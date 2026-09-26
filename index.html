@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poquito – Spanisch Vokabeltrainer</title>
+<style>
+  :root {
+    --bg: #fdf6ec;
+    --card-front: #ffffff;
+    --card-back: #fff3d6;
+    --accent: #e07a3e;
+    --accent-dark: #c85f28;
+    --text: #3a2e28;
+    --muted: #8a7b6f;
+    --good: #4caf7d;
+    --bad: #e05656;
+    --shadow: rgba(58, 46, 40, 0.15);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 1.7rem;
+  }
+
+  header p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .stats {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stats span strong {
+    color: var(--text);
+  }
+
+  .scene {
+    width: min(90vw, 360px);
+    height: 220px;
+    perspective: 1200px;
+    margin: 12px 0 20px;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+
+  .card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 16px;
+    backface-visibility: hidden;
+    box-shadow: 0 8px 20px var(--shadow);
+    text-align: center;
+  }
+
+  .card-face .lang-tag {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .card-face .word {
+    font-size: 1.6rem;
+    font-weight: 600;
+    word-break: break-word;
+  }
+
+  .card-front {
+    background: var(--card-front);
+    border: 2px solid var(--accent);
+  }
+
+  .card-back {
+    background: var(--card-back);
+    border: 2px solid var(--accent-dark);
+    transform: rotateY(180deg);
+  }
+
+  .hint {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    width: min(90vw, 360px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .actions.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .actions button {
+    flex: 1;
+    padding: 14px 8px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.1s ease, filter 0.15s ease;
+  }
+
+  .actions button:active {
+    transform: scale(0.97);
+  }
+
+  .btn-no {
+    background: var(--bad);
+  }
+
+  .btn-yes {
+    background: var(--good);
+  }
+
+  .actions button:hover {
+    filter: brightness(1.05);
+  }
+
+  .empty-state, .done-state {
+    max-width: 380px;
+    text-align: center;
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 22px;
+    box-shadow: 0 8px 20px var(--shadow);
+    margin-top: 12px;
+  }
+
+  .empty-state h2, .done-state h2 {
+    margin-top: 0;
+  }
+
+  footer {
+    margin-top: 28px;
+  }
+
+  .reset-btn {
+    background: none;
+    border: 1px solid var(--muted);
+    color: var(--muted);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .reset-btn:hover {
+    border-color: var(--bad);
+    color: var(--bad);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Poquito 🌶️</h1>
+  <p>Spanisch-Vokabeltrainer</p>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<div id="trainer"></div>
+
+<footer>
+  <button class="reset-btn" id="resetBtn">Fortschritt zurücksetzen</button>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------------------------------------------------------------
+  // Vokabeldaten: hier werden die Wörter später eingetragen.
+  // Format: { es: "spanisches Wort", de: "deutsche Übersetzung" }
+  // ---------------------------------------------------------------
+  const VOCAB = [
+    // { es: "el perro", de: "der Hund" },
+  ];
+
+  const STORAGE_KEY = "poquitoVocabTrainerState_v1";
+  const MAX_LEVEL = 3; // Level, ab dem eine Karte für diese Runde als "gelernt" gilt
+
+  const trainerEl = document.getElementById("trainer");
+  const statsEl = document.getElementById("stats");
+  const resetBtn = document.getElementById("resetBtn");
+
+  let state = loadState();
+  let current = null; // { id, flipped }
+
+  function defaultState() {
+    return {
+      progress: {},   // { [wordId]: { level: number, correct: number, wrong: number } }
+      deck: [],
+      totalCorrect: 0,
+      totalWrong: 0,
+    };
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState();
+      const parsed = JSON.parse(raw);
+      return Object.assign(defaultState(), parsed);
+    } catch (e) {
+      return defaultState();
+    }
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      // localStorage nicht verfügbar - Fortschritt wird nicht gespeichert
+    }
+  }
+
+  function getProgress(id) {
+    if (!state.progress[id]) {
+      state.progress[id] = { level: 0, correct: 0, wrong: 0 };
+    }
+    return state.progress[id];
+  }
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function findWord(id) {
+    return VOCAB.find((w) => w.es === id);
+  }
+
+  function buildDeck(onlyUnlearned) {
+    let ids = VOCAB.map((w) => w.es);
+    if (onlyUnlearned) {
+      ids = ids.filter((id) => getProgress(id).level < MAX_LEVEL);
+      if (ids.length === 0) ids = VOCAB.map((w) => w.es); // alles gelernt -> alles wiederholen
+    }
+    return shuffle(ids);
+  }
+
+  function ensureDeck() {
+    // Deck bereinigen: IDs, die es nicht mehr in VOCAB gibt, entfernen
+    state.deck = state.deck.filter((id) => findWord(id));
+    if (state.deck.length === 0 && VOCAB.length > 0) {
+      state.deck = buildDeck(true);
+      saveState();
+    }
+  }
+
+  function nextCard() {
+    ensureDeck();
+    if (VOCAB.length === 0) {
+      current = null;
+      render();
+      return;
+    }
+    if (state.deck.length === 0) {
+      current = null; // Runde fertig
+      render();
+      return;
+    }
+    const id = state.deck.shift();
+    current = { id, flipped: false };
+    render();
+  }
+
+  function grade(isCorrect) {
+    if (!current) return;
+    const id = current.id;
+    const prog = getProgress(id);
+
+    if (isCorrect) {
+      prog.correct++;
+      state.totalCorrect++;
+      prog.level = Math.min(MAX_LEVEL, prog.level + 1);
+      if (prog.level < MAX_LEVEL) {
+        // Karte kommt später wieder, mit wachsendem Abstand je nach Level
+        const spacing = prog.level * 3 + 2;
+        const pos = Math.min(state.deck.length, spacing);
+        state.deck.splice(pos, 0, id);
+      }
+      // bei MAX_LEVEL: Karte gilt für diese Runde als gelernt, kommt nicht sofort wieder
+    } else {
+      prog.wrong++;
+      state.totalWrong++;
+      prog.level = 0;
+      // falsche Karten kommen bald wieder
+      const pos = Math.min(state.deck.length, 2);
+      state.deck.splice(pos, 0, id);
+    }
+
+    saveState();
+    nextCard();
+  }
+
+  function resetProgress() {
+    if (!confirm("Fortschritt wirklich zurücksetzen?")) return;
+    state = defaultState();
+    saveState();
+    nextCard();
+  }
+
+  function learnedCount() {
+    return VOCAB.filter((w) => getProgress(w.es).level >= MAX_LEVEL).length;
+  }
+
+  function renderStats() {
+    statsEl.innerHTML = `
+      <span><strong>${learnedCount()}</strong> / ${VOCAB.length} gelernt</span>
+      <span><strong>${state.totalCorrect}</strong> richtig</span>
+      <span><strong>${state.totalWrong}</strong> falsch</span>
+    `;
+  }
+
+  function render() {
+    renderStats();
+
+    if (VOCAB.length === 0) {
+      trainerEl.innerHTML = `
+        <div class="empty-state">
+          <h2>Noch keine Vokabeln</h2>
+          <p>Es sind noch keine Vokabeldaten hinterlegt. Sobald Wörter im
+          <code>VOCAB</code>-Array eingetragen sind, startet hier automatisch
+          das Training.</p>
+        </div>
+      `;
+      return;
+    }
+
+    if (!current) {
+      trainerEl.innerHTML = `
+        <div class="done-state">
+          <h2>Runde geschafft! 🎉</h2>
+          <p>Alle Karten dieser Runde wurden abgefragt.</p>
+          <button class="reset-btn" id="newRoundBtn">Neue Runde starten</button>
+        </div>
+      `;
+      document.getElementById("newRoundBtn").addEventListener("click", () => {
+        state.deck = buildDeck(true);
+        saveState();
+        nextCard();
+      });
+      return;
+    }
+
+    const word = findWord(current.id);
+
+    trainerEl.innerHTML = `
+      <div class="scene">
+        <div class="card" id="card">
+          <div class="card-face card-front">
+            <span class="lang-tag">Spanisch</span>
+            <span class="word">${escapeHtml(word.es)}</span>
+          </div>
+          <div class="card-face card-back">
+            <span class="lang-tag">Deutsch</span>
+            <span class="word">${escapeHtml(word.de)}</span>
+          </div>
+        </div>
+      </div>
+      <p class="hint">${current.flipped ? "Wie gut wusstest du das?" : "Zum Umdrehen tippen"}</p>
+      <div class="actions ${current.flipped ? "visible" : ""}" id="actions">
+        <button class="btn-no" id="btnNo">Wusste ich nicht</button>
+        <button class="btn-yes" id="btnYes">Wusste ich</button>
+      </div>
+    `;
+
+    const cardEl = document.getElementById("card");
+    if (current.flipped) cardEl.classList.add("flipped");
+
+    cardEl.addEventListener("click", () => {
+      current.flipped = !current.flipped;
+      render();
+    });
+
+    document.getElementById("btnYes").addEventListener("click", (e) => {
+      e.stopPropagation();
+      grade(true);
+    });
+    document.getElementById("btnNo").addEventListener("click", (e) => {
+      e.stopPropagation();
+      grade(false);
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  resetBtn.addEventListener("click", resetProgress);
+
+  ensureDeck();
+  if (state.deck.length === 0 && VOCAB.length > 0) {
+    state.deck = buildDeck(false);
+    saveState();
+  }
+  nextCard();
+})();
+</script>
+
+</body>
+</html>
