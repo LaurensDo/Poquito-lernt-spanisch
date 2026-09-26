@@ -2314,6 +2314,9 @@
   ];
 
   const PODCAST_SPEEDS = [0.75, 1, 1.25];
+  // Safari spricht bei Rate 1 schon zügig und beschleunigt darüber sehr stark,
+  // deshalb ist „1,25×“ bewusst nur leicht schneller.
+  const PODCAST_RATES = { 0.75: 0.75, 1: 1, 1.25: 1.1 };
   // Bekannte Namen spanischer Systemstimmen, um Sprecherinnen und Sprecher zu unterscheiden.
   const FEMALE_VOICE_NAMES = ["Mónica", "Monica", "Paulina", "Marisol", "Luciana", "Isabela", "Soledad", "Angélica", "Francisca", "Esperanza", "Helena", "Laura", "Lucía", "Lucia", "Elvira", "Penélope", "Dalia"];
   const MALE_VOICE_NAMES = ["Jorge", "Juan", "Diego", "Carlos", "Enrique", "Pablo", "Álvaro", "Alvaro", "Andrés", "Miguel", "Raúl", "Tomás"];
@@ -3176,7 +3179,7 @@
   }
 
   function episodeSeconds(ep, upto) {
-    return baseSeconds(ep, upto) / state.podcastSpeed;
+    return baseSeconds(ep, upto) / PODCAST_RATES[state.podcastSpeed];
   }
 
   function formatTime(sec) {
@@ -3210,7 +3213,7 @@
     u.lang = voice ? voice.lang : "es-ES";
     if (voice) u.voice = voice;
     u.pitch = pitch;
-    u.rate = state.podcastSpeed;
+    u.rate = PODCAST_RATES[state.podcastSpeed];
     u.onend = () => {
       if (player !== p || token !== p.token || !p.playing) return;
       if (p.index >= ep.lines.length - 1) {
