@@ -42,12 +42,27 @@
       var(--bg);
   }
 
-  button { font: inherit; color: inherit; }
+  button, input, select { font: inherit; color: inherit; }
 
   .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
     max-width: 640px;
     margin: 0 auto;
-    padding: max(20px, env(safe-area-inset-top)) 16px 48px;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  }
+
+  .stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-bottom: max(24px, 10vh);
   }
 
   .noscript {
@@ -167,13 +182,22 @@
     font-weight: 900;
   }
 
-  /* ---------- Kacheln (Module & Kategorien) ---------- */
+  .lead {
+    margin: -8px 0 20px;
+    color: var(--muted);
+    font-weight: 800;
+  }
+
+  /* ---------- Kacheln ---------- */
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin-bottom: 28px;
   }
+
+  .grid.two { grid-template-columns: repeat(2, 1fr); }
+  .grid.three { grid-template-columns: repeat(3, 1fr); }
 
   @media (min-width: 560px) {
     .grid { grid-template-columns: repeat(3, 1fr); }
@@ -195,7 +219,7 @@
     transition: transform 0.1s ease;
   }
 
-  .tile:active:not(:disabled) {
+  .tile:active:not(.locked) {
     transform: translateY(3px);
     box-shadow: 0 2px 0 var(--line);
   }
@@ -213,16 +237,25 @@
 
   .tile .name { font-size: 1.05rem; font-weight: 900; line-height: 1.2; }
   .tile .desc { font-size: 0.85rem; font-weight: 700; color: var(--muted); }
+  .tile .stars-line { font-size: 0.9rem; font-weight: 900; color: var(--sun-dark); }
+
+  .tile.big { padding: 20px; min-height: 180px; }
+  .tile.big .ico { width: 64px; height: 64px; font-size: 2.1rem; border-radius: 18px; }
+  .tile.big .name { font-size: 1.35rem; }
+  .tile.big .desc { font-size: 0.95rem; }
 
   .tile.featured {
-    box-shadow: 0 0 0 3px var(--primary), 0 7px 0 3px var(--primary-dark);
+    box-shadow: 0 0 0 3px var(--c), 0 7px 0 3px color-mix(in srgb, var(--c) 70%, black);
   }
 
   .tile.featured:active {
-    box-shadow: 0 0 0 3px var(--primary), 0 3px 0 3px var(--primary-dark);
+    box-shadow: 0 0 0 3px var(--c), 0 3px 0 3px color-mix(in srgb, var(--c) 70%, black);
   }
 
-  .tile:disabled {
+  .tile.small { padding: 14px; }
+  .tile.small .ico { width: 42px; height: 42px; font-size: 1.35rem; border-radius: 13px; }
+
+  .tile.locked {
     cursor: default;
     background: rgba(255, 255, 255, 0.5);
     box-shadow: none;
@@ -230,8 +263,9 @@
     outline-offset: -2px;
   }
 
-  .tile:disabled .ico { filter: grayscale(1); opacity: 0.45; }
-  .tile:disabled .name, .tile:disabled .desc { color: #B3A596; }
+  .tile.locked .ico { filter: grayscale(1); opacity: 0.45; }
+  .tile.locked .name, .tile.locked .desc { color: #B3A596; }
+  .tile.wiggle { animation: wiggle 0.35s ease; }
 
   .pill {
     position: absolute;
@@ -247,7 +281,7 @@
     text-transform: uppercase;
   }
 
-  .pill.go { background: var(--primary); color: #fff; }
+  .pill.go { background: var(--c); color: #fff; }
   .pill.err { background: #FDE3E4; color: var(--bad-dark); }
 
   .medal { position: absolute; top: 10px; right: 12px; font-size: 1.4rem; }
@@ -333,6 +367,14 @@
     margin: 0;
     font-size: 1.45rem;
     font-weight: 900;
+    line-height: 1.2;
+  }
+
+  .topbar h2 small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 800;
   }
 
   .progress {
@@ -385,8 +427,8 @@
     perspective: 1400px;
   }
 
-  .scene.enter { animation: pop-in 0.35s ease-out; }
-  .scene.shake { animation: shake 0.45s; }
+  .enter { animation: pop-in 0.35s ease-out; }
+  .shake { animation: shake 0.45s; }
 
   .card {
     position: relative;
@@ -476,7 +518,7 @@
     cursor: pointer;
   }
 
-  .speak:active {
+  .speak:active, .say:active {
     transform: translateY(3px);
     box-shadow: 0 1px 0 var(--sun-dark);
   }
@@ -520,6 +562,263 @@
     pointer-events: none;
     animation: float-up 0.9s ease-out forwards;
   }
+
+  /* ---------- Verben: Stufen & Regeln ---------- */
+  .levels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .level-btn {
+    padding: 14px 8px;
+    border: none;
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: 0 4px 0 var(--line);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .level-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--line); }
+  .level-btn b { display: block; font-size: 1.6rem; }
+  .level-btn span { display: block; font-weight: 900; }
+  .level-btn small { display: block; color: var(--muted); font-size: 0.78rem; font-weight: 700; }
+  .level-btn.on { background: var(--primary); color: #fff; box-shadow: 0 4px 0 var(--primary-dark); }
+  .level-btn.on small { color: rgba(255, 255, 255, 0.85); }
+
+  .rules-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    margin-bottom: 26px;
+    padding: 16px 18px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #3A86FF, #7A6CF0);
+    box-shadow: 0 5px 0 #2D5FC0;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .rules-link:active { transform: translateY(4px); box-shadow: 0 1px 0 #2D5FC0; }
+  .rules-link .ico { font-size: 2rem; }
+  .rules-link b { display: block; font-size: 1.15rem; font-weight: 900; }
+  .rules-link span { font-weight: 700; opacity: 0.9; font-size: 0.9rem; }
+
+  .panel {
+    margin-bottom: 18px;
+    padding: 20px;
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: 0 5px 0 var(--line);
+  }
+
+  .panel h3 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 900; }
+  .panel p { margin: 0 0 12px; font-weight: 700; line-height: 1.5; }
+
+  .example {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .example:first-of-type { border-top: none; padding-top: 0; }
+  .ex-text { flex: 1; }
+  .ex-use { font-size: 0.82rem; font-weight: 900; color: var(--primary); }
+  .ex-es { font-size: 1.05rem; font-weight: 900; }
+  .ex-de { font-size: 0.9rem; font-weight: 700; color: var(--muted); }
+
+  .say {
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: var(--sun);
+    box-shadow: 0 3px 0 var(--sun-dark);
+    font-size: 1.05rem;
+    cursor: pointer;
+  }
+
+  .notes { margin: 0; padding-left: 20px; }
+  .notes li { margin-bottom: 8px; font-weight: 700; line-height: 1.45; }
+
+  .signal { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .signal span {
+    padding: 6px 12px;
+    border-radius: 99px;
+    background: var(--bg);
+    font-weight: 800;
+  }
+
+  .table-scroll { overflow-x: auto; }
+
+  table.conj { width: 100%; border-collapse: collapse; }
+
+  table.conj th {
+    padding: 6px 8px;
+    text-align: left;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  table.conj td { padding: 9px 8px; border-top: 1px solid var(--line); font-weight: 800; }
+  table.conj td.pron { color: var(--muted); font-weight: 700; white-space: nowrap; }
+  table.conj em { font-style: normal; color: var(--primary); }
+  table.conj td .say { width: 34px; height: 34px; font-size: 0.85rem; }
+
+  .verb-select {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg);
+    font-weight: 800;
+  }
+
+  /* ---------- Verben: Übung ---------- */
+  .prompt {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 58px 20px 24px;
+    border-radius: 28px;
+    background: var(--surface);
+    box-shadow: 0 8px 0 var(--line), var(--shadow);
+    text-align: center;
+  }
+
+  .prompt .pron { font-size: clamp(1.9rem, 6vw, 2.6rem); font-weight: 900; line-height: 1.15; }
+
+  .prompt .inf {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
+
+  .prompt .inf small { color: var(--muted); font-weight: 800; }
+  .prompt .task { margin-top: 12px; color: var(--muted); font-size: 0.9rem; font-weight: 800; }
+
+  .answer-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    min-height: 68px;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    border: 3px dashed var(--locked);
+    border-radius: 18px;
+    background: var(--surface);
+    font-size: 1.9rem;
+    font-weight: 900;
+  }
+
+  .answer-box .gap { width: 16px; }
+  .answer-box .placeholder { color: var(--muted); font-size: 1rem; font-weight: 800; }
+  .answer-box.correct, .type-input.correct { border: 3px solid var(--good); background: #E6F8EF; }
+  .answer-box.wrong, .type-input.wrong { border: 3px solid var(--bad); background: #FDECEC; }
+
+  .letters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .letter {
+    width: 54px;
+    height: 58px;
+    border: none;
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: 0 5px 0 var(--line);
+    font-size: 1.6rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .letter:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--line); }
+  .letter.space { width: 84px; color: var(--muted); }
+  .letter.used { visibility: hidden; }
+
+  .tools { display: flex; justify-content: center; }
+  .tools .btn { width: auto; padding: 12px 22px; }
+
+  .options { display: grid; gap: 12px; }
+  .options .btn { font-size: 1.45rem; padding: 18px; }
+  .options .btn.picked-wrong { --btn: var(--bad); --btn-dark: var(--bad-dark); color: #fff; }
+  .options .btn.is-right { --btn: var(--good); --btn-dark: var(--good-dark); color: #fff; }
+
+  .type-input {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 14px;
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    outline: none;
+    background: var(--surface);
+    font-size: 1.7rem;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  .type-input:focus { border-color: var(--sun); }
+
+  .accents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .accent {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: 0 4px 0 var(--line);
+    font-size: 1.35rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .accent:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--line); }
+
+  @media (max-width: 420px) {
+    .accents { gap: 6px; }
+    .accent { width: 42px; height: 46px; }
+  }
+
+  .feedback {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    text-align: center;
+    font-weight: 900;
+    animation: pop-in 0.25s ease-out;
+  }
+
+  .feedback.good { background: #E6F8EF; color: var(--good-dark); }
+  .feedback.bad { background: #FDECEC; color: var(--bad-dark); }
+  .fb-answer { display: block; margin-top: 4px; color: var(--ink); font-size: 1.6rem; }
+  .feedback .btn { margin-top: 12px; }
 
   /* ---------- Ergebnis ---------- */
   .result {
@@ -602,6 +901,24 @@
     animation: fall linear forwards;
   }
 
+  /* ---------- Große Tablets (z. B. iPad Pro 12,9") ---------- */
+  @media (min-width: 900px) {
+    html { font-size: 18px; }
+    .app { max-width: 1000px; padding-left: 36px; padding-right: 36px; }
+    .grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, 1fr); }
+    .grid.three { grid-template-columns: repeat(3, 1fr); }
+    .btn-stack.pair { grid-template-columns: 1fr 1fr; }
+    .logo { width: 68px; height: 68px; font-size: 36px; }
+    .icon-btn { width: 54px; height: 54px; }
+    .tile.big { min-height: 210px; padding: 24px; }
+    .scene { height: clamp(360px, 40vh, 480px); }
+    .speak { width: 68px; height: 68px; font-size: 1.8rem; }
+    .letter { width: 64px; height: 70px; font-size: 1.9rem; }
+    .accent { width: 58px; height: 58px; }
+    .badges { grid-template-columns: repeat(6, 1fr); }
+  }
+
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
 
   @keyframes pop-in {
@@ -615,6 +932,12 @@
     40% { transform: translateX(10px); }
     60% { transform: translateX(-6px); }
     80% { transform: translateX(6px); }
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
   }
 
   @keyframes float-up {
@@ -656,12 +979,20 @@
         { es: "buenas tardes", de: "guten Tag / guten Nachmittag" },
         { es: "buenas noches", de: "guten Abend / gute Nacht" },
         { es: "hasta luego", de: "bis später" },
+        { es: "hasta mañana", de: "bis morgen" },
         { es: "¿Qué tal?", de: "Wie geht's?" },
+        { es: "¿Cómo estás?", de: "Wie geht es dir?" },
+        { es: "muy bien", de: "sehr gut" },
+        { es: "¿Cómo te llamas?", de: "Wie heißt du?" },
+        { es: "me llamo", de: "ich heiße" },
+        { es: "encantado", de: "sehr erfreut" },
+        { es: "bienvenido", de: "willkommen" },
         { es: "por favor", de: "bitte" },
         { es: "gracias", de: "danke" },
         { es: "de nada", de: "gern geschehen" },
         { es: "lo siento", de: "es tut mir leid" },
         { es: "perdón", de: "Entschuldigung" },
+        { es: "¡Buen provecho!", de: "Guten Appetit!" },
         { es: "sí", de: "ja" },
         { es: "no", de: "nein" },
       ],
@@ -669,6 +1000,7 @@
     {
       id: "zahlen", name: "Zahlen", icon: "🔢", color: "#1FA6A0",
       words: [
+        { es: "cero", de: "null" },
         { es: "uno", de: "eins" },
         { es: "dos", de: "zwei" },
         { es: "tres", de: "drei" },
@@ -679,17 +1011,35 @@
         { es: "ocho", de: "acht" },
         { es: "nueve", de: "neun" },
         { es: "diez", de: "zehn" },
+        { es: "once", de: "elf" },
+        { es: "doce", de: "zwölf" },
+        { es: "trece", de: "dreizehn" },
+        { es: "catorce", de: "vierzehn" },
+        { es: "quince", de: "fünfzehn" },
+        { es: "dieciséis", de: "sechzehn" },
+        { es: "veinte", de: "zwanzig" },
+        { es: "treinta", de: "dreißig" },
+        { es: "cuarenta", de: "vierzig" },
+        { es: "cincuenta", de: "fünfzig" },
+        { es: "cien", de: "hundert" },
+        { es: "mil", de: "tausend" },
       ],
     },
     {
       id: "farben", name: "Farben", icon: "🎨", color: "#9B5DE5",
       words: [
+        { es: "el color", de: "die Farbe" },
         { es: "rojo", de: "rot" },
         { es: "azul", de: "blau" },
         { es: "verde", de: "grün" },
         { es: "amarillo", de: "gelb" },
         { es: "negro", de: "schwarz" },
         { es: "blanco", de: "weiß" },
+        { es: "marrón", de: "braun" },
+        { es: "gris", de: "grau" },
+        { es: "rosa", de: "rosa" },
+        { es: "naranja", de: "orange" },
+        { es: "morado", de: "lila" },
       ],
     },
     {
@@ -697,12 +1047,22 @@
       words: [
         { es: "la madre", de: "die Mutter" },
         { es: "el padre", de: "der Vater" },
+        { es: "los padres", de: "die Eltern" },
         { es: "el hermano", de: "der Bruder" },
         { es: "la hermana", de: "die Schwester" },
         { es: "el hijo", de: "der Sohn" },
         { es: "la hija", de: "die Tochter" },
         { es: "el abuelo", de: "der Großvater" },
         { es: "la abuela", de: "die Großmutter" },
+        { es: "el tío", de: "der Onkel" },
+        { es: "la tía", de: "die Tante" },
+        { es: "el primo", de: "der Cousin" },
+        { es: "la prima", de: "die Cousine" },
+        { es: "el marido", de: "der Ehemann" },
+        { es: "la mujer", de: "die Frau / Ehefrau" },
+        { es: "el niño", de: "das Kind / der Junge" },
+        { es: "la niña", de: "das Mädchen" },
+        { es: "el bebé", de: "das Baby" },
         { es: "el amigo", de: "der Freund" },
         { es: "la amiga", de: "die Freundin" },
       ],
@@ -714,13 +1074,29 @@
         { es: "el pan", de: "das Brot" },
         { es: "la leche", de: "die Milch" },
         { es: "el café", de: "der Kaffee" },
-        { es: "la manzana", de: "der Apfel" },
-        { es: "el queso", de: "der Käse" },
-        { es: "la carne", de: "das Fleisch" },
-        { es: "el pescado", de: "der Fisch (als Essen)" },
-        { es: "el huevo", de: "das Ei" },
+        { es: "el té", de: "der Tee" },
+        { es: "el zumo", de: "der Saft" },
         { es: "la cerveza", de: "das Bier" },
         { es: "el vino", de: "der Wein" },
+        { es: "la manzana", de: "der Apfel" },
+        { es: "el plátano", de: "die Banane" },
+        { es: "la fruta", de: "das Obst" },
+        { es: "la verdura", de: "das Gemüse" },
+        { es: "el tomate", de: "die Tomate" },
+        { es: "la patata", de: "die Kartoffel" },
+        { es: "el arroz", de: "der Reis" },
+        { es: "el queso", de: "der Käse" },
+        { es: "el huevo", de: "das Ei" },
+        { es: "la carne", de: "das Fleisch" },
+        { es: "el pollo", de: "das Hähnchen" },
+        { es: "el pescado", de: "der Fisch (als Essen)" },
+        { es: "la sopa", de: "die Suppe" },
+        { es: "el azúcar", de: "der Zucker" },
+        { es: "la sal", de: "das Salz" },
+        { es: "el helado", de: "das Eis" },
+        { es: "el desayuno", de: "das Frühstück" },
+        { es: "la comida", de: "das Essen / Mittagessen" },
+        { es: "la cena", de: "das Abendessen" },
       ],
     },
     {
@@ -731,7 +1107,69 @@
         { es: "el pájaro", de: "der Vogel" },
         { es: "el caballo", de: "das Pferd" },
         { es: "la vaca", de: "die Kuh" },
+        { es: "el cerdo", de: "das Schwein" },
+        { es: "la oveja", de: "das Schaf" },
+        { es: "la gallina", de: "das Huhn" },
+        { es: "el pato", de: "die Ente" },
+        { es: "el conejo", de: "das Kaninchen" },
+        { es: "el ratón", de: "die Maus" },
         { es: "el pez", de: "der Fisch (lebendes Tier)" },
+        { es: "el oso", de: "der Bär" },
+        { es: "el león", de: "der Löwe" },
+        { es: "la mariposa", de: "der Schmetterling" },
+      ],
+    },
+    {
+      id: "koerper", name: "Körper", icon: "🖐️", color: "#FF8C69",
+      words: [
+        { es: "la cabeza", de: "der Kopf" },
+        { es: "el pelo", de: "das Haar" },
+        { es: "el ojo", de: "das Auge" },
+        { es: "la nariz", de: "die Nase" },
+        { es: "la boca", de: "der Mund" },
+        { es: "el diente", de: "der Zahn" },
+        { es: "la oreja", de: "das Ohr" },
+        { es: "el brazo", de: "der Arm" },
+        { es: "la mano", de: "die Hand" },
+        { es: "el dedo", de: "der Finger" },
+        { es: "la pierna", de: "das Bein" },
+        { es: "el pie", de: "der Fuß" },
+        { es: "la espalda", de: "der Rücken" },
+        { es: "el corazón", de: "das Herz" },
+      ],
+    },
+    {
+      id: "kleidung", name: "Kleidung", icon: "👕", color: "#5B8DEF",
+      words: [
+        { es: "la camisa", de: "das Hemd" },
+        { es: "la camiseta", de: "das T-Shirt" },
+        { es: "los pantalones", de: "die Hose" },
+        { es: "la falda", de: "der Rock" },
+        { es: "el vestido", de: "das Kleid" },
+        { es: "la chaqueta", de: "die Jacke" },
+        { es: "el abrigo", de: "der Mantel" },
+        { es: "los zapatos", de: "die Schuhe" },
+        { es: "los calcetines", de: "die Socken" },
+        { es: "el sombrero", de: "der Hut" },
+        { es: "el bolso", de: "die Handtasche" },
+        { es: "las gafas", de: "die Brille" },
+      ],
+    },
+    {
+      id: "zuhause", name: "Zuhause", icon: "🛋️", color: "#C77DFF",
+      words: [
+        { es: "la cocina", de: "die Küche" },
+        { es: "el baño", de: "das Bad" },
+        { es: "el dormitorio", de: "das Schlafzimmer" },
+        { es: "el salón", de: "das Wohnzimmer" },
+        { es: "el jardín", de: "der Garten" },
+        { es: "la puerta", de: "die Tür" },
+        { es: "la ventana", de: "das Fenster" },
+        { es: "la cama", de: "das Bett" },
+        { es: "el sofá", de: "das Sofa" },
+        { es: "la lámpara", de: "die Lampe" },
+        { es: "el espejo", de: "der Spiegel" },
+        { es: "la llave", de: "der Schlüssel" },
       ],
     },
     {
@@ -743,10 +1181,60 @@
         { es: "la ciudad", de: "die Stadt" },
         { es: "la calle", de: "die Straße" },
         { es: "la playa", de: "der Strand" },
+        { es: "el parque", de: "der Park" },
+        { es: "la tienda", de: "das Geschäft" },
+        { es: "el mercado", de: "der Markt" },
+        { es: "el supermercado", de: "der Supermarkt" },
+        { es: "el restaurante", de: "das Restaurant" },
+        { es: "el hotel", de: "das Hotel" },
+        { es: "el hospital", de: "das Krankenhaus" },
+        { es: "la farmacia", de: "die Apotheke" },
+        { es: "el banco", de: "die Bank" },
+        { es: "la estación", de: "der Bahnhof" },
+        { es: "el aeropuerto", de: "der Flughafen" },
         { es: "el coche", de: "das Auto" },
         { es: "el libro", de: "das Buch" },
         { es: "la mesa", de: "der Tisch" },
         { es: "la silla", de: "der Stuhl" },
+      ],
+    },
+    {
+      id: "reisen", name: "Reisen & Verkehr", icon: "✈️", color: "#00A8C6",
+      words: [
+        { es: "el tren", de: "der Zug" },
+        { es: "el autobús", de: "der Bus" },
+        { es: "el avión", de: "das Flugzeug" },
+        { es: "el barco", de: "das Schiff" },
+        { es: "la bicicleta", de: "das Fahrrad" },
+        { es: "el billete", de: "die Fahrkarte" },
+        { es: "la maleta", de: "der Koffer" },
+        { es: "el pasaporte", de: "der Reisepass" },
+        { es: "el mapa", de: "die Landkarte" },
+        { es: "las vacaciones", de: "der Urlaub / die Ferien" },
+        { es: "a la derecha", de: "rechts" },
+        { es: "a la izquierda", de: "links" },
+        { es: "todo recto", de: "geradeaus" },
+        { es: "cerca", de: "nah" },
+        { es: "lejos", de: "weit weg" },
+      ],
+    },
+    {
+      id: "wetter", name: "Wetter & Natur", icon: "🌤️", color: "#4CC9F0",
+      words: [
+        { es: "el sol", de: "die Sonne" },
+        { es: "la lluvia", de: "der Regen" },
+        { es: "la nieve", de: "der Schnee" },
+        { es: "el viento", de: "der Wind" },
+        { es: "la nube", de: "die Wolke" },
+        { es: "el cielo", de: "der Himmel" },
+        { es: "hace calor", de: "es ist heiß" },
+        { es: "hace frío", de: "es ist kalt" },
+        { es: "llueve", de: "es regnet" },
+        { es: "el mar", de: "das Meer" },
+        { es: "la montaña", de: "der Berg" },
+        { es: "el río", de: "der Fluss" },
+        { es: "el árbol", de: "der Baum" },
+        { es: "la flor", de: "die Blume" },
       ],
     },
     {
@@ -756,11 +1244,64 @@
         { es: "mañana", de: "morgen" },
         { es: "ayer", de: "gestern" },
         { es: "ahora", de: "jetzt" },
+        { es: "pronto", de: "bald" },
+        { es: "antes", de: "vorher / früher" },
+        { es: "después", de: "danach / später" },
+        { es: "temprano", de: "früh" },
+        { es: "tarde", de: "spät" },
         { es: "siempre", de: "immer" },
+        { es: "a veces", de: "manchmal" },
         { es: "nunca", de: "nie" },
+        { es: "la mañana", de: "der Morgen / Vormittag" },
+        { es: "la tarde", de: "der Nachmittag" },
+        { es: "la noche", de: "die Nacht / der Abend" },
+        { es: "la hora", de: "die Stunde / Uhrzeit" },
+        { es: "el minuto", de: "die Minute" },
         { es: "el día", de: "der Tag" },
         { es: "la semana", de: "die Woche" },
+        { es: "el mes", de: "der Monat" },
         { es: "el año", de: "das Jahr" },
+      ],
+    },
+    {
+      id: "kalender", name: "Wochentage & Monate", icon: "📆", color: "#F15BB5",
+      words: [
+        { es: "el lunes", de: "der Montag" },
+        { es: "el martes", de: "der Dienstag" },
+        { es: "el miércoles", de: "der Mittwoch" },
+        { es: "el jueves", de: "der Donnerstag" },
+        { es: "el viernes", de: "der Freitag" },
+        { es: "el sábado", de: "der Samstag" },
+        { es: "el domingo", de: "der Sonntag" },
+        { es: "enero", de: "Januar" },
+        { es: "febrero", de: "Februar" },
+        { es: "marzo", de: "März" },
+        { es: "abril", de: "April" },
+        { es: "mayo", de: "Mai" },
+        { es: "junio", de: "Juni" },
+        { es: "julio", de: "Juli" },
+        { es: "agosto", de: "August" },
+        { es: "septiembre", de: "September" },
+        { es: "octubre", de: "Oktober" },
+        { es: "noviembre", de: "November" },
+        { es: "diciembre", de: "Dezember" },
+      ],
+    },
+    {
+      id: "berufe", name: "Berufe", icon: "💼", color: "#8D6E63",
+      words: [
+        { es: "el médico", de: "der Arzt" },
+        { es: "la médica", de: "die Ärztin" },
+        { es: "el profesor", de: "der Lehrer" },
+        { es: "la profesora", de: "die Lehrerin" },
+        { es: "el enfermero", de: "der Krankenpfleger" },
+        { es: "la enfermera", de: "die Krankenschwester" },
+        { es: "el camarero", de: "der Kellner" },
+        { es: "el cocinero", de: "der Koch" },
+        { es: "el policía", de: "der Polizist" },
+        { es: "el vendedor", de: "der Verkäufer" },
+        { es: "el abogado", de: "der Anwalt" },
+        { es: "el estudiante", de: "der Student" },
       ],
     },
     {
@@ -771,30 +1312,85 @@
         { es: "tener", de: "haben" },
         { es: "hacer", de: "machen / tun" },
         { es: "ir", de: "gehen / fahren" },
+        { es: "venir", de: "kommen" },
+        { es: "llegar", de: "ankommen" },
+        { es: "salir", de: "hinausgehen / ausgehen" },
         { es: "comer", de: "essen" },
         { es: "beber", de: "trinken" },
         { es: "hablar", de: "sprechen" },
+        { es: "decir", de: "sagen" },
         { es: "vivir", de: "leben / wohnen" },
         { es: "querer", de: "wollen / lieben" },
         { es: "poder", de: "können" },
         { es: "saber", de: "wissen" },
         { es: "dormir", de: "schlafen" },
         { es: "trabajar", de: "arbeiten" },
+        { es: "ver", de: "sehen" },
+        { es: "mirar", de: "anschauen" },
+        { es: "escuchar", de: "zuhören" },
+        { es: "leer", de: "lesen" },
+        { es: "escribir", de: "schreiben" },
+        { es: "abrir", de: "öffnen" },
+        { es: "cerrar", de: "schließen" },
+        { es: "comprar", de: "kaufen" },
+        { es: "pagar", de: "bezahlen" },
+        { es: "dar", de: "geben" },
+        { es: "ayudar", de: "helfen" },
+        { es: "necesitar", de: "brauchen" },
+        { es: "buscar", de: "suchen" },
+        { es: "encontrar", de: "finden" },
+        { es: "jugar", de: "spielen" },
+        { es: "aprender", de: "lernen" },
+        { es: "entender", de: "verstehen" },
+        { es: "pensar", de: "denken" },
       ],
     },
     {
-      id: "adjektive", name: "Adjektive", icon: "✨", color: "#00A8C6",
+      id: "adjektive", name: "Adjektive", icon: "✨", color: "#00B4D8",
       words: [
         { es: "grande", de: "groß" },
         { es: "pequeño", de: "klein" },
+        { es: "alto", de: "groß (Person) / hoch" },
+        { es: "bajo", de: "klein (Person) / niedrig" },
+        { es: "largo", de: "lang" },
+        { es: "corto", de: "kurz" },
         { es: "bueno", de: "gut" },
         { es: "malo", de: "schlecht" },
         { es: "bonito", de: "schön / hübsch" },
         { es: "nuevo", de: "neu" },
         { es: "viejo", de: "alt" },
+        { es: "joven", de: "jung" },
+        { es: "rápido", de: "schnell" },
+        { es: "lento", de: "langsam" },
+        { es: "fácil", de: "einfach / leicht" },
+        { es: "difícil", de: "schwierig" },
+        { es: "barato", de: "billig" },
+        { es: "caro", de: "teuer" },
         { es: "caliente", de: "heiß / warm" },
         { es: "frío", de: "kalt" },
+        { es: "limpio", de: "sauber" },
+        { es: "sucio", de: "schmutzig" },
+        { es: "rico", de: "lecker / reich" },
         { es: "feliz", de: "glücklich" },
+        { es: "triste", de: "traurig" },
+        { es: "cansado", de: "müde" },
+      ],
+    },
+    {
+      id: "gefuehle", name: "Gefühle", icon: "😊", color: "#FFB703",
+      words: [
+        { es: "contento", de: "froh / zufrieden" },
+        { es: "enfadado", de: "wütend" },
+        { es: "nervioso", de: "nervös" },
+        { es: "tranquilo", de: "ruhig" },
+        { es: "aburrido", de: "gelangweilt / langweilig" },
+        { es: "sorprendido", de: "überrascht" },
+        { es: "el amor", de: "die Liebe" },
+        { es: "el miedo", de: "die Angst" },
+        { es: "tener hambre", de: "Hunger haben" },
+        { es: "tener sed", de: "Durst haben" },
+        { es: "tener sueño", de: "müde sein" },
+        { es: "me gusta", de: "ich mag / es gefällt mir" },
       ],
     },
     {
@@ -803,21 +1399,333 @@
         { es: "¿qué?", de: "was?" },
         { es: "¿quién?", de: "wer?" },
         { es: "¿dónde?", de: "wo?" },
+        { es: "¿adónde?", de: "wohin?" },
+        { es: "¿de dónde?", de: "woher?" },
         { es: "¿cuándo?", de: "wann?" },
         { es: "¿por qué?", de: "warum?" },
         { es: "¿cómo?", de: "wie?" },
+        { es: "¿cuál?", de: "welche(r/s)?" },
         { es: "¿cuánto?", de: "wie viel?" },
+        { es: "¿cuántos?", de: "wie viele?" },
       ],
     },
   ];
 
   const MODULES = [
-    { id: "vokabeln", name: "Vokabeln", icon: "📚", color: "#E4572E", desc: "Karteikarten", active: true },
-    { id: "verben", name: "Verben", icon: "🔤", color: "#3A86FF", desc: "Konjugation üben" },
-    { id: "grammatik", name: "Grammatik", icon: "🧩", color: "#9B5DE5", desc: "Regeln verstehen" },
+    { id: "vokabeln", name: "Vokabeln", icon: "📚", color: "#E4572E", action: "open-vocab" },
+    { id: "verben", name: "Verben", icon: "🔤", color: "#3A86FF", action: "open-verbs" },
     { id: "hoeren", name: "Hören", icon: "🎧", color: "#1FA6A0", desc: "Hörverständnis" },
     { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", desc: "Aussprache üben" },
     { id: "lesen", name: "Lesen", icon: "📖", color: "#F6B519", desc: "Kurze Geschichten" },
+  ];
+
+  // ---------------------------------------------------------------
+  // Verben. forms überschreibt einzelne Zeitformen komplett, alles
+  // andere erzeugt der Konjugations-Baukasten weiter unten.
+  // ---------------------------------------------------------------
+  const VERBS = [
+    { inf: "hablar", de: "sprechen", group: "regular" },
+    { inf: "trabajar", de: "arbeiten", group: "regular" },
+    { inf: "estudiar", de: "lernen / studieren", group: "regular" },
+    { inf: "cantar", de: "singen", group: "regular" },
+    { inf: "bailar", de: "tanzen", group: "regular" },
+    { inf: "comprar", de: "kaufen", group: "regular" },
+    { inf: "escuchar", de: "zuhören", group: "regular" },
+    { inf: "comer", de: "essen", group: "regular" },
+    { inf: "beber", de: "trinken", group: "regular" },
+    { inf: "aprender", de: "lernen", group: "regular" },
+    { inf: "vender", de: "verkaufen", group: "regular" },
+    { inf: "correr", de: "rennen", group: "regular" },
+    { inf: "vivir", de: "leben / wohnen", group: "regular" },
+    { inf: "recibir", de: "bekommen", group: "regular" },
+    { inf: "compartir", de: "teilen", group: "regular" },
+    { inf: "decidir", de: "entscheiden", group: "regular" },
+
+    {
+      inf: "ser", de: "sein", group: "irregular", impTu: "sé",
+      forms: {
+        presente: ["soy", "eres", "es", "somos", "sois", "son"],
+        indefinido: ["fui", "fuiste", "fue", "fuimos", "fuisteis", "fueron"],
+        imperfecto: ["era", "eras", "era", "éramos", "erais", "eran"],
+        subjuntivo: ["sea", "seas", "sea", "seamos", "seáis", "sean"],
+      },
+    },
+    {
+      inf: "estar", de: "sein (Zustand / Ort)", group: "irregular",
+      forms: {
+        presente: ["estoy", "estás", "está", "estamos", "estáis", "están"],
+        indefinido: ["estuve", "estuviste", "estuvo", "estuvimos", "estuvisteis", "estuvieron"],
+        subjuntivo: ["esté", "estés", "esté", "estemos", "estéis", "estén"],
+      },
+    },
+    {
+      inf: "ir", de: "gehen / fahren", group: "irregular", impTu: "ve", impNos: "vamos",
+      forms: {
+        presente: ["voy", "vas", "va", "vamos", "vais", "van"],
+        indefinido: ["fui", "fuiste", "fue", "fuimos", "fuisteis", "fueron"],
+        imperfecto: ["iba", "ibas", "iba", "íbamos", "ibais", "iban"],
+        subjuntivo: ["vaya", "vayas", "vaya", "vayamos", "vayáis", "vayan"],
+      },
+    },
+    {
+      inf: "tener", de: "haben", group: "irregular", stem: "e>ie", yo: "tengo", subjFromYo: true, futStem: "tendr", impTu: "ten",
+      forms: { indefinido: ["tuve", "tuviste", "tuvo", "tuvimos", "tuvisteis", "tuvieron"] },
+    },
+    {
+      inf: "hacer", de: "machen / tun", group: "irregular", yo: "hago", subjFromYo: true, futStem: "har", impTu: "haz", part: "hecho",
+      forms: { indefinido: ["hice", "hiciste", "hizo", "hicimos", "hicisteis", "hicieron"] },
+    },
+    {
+      inf: "decir", de: "sagen", group: "irregular", stem: "e>i", yo: "digo", subjFromYo: true, futStem: "dir", impTu: "di", part: "dicho",
+      forms: { indefinido: ["dije", "dijiste", "dijo", "dijimos", "dijisteis", "dijeron"] },
+    },
+    {
+      inf: "poder", de: "können", group: "irregular", stem: "o>ue", futStem: "podr", noImp: true,
+      forms: { indefinido: ["pude", "pudiste", "pudo", "pudimos", "pudisteis", "pudieron"] },
+    },
+    {
+      inf: "querer", de: "wollen / lieben", group: "irregular", stem: "e>ie", futStem: "querr", noImp: true,
+      forms: { indefinido: ["quise", "quisiste", "quiso", "quisimos", "quisisteis", "quisieron"] },
+    },
+    {
+      inf: "venir", de: "kommen", group: "irregular", stem: "e>ie", yo: "vengo", subjFromYo: true, futStem: "vendr", impTu: "ven",
+      forms: { indefinido: ["vine", "viniste", "vino", "vinimos", "vinisteis", "vinieron"] },
+    },
+    {
+      inf: "poner", de: "stellen / legen", group: "irregular", yo: "pongo", subjFromYo: true, futStem: "pondr", impTu: "pon", part: "puesto",
+      forms: { indefinido: ["puse", "pusiste", "puso", "pusimos", "pusisteis", "pusieron"] },
+    },
+    {
+      inf: "saber", de: "wissen", group: "irregular", futStem: "sabr", noImp: true,
+      forms: {
+        presente: ["sé", "sabes", "sabe", "sabemos", "sabéis", "saben"],
+        indefinido: ["supe", "supiste", "supo", "supimos", "supisteis", "supieron"],
+        subjuntivo: ["sepa", "sepas", "sepa", "sepamos", "sepáis", "sepan"],
+      },
+    },
+    {
+      inf: "dar", de: "geben", group: "irregular",
+      forms: {
+        presente: ["doy", "das", "da", "damos", "dais", "dan"],
+        indefinido: ["di", "diste", "dio", "dimos", "disteis", "dieron"],
+        subjuntivo: ["dé", "des", "dé", "demos", "deis", "den"],
+      },
+    },
+    { inf: "salir", de: "hinausgehen", group: "irregular", yo: "salgo", subjFromYo: true, futStem: "saldr", impTu: "sal" },
+    {
+      inf: "ver", de: "sehen", group: "irregular", subjFromYo: true, part: "visto",
+      forms: {
+        presente: ["veo", "ves", "ve", "vemos", "veis", "ven"],
+        indefinido: ["vi", "viste", "vio", "vimos", "visteis", "vieron"],
+        imperfecto: ["veía", "veías", "veía", "veíamos", "veíais", "veían"],
+      },
+    },
+
+    { inf: "pensar", de: "denken", group: "special", stem: "e>ie" },
+    { inf: "cerrar", de: "schließen", group: "special", stem: "e>ie" },
+    { inf: "empezar", de: "anfangen", group: "special", stem: "e>ie" },
+    { inf: "entender", de: "verstehen", group: "special", stem: "e>ie" },
+    { inf: "preferir", de: "bevorzugen", group: "special", stem: "e>ie" },
+    { inf: "contar", de: "zählen / erzählen", group: "special", stem: "o>ue" },
+    { inf: "encontrar", de: "finden", group: "special", stem: "o>ue" },
+    { inf: "volver", de: "zurückkommen", group: "special", stem: "o>ue", part: "vuelto" },
+    { inf: "dormir", de: "schlafen", group: "special", stem: "o>ue" },
+    { inf: "jugar", de: "spielen", group: "special", stem: "u>ue" },
+    { inf: "pedir", de: "bitten / bestellen", group: "special", stem: "e>i" },
+    { inf: "repetir", de: "wiederholen", group: "special", stem: "e>i" },
+    { inf: "buscar", de: "suchen", group: "special" },
+    { inf: "llegar", de: "ankommen", group: "special" },
+    {
+      inf: "leer", de: "lesen", group: "special", part: "leído",
+      forms: { indefinido: ["leí", "leíste", "leyó", "leímos", "leísteis", "leyeron"] },
+    },
+    { inf: "conocer", de: "kennen", group: "special", yo: "conozco", subjFromYo: true },
+  ];
+
+  const VERB_GROUPS = [
+    { id: "regular", name: "Regelmäßig", icon: "✅", color: "#22B573", desc: "hablar, comer, vivir …" },
+    { id: "irregular", name: "Unregelmäßig", icon: "⚡", color: "#E5484D", desc: "ser, tener, ir …" },
+    { id: "special", name: "Besondere", icon: "🔀", color: "#9B5DE5", desc: "Stammwechsel & Schreibänderung" },
+    { id: "mixed", name: "Gemischt", icon: "🎲", color: "#3A86FF", desc: "alle Verben" },
+  ];
+
+  const LEVELS = [
+    { n: 1, icon: "🧩", name: "Buchstaben", desc: "in Reihenfolge tippen", hint: "Tippe die Buchstaben in der richtigen Reihenfolge." },
+    { n: 2, icon: "🔘", name: "Auswahl", desc: "1 aus 3 wählen", hint: "Wähle die richtige Form." },
+    { n: 3, icon: "⌨️", name: "Schreiben", desc: "selbst schreiben", hint: "Schreibe die richtige Form." },
+  ];
+
+  const PERSONS = ["yo", "tú", "él / ella / usted", "nosotros", "vosotros", "ellos / ellas / ustedes"];
+  const IMP_PERSONS = ["tú", "usted", "nosotros", "vosotros", "ustedes"];
+
+  // ---------------------------------------------------------------
+  // Zeitformen mit Regeln und Erklärungen
+  // ---------------------------------------------------------------
+  const TENSES = [
+    {
+      id: "presente", mood: "Indikativ", name: "Presente", de: "Präsens", icon: "🌞", color: "#F6B519",
+      use: [
+        { t: "Was jetzt gerade passiert", es: "Ahora hablo con mi madre.", de: "Jetzt spreche ich mit meiner Mutter." },
+        { t: "Gewohnheiten und Wiederholungen", es: "Todos los días como fruta.", de: "Jeden Tag esse ich Obst." },
+        { t: "Allgemeine Tatsachen", es: "El sol sale por el este.", de: "Die Sonne geht im Osten auf." },
+        { t: "Feste Pläne in naher Zukunft", es: "Mañana viajo a Madrid.", de: "Morgen reise ich nach Madrid." },
+      ],
+      build: "Nimm den Stamm (Infinitiv ohne -ar, -er oder -ir) und hänge die passende Endung an.",
+      notes: [
+        "Stammwechsel e → ie: pensar → pienso, querer → quiero.",
+        "Stammwechsel o → ue: dormir → duermo, poder → puedo.",
+        "Stammwechsel e → i: pedir → pido, repetir → repito.",
+        "Der Stammwechsel gilt nicht für nosotros und vosotros (pensamos, pensáis) – deshalb heißen diese Verben „Stiefel-Verben“.",
+        "Unregelmäßige yo-Form: tengo, hago, pongo, salgo, vengo, digo, conozco.",
+        "Ganz unregelmäßig: ser (soy), estar (estoy), ir (voy), saber (sé), dar (doy).",
+      ],
+      signal: ["ahora", "hoy", "siempre", "normalmente", "todos los días", "a veces"],
+    },
+    {
+      id: "perfecto", mood: "Indikativ", name: "Pretérito perfecto", de: "Perfekt", icon: "✅", color: "#22B573",
+      use: [
+        { t: "In einem Zeitraum, der noch andauert", es: "Hoy he comido paella.", de: "Heute habe ich Paella gegessen." },
+        { t: "Erfahrungen (schon mal / noch nie)", es: "¿Has estado en México?", de: "Warst du schon mal in Mexiko?" },
+        { t: "Gerade eben passiert", es: "Ya he terminado.", de: "Ich bin schon fertig." },
+      ],
+      build: "haber im Präsens + Partizip. Das Partizip bildest du so: -ar → -ado, -er/-ir → -ido. Es bleibt immer gleich.",
+      notes: [
+        "haber im Präsens: he, has, ha, hemos, habéis, han.",
+        "Unregelmäßige Partizipien: hacer → hecho, decir → dicho, poner → puesto, ver → visto, volver → vuelto, escribir → escrito, abrir → abierto.",
+        "Endet der Stamm auf einen Vokal, bekommt -ido einen Akzent: leer → leído.",
+        "Zwischen haber und Partizip steht nie ein anderes Wort: No lo he visto.",
+      ],
+      signal: ["hoy", "esta mañana", "esta semana", "este año", "ya", "todavía no", "nunca", "alguna vez"],
+    },
+    {
+      id: "indefinido", mood: "Indikativ", name: "Pretérito indefinido", de: "Einfache Vergangenheit", icon: "📜", color: "#E4572E",
+      use: [
+        { t: "Abgeschlossen, zu einem bestimmten Zeitpunkt", es: "Ayer hablé con Ana.", de: "Gestern habe ich mit Ana gesprochen." },
+        { t: "Abfolge von Ereignissen", es: "Llegué, comí y me fui.", de: "Ich kam an, aß und ging." },
+        { t: "Abgeschlossener Zeitraum", es: "Viví dos años en Sevilla.", de: "Ich habe zwei Jahre in Sevilla gelebt." },
+      ],
+      build: "Stamm + Endung. -er- und -ir-Verben haben dieselben Endungen.",
+      notes: [
+        "Viele wichtige Verben haben einen eigenen Stamm und Endungen ohne Akzent: tener → tuve, estar → estuve, poder → pude, poner → puse, saber → supe, querer → quise, venir → vine, hacer → hice (él: hizo).",
+        "decir → dije, dijiste, dijo … aber ellos: dijeron (ohne i).",
+        "ser und ir sind im Indefinido gleich: fui, fuiste, fue, fuimos, fuisteis, fueron.",
+        "dar und ver: di, diste, dio … / vi, viste, vio … (ohne Akzent).",
+        "-ir-Verben mit Stammwechsel ändern sich nur in der 3. Person: pidió, pidieron, durmió, durmieron.",
+        "Schreibänderung in der yo-Form: buscar → busqué, llegar → llegué, empezar → empecé.",
+        "leer → leyó, leyeron.",
+      ],
+      signal: ["ayer", "anoche", "la semana pasada", "el año pasado", "en 2010", "hace dos días"],
+    },
+    {
+      id: "imperfecto", mood: "Indikativ", name: "Pretérito imperfecto", de: "Imperfekt", icon: "🕰️", color: "#8D6E63",
+      use: [
+        { t: "Gewohnheiten in der Vergangenheit", es: "De niño jugaba al fútbol.", de: "Als Kind spielte ich Fußball." },
+        { t: "Beschreibungen und Hintergrund", es: "Hacía sol y la playa estaba llena.", de: "Die Sonne schien und der Strand war voll." },
+        { t: "Handlung lief gerade, als etwas passierte", es: "Leía cuando sonó el teléfono.", de: "Ich las gerade, als das Telefon klingelte." },
+      ],
+      build: "Stamm + Endung. -ar-Verben bekommen -aba, -er- und -ir-Verben -ía.",
+      notes: [
+        "Nur drei Verben sind unregelmäßig: ser → era, ir → iba, ver → veía.",
+        "yo und él/ella haben dieselbe Form: yo hablaba, ella hablaba.",
+        "Faustregel: Indefinido erzählt, was passierte – Imperfecto beschreibt, wie es war.",
+      ],
+      signal: ["antes", "siempre", "a menudo", "todos los días", "de niño", "mientras"],
+    },
+    {
+      id: "pluscuamperfecto", mood: "Indikativ", name: "Pluscuamperfecto", de: "Plusquamperfekt", icon: "⏪", color: "#7A6CF0",
+      use: [
+        { t: "Vorvergangenheit", es: "Cuando llegué, la película ya había empezado.", de: "Als ich ankam, hatte der Film schon angefangen." },
+        { t: "Erfahrung bis zu einem Punkt in der Vergangenheit", es: "Nunca había visto el mar.", de: "Ich hatte noch nie das Meer gesehen." },
+      ],
+      build: "haber im Imperfecto + Partizip.",
+      notes: [
+        "haber im Imperfecto: había, habías, había, habíamos, habíais, habían.",
+        "Die Partizipien sind dieselben wie beim Perfecto – auch die unregelmäßigen (hecho, dicho, visto …).",
+        "Entspricht dem deutschen „hatte … gemacht“ oder „war … gegangen“.",
+      ],
+      signal: ["ya", "todavía no", "antes", "nunca", "cuando"],
+    },
+    {
+      id: "futuro", mood: "Indikativ", name: "Futuro simple", de: "Futur I", icon: "🚀", color: "#3A86FF",
+      use: [
+        { t: "Zukünftige Handlungen", es: "El año que viene viajaré a Chile.", de: "Nächstes Jahr werde ich nach Chile reisen." },
+        { t: "Vorhersagen und Versprechen", es: "Mañana lloverá.", de: "Morgen wird es regnen." },
+        { t: "Vermutungen über die Gegenwart", es: "¿Dónde estará Juan?", de: "Wo ist Juan wohl?" },
+      ],
+      build: "Ganzer Infinitiv + Endung. Die Endungen sind für -ar, -er und -ir gleich.",
+      notes: [
+        "Endungen: -é, -ás, -á, -emos, -éis, -án.",
+        "Unregelmäßige Stämme: tener → tendr-, venir → vendr-, poner → pondr-, salir → saldr-, poder → podr-, saber → sabr-, querer → querr-, hacer → har-, decir → dir-.",
+        "Im Alltag sagt man oft „ir a + Infinitiv“: Voy a comer. – Ich werde essen.",
+      ],
+      signal: ["mañana", "pasado mañana", "la semana que viene", "el próximo año", "pronto", "algún día"],
+    },
+    {
+      id: "condicional", mood: "Indikativ", name: "Condicional", de: "Konditional", icon: "🤔", color: "#00A8C6",
+      use: [
+        { t: "Was man tun würde", es: "Yo en tu lugar estudiaría más.", de: "An deiner Stelle würde ich mehr lernen." },
+        { t: "Höfliche Bitten", es: "¿Podrías ayudarme?", de: "Könntest du mir helfen?" },
+        { t: "Irreale Bedingung (mit si + Subjuntivo imperfecto)", es: "Si tuviera tiempo, viajaría más.", de: "Wenn ich Zeit hätte, würde ich mehr reisen." },
+      ],
+      build: "Ganzer Infinitiv + Endung. Die Endungen sind für alle Verben gleich.",
+      notes: [
+        "Endungen: -ía, -ías, -ía, -íamos, -íais, -ían.",
+        "Dieselben unregelmäßigen Stämme wie beim Futuro: tendría, haría, diría, podría, saldría …",
+        "Entspricht dem deutschen „würde …“, „hätte …“ oder „könnte …“.",
+      ],
+      signal: ["me gustaría", "yo en tu lugar", "¿podrías …?", "si …"],
+    },
+    {
+      id: "subjuntivo", mood: "Konjunktiv (Subjuntivo)", name: "Subjuntivo presente", de: "Konjunktiv Präsens", icon: "💭", color: "#FF6B9A",
+      use: [
+        { t: "Wunsch oder Aufforderung (querer que …)", es: "Quiero que vengas.", de: "Ich will, dass du kommst." },
+        { t: "Gefühle und Hoffnungen", es: "Espero que estés bien.", de: "Ich hoffe, dass es dir gut geht." },
+        { t: "Zweifel", es: "No creo que llueva.", de: "Ich glaube nicht, dass es regnet." },
+        { t: "Zukunft nach cuando", es: "Cuando llegues, llámame.", de: "Wenn du ankommst, ruf mich an." },
+      ],
+      build: "Nimm die yo-Form im Präsens, streiche das -o und hänge die „vertauschten“ Endungen an: -ar-Verben bekommen e-Endungen, -er- und -ir-Verben a-Endungen.",
+      notes: [
+        "Beispiele: hablo → hable, como → coma, tengo → tenga, conozco → conozca.",
+        "Ganz unregelmäßig: ser → sea, estar → esté, ir → vaya, saber → sepa, dar → dé, haber → haya.",
+        "Stammwechsel wie im Präsens: piense, pueda, quiera. -ir-Verben ändern auch nosotros/vosotros: durmamos, pidamos.",
+        "Schreibänderung: buscar → busque, llegar → llegue, empezar → empiece.",
+        "Verneinte Befehle stehen immer im Subjuntivo: ¡No hables!",
+        "Im Deutschen gibt es meist keine eigene Form – oft übersetzt man mit „dass …“.",
+      ],
+      signal: ["quiero que", "espero que", "ojalá", "es importante que", "para que", "no creo que"],
+    },
+    {
+      id: "subjImperfecto", mood: "Konjunktiv (Subjuntivo)", name: "Subjuntivo imperfecto", de: "Konjunktiv Imperfekt", icon: "🌙", color: "#C77DFF",
+      use: [
+        { t: "Auslöser steht in der Vergangenheit", es: "Quería que vinieras.", de: "Ich wollte, dass du kommst." },
+        { t: "Irreale Bedingung mit si", es: "Si tuviera dinero, compraría una casa.", de: "Wenn ich Geld hätte, würde ich ein Haus kaufen." },
+        { t: "Nach como si (als ob)", es: "Habla como si fuera el jefe.", de: "Er redet, als ob er der Chef wäre." },
+      ],
+      build: "Nimm die ellos-Form im Indefinido (hablaron), streiche -ron und hänge an: -ra, -ras, -ra, -ramos, -rais, -ran.",
+      notes: [
+        "Die nosotros-Form bekommt einen Akzent: habláramos, comiéramos, fuéramos.",
+        "Weil die Form vom Indefinido kommt, übernimmt sie alle Unregelmäßigkeiten: tuvieron → tuviera, fueron → fuera, dijeron → dijera.",
+        "Es gibt eine gleichbedeutende Form auf -se (hablase, comiese) – die -ra-Form ist aber häufiger.",
+      ],
+      signal: ["si", "como si", "quería que", "me gustaría que", "ojalá"],
+    },
+    {
+      id: "imperativo", mood: "Imperativ", name: "Imperativo", de: "Imperativ (Befehlsform)", icon: "📣", color: "#E5484D",
+      use: [
+        { t: "Aufforderungen und Befehle", es: "¡Habla más despacio!", de: "Sprich langsamer!" },
+        { t: "Höfliche Bitte mit usted", es: "Abra la ventana, por favor.", de: "Öffnen Sie bitte das Fenster." },
+        { t: "Gemeinsame Aufforderung mit nosotros", es: "¡Comamos juntos!", de: "Lasst uns zusammen essen!" },
+      ],
+      build: "tú = él-Form im Präsens (habla). vosotros = Infinitiv mit -d statt -r (hablad). usted, nosotros und ustedes = Formen des Subjuntivo presente (hable, hablemos, hablen).",
+      notes: [
+        "Unregelmäßige tú-Formen: decir → di, hacer → haz, ir → ve, poner → pon, salir → sal, ser → sé, tener → ten, venir → ven.",
+        "ir bei nosotros: ¡Vamos!",
+        "Verneinte Befehle nehmen immer den Subjuntivo: ¡No hables! ¡No comáis!",
+        "Pronomen werden angehängt: ¡Dímelo! – Sag es mir!",
+        "Für yo gibt es keinen Imperativ.",
+      ],
+      signal: [],
+    },
   ];
 
   const SESSION_SIZE = 10;
@@ -827,14 +1735,17 @@
   const XP_RETRY = 3;
   const XP_PERFECT_BONUS = 20;
   const XP_PER_LEVEL = 100;
+  const MAX_STARS_PER_TENSE = VERB_GROUPS.length * LEVELS.length * 3;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
 
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
   const WORDS = new Map(VOCAB.map((w) => [w.es, w]));
   const CATS = new Map(CATEGORIES.map((c) => [c.id, c]));
+  const TENSE_BY_ID = new Map(TENSES.map((t) => [t.id, t]));
+  const VERB_BY_INF = new Map(VERBS.map((v) => [v.inf, v]));
 
   const BADGES = [
-    { id: "first-session", icon: "🎉", name: "Erste Runde", desc: "Eine Runde geschafft", test: () => state.sessionsDone >= 1 },
+    { id: "first-session", icon: "🎉", name: "Erste Runde", desc: "Vokabel-Runde geschafft", test: () => state.sessionsDone >= 1 },
     { id: "perfect", icon: "⭐", name: "Perfekt", desc: "Runde ohne Fehler", test: () => state.perfectSessions >= 1 },
     { id: "learned-10", icon: "🌱", name: "Keimling", desc: "10 Wörter gelernt", test: () => learnedCount() >= 10 },
     { id: "learned-50", icon: "🌳", name: "Wortbaum", desc: "50 Wörter gelernt", test: () => learnedCount() >= 50 },
@@ -843,6 +1754,9 @@
     { id: "streak-3", icon: "🔥", name: "Dranbleiber", desc: "3 Tage in Folge", test: () => state.streak.count >= 3 },
     { id: "streak-7", icon: "📅", name: "Wochenheld", desc: "7 Tage in Folge", test: () => state.streak.count >= 7 },
     { id: "mistakes-cleared", icon: "💪", name: "Fehlerjäger", desc: "Fehlerstapel geleert", test: () => state.mistakesCleared >= 1 },
+    { id: "verbs-first", icon: "🔤", name: "Konjugator", desc: "Verb-Runde geschafft", test: () => state.verbSessions >= 1 },
+    { id: "verbs-all-tenses", icon: "🧭", name: "Zeitreisender", desc: "Jede Zeitform geübt", test: () => TENSES.every((t) => state.verbTensesDone.includes(t.id)) },
+    { id: "verbs-writer", icon: "✍️", name: "Schreibprofi", desc: "Stufe 3 mit 3 Sternen", test: () => Object.keys(state.verbStars).some((k) => k.endsWith("|3") && state.verbStars[k] === 3) },
   ];
 
   const app = document.getElementById("app");
@@ -851,6 +1765,8 @@
   let lastView = null;
   let session = null;
   let busy = false;
+  let currentTense = TENSES[0].id;
+  let lookupVerb = "tener";
 
   // ---------- Speichern ----------
   function defaultState() {
@@ -864,6 +1780,10 @@
       perfectSessions: 0,
       mistakesCleared: 0,
       sound: true,
+      verbStars: {},
+      verbSessions: 0,
+      verbTensesDone: [],
+      verbLevel: 1,
     };
   }
 
@@ -954,7 +1874,143 @@
     return fresh;
   }
 
-  // ---------- Runden ----------
+  function starsFor(tense, group, level) {
+    return state.verbStars[tense + "|" + group + "|" + level] || 0;
+  }
+
+  function tenseStars(tense) {
+    let sum = 0;
+    VERB_GROUPS.forEach((g) => LEVELS.forEach((l) => { sum += starsFor(tense, g.id, l.n); }));
+    return sum;
+  }
+
+  function totalVerbStars() {
+    return TENSES.reduce((sum, t) => sum + tenseStars(t.id), 0);
+  }
+
+  // ---------- Konjugation ----------
+  const END = {
+    presente: { ar: ["o", "as", "a", "amos", "áis", "an"], er: ["o", "es", "e", "emos", "éis", "en"], ir: ["o", "es", "e", "imos", "ís", "en"] },
+    indefinido: { ar: ["é", "aste", "ó", "amos", "asteis", "aron"], er: ["í", "iste", "ió", "imos", "isteis", "ieron"], ir: ["í", "iste", "ió", "imos", "isteis", "ieron"] },
+    imperfecto: { ar: ["aba", "abas", "aba", "ábamos", "abais", "aban"], er: ["ía", "ías", "ía", "íamos", "íais", "ían"], ir: ["ía", "ías", "ía", "íamos", "íais", "ían"] },
+    subjuntivo: { ar: ["e", "es", "e", "emos", "éis", "en"], er: ["a", "as", "a", "amos", "áis", "an"], ir: ["a", "as", "a", "amos", "áis", "an"] },
+  };
+  const FUT_END = ["é", "ás", "á", "emos", "éis", "án"];
+  const COND_END = ["ía", "ías", "ía", "íamos", "íais", "ían"];
+  const HABER_PRES = ["he", "has", "ha", "hemos", "habéis", "han"];
+  const HABER_IMPF = ["había", "habías", "había", "habíamos", "habíais", "habían"];
+  const BOOT = [0, 1, 2, 5];
+
+  function changeStem(stem, change) {
+    const [from, to] = change.split(">");
+    const i = stem.lastIndexOf(from);
+    return stem.slice(0, i) + to + stem.slice(i + from.length);
+  }
+
+  // -ir-Verben mit Stammwechsel: e → i bzw. o → u in der 3. Person Indefinido und im Subjuntivo (nosotros/vosotros)
+  function weakChange(change) {
+    return change === "o>ue" ? "o>u" : "e>i";
+  }
+
+  // -car/-gar/-zar: vor e ändert sich die Schreibung, damit der Laut gleich bleibt
+  function spell(stem, inf, ending) {
+    if (!/^[eé]/.test(ending)) return stem;
+    if (inf.endsWith("car")) return stem.slice(0, -1) + "qu";
+    if (inf.endsWith("gar")) return stem + "u";
+    if (inf.endsWith("zar")) return stem.slice(0, -1) + "c";
+    return stem;
+  }
+
+  function participio(v) {
+    return v.part || v.inf.slice(0, -2) + (v.inf.endsWith("ar") ? "ado" : "ido");
+  }
+
+  function conj(v, tense) {
+    if (v.forms && v.forms[tense]) return v.forms[tense];
+    const t = v.inf.slice(-2);
+    const s = v.inf.slice(0, -2);
+    switch (tense) {
+      case "presente":
+        return END.presente[t].map((e, i) => {
+          if (i === 0 && v.yo) return v.yo;
+          return (v.stem && BOOT.includes(i) ? changeStem(s, v.stem) : s) + e;
+        });
+      case "indefinido":
+        return END.indefinido[t].map((e, i) => {
+          const st = t === "ir" && v.stem && (i === 2 || i === 5) ? changeStem(s, weakChange(v.stem)) : s;
+          return spell(st, v.inf, e) + e;
+        });
+      case "imperfecto":
+        return END.imperfecto[t].map((e) => s + e);
+      case "futuro":
+        return FUT_END.map((e) => (v.futStem || v.inf) + e);
+      case "condicional":
+        return COND_END.map((e) => (v.futStem || v.inf) + e);
+      case "perfecto":
+        return HABER_PRES.map((h) => h + " " + participio(v));
+      case "pluscuamperfecto":
+        return HABER_IMPF.map((h) => h + " " + participio(v));
+      case "subjuntivo": {
+        if (v.subjFromYo) {
+          const yoStem = conj(v, "presente")[0].slice(0, -1);
+          return END.subjuntivo[t].map((e) => yoStem + e);
+        }
+        return END.subjuntivo[t].map((e, i) => {
+          let st = s;
+          if (v.stem && BOOT.includes(i)) st = changeStem(s, v.stem);
+          else if (v.stem && t === "ir") st = changeStem(s, weakChange(v.stem));
+          return spell(st, v.inf, e) + e;
+        });
+      }
+      case "subjImperfecto": {
+        const base = conj(v, "indefinido")[5].slice(0, -3);
+        const accented = base.slice(0, -1) + (base.endsWith("a") ? "á" : "é");
+        return ["ra", "ras", "ra", "ramos", "rais", "ran"].map((e, i) => (i === 3 ? accented : base) + e);
+      }
+      case "imperativo": {
+        const pres = conj(v, "presente");
+        const subj = conj(v, "subjuntivo");
+        return [v.impTu || pres[2], subj[2], v.impNos || subj[3], v.inf.slice(0, -1) + "d", subj[5]];
+      }
+    }
+    return [];
+  }
+
+  function personsFor(tense) {
+    return tense === "imperativo" ? IMP_PERSONS : PERSONS;
+  }
+
+  // Typischer Anfängerfehler: das Verb so konjugieren, als wäre es regelmäßig.
+  function regularizedForm(v, tense, person) {
+    if (v.inf.length < 4) return null;
+    return conj({ inf: v.inf }, tense)[person];
+  }
+
+  const RELATED_TENSE = {
+    presente: "subjuntivo", subjuntivo: "presente",
+    indefinido: "imperfecto", imperfecto: "indefinido",
+    perfecto: "pluscuamperfecto", pluscuamperfecto: "perfecto",
+    futuro: "condicional", condicional: "futuro",
+    subjImperfecto: "imperfecto", imperativo: "subjuntivo",
+  };
+
+  function distractors(task) {
+    const v = task.verb;
+    const pool = [];
+    const reg = regularizedForm(v, task.tense, task.person);
+    if (reg) pool.push(reg);
+    const rel = RELATED_TENSE[task.tense];
+    const relPerson = task.tense === "imperativo" ? task.person + 1 : task.person;
+    pool.push(conj(v, rel)[relPerson]);
+    shuffle(conj(v, task.tense).slice()).forEach((f) => pool.push(f));
+    const unique = [];
+    pool.forEach((f) => {
+      if (f && f !== task.answer && !unique.includes(f)) unique.push(f);
+    });
+    return unique.slice(0, 2);
+  }
+
+  // ---------- Vokabel-Runden ----------
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -994,16 +2050,10 @@
     return shuffle([...picked]);
   }
 
-  function startSession(source) {
-    const cards = pickCards(source);
-    if (cards.length === 0) return;
-    unlockAudio();
+  function newSession(kind, fields) {
     busy = false;
-    session = {
-      source,
-      queue: cards,
-      total: cards.length,
-      current: null,
+    session = Object.assign({
+      kind,
       firstTry: new Map(),
       done: new Set(),
       xp: 0,
@@ -1013,7 +2063,13 @@
       firstRight: 0,
       stars: 0,
       newBadges: [],
-    };
+    }, fields);
+  }
+
+  function startVocab(source) {
+    const cards = pickCards(source);
+    if (cards.length === 0) return;
+    newSession("vocab", { source, queue: cards, total: cards.length, current: null });
     view = "session";
     nextCard();
   }
@@ -1030,7 +2086,7 @@
 
   // Nur die erste Antwort pro Runde zählt für Level und Fehlerstapel;
   // falsche Karten kommen in der Runde nochmal, bis sie sitzen.
-  function answer(knewIt) {
+  function answerCard(knewIt) {
     if (busy || !session) return;
     busy = true;
     const s = session;
@@ -1057,11 +2113,7 @@
 
     if (knewIt) {
       const gain = firstAnswer ? XP_FIRST_TRY : XP_RETRY;
-      s.xp += gain;
-      state.xp += gain;
-      s.combo++;
-      s.bestCombo = Math.max(s.bestCombo, s.combo);
-      s.done.add(id);
+      reward(s, id, gain);
       card.classList.add("correct");
       floatText(scene, "+" + gain + " XP");
       playCorrect();
@@ -1069,9 +2121,7 @@
       s.combo = 0;
       s.queue.splice(Math.min(3, s.queue.length), 0, id);
       card.classList.add("wrong");
-      scene.classList.remove("enter");
-      void scene.offsetWidth;
-      scene.classList.add("shake");
+      restartAnimation(scene, "shake");
       playWrong();
     }
 
@@ -1084,6 +2134,118 @@
     }, 750);
   }
 
+  function reward(s, id, gain) {
+    s.xp += gain;
+    state.xp += gain;
+    s.combo++;
+    s.bestCombo = Math.max(s.bestCombo, s.combo);
+    s.done.add(id);
+  }
+
+  // ---------- Verb-Runden ----------
+  function verbsFor(group, tense) {
+    let list = group === "mixed" ? VERBS : VERBS.filter((v) => v.group === group);
+    if (tense === "imperativo") list = list.filter((v) => !v.noImp);
+    return list;
+  }
+
+  function buildTasks(tense, group) {
+    const verbs = shuffle(verbsFor(group, tense).slice());
+    const personCount = personsFor(tense).length;
+    const tasks = [];
+    const used = new Set();
+    for (let i = 0; tasks.length < SESSION_SIZE && i < SESSION_SIZE * 4; i++) {
+      const v = verbs[i % verbs.length];
+      const p = Math.floor(Math.random() * personCount);
+      const id = v.inf + "|" + p;
+      if (used.has(id)) continue;
+      used.add(id);
+      tasks.push({ id, verb: v, person: p, tense, answer: conj(v, tense)[p] });
+    }
+    return tasks;
+  }
+
+  function prepareTask(base, level) {
+    const task = Object.assign({}, base, { result: null, accentOnly: false, given: "" });
+    if (level === 1) {
+      const chars = [...task.answer];
+      let order = shuffle(chars.map((_, i) => i));
+      for (let tries = 0; tries < 5 && chars.length > 1 && order.every((n, i) => chars[n] === chars[i]); tries++) {
+        order = shuffle(order);
+      }
+      task.letters = order.map((n) => chars[n]);
+      task.picked = [];
+    } else if (level === 2) {
+      task.options = shuffle([task.answer, ...distractors(task)]);
+    }
+    return task;
+  }
+
+  function startDrill(tense, group) {
+    const level = state.verbLevel;
+    const tasks = buildTasks(tense, group);
+    newSession("verbs", { tense, group, level, queue: tasks, total: tasks.length, task: null });
+    view = "drill";
+    nextTask();
+  }
+
+  function nextTask() {
+    const s = session;
+    if (s.queue.length === 0) {
+      finishSession();
+      return;
+    }
+    s.task = prepareTask(s.queue.shift(), s.level);
+    s.fresh = true;
+    render();
+    focusInput();
+  }
+
+  function normalize(str) {
+    return str.normalize("NFC").trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  function stripAccents(str) {
+    return str.normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }
+
+  function submitDrill(given) {
+    const s = session;
+    const t = s.task;
+    if (!t || t.result) return;
+    const ok = normalize(given) === normalize(t.answer);
+    t.given = given;
+    t.result = ok ? "right" : "wrong";
+    t.accentOnly = !ok && stripAccents(normalize(given)) === stripAccents(normalize(t.answer));
+    const first = !s.firstTry.has(t.id);
+    if (first) s.firstTry.set(t.id, ok);
+
+    if (ok) {
+      reward(s, t.id, first ? XP_FIRST_TRY : XP_RETRY);
+      playCorrect();
+      speak(t.answer);
+    } else {
+      s.combo = 0;
+      s.queue.splice(Math.min(3, s.queue.length), 0, { id: t.id, verb: t.verb, person: t.person, tense: t.tense, answer: t.answer });
+      playWrong();
+      setTimeout(() => speak(t.answer), 450);
+    }
+    saveState();
+    render();
+    if (ok && s.level !== 3) {
+      setTimeout(() => {
+        if (session === s && s.task === t) nextTask();
+      }, 1100);
+    } else {
+      focusInput();
+    }
+  }
+
+  function focusInput() {
+    const input = app.querySelector(".type-input");
+    if (input) input.focus();
+  }
+
   function finishSession() {
     const s = session;
     s.firstRight = [...s.firstTry.values()].filter(Boolean).length;
@@ -1094,7 +2256,14 @@
       state.xp += XP_PERFECT_BONUS;
       state.perfectSessions++;
     }
-    state.sessionsDone++;
+    if (s.kind === "verbs") {
+      const key = s.tense + "|" + s.group + "|" + s.level;
+      state.verbStars[key] = Math.max(state.verbStars[key] || 0, s.stars);
+      state.verbSessions++;
+      if (!state.verbTensesDone.includes(s.tense)) state.verbTensesDone.push(s.tense);
+    } else {
+      state.sessionsDone++;
+    }
     bumpStreak();
     s.newBadges = unlockBadges();
     saveState();
@@ -1116,7 +2285,7 @@
   }
 
   function tone(freq, start, dur, type, vol, slideTo) {
-    if (!audioCtx) return;
+    if (!audioCtx || !state.sound) return;
     const t0 = audioCtx.currentTime + start;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -1124,27 +2293,55 @@
     osc.frequency.setValueAtTime(freq, t0);
     if (slideTo) osc.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
     gain.gain.setValueAtTime(0.0001, t0);
-    gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.015);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
     osc.connect(gain).connect(audioCtx.destination);
     osc.start(t0);
     osc.stop(t0 + dur + 0.05);
   }
 
+  function swish() {
+    if (!audioCtx || !state.sound) return;
+    const t0 = audioCtx.currentTime;
+    const len = Math.floor(audioCtx.sampleRate * 0.22);
+    const buffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+    const src = audioCtx.createBufferSource();
+    src.buffer = buffer;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.Q.value = 1.4;
+    filter.frequency.setValueAtTime(700, t0);
+    filter.frequency.exponentialRampToValueAtTime(3200, t0 + 0.2);
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.exponentialRampToValueAtTime(0.22, t0 + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.22);
+    src.connect(filter).connect(gain).connect(audioCtx.destination);
+    src.start(t0);
+  }
+
+  const sfx = {
+    tap: () => tone(520, 0, 0.07, "sine", 0.14, 820),
+    back: () => tone(760, 0, 0.08, "sine", 0.13, 460),
+    locked: () => tone(170, 0, 0.16, "triangle", 0.28, 110),
+    flip: () => swish(),
+    select: (n) => tone(620 + n * 40, 0, 0.08, "sine", 0.15),
+    remove: () => tone(440, 0, 0.08, "sine", 0.13, 300),
+  };
+
   function playCorrect() {
-    if (!state.sound) return;
     tone(784, 0, 0.18, "triangle", 0.3);
     tone(1175, 0.1, 0.4, "triangle", 0.3);
   }
 
   function playWrong() {
-    if (!state.sound) return;
     tone(311, 0, 0.22, "square", 0.08, 277);
     tone(233, 0.2, 0.45, "square", 0.08, 165);
   }
 
   function playFanfare(stars) {
-    if (!state.sound) return;
     [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.12, 0.3, "triangle", 0.25));
     if (stars === 3) tone(1319, 0.5, 0.7, "triangle", 0.22);
   }
@@ -1183,6 +2380,12 @@
     parent.appendChild(el);
   }
 
+  function restartAnimation(el, cls) {
+    el.classList.remove("enter", cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+  }
+
   function confetti() {
     const colors = ["#E4572E", "#F6B519", "#22B573", "#3A86FF", "#FF6B9A", "#9B5DE5"];
     const wrap = document.createElement("div");
@@ -1204,8 +2407,16 @@
     return String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
   }
 
+  function starsText(n, max) {
+    return "★ " + n + " / " + max;
+  }
+
   function soundButton() {
     return `<button class="icon-btn" data-action="toggle-sound" aria-label="Ton an/aus">${state.sound ? "🔊" : "🔇"}</button>`;
+  }
+
+  function sayButton(text) {
+    return `<button class="say" data-action="say" data-text="${esc(text)}" aria-label="Vorlesen">🔊</button>`;
   }
 
   function playerCard() {
@@ -1221,28 +2432,10 @@
         <div class="chips">
           <span class="chip">🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
           <span class="chip">📚 ${learnedCount()} / ${VOCAB.length} Wörter</span>
+          <span class="chip">⭐ ${totalVerbStars()} Verb-Sterne</span>
           <span class="chip">🏅 ${state.badges.length} / ${BADGES.length}</span>
         </div>
       </section>`;
-  }
-
-  function moduleTile(m) {
-    if (!m.active) {
-      return `
-        <button class="tile" disabled style="--c:${m.color}">
-          <span class="pill">Bald</span>
-          <span class="ico">${m.icon}</span>
-          <span class="name">${esc(m.name)}</span>
-          <span class="desc">${esc(m.desc)}</span>
-        </button>`;
-    }
-    return `
-      <button class="tile featured" data-action="open-vocab" style="--c:${m.color}">
-        <span class="pill go">Los!</span>
-        <span class="ico">${m.icon}</span>
-        <span class="name">${esc(m.name)}</span>
-        <span class="desc">${learnedCount()} / ${VOCAB.length} gelernt</span>
-      </button>`;
   }
 
   function badgeTile(b) {
@@ -1256,6 +2449,12 @@
   }
 
   function homeView() {
+    const active = MODULES.filter((m) => m.action);
+    const upcoming = MODULES.filter((m) => !m.action);
+    const moduleDesc = {
+      vokabeln: `${learnedCount()} / ${VOCAB.length} Wörter gelernt`,
+      verben: `${starsText(totalVerbStars(), TENSES.length * MAX_STARS_PER_TENSE)} · ${TENSES.length} Zeitformen`,
+    };
     return `
       <header class="hero">
         <div class="logo">🌶️</div>
@@ -1268,7 +2467,25 @@
       </header>
       ${playerCard()}
       <h2 class="section-title">Was möchtest du lernen?</h2>
-      <div class="grid">${MODULES.map(moduleTile).join("")}</div>
+      <div class="grid two">
+        ${active.map((m) => `
+          <button class="tile big featured" data-action="${m.action}" style="--c:${m.color}">
+            <span class="pill go">Los!</span>
+            <span class="ico">${m.icon}</span>
+            <span class="name">${esc(m.name)}</span>
+            <span class="desc">${esc(moduleDesc[m.id])}</span>
+          </button>`).join("")}
+      </div>
+      <h2 class="section-title">Demnächst</h2>
+      <div class="grid three">
+        ${upcoming.map((m) => `
+          <button class="tile small locked" data-action="locked" aria-disabled="true" style="--c:${m.color}">
+            <span class="pill">Bald</span>
+            <span class="ico">${m.icon}</span>
+            <span class="name">${esc(m.name)}</span>
+            <span class="desc">${esc(m.desc)}</span>
+          </button>`).join("")}
+      </div>
       <h2 class="section-title">Abzeichen</h2>
       <div class="badges">${BADGES.map(badgeTile).join("")}</div>`;
   }
@@ -1296,7 +2513,7 @@
     return `
       <div class="topbar">
         <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
-        <h2>📚 Vokabeln</h2>
+        <h2>📚 Vokabeln<small>${VOCAB.length} Wörter in ${CATEGORIES.length} Kategorien</small></h2>
         ${soundButton()}
       </div>
       <div class="summary">
@@ -1304,7 +2521,7 @@
         <div class="stat"><b>${VOCAB.length - learned}</b><span>offen</span></div>
         <div class="stat"><b>${mistakes}</b><span>Fehlerstapel</span></div>
       </div>
-      <div class="btn-stack">
+      <div class="btn-stack pair">
         <button class="btn" data-action="start" data-source="all">🎲 Gemischt lernen <small>· ${SESSION_SIZE} Karten</small></button>
         <button class="btn sun" data-action="start" data-source="mistakes" ${mistakes ? "" : "disabled"}>
           ${mistakes ? `🔁 Fehlerstapel wiederholen <small>· ${mistakes}</small>` : "✅ Fehlerstapel ist leer"}
@@ -1319,41 +2536,272 @@
     return session.combo >= 2 ? "🔥 " + session.combo : "";
   }
 
-  function sessionView() {
-    const w = WORDS.get(session.current);
-    const c = CATS.get(w.cat);
+  function sessionTopbar() {
     return `
       <div class="topbar">
         <button class="icon-btn" data-action="exit" aria-label="Runde beenden">✕</button>
         <div class="progress"><span style="width:${(session.done.size / session.total) * 100}%"></span></div>
         <span class="combo">${comboLabel()}</span>
-      </div>
-      <div class="scene enter">
-        <div class="card" data-action="flip">
-          <div class="face front">
-            <span class="cat-chip" style="--c:${c.color}">${c.icon} ${esc(c.name)}</span>
-            <span class="lang">Español</span>
-            <div class="word">${esc(w.es)}</div>
-            <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
-            <span class="tap-hint">Tippen zum Umdrehen</span>
-          </div>
-          <div class="face back">
-            <span class="lang">Deutsch</span>
-            <div class="word">${esc(w.de)}</div>
-            <div class="sub">${esc(w.es)}</div>
-            <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
+      </div>`;
+  }
+
+  function sessionView() {
+    const w = WORDS.get(session.current);
+    const c = CATS.get(w.cat);
+    return `
+      ${sessionTopbar()}
+      <div class="stage">
+        <div class="scene enter">
+          <div class="card" data-action="flip">
+            <div class="face front">
+              <span class="cat-chip" style="--c:${c.color}">${c.icon} ${esc(c.name)}</span>
+              <span class="lang">Español</span>
+              <div class="word">${esc(w.es)}</div>
+              <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
+              <span class="tap-hint">Tippen zum Umdrehen</span>
+            </div>
+            <div class="face back">
+              <span class="lang">Deutsch</span>
+              <div class="word">${esc(w.de)}</div>
+              <div class="sub">${esc(w.es)}</div>
+              <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="actions hidden">
-        <button class="btn bad" data-action="answer" data-knew="0">✗ Wusste ich nicht</button>
-        <button class="btn good" data-action="answer" data-knew="1">✓ Wusste ich</button>
+        <div class="actions hidden">
+          <button class="btn bad" data-action="answer" data-knew="0">✗ Wusste ich nicht</button>
+          <button class="btn good" data-action="answer" data-knew="1">✓ Wusste ich</button>
+        </div>
       </div>`;
   }
 
   function updateSessionBar() {
     app.querySelector(".progress > span").style.width = (session.done.size / session.total) * 100 + "%";
     app.querySelector(".combo").textContent = comboLabel();
+  }
+
+  function verbsView() {
+    const moods = [...new Set(TENSES.map((t) => t.mood))];
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
+        <h2>🔤 Verben<small>Konjugation üben</small></h2>
+        ${soundButton()}
+      </div>
+      <div class="summary">
+        <div class="stat"><b>${totalVerbStars()}</b><span>Sterne</span></div>
+        <div class="stat"><b>${state.verbSessions}</b><span>Runden</span></div>
+        <div class="stat"><b>${state.verbTensesDone.length} / ${TENSES.length}</b><span>Zeitformen geübt</span></div>
+      </div>
+      <p class="lead">Wähle eine Zeitform. Dort findest du die Regeln und Übungen in drei Stufen.</p>
+      ${moods.map((mood) => `
+        <h2 class="section-title">${esc(mood)}</h2>
+        <div class="grid">
+          ${TENSES.filter((t) => t.mood === mood).map((t) => `
+            <button class="tile" data-action="open-tense" data-tense="${t.id}" style="--c:${t.color}">
+              <span class="ico">${t.icon}</span>
+              <span class="name">${esc(t.name)}</span>
+              <span class="desc">${esc(t.de)}</span>
+              <span class="stars-line">${starsText(tenseStars(t.id), MAX_STARS_PER_TENSE)}</span>
+            </button>`).join("")}
+        </div>`).join("")}`;
+  }
+
+  function starRow(n) {
+    return [1, 2, 3].map((i) => (i <= n ? "★" : "☆")).join("");
+  }
+
+  function tenseView() {
+    const t = TENSE_BY_ID.get(currentTense);
+    const lvl = state.verbLevel;
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="open-verbs" aria-label="Zurück">←</button>
+        <h2>${t.icon} ${esc(t.name)}<small>${esc(t.de)} · ${esc(t.mood)}</small></h2>
+        ${soundButton()}
+      </div>
+      <button class="rules-link" data-action="open-rules">
+        <span class="ico">📘</span>
+        <span><b>Regeln & Erklärung</b><span>Wann benutzt man es, wie wird es gebildet?</span></span>
+      </button>
+      <h2 class="section-title">Schwierigkeit</h2>
+      <div class="levels">
+        ${LEVELS.map((l) => `
+          <button class="level-btn ${l.n === lvl ? "on" : ""}" data-action="set-level" data-level="${l.n}">
+            <b>${l.icon}</b>
+            <span>Stufe ${l.n}</span>
+            <small>${esc(l.desc)}</small>
+          </button>`).join("")}
+      </div>
+      <h2 class="section-title">Verben üben</h2>
+      <div class="grid">
+        ${VERB_GROUPS.map((g) => `
+          <button class="tile" data-action="start-drill" data-group="${g.id}" style="--c:${g.color}">
+            <span class="ico">${g.icon}</span>
+            <span class="name">${esc(g.name)}</span>
+            <span class="desc">${esc(g.desc)}</span>
+            <span class="desc">${verbsFor(g.id, t.id).length} Verben</span>
+            <span class="stars-line">${starRow(starsFor(t.id, g.id, lvl))} Stufe ${lvl}</span>
+          </button>`).join("")}
+      </div>`;
+  }
+
+  function conjTable(verbs, tense, marked) {
+    const persons = personsFor(tense);
+    const forms = verbs.map((v) => conj(v, tense));
+    return `
+      <div class="table-scroll">
+        <table class="conj">
+          <tr><th></th>${verbs.map((v) => `<th>${esc(v.inf)}</th>`).join("")}</tr>
+          ${persons.map((p, i) => `
+            <tr>
+              <td class="pron">${esc(p)}</td>
+              ${forms.map((f, j) => `<td>${marked ? markEnding(f[i], verbs[j], tense) : esc(f[i])}</td>`).join("")}
+              ${verbs.length === 1 ? `<td>${sayButton(forms[0][i])}</td>` : ""}
+            </tr>`).join("")}
+        </table>
+      </div>`;
+  }
+
+  function markEnding(form, v, tense) {
+    if (form.includes(" ")) {
+      const [aux, rest] = form.split(" ");
+      return `<em>${esc(aux)}</em> ${esc(rest)}`;
+    }
+    const stem = tense === "futuro" || tense === "condicional" ? v.inf : v.inf.slice(0, -2);
+    return form.startsWith(stem) ? esc(stem) + `<em>${esc(form.slice(stem.length))}</em>` : esc(form);
+  }
+
+  function rulesView() {
+    const t = TENSE_BY_ID.get(currentTense);
+    const models = ["hablar", "comer", "vivir"].map((inf) => VERB_BY_INF.get(inf));
+    const lookup = VERB_BY_INF.get(lookupVerb);
+    const available = VERBS.filter((v) => !(t.id === "imperativo" && v.noImp));
+    const verbForLookup = available.includes(lookup) ? lookup : available[0];
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="open-tense" data-tense="${t.id}" aria-label="Zurück">←</button>
+        <h2>📘 ${esc(t.name)}<small>${esc(t.de)}</small></h2>
+        ${soundButton()}
+      </div>
+      <section class="panel">
+        <h3>Wann benutzt man es?</h3>
+        ${t.use.map((u) => `
+          <div class="example">
+            <div class="ex-text">
+              <div class="ex-use">${esc(u.t)}</div>
+              <div class="ex-es">${esc(u.es)}</div>
+              <div class="ex-de">${esc(u.de)}</div>
+            </div>
+            ${sayButton(u.es)}
+          </div>`).join("")}
+      </section>
+      <section class="panel">
+        <h3>So wird es gebildet</h3>
+        <p>${esc(t.build)}</p>
+        ${conjTable(models, t.id, true)}
+      </section>
+      <section class="panel">
+        <h3>Das musst du dir merken</h3>
+        <ul class="notes">${t.notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul>
+      </section>
+      ${t.signal.length ? `
+        <section class="panel">
+          <h3>Signalwörter</h3>
+          <div class="signal">${t.signal.map((s) => `<span>${esc(s)}</span>`).join("")}</div>
+        </section>` : ""}
+      <section class="panel">
+        <h3>Verb nachschlagen</h3>
+        <select class="verb-select" aria-label="Verb auswählen">
+          ${VERB_GROUPS.filter((g) => g.id !== "mixed").map((g) => `
+            <optgroup label="${esc(g.name)}">
+              ${available.filter((v) => v.group === g.id).map((v) => `
+                <option value="${v.inf}" ${v === verbForLookup ? "selected" : ""}>${esc(v.inf)} – ${esc(v.de)}</option>`).join("")}
+            </optgroup>`).join("")}
+        </select>
+        ${conjTable([verbForLookup], t.id, false)}
+      </section>
+      <button class="btn" data-action="open-tense" data-tense="${t.id}">Jetzt üben</button>`;
+  }
+
+  function drillAnswerArea() {
+    const s = session;
+    const t = s.task;
+    if (s.level === 1) {
+      const chars = t.picked.map((i) => t.letters[i]);
+      const boxClass = t.result === "right" ? "correct" : t.result === "wrong" ? "wrong" : "";
+      return `
+        <div class="answer-box ${boxClass}">
+          ${chars.length ? chars.map((ch) => (ch === " " ? `<span class="gap"></span>` : `<span>${esc(ch)}</span>`)).join("") : `<span class="placeholder">Tippe die Buchstaben unten</span>`}
+        </div>
+        ${t.result ? "" : `
+          <div class="letters">
+            ${t.letters.map((ch, i) => `
+              <button class="letter ${ch === " " ? "space" : ""} ${t.picked.includes(i) ? "used" : ""}" data-action="pick" data-i="${i}">${ch === " " ? "␣" : esc(ch)}</button>`).join("")}
+          </div>
+          <div class="tools"><button class="btn light" data-action="unpick" ${t.picked.length ? "" : "disabled"}>⌫ Zurück</button></div>`}`;
+    }
+    if (s.level === 2) {
+      return `
+        <div class="options">
+          ${t.options.map((o) => {
+            let cls = "light";
+            if (t.result && o === t.answer) cls = "is-right";
+            else if (t.result && o === t.given) cls = "picked-wrong";
+            return `<button class="btn ${cls}" data-action="option" data-value="${esc(o)}" ${t.result ? "disabled" : ""}>${esc(o)}</button>`;
+          }).join("")}
+        </div>`;
+    }
+    const inputClass = t.result === "right" ? "correct" : t.result === "wrong" ? "wrong" : "";
+    return `
+      <input class="type-input ${inputClass}" type="text" value="${esc(t.given)}" ${t.result ? "readonly" : ""}
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="${t.result ? "next" : "done"}" aria-label="Deine Antwort">
+      ${t.result ? "" : `
+        <div class="accents">${["á", "é", "í", "ó", "ú", "ñ", "ü"].map((a) => `<button class="accent" data-action="accent" data-char="${a}">${a}</button>`).join("")}</div>
+        <button class="btn" data-action="check">Prüfen</button>`}`;
+  }
+
+  function drillFeedback() {
+    const s = session;
+    const t = s.task;
+    if (!t.result) return "";
+    const nextBtn = `<button class="btn ${t.result === "right" ? "good" : ""}" data-action="next-task">Weiter</button>`;
+    if (t.result === "right") {
+      return `
+        <div class="feedback good">
+          ✓ ¡Correcto!
+          <span class="fb-answer">${esc(t.answer)}</span>
+          ${s.level === 3 ? nextBtn : ""}
+        </div>`;
+    }
+    return `
+      <div class="feedback bad">
+        ${t.accentOnly ? "Fast! Achte auf die Akzente." : "Leider falsch."} Richtig ist:
+        <span class="fb-answer">${esc(t.answer)}</span>
+        ${nextBtn}
+      </div>`;
+  }
+
+  function drillView() {
+    const s = session;
+    const t = s.task;
+    const tense = TENSE_BY_ID.get(s.tense);
+    const level = LEVELS[s.level - 1];
+    const fresh = s.fresh;
+    s.fresh = false;
+    return `
+      ${sessionTopbar()}
+      <div class="stage">
+        <div class="prompt ${fresh ? "enter" : ""}">
+          <span class="cat-chip" style="--c:${tense.color}">${tense.icon} ${esc(tense.name)}</span>
+          <span class="lang">Stufe ${s.level}</span>
+          <div class="pron">${esc(personsFor(s.tense)[t.person])}</div>
+          <div class="inf">${esc(t.verb.inf)} <small>· ${esc(t.verb.de)}</small> ${sayButton(t.verb.inf)}</div>
+          <div class="task">${esc(level.hint)}</div>
+        </div>
+        ${drillAnswerArea()}
+        ${drillFeedback()}
+      </div>`;
   }
 
   function resultView() {
@@ -1366,94 +2814,204 @@
     };
     const levelBefore = levelInfo(s.startXp).level;
     const levelNow = levelInfo(state.xp).level;
-    const canRepeat = s.source.type !== "mistakes" || state.wrongStack.length > 0;
+    let context = "";
+    let canRepeat = true;
+    let backAction = `data-action="open-vocab"`;
+    if (s.kind === "verbs") {
+      const group = VERB_GROUPS.find((g) => g.id === s.group);
+      context = `<p>${esc(TENSE_BY_ID.get(s.tense).name)} · ${esc(group.name)} · Stufe ${s.level}</p>`;
+      backAction = `data-action="open-tense" data-tense="${s.tense}"`;
+    } else {
+      canRepeat = s.source.type !== "mistakes" || state.wrongStack.length > 0;
+    }
     return `
-      <section class="result">
-        <div class="stars">${[1, 2, 3].map((i) => `<span class="${i <= s.stars ? "on" : ""}">★</span>`).join("")}</div>
-        <h2>${titles[s.stars]}</h2>
-        <p>${texts[s.stars]}</p>
-        <div class="summary">
-          <div class="stat"><b>${s.firstRight}/${s.total}</b><span>auf Anhieb</span></div>
-          <div class="stat"><b>+${s.xp}</b><span>XP</span></div>
-          <div class="stat"><b>${s.bestCombo}</b><span>beste Serie</span></div>
+      <div class="stage">
+        <section class="result">
+          <div class="stars">${[1, 2, 3].map((i) => `<span class="${i <= s.stars ? "on" : ""}">★</span>`).join("")}</div>
+          <h2>${titles[s.stars]}</h2>
+          <p>${texts[s.stars]}</p>
+          ${context}
+          <div class="summary">
+            <div class="stat"><b>${s.firstRight}/${s.total}</b><span>auf Anhieb</span></div>
+            <div class="stat"><b>+${s.xp}</b><span>XP</span></div>
+            <div class="stat"><b>${s.bestCombo}</b><span>beste Serie</span></div>
+          </div>
+          ${levelNow > levelBefore ? `<div class="levelup">🎊 Level ${levelNow} erreicht!</div>` : ""}
+          ${s.newBadges.length ? `
+            <div class="new-badges">
+              <h3>Neues Abzeichen!</h3>
+              <div class="badges">${s.newBadges.map(badgeTile).join("")}</div>
+            </div>` : ""}
+        </section>
+        <div class="btn-stack">
+          ${canRepeat ? `<button class="btn" data-action="again">Nächste Runde</button>` : ""}
+          <button class="btn light" ${backAction}>Zur Übersicht</button>
         </div>
-        ${levelNow > levelBefore ? `<div class="levelup">🎊 Level ${levelNow} erreicht!</div>` : ""}
-        ${s.newBadges.length ? `
-          <div class="new-badges">
-            <h3>Neues Abzeichen!</h3>
-            <div class="badges">${s.newBadges.map(badgeTile).join("")}</div>
-          </div>` : ""}
-      </section>
-      <div class="btn-stack">
-        ${canRepeat ? `<button class="btn" data-action="again">Nächste Runde</button>` : ""}
-        <button class="btn light" data-action="open-vocab">Zur Übersicht</button>
       </div>`;
   }
 
+  const VIEWS = {
+    home: homeView,
+    vocab: vocabView,
+    session: sessionView,
+    verbs: verbsView,
+    tense: tenseView,
+    rules: rulesView,
+    drill: drillView,
+    result: resultView,
+  };
+
   function render() {
-    if (view === "home") app.innerHTML = homeView();
-    else if (view === "vocab") app.innerHTML = vocabView();
-    else if (view === "session") app.innerHTML = sessionView();
-    else if (view === "result") app.innerHTML = resultView();
+    app.innerHTML = VIEWS[view]();
     if (view !== lastView) {
       window.scrollTo(0, 0);
       lastView = view;
     }
   }
 
+  function go(next) {
+    if (synth) synth.cancel();
+    session = next === "session" || next === "drill" || next === "result" ? session : null;
+    busy = false;
+    view = next;
+    render();
+  }
+
   // ---------- Bedienung ----------
+  const BACK_ACTIONS = new Set(["home", "exit"]);
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "say", "locked", "toggle-sound", "accent"]);
+
+  app.addEventListener("pointerdown", (e) => {
+    if (e.target.closest(".accent")) e.preventDefault();
+  });
+
   app.addEventListener("click", (e) => {
     const el = e.target.closest("[data-action]");
     if (!el || el.disabled) return;
-    switch (el.dataset.action) {
+    unlockAudio();
+    const action = el.dataset.action;
+    const goingBack = BACK_ACTIONS.has(action) || el.getAttribute("aria-label") === "Zurück";
+    if (goingBack) sfx.back();
+    else if (!OWN_SOUND.has(action)) sfx.tap();
+
+    switch (action) {
       case "home":
-        view = "home";
-        render();
+        go("home");
         break;
       case "open-vocab":
-        session = null;
-        view = "vocab";
-        render();
+        go("vocab");
+        break;
+      case "open-verbs":
+        go("verbs");
+        break;
+      case "open-tense":
+        currentTense = el.dataset.tense;
+        go("tense");
+        break;
+      case "open-rules":
+        go("rules");
+        break;
+      case "locked":
+        sfx.locked();
+        restartAnimation(el, "wiggle");
         break;
       case "start":
-        startSession(parseSource(el.dataset.source));
+        startVocab(parseSource(el.dataset.source));
+        break;
+      case "start-drill":
+        startDrill(currentTense, el.dataset.group);
         break;
       case "again":
-        startSession(session.source);
+        if (session.kind === "verbs") startDrill(session.tense, session.group);
+        else startVocab(session.source);
+        break;
+      case "set-level":
+        state.verbLevel = Number(el.dataset.level);
+        saveState();
+        render();
         break;
       case "flip":
         if (busy) return;
+        sfx.flip();
         el.classList.toggle("flipped");
         app.querySelector(".actions").classList.remove("hidden");
         break;
       case "speak":
         speak(session.current);
         break;
+      case "say":
+        speak(el.dataset.text);
+        break;
       case "answer":
-        answer(el.dataset.knew === "1");
+        answerCard(el.dataset.knew === "1");
+        break;
+      case "pick": {
+        const t = session.task;
+        const i = Number(el.dataset.i);
+        if (t.result || t.picked.includes(i)) return;
+        t.picked.push(i);
+        sfx.select(t.picked.length);
+        if (t.picked.length === t.letters.length) submitDrill(t.picked.map((n) => t.letters[n]).join(""));
+        else render();
+        break;
+      }
+      case "unpick":
+        session.task.picked.pop();
+        sfx.remove();
+        render();
+        break;
+      case "option":
+        submitDrill(el.dataset.value);
+        break;
+      case "accent": {
+        const input = app.querySelector(".type-input");
+        const start = input.selectionStart == null ? input.value.length : input.selectionStart;
+        const end = input.selectionEnd == null ? input.value.length : input.selectionEnd;
+        input.setRangeText(el.dataset.char, start, end, "end");
+        input.focus();
+        sfx.select(1);
+        break;
+      }
+      case "check":
+        submitDrill(app.querySelector(".type-input").value);
+        break;
+      case "next-task":
+        nextTask();
         break;
       case "exit":
-        if (synth) synth.cancel();
-        session = null;
-        busy = false;
-        view = "vocab";
-        render();
+        go(session.kind === "verbs" ? "tense" : "vocab");
         break;
       case "toggle-sound":
         state.sound = !state.sound;
         if (!state.sound && synth) synth.cancel();
-        if (state.sound) unlockAudio();
         saveState();
         el.textContent = state.sound ? "🔊" : "🔇";
+        sfx.tap();
         break;
       case "reset":
-        if (confirm("Wirklich den gesamten Fortschritt (Wörter, XP, Abzeichen) löschen?")) {
+        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, XP, Abzeichen) löschen?")) {
           state = Object.assign(defaultState(), { sound: state.sound });
           saveState();
           render();
         }
         break;
     }
+  });
+
+  app.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" || !e.target.classList.contains("type-input") || !session || !session.task) return;
+    e.preventDefault();
+    unlockAudio();
+    if (session.task.result) nextTask();
+    else submitDrill(e.target.value);
+  });
+
+  app.addEventListener("change", (e) => {
+    if (!e.target.classList.contains("verb-select")) return;
+    unlockAudio();
+    sfx.tap();
+    lookupVerb = e.target.value;
+    render();
   });
 
   render();
