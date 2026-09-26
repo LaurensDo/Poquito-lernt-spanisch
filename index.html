@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFF4E6">
+<title>Poquito – Spanisch lernen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFF4E6;
+    --surface: #FFFFFF;
+    --ink: #2D1E17;
+    --muted: #8C7A6B;
+    --line: #F1E2D0;
+    --primary: #E4572E;
+    --primary-dark: #B63F1B;
+    --sun: #F6B519;
+    --sun-dark: #C98E00;
+    --good: #22B573;
+    --good-dark: #178556;
+    --bad: #E5484D;
+    --bad-dark: #B32F34;
+    --locked: #CFC3B6;
+    --shadow: 0 12px 28px rgba(140, 70, 20, 0.10);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body { margin: 0; }
+
+  body {
+    min-height: 100vh;
+    font-family: "Nunito", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 0% 0%, #FFD9B3 0, transparent 45%),
+      radial-gradient(circle at 100% 25%, #FFD6CC 0, transparent 40%),
+      radial-gradient(circle at 50% 110%, #FFE7A8 0, transparent 45%),
+      var(--bg);
+  }
+
+  button { font: inherit; color: inherit; }
+
+  .app {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: max(20px, env(safe-area-inset-top)) 16px 48px;
+  }
+
+  .noscript {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  /* ---------- Kopfbereich ---------- */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 8px 0 20px;
+  }
+
+  .logo {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    background: linear-gradient(135deg, var(--primary), var(--sun));
+    box-shadow: 0 6px 0 var(--primary-dark);
+    transform: rotate(-6deg);
+  }
+
+  .hero h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .hero p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-weight: 800;
+  }
+
+  .spacer { flex: 1; }
+
+  .icon-btn {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: 0 4px 0 var(--line);
+    font-size: 1.25rem;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  .icon-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+
+  /* ---------- Spielerkarte (Level, XP, Serie) ---------- */
+  .player {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary) 0%, #F08A24 60%, var(--sun) 100%);
+    border-radius: 24px;
+    padding: 18px 20px;
+    box-shadow: 0 6px 0 var(--primary-dark), var(--shadow);
+    margin-bottom: 28px;
+  }
+
+  .player-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .player .lvl { font-size: 1.4rem; font-weight: 900; }
+  .player .xp { font-size: 0.9rem; font-weight: 800; opacity: 0.9; }
+
+  .bar {
+    height: 12px;
+    margin: 10px 0 14px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+  }
+
+  .bar > span {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: #fff;
+    transition: width 0.5s ease;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip {
+    padding: 6px 12px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.22);
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .section-title {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
+    font-weight: 900;
+  }
+
+  /* ---------- Kacheln (Module & Kategorien) ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  @media (min-width: 560px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 16px;
+    border: none;
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: 0 5px 0 var(--line), 0 10px 24px rgba(140, 70, 20, 0.06);
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+
+  .tile:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--line);
+  }
+
+  .tile .ico {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 4px;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    font-size: 1.6rem;
+    background: color-mix(in srgb, var(--c) 20%, white);
+  }
+
+  .tile .name { font-size: 1.05rem; font-weight: 900; line-height: 1.2; }
+  .tile .desc { font-size: 0.85rem; font-weight: 700; color: var(--muted); }
+
+  .tile.featured {
+    box-shadow: 0 0 0 3px var(--primary), 0 7px 0 3px var(--primary-dark);
+  }
+
+  .tile.featured:active {
+    box-shadow: 0 0 0 3px var(--primary), 0 3px 0 3px var(--primary-dark);
+  }
+
+  .tile:disabled {
+    cursor: default;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+    outline: 2px dashed var(--locked);
+    outline-offset: -2px;
+  }
+
+  .tile:disabled .ico { filter: grayscale(1); opacity: 0.45; }
+  .tile:disabled .name, .tile:disabled .desc { color: #B3A596; }
+
+  .pill {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 9px;
+    border-radius: 99px;
+    background: var(--line);
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pill.go { background: var(--primary); color: #fff; }
+  .pill.err { background: #FDE3E4; color: var(--bad-dark); }
+
+  .medal { position: absolute; top: 10px; right: 12px; font-size: 1.4rem; }
+
+  .mini-bar {
+    width: 100%;
+    height: 8px;
+    margin-top: 4px;
+    border-radius: 99px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .mini-bar > span {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: var(--c);
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 18px;
+    border: none;
+    border-radius: 18px;
+    background: var(--btn, var(--primary));
+    box-shadow: 0 5px 0 var(--btn-dark, var(--primary-dark));
+    color: #fff;
+    font-size: 1.08rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  .btn:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--btn-dark, var(--primary-dark));
+  }
+
+  .btn small { font-weight: 800; opacity: 0.85; }
+
+  .btn.good { --btn: var(--good); --btn-dark: var(--good-dark); }
+  .btn.bad { --btn: var(--bad); --btn-dark: var(--bad-dark); }
+  .btn.sun { --btn: var(--sun); --btn-dark: var(--sun-dark); color: #4A3000; }
+  .btn.light { --btn: var(--surface); --btn-dark: var(--line); color: var(--ink); }
+
+  .btn:disabled {
+    --btn: var(--locked);
+    --btn-dark: #B5A898;
+    color: #fff;
+    cursor: default;
+  }
+
+  .btn-stack { display: grid; gap: 14px; margin-bottom: 28px; }
+
+  .link-btn {
+    display: block;
+    margin: 8px auto 0;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* ---------- Kopfzeile Unterseiten ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0 20px;
+  }
+
+  .topbar h2 {
+    flex: 1;
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 900;
+  }
+
+  .progress {
+    flex: 1;
+    height: 16px;
+    border-radius: 99px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .progress > span {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--good), #6FD99E);
+    transition: width 0.4s ease;
+  }
+
+  .combo {
+    min-width: 52px;
+    text-align: right;
+    color: var(--primary);
+    font-weight: 900;
+  }
+
+  /* ---------- Statistik-Kästchen ---------- */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .stat {
+    padding: 14px 8px;
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: 0 4px 0 var(--line);
+    text-align: center;
+  }
+
+  .stat b { display: block; font-size: 1.5rem; font-weight: 900; }
+  .stat span { font-size: 0.8rem; font-weight: 800; color: var(--muted); }
+
+  /* ---------- Karteikarte ---------- */
+  .scene {
+    position: relative;
+    height: 320px;
+    margin: 8px 0 24px;
+    perspective: 1400px;
+  }
+
+  .scene.enter { animation: pop-in 0.35s ease-out; }
+  .scene.shake { animation: shake 0.45s; }
+
+  .card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .card.flipped { transform: rotateY(180deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    border-radius: 28px;
+    text-align: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .front {
+    background: var(--surface);
+    box-shadow: 0 8px 0 var(--line), var(--shadow);
+  }
+
+  .back {
+    background: linear-gradient(160deg, #FFF3CF, #FFE1A6);
+    box-shadow: 0 8px 0 #F1CE84, var(--shadow);
+    transform: rotateY(180deg);
+  }
+
+  .card.correct .face { box-shadow: 0 0 0 5px var(--good), 0 8px 0 5px var(--good-dark); }
+  .card.wrong .face { box-shadow: 0 0 0 5px var(--bad), 0 8px 0 5px var(--bad-dark); }
+
+  .cat-chip {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 11px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--c) 20%, white);
+    font-size: 0.8rem;
+    font-weight: 900;
+  }
+
+  .lang {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .word {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    word-break: break-word;
+  }
+
+  .sub {
+    margin-top: 8px;
+    color: #8A6A2E;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .speak {
+    width: 58px;
+    height: 58px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 50%;
+    background: var(--sun);
+    box-shadow: 0 4px 0 var(--sun-dark);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .speak:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--sun-dark);
+  }
+
+  .tap-hint {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .actions.hidden {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+  }
+
+  @media (max-width: 420px) {
+    .actions .btn { padding: 16px 6px; font-size: 1rem; }
+  }
+
+  .xp-float {
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    z-index: 5;
+    color: var(--good);
+    font-size: 1.7rem;
+    font-weight: 900;
+    text-shadow: 0 2px 0 #fff;
+    pointer-events: none;
+    animation: float-up 0.9s ease-out forwards;
+  }
+
+  /* ---------- Ergebnis ---------- */
+  .result {
+    margin-bottom: 22px;
+    padding: 28px 20px;
+    border-radius: 28px;
+    background: var(--surface);
+    box-shadow: 0 8px 0 var(--line), var(--shadow);
+    text-align: center;
+    animation: pop-in 0.4s ease-out;
+  }
+
+  .stars { font-size: 3.4rem; letter-spacing: 6px; line-height: 1.1; }
+  .stars span { display: inline-block; color: var(--line); }
+
+  .stars span.on {
+    color: var(--sun);
+    text-shadow: 0 4px 0 var(--sun-dark);
+    animation: star-pop 0.5s both;
+  }
+
+  .stars span.on:nth-child(2) { animation-delay: 0.2s; }
+  .stars span.on:nth-child(3) { animation-delay: 0.4s; }
+
+  .result h2 { margin: 8px 0 4px; font-size: 2rem; font-weight: 900; }
+  .result p { margin: 0 0 20px; color: var(--muted); font-weight: 800; }
+  .result .summary { margin-bottom: 16px; }
+  .result .stat { background: var(--bg); box-shadow: none; }
+
+  .levelup {
+    margin-bottom: 14px;
+    padding: 12px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--primary), var(--sun));
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .new-badges h3 { margin: 8px 0 10px; font-size: 1.05rem; font-weight: 900; }
+  .new-badges .badges { grid-template-columns: repeat(auto-fit, minmax(110px, 150px)); justify-content: center; }
+
+  /* ---------- Abzeichen ---------- */
+  .badges {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+  }
+
+  .badge {
+    padding: 12px 8px;
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: 0 4px 0 var(--line);
+    text-align: center;
+  }
+
+  .b-ico { font-size: 2rem; }
+  .b-name { margin-top: 4px; font-size: 0.85rem; font-weight: 900; }
+  .b-desc { margin-top: 2px; color: var(--muted); font-size: 0.72rem; font-weight: 700; }
+
+  .badge.locked { background: rgba(255, 255, 255, 0.5); box-shadow: none; }
+  .badge.locked .b-ico { filter: grayscale(1); opacity: 0.35; }
+  .badge.locked .b-name { color: var(--muted); }
+
+  /* ---------- Konfetti ---------- */
+  .confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .confetti i {
+    position: absolute;
+    top: -16px;
+    width: 9px;
+    height: 15px;
+    border-radius: 2px;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+  }
+
+  @keyframes float-up {
+    0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
+    20% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
+    100% { opacity: 0; transform: translate(-50%, -60px) scale(1); }
+  }
+
+  @keyframes star-pop {
+    0% { transform: scale(0) rotate(-30deg); }
+    70% { transform: scale(1.3) rotate(8deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+</style>
+</head>
+<body>
+
+<noscript>
+  <p class="noscript">Poquito braucht JavaScript. Bitte öffne die Seite in Safari oder einem anderen Browser – nicht in der Datei-Vorschau.</p>
+</noscript>
+
+<main class="app" id="app"></main>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------------------------------------------------------------
+  // Vokabeln nach Kategorien. Neue Wörter einfach in die passende
+  // Kategorie eintragen: { es: "spanisch", de: "deutsch" }
+  // ---------------------------------------------------------------
+  const CATEGORIES = [
+    {
+      id: "begruessung", name: "Begrüßung", icon: "👋", color: "#F6B519",
+      words: [
+        { es: "hola", de: "hallo" },
+        { es: "adiós", de: "tschüss / auf Wiedersehen" },
+        { es: "buenos días", de: "guten Morgen" },
+        { es: "buenas tardes", de: "guten Tag / guten Nachmittag" },
+        { es: "buenas noches", de: "guten Abend / gute Nacht" },
+        { es: "hasta luego", de: "bis später" },
+        { es: "¿Qué tal?", de: "Wie geht's?" },
+        { es: "por favor", de: "bitte" },
+        { es: "gracias", de: "danke" },
+        { es: "de nada", de: "gern geschehen" },
+        { es: "lo siento", de: "es tut mir leid" },
+        { es: "perdón", de: "Entschuldigung" },
+        { es: "sí", de: "ja" },
+        { es: "no", de: "nein" },
+      ],
+    },
+    {
+      id: "zahlen", name: "Zahlen", icon: "🔢", color: "#1FA6A0",
+      words: [
+        { es: "uno", de: "eins" },
+        { es: "dos", de: "zwei" },
+        { es: "tres", de: "drei" },
+        { es: "cuatro", de: "vier" },
+        { es: "cinco", de: "fünf" },
+        { es: "seis", de: "sechs" },
+        { es: "siete", de: "sieben" },
+        { es: "ocho", de: "acht" },
+        { es: "nueve", de: "neun" },
+        { es: "diez", de: "zehn" },
+      ],
+    },
+    {
+      id: "farben", name: "Farben", icon: "🎨", color: "#9B5DE5",
+      words: [
+        { es: "rojo", de: "rot" },
+        { es: "azul", de: "blau" },
+        { es: "verde", de: "grün" },
+        { es: "amarillo", de: "gelb" },
+        { es: "negro", de: "schwarz" },
+        { es: "blanco", de: "weiß" },
+      ],
+    },
+    {
+      id: "familie", name: "Familie & Freunde", icon: "👪", color: "#E4572E",
+      words: [
+        { es: "la madre", de: "die Mutter" },
+        { es: "el padre", de: "der Vater" },
+        { es: "el hermano", de: "der Bruder" },
+        { es: "la hermana", de: "die Schwester" },
+        { es: "el hijo", de: "der Sohn" },
+        { es: "la hija", de: "die Tochter" },
+        { es: "el abuelo", de: "der Großvater" },
+        { es: "la abuela", de: "die Großmutter" },
+        { es: "el amigo", de: "der Freund" },
+        { es: "la amiga", de: "die Freundin" },
+      ],
+    },
+    {
+      id: "essen", name: "Essen & Trinken", icon: "🥘", color: "#F08A24",
+      words: [
+        { es: "el agua", de: "das Wasser" },
+        { es: "el pan", de: "das Brot" },
+        { es: "la leche", de: "die Milch" },
+        { es: "el café", de: "der Kaffee" },
+        { es: "la manzana", de: "der Apfel" },
+        { es: "el queso", de: "der Käse" },
+        { es: "la carne", de: "das Fleisch" },
+        { es: "el pescado", de: "der Fisch (als Essen)" },
+        { es: "el huevo", de: "das Ei" },
+        { es: "la cerveza", de: "das Bier" },
+        { es: "el vino", de: "der Wein" },
+      ],
+    },
+    {
+      id: "tiere", name: "Tiere", icon: "🐾", color: "#22B573",
+      words: [
+        { es: "el perro", de: "der Hund" },
+        { es: "el gato", de: "die Katze" },
+        { es: "el pájaro", de: "der Vogel" },
+        { es: "el caballo", de: "das Pferd" },
+        { es: "la vaca", de: "die Kuh" },
+        { es: "el pez", de: "der Fisch (lebendes Tier)" },
+      ],
+    },
+    {
+      id: "orte", name: "Orte & Dinge", icon: "🏠", color: "#3A86FF",
+      words: [
+        { es: "la casa", de: "das Haus" },
+        { es: "la escuela", de: "die Schule" },
+        { es: "el trabajo", de: "die Arbeit" },
+        { es: "la ciudad", de: "die Stadt" },
+        { es: "la calle", de: "die Straße" },
+        { es: "la playa", de: "der Strand" },
+        { es: "el coche", de: "das Auto" },
+        { es: "el libro", de: "das Buch" },
+        { es: "la mesa", de: "der Tisch" },
+        { es: "la silla", de: "der Stuhl" },
+      ],
+    },
+    {
+      id: "zeit", name: "Zeit", icon: "⏰", color: "#FF6B9A",
+      words: [
+        { es: "hoy", de: "heute" },
+        { es: "mañana", de: "morgen" },
+        { es: "ayer", de: "gestern" },
+        { es: "ahora", de: "jetzt" },
+        { es: "siempre", de: "immer" },
+        { es: "nunca", de: "nie" },
+        { es: "el día", de: "der Tag" },
+        { es: "la semana", de: "die Woche" },
+        { es: "el año", de: "das Jahr" },
+      ],
+    },
+    {
+      id: "verben", name: "Wichtige Verben", icon: "🏃", color: "#E5484D",
+      words: [
+        { es: "ser", de: "sein (dauerhaft)" },
+        { es: "estar", de: "sein (Zustand / Ort)" },
+        { es: "tener", de: "haben" },
+        { es: "hacer", de: "machen / tun" },
+        { es: "ir", de: "gehen / fahren" },
+        { es: "comer", de: "essen" },
+        { es: "beber", de: "trinken" },
+        { es: "hablar", de: "sprechen" },
+        { es: "vivir", de: "leben / wohnen" },
+        { es: "querer", de: "wollen / lieben" },
+        { es: "poder", de: "können" },
+        { es: "saber", de: "wissen" },
+        { es: "dormir", de: "schlafen" },
+        { es: "trabajar", de: "arbeiten" },
+      ],
+    },
+    {
+      id: "adjektive", name: "Adjektive", icon: "✨", color: "#00A8C6",
+      words: [
+        { es: "grande", de: "groß" },
+        { es: "pequeño", de: "klein" },
+        { es: "bueno", de: "gut" },
+        { es: "malo", de: "schlecht" },
+        { es: "bonito", de: "schön / hübsch" },
+        { es: "nuevo", de: "neu" },
+        { es: "viejo", de: "alt" },
+        { es: "caliente", de: "heiß / warm" },
+        { es: "frío", de: "kalt" },
+        { es: "feliz", de: "glücklich" },
+      ],
+    },
+    {
+      id: "fragen", name: "Fragewörter", icon: "❓", color: "#7A6CF0",
+      words: [
+        { es: "¿qué?", de: "was?" },
+        { es: "¿quién?", de: "wer?" },
+        { es: "¿dónde?", de: "wo?" },
+        { es: "¿cuándo?", de: "wann?" },
+        { es: "¿por qué?", de: "warum?" },
+        { es: "¿cómo?", de: "wie?" },
+        { es: "¿cuánto?", de: "wie viel?" },
+      ],
+    },
+  ];
+
+  const MODULES = [
+    { id: "vokabeln", name: "Vokabeln", icon: "📚", color: "#E4572E", desc: "Karteikarten", active: true },
+    { id: "verben", name: "Verben", icon: "🔤", color: "#3A86FF", desc: "Konjugation üben" },
+    { id: "grammatik", name: "Grammatik", icon: "🧩", color: "#9B5DE5", desc: "Regeln verstehen" },
+    { id: "hoeren", name: "Hören", icon: "🎧", color: "#1FA6A0", desc: "Hörverständnis" },
+    { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", desc: "Aussprache üben" },
+    { id: "lesen", name: "Lesen", icon: "📖", color: "#F6B519", desc: "Kurze Geschichten" },
+  ];
+
+  const SESSION_SIZE = 10;
+  const LEARNED_LEVEL = 3;
+  const MAX_LEVEL = 5;
+  const XP_FIRST_TRY = 10;
+  const XP_RETRY = 3;
+  const XP_PERFECT_BONUS = 20;
+  const XP_PER_LEVEL = 100;
+  const STORAGE_KEY = "poquitoVocabTrainerState_v1";
+
+  const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
+  const WORDS = new Map(VOCAB.map((w) => [w.es, w]));
+  const CATS = new Map(CATEGORIES.map((c) => [c.id, c]));
+
+  const BADGES = [
+    { id: "first-session", icon: "🎉", name: "Erste Runde", desc: "Eine Runde geschafft", test: () => state.sessionsDone >= 1 },
+    { id: "perfect", icon: "⭐", name: "Perfekt", desc: "Runde ohne Fehler", test: () => state.perfectSessions >= 1 },
+    { id: "learned-10", icon: "🌱", name: "Keimling", desc: "10 Wörter gelernt", test: () => learnedCount() >= 10 },
+    { id: "learned-50", icon: "🌳", name: "Wortbaum", desc: "50 Wörter gelernt", test: () => learnedCount() >= 50 },
+    { id: "learned-all", icon: "🏆", name: "Wortmeister", desc: "Alle Wörter gelernt", test: () => learnedCount() === VOCAB.length },
+    { id: "category", icon: "🥇", name: "Themen-Profi", desc: "Kategorie komplett", test: () => CATEGORIES.some((c) => catLearned(c) === c.words.length) },
+    { id: "streak-3", icon: "🔥", name: "Dranbleiber", desc: "3 Tage in Folge", test: () => state.streak.count >= 3 },
+    { id: "streak-7", icon: "📅", name: "Wochenheld", desc: "7 Tage in Folge", test: () => state.streak.count >= 7 },
+    { id: "mistakes-cleared", icon: "💪", name: "Fehlerjäger", desc: "Fehlerstapel geleert", test: () => state.mistakesCleared >= 1 },
+  ];
+
+  const app = document.getElementById("app");
+  let state = loadState();
+  let view = "home";
+  let lastView = null;
+  let session = null;
+  let busy = false;
+
+  // ---------- Speichern ----------
+  function defaultState() {
+    return {
+      progress: {},
+      wrongStack: [],
+      xp: 0,
+      streak: { count: 0, lastDay: null },
+      badges: [],
+      sessionsDone: 0,
+      perfectSessions: 0,
+      mistakesCleared: 0,
+      sound: true,
+    };
+  }
+
+  function loadState() {
+    const s = defaultState();
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) Object.assign(s, JSON.parse(raw));
+    } catch (e) {
+      // ohne localStorage startet man eben frisch
+    }
+    s.wrongStack = s.wrongStack.filter((id) => WORDS.has(id));
+    return s;
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      // Speichern nicht möglich (z. B. privater Modus)
+    }
+  }
+
+  // ---------- Lernstand ----------
+  function prog(id) {
+    if (!state.progress[id]) state.progress[id] = { level: 0, correct: 0, wrong: 0, lastSeen: 0 };
+    return state.progress[id];
+  }
+
+  function isSeen(id) {
+    const p = state.progress[id];
+    return !!p && p.correct + p.wrong > 0;
+  }
+
+  function isLearned(id) {
+    const p = state.progress[id];
+    return !!p && p.level >= LEARNED_LEVEL;
+  }
+
+  function learnedCount() {
+    return VOCAB.filter((w) => isLearned(w.es)).length;
+  }
+
+  function catLearned(c) {
+    return c.words.filter((w) => isLearned(w.es)).length;
+  }
+
+  function levelInfo(xp) {
+    return { level: Math.floor(xp / XP_PER_LEVEL) + 1, into: xp % XP_PER_LEVEL };
+  }
+
+  function dayKey(d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  function todayKey() {
+    return dayKey(new Date());
+  }
+
+  function yesterdayKey() {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return dayKey(d);
+  }
+
+  function currentStreak() {
+    const { count, lastDay } = state.streak;
+    return lastDay === todayKey() || lastDay === yesterdayKey() ? count : 0;
+  }
+
+  function bumpStreak() {
+    const today = todayKey();
+    if (state.streak.lastDay === today) return;
+    state.streak.count = state.streak.lastDay === yesterdayKey() ? state.streak.count + 1 : 1;
+    state.streak.lastDay = today;
+  }
+
+  function removeFromWrongStack(id) {
+    const i = state.wrongStack.indexOf(id);
+    if (i === -1) return;
+    state.wrongStack.splice(i, 1);
+    if (state.wrongStack.length === 0) state.mistakesCleared++;
+  }
+
+  function unlockBadges() {
+    const fresh = BADGES.filter((b) => !state.badges.includes(b.id) && b.test());
+    fresh.forEach((b) => state.badges.push(b.id));
+    return fresh;
+  }
+
+  // ---------- Runden ----------
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function parseSource(str) {
+    if (str.startsWith("cat:")) return { type: "cat", id: str.slice(4) };
+    return { type: str };
+  }
+
+  // Mischt Wiederholungen (Fehler zuerst) mit neuen Wörtern; gelernte Wörter füllen nur auf.
+  function pickCards(source) {
+    if (source.type === "mistakes") return shuffle([...state.wrongStack]).slice(0, SESSION_SIZE);
+
+    const pool = source.type === "cat" ? CATS.get(source.id).words.map((w) => w.es) : VOCAB.map((w) => w.es);
+    const wrong = new Set(state.wrongStack);
+    const level = (id) => (state.progress[id] ? state.progress[id].level : 0);
+    const lastSeen = (id) => (state.progress[id] && state.progress[id].lastSeen) || 0;
+
+    const review = pool
+      .filter((id) => isSeen(id) && !isLearned(id))
+      .sort((a, b) => wrong.has(b) - wrong.has(a) || level(a) - level(b) || lastSeen(a) - lastSeen(b));
+    const fresh = shuffle(pool.filter((id) => !isSeen(id)));
+    const known = pool
+      .filter((id) => isLearned(id))
+      .sort((a, b) => level(a) - level(b) || lastSeen(a) - lastSeen(b));
+
+    const half = Math.ceil(SESSION_SIZE / 2);
+    const picked = new Set(review.slice(0, half));
+    for (const id of [...fresh, ...review, ...known]) {
+      if (picked.size >= SESSION_SIZE) break;
+      picked.add(id);
+    }
+    return shuffle([...picked]);
+  }
+
+  function startSession(source) {
+    const cards = pickCards(source);
+    if (cards.length === 0) return;
+    unlockAudio();
+    busy = false;
+    session = {
+      source,
+      queue: cards,
+      total: cards.length,
+      current: null,
+      firstTry: new Map(),
+      done: new Set(),
+      xp: 0,
+      combo: 0,
+      bestCombo: 0,
+      startXp: state.xp,
+      firstRight: 0,
+      stars: 0,
+      newBadges: [],
+    };
+    view = "session";
+    nextCard();
+  }
+
+  function nextCard() {
+    if (session.queue.length === 0) {
+      finishSession();
+      return;
+    }
+    session.current = session.queue.shift();
+    render();
+    speak(session.current);
+  }
+
+  // Nur die erste Antwort pro Runde zählt für Level und Fehlerstapel;
+  // falsche Karten kommen in der Runde nochmal, bis sie sitzen.
+  function answer(knewIt) {
+    if (busy || !session) return;
+    busy = true;
+    const s = session;
+    const id = s.current;
+    const firstAnswer = !s.firstTry.has(id);
+
+    if (firstAnswer) {
+      s.firstTry.set(id, knewIt);
+      const p = prog(id);
+      p.lastSeen = Date.now();
+      if (knewIt) {
+        p.correct++;
+        p.level = Math.min(MAX_LEVEL, p.level + 1);
+        removeFromWrongStack(id);
+      } else {
+        p.wrong++;
+        p.level = 0;
+        if (!state.wrongStack.includes(id)) state.wrongStack.push(id);
+      }
+    }
+
+    const scene = app.querySelector(".scene");
+    const card = app.querySelector(".card");
+
+    if (knewIt) {
+      const gain = firstAnswer ? XP_FIRST_TRY : XP_RETRY;
+      s.xp += gain;
+      state.xp += gain;
+      s.combo++;
+      s.bestCombo = Math.max(s.bestCombo, s.combo);
+      s.done.add(id);
+      card.classList.add("correct");
+      floatText(scene, "+" + gain + " XP");
+      playCorrect();
+    } else {
+      s.combo = 0;
+      s.queue.splice(Math.min(3, s.queue.length), 0, id);
+      card.classList.add("wrong");
+      scene.classList.remove("enter");
+      void scene.offsetWidth;
+      scene.classList.add("shake");
+      playWrong();
+    }
+
+    saveState();
+    updateSessionBar();
+    setTimeout(() => {
+      if (session !== s) return;
+      busy = false;
+      nextCard();
+    }, 750);
+  }
+
+  function finishSession() {
+    const s = session;
+    s.firstRight = [...s.firstTry.values()].filter(Boolean).length;
+    const ratio = s.firstRight / s.total;
+    s.stars = ratio === 1 ? 3 : ratio >= 0.6 ? 2 : 1;
+    if (ratio === 1) {
+      s.xp += XP_PERFECT_BONUS;
+      state.xp += XP_PERFECT_BONUS;
+      state.perfectSessions++;
+    }
+    state.sessionsDone++;
+    bumpStreak();
+    s.newBadges = unlockBadges();
+    saveState();
+    view = "result";
+    render();
+    playFanfare(s.stars);
+    if (s.stars === 3) confetti();
+  }
+
+  // ---------- Ton & Sprache ----------
+  let audioCtx = null;
+
+  function unlockAudio() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+  }
+
+  function tone(freq, start, dur, type, vol, slideTo) {
+    if (!audioCtx) return;
+    const t0 = audioCtx.currentTime + start;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t0);
+    if (slideTo) osc.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.exponentialRampToValueAtTime(vol, t0 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(t0);
+    osc.stop(t0 + dur + 0.05);
+  }
+
+  function playCorrect() {
+    if (!state.sound) return;
+    tone(784, 0, 0.18, "triangle", 0.3);
+    tone(1175, 0.1, 0.4, "triangle", 0.3);
+  }
+
+  function playWrong() {
+    if (!state.sound) return;
+    tone(311, 0, 0.22, "square", 0.08, 277);
+    tone(233, 0.2, 0.45, "square", 0.08, 165);
+  }
+
+  function playFanfare(stars) {
+    if (!state.sound) return;
+    [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.12, 0.3, "triangle", 0.25));
+    if (stars === 3) tone(1319, 0.5, 0.7, "triangle", 0.22);
+  }
+
+  const synth = "speechSynthesis" in window ? window.speechSynthesis : null;
+  let spanishVoice = null;
+
+  function pickVoice() {
+    const voices = synth.getVoices();
+    spanishVoice =
+      voices.find((v) => v.lang === "es-ES") ||
+      voices.find((v) => v.lang.toLowerCase().startsWith("es")) ||
+      null;
+  }
+
+  if (synth) {
+    pickVoice();
+    synth.onvoiceschanged = pickVoice;
+  }
+
+  function speak(text) {
+    if (!synth || !state.sound) return;
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "es-ES";
+    if (spanishVoice) u.voice = spanishVoice;
+    u.rate = 0.9;
+    synth.speak(u);
+  }
+
+  // ---------- Effekte ----------
+  function floatText(parent, text) {
+    const el = document.createElement("div");
+    el.className = "xp-float";
+    el.textContent = text;
+    parent.appendChild(el);
+  }
+
+  function confetti() {
+    const colors = ["#E4572E", "#F6B519", "#22B573", "#3A86FF", "#FF6B9A", "#9B5DE5"];
+    const wrap = document.createElement("div");
+    wrap.className = "confetti";
+    for (let i = 0; i < 90; i++) {
+      const p = document.createElement("i");
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.background = colors[i % colors.length];
+      p.style.animationDelay = Math.random() * 0.6 + "s";
+      p.style.animationDuration = 2 + Math.random() * 1.5 + "s";
+      wrap.appendChild(p);
+    }
+    document.body.appendChild(wrap);
+    setTimeout(() => wrap.remove(), 4500);
+  }
+
+  // ---------- Ansichten ----------
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+  }
+
+  function soundButton() {
+    return `<button class="icon-btn" data-action="toggle-sound" aria-label="Ton an/aus">${state.sound ? "🔊" : "🔇"}</button>`;
+  }
+
+  function playerCard() {
+    const { level, into } = levelInfo(state.xp);
+    const streak = currentStreak();
+    return `
+      <section class="player">
+        <div class="player-top">
+          <span class="lvl">Level ${level}</span>
+          <span class="xp">${into} / ${XP_PER_LEVEL} XP</span>
+        </div>
+        <div class="bar"><span style="width:${(into / XP_PER_LEVEL) * 100}%"></span></div>
+        <div class="chips">
+          <span class="chip">🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
+          <span class="chip">📚 ${learnedCount()} / ${VOCAB.length} Wörter</span>
+          <span class="chip">🏅 ${state.badges.length} / ${BADGES.length}</span>
+        </div>
+      </section>`;
+  }
+
+  function moduleTile(m) {
+    if (!m.active) {
+      return `
+        <button class="tile" disabled style="--c:${m.color}">
+          <span class="pill">Bald</span>
+          <span class="ico">${m.icon}</span>
+          <span class="name">${esc(m.name)}</span>
+          <span class="desc">${esc(m.desc)}</span>
+        </button>`;
+    }
+    return `
+      <button class="tile featured" data-action="open-vocab" style="--c:${m.color}">
+        <span class="pill go">Los!</span>
+        <span class="ico">${m.icon}</span>
+        <span class="name">${esc(m.name)}</span>
+        <span class="desc">${learnedCount()} / ${VOCAB.length} gelernt</span>
+      </button>`;
+  }
+
+  function badgeTile(b) {
+    const got = state.badges.includes(b.id);
+    return `
+      <div class="badge ${got ? "" : "locked"}">
+        <div class="b-ico">${b.icon}</div>
+        <div class="b-name">${esc(b.name)}</div>
+        <div class="b-desc">${esc(b.desc)}</div>
+      </div>`;
+  }
+
+  function homeView() {
+    return `
+      <header class="hero">
+        <div class="logo">🌶️</div>
+        <div>
+          <h1>Poquito</h1>
+          <p>¡Aprende español!</p>
+        </div>
+        <div class="spacer"></div>
+        ${soundButton()}
+      </header>
+      ${playerCard()}
+      <h2 class="section-title">Was möchtest du lernen?</h2>
+      <div class="grid">${MODULES.map(moduleTile).join("")}</div>
+      <h2 class="section-title">Abzeichen</h2>
+      <div class="badges">${BADGES.map(badgeTile).join("")}</div>`;
+  }
+
+  function categoryTile(c) {
+    const learned = catLearned(c);
+    const total = c.words.length;
+    const errors = c.words.filter((w) => state.wrongStack.includes(w.es)).length;
+    let corner = "";
+    if (learned === total) corner = `<span class="medal">🥇</span>`;
+    else if (errors) corner = `<span class="pill err">${errors} ✗</span>`;
+    return `
+      <button class="tile" data-action="start" data-source="cat:${c.id}" style="--c:${c.color}">
+        ${corner}
+        <span class="ico">${c.icon}</span>
+        <span class="name">${esc(c.name)}</span>
+        <span class="desc">${learned} / ${total} gelernt</span>
+        <span class="mini-bar"><span style="width:${(learned / total) * 100}%"></span></span>
+      </button>`;
+  }
+
+  function vocabView() {
+    const learned = learnedCount();
+    const mistakes = state.wrongStack.length;
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
+        <h2>📚 Vokabeln</h2>
+        ${soundButton()}
+      </div>
+      <div class="summary">
+        <div class="stat"><b>${learned}</b><span>gelernt</span></div>
+        <div class="stat"><b>${VOCAB.length - learned}</b><span>offen</span></div>
+        <div class="stat"><b>${mistakes}</b><span>Fehlerstapel</span></div>
+      </div>
+      <div class="btn-stack">
+        <button class="btn" data-action="start" data-source="all">🎲 Gemischt lernen <small>· ${SESSION_SIZE} Karten</small></button>
+        <button class="btn sun" data-action="start" data-source="mistakes" ${mistakes ? "" : "disabled"}>
+          ${mistakes ? `🔁 Fehlerstapel wiederholen <small>· ${mistakes}</small>` : "✅ Fehlerstapel ist leer"}
+        </button>
+      </div>
+      <h2 class="section-title">Nach Kategorie</h2>
+      <div class="grid">${CATEGORIES.map(categoryTile).join("")}</div>
+      <button class="link-btn" data-action="reset">Gesamten Fortschritt zurücksetzen</button>`;
+  }
+
+  function comboLabel() {
+    return session.combo >= 2 ? "🔥 " + session.combo : "";
+  }
+
+  function sessionView() {
+    const w = WORDS.get(session.current);
+    const c = CATS.get(w.cat);
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="exit" aria-label="Runde beenden">✕</button>
+        <div class="progress"><span style="width:${(session.done.size / session.total) * 100}%"></span></div>
+        <span class="combo">${comboLabel()}</span>
+      </div>
+      <div class="scene enter">
+        <div class="card" data-action="flip">
+          <div class="face front">
+            <span class="cat-chip" style="--c:${c.color}">${c.icon} ${esc(c.name)}</span>
+            <span class="lang">Español</span>
+            <div class="word">${esc(w.es)}</div>
+            <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
+            <span class="tap-hint">Tippen zum Umdrehen</span>
+          </div>
+          <div class="face back">
+            <span class="lang">Deutsch</span>
+            <div class="word">${esc(w.de)}</div>
+            <div class="sub">${esc(w.es)}</div>
+            <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
+          </div>
+        </div>
+      </div>
+      <div class="actions hidden">
+        <button class="btn bad" data-action="answer" data-knew="0">✗ Wusste ich nicht</button>
+        <button class="btn good" data-action="answer" data-knew="1">✓ Wusste ich</button>
+      </div>`;
+  }
+
+  function updateSessionBar() {
+    app.querySelector(".progress > span").style.width = (session.done.size / session.total) * 100 + "%";
+    app.querySelector(".combo").textContent = comboLabel();
+  }
+
+  function resultView() {
+    const s = session;
+    const titles = { 3: "¡Perfecto!", 2: "¡Muy bien!", 1: "¡Sigue así!" };
+    const texts = {
+      3: "Alles auf Anhieb gewusst!",
+      2: "Stark gemacht – weiter so!",
+      1: "Übung macht den Meister. Deine Fehler kommen bald wieder.",
+    };
+    const levelBefore = levelInfo(s.startXp).level;
+    const levelNow = levelInfo(state.xp).level;
+    const canRepeat = s.source.type !== "mistakes" || state.wrongStack.length > 0;
+    return `
+      <section class="result">
+        <div class="stars">${[1, 2, 3].map((i) => `<span class="${i <= s.stars ? "on" : ""}">★</span>`).join("")}</div>
+        <h2>${titles[s.stars]}</h2>
+        <p>${texts[s.stars]}</p>
+        <div class="summary">
+          <div class="stat"><b>${s.firstRight}/${s.total}</b><span>auf Anhieb</span></div>
+          <div class="stat"><b>+${s.xp}</b><span>XP</span></div>
+          <div class="stat"><b>${s.bestCombo}</b><span>beste Serie</span></div>
+        </div>
+        ${levelNow > levelBefore ? `<div class="levelup">🎊 Level ${levelNow} erreicht!</div>` : ""}
+        ${s.newBadges.length ? `
+          <div class="new-badges">
+            <h3>Neues Abzeichen!</h3>
+            <div class="badges">${s.newBadges.map(badgeTile).join("")}</div>
+          </div>` : ""}
+      </section>
+      <div class="btn-stack">
+        ${canRepeat ? `<button class="btn" data-action="again">Nächste Runde</button>` : ""}
+        <button class="btn light" data-action="open-vocab">Zur Übersicht</button>
+      </div>`;
+  }
+
+  function render() {
+    if (view === "home") app.innerHTML = homeView();
+    else if (view === "vocab") app.innerHTML = vocabView();
+    else if (view === "session") app.innerHTML = sessionView();
+    else if (view === "result") app.innerHTML = resultView();
+    if (view !== lastView) {
+      window.scrollTo(0, 0);
+      lastView = view;
+    }
+  }
+
+  // ---------- Bedienung ----------
+  app.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-action]");
+    if (!el || el.disabled) return;
+    switch (el.dataset.action) {
+      case "home":
+        view = "home";
+        render();
+        break;
+      case "open-vocab":
+        session = null;
+        view = "vocab";
+        render();
+        break;
+      case "start":
+        startSession(parseSource(el.dataset.source));
+        break;
+      case "again":
+        startSession(session.source);
+        break;
+      case "flip":
+        if (busy) return;
+        el.classList.toggle("flipped");
+        app.querySelector(".actions").classList.remove("hidden");
+        break;
+      case "speak":
+        speak(session.current);
+        break;
+      case "answer":
+        answer(el.dataset.knew === "1");
+        break;
+      case "exit":
+        if (synth) synth.cancel();
+        session = null;
+        busy = false;
+        view = "vocab";
+        render();
+        break;
+      case "toggle-sound":
+        state.sound = !state.sound;
+        if (!state.sound && synth) synth.cancel();
+        if (state.sound) unlockAudio();
+        saveState();
+        el.textContent = state.sound ? "🔊" : "🔇";
+        break;
+      case "reset":
+        if (confirm("Wirklich den gesamten Fortschritt (Wörter, XP, Abzeichen) löschen?")) {
+          state = Object.assign(defaultState(), { sound: state.sound });
+          saveState();
+          render();
+        }
+        break;
+    }
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
