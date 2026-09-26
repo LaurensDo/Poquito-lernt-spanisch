@@ -229,7 +229,134 @@
   // Format: { es: "spanisches Wort", de: "deutsche Übersetzung" }
   // ---------------------------------------------------------------
   const VOCAB = [
-    // { es: "el perro", de: "der Hund" },
+    // Begrüßung & Höflichkeit
+    { es: "hola", de: "hallo" },
+    { es: "adiós", de: "tschüss / auf Wiedersehen" },
+    { es: "buenos días", de: "guten Morgen" },
+    { es: "buenas tardes", de: "guten Tag / guten Nachmittag" },
+    { es: "buenas noches", de: "guten Abend / gute Nacht" },
+    { es: "hasta luego", de: "bis später" },
+    { es: "¿Qué tal?", de: "Wie geht's?" },
+    { es: "por favor", de: "bitte" },
+    { es: "gracias", de: "danke" },
+    { es: "de nada", de: "gern geschehen" },
+    { es: "lo siento", de: "es tut mir leid" },
+    { es: "perdón", de: "Entschuldigung" },
+    { es: "sí", de: "ja" },
+    { es: "no", de: "nein" },
+
+    // Zahlen
+    { es: "uno", de: "eins" },
+    { es: "dos", de: "zwei" },
+    { es: "tres", de: "drei" },
+    { es: "cuatro", de: "vier" },
+    { es: "cinco", de: "fünf" },
+    { es: "seis", de: "sechs" },
+    { es: "siete", de: "sieben" },
+    { es: "ocho", de: "acht" },
+    { es: "nueve", de: "neun" },
+    { es: "diez", de: "zehn" },
+
+    // Farben
+    { es: "rojo", de: "rot" },
+    { es: "azul", de: "blau" },
+    { es: "verde", de: "grün" },
+    { es: "amarillo", de: "gelb" },
+    { es: "negro", de: "schwarz" },
+    { es: "blanco", de: "weiß" },
+
+    // Familie & Menschen
+    { es: "la madre", de: "die Mutter" },
+    { es: "el padre", de: "der Vater" },
+    { es: "el hermano", de: "der Bruder" },
+    { es: "la hermana", de: "die Schwester" },
+    { es: "el hijo", de: "der Sohn" },
+    { es: "la hija", de: "die Tochter" },
+    { es: "el abuelo", de: "der Großvater" },
+    { es: "la abuela", de: "die Großmutter" },
+    { es: "el amigo", de: "der Freund" },
+    { es: "la amiga", de: "die Freundin" },
+
+    // Essen & Trinken
+    { es: "el agua", de: "das Wasser" },
+    { es: "el pan", de: "das Brot" },
+    { es: "la leche", de: "die Milch" },
+    { es: "el café", de: "der Kaffee" },
+    { es: "la manzana", de: "der Apfel" },
+    { es: "el queso", de: "der Käse" },
+    { es: "la carne", de: "das Fleisch" },
+    { es: "el pescado", de: "der Fisch (als Essen)" },
+    { es: "el huevo", de: "das Ei" },
+    { es: "la cerveza", de: "das Bier" },
+    { es: "el vino", de: "der Wein" },
+
+    // Tiere
+    { es: "el perro", de: "der Hund" },
+    { es: "el gato", de: "die Katze" },
+    { es: "el pájaro", de: "der Vogel" },
+    { es: "el caballo", de: "das Pferd" },
+    { es: "la vaca", de: "die Kuh" },
+    { es: "el pez", de: "der Fisch (lebendes Tier)" },
+
+    // Orte & Dinge
+    { es: "la casa", de: "das Haus" },
+    { es: "la escuela", de: "die Schule" },
+    { es: "el trabajo", de: "die Arbeit" },
+    { es: "la ciudad", de: "die Stadt" },
+    { es: "la calle", de: "die Straße" },
+    { es: "la playa", de: "der Strand" },
+    { es: "el coche", de: "das Auto" },
+    { es: "el libro", de: "das Buch" },
+    { es: "la mesa", de: "der Tisch" },
+    { es: "la silla", de: "der Stuhl" },
+
+    // Zeit
+    { es: "hoy", de: "heute" },
+    { es: "mañana", de: "morgen" },
+    { es: "ayer", de: "gestern" },
+    { es: "ahora", de: "jetzt" },
+    { es: "siempre", de: "immer" },
+    { es: "nunca", de: "nie" },
+    { es: "el día", de: "der Tag" },
+    { es: "la semana", de: "die Woche" },
+    { es: "el año", de: "das Jahr" },
+
+    // Verben
+    { es: "ser", de: "sein (dauerhaft)" },
+    { es: "estar", de: "sein (Zustand / Ort)" },
+    { es: "tener", de: "haben" },
+    { es: "hacer", de: "machen / tun" },
+    { es: "ir", de: "gehen / fahren" },
+    { es: "comer", de: "essen" },
+    { es: "beber", de: "trinken" },
+    { es: "hablar", de: "sprechen" },
+    { es: "vivir", de: "leben / wohnen" },
+    { es: "querer", de: "wollen / lieben" },
+    { es: "poder", de: "können" },
+    { es: "saber", de: "wissen" },
+    { es: "dormir", de: "schlafen" },
+    { es: "trabajar", de: "arbeiten" },
+
+    // Adjektive
+    { es: "grande", de: "groß" },
+    { es: "pequeño", de: "klein" },
+    { es: "bueno", de: "gut" },
+    { es: "malo", de: "schlecht" },
+    { es: "bonito", de: "schön / hübsch" },
+    { es: "nuevo", de: "neu" },
+    { es: "viejo", de: "alt" },
+    { es: "caliente", de: "heiß / warm" },
+    { es: "frío", de: "kalt" },
+    { es: "feliz", de: "glücklich" },
+
+    // Fragewörter
+    { es: "¿qué?", de: "was?" },
+    { es: "¿quién?", de: "wer?" },
+    { es: "¿dónde?", de: "wo?" },
+    { es: "¿cuándo?", de: "wann?" },
+    { es: "¿por qué?", de: "warum?" },
+    { es: "¿cómo?", de: "wie?" },
+    { es: "¿cuánto?", de: "wie viel?" },
   ];
 
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
