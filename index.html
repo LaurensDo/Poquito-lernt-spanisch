@@ -820,6 +820,50 @@
   .fb-answer { display: block; margin-top: 4px; color: var(--ink); font-size: 1.6rem; }
   .feedback .btn { margin-top: 12px; }
 
+  /* ---------- Hören ---------- */
+  .prompt.listen { padding-top: 64px; }
+
+  .play-btn {
+    width: 120px;
+    height: 120px;
+    border: none;
+    border-radius: 50%;
+    background: var(--sun);
+    box-shadow: 0 7px 0 var(--sun-dark);
+    font-size: 3.2rem;
+    cursor: pointer;
+  }
+
+  .play-btn:active { transform: translateY(5px); box-shadow: 0 2px 0 var(--sun-dark); }
+  .speaking .play-btn { animation: pulse 0.9s ease-in-out infinite; }
+
+  .slow-btn {
+    display: block;
+    margin: 18px auto 0;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 99px;
+    background: var(--bg);
+    box-shadow: 0 3px 0 var(--line);
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .slow-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); }
+  .fb-sub { display: block; margin-top: 2px; color: var(--muted); font-size: 1rem; font-weight: 800; }
+  .options.long .btn { font-size: 1.1rem; padding: 16px; }
+
+  .notice {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: #FFF1CC;
+    color: #6B4E00;
+    font-weight: 800;
+  }
+
+  .grid.modules > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+
   /* ---------- Ergebnis ---------- */
   .result {
     margin-bottom: 22px;
@@ -907,8 +951,10 @@
     .app { max-width: 1000px; padding-left: 36px; padding-right: 36px; }
     .grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .grid.two { grid-template-columns: repeat(2, 1fr); }
-    .grid.three { grid-template-columns: repeat(3, 1fr); }
+    .grid.three, .grid.modules { grid-template-columns: repeat(3, 1fr); }
+    .grid.modules > :last-child:nth-child(odd) { grid-column: auto; }
     .btn-stack.pair { grid-template-columns: 1fr 1fr; }
+    .play-btn { width: 140px; height: 140px; font-size: 3.8rem; }
     .logo { width: 68px; height: 68px; font-size: 36px; }
     .icon-btn { width: 54px; height: 54px; }
     .tile.big { min-height: 210px; padding: 24px; }
@@ -916,7 +962,12 @@
     .speak { width: 68px; height: 68px; font-size: 1.8rem; }
     .letter { width: 64px; height: 70px; font-size: 1.9rem; }
     .accent { width: 58px; height: 58px; }
-    .badges { grid-template-columns: repeat(6, 1fr); }
+    .badges { grid-template-columns: repeat(7, 1fr); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
   }
 
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
@@ -1414,7 +1465,7 @@
   const MODULES = [
     { id: "vokabeln", name: "Vokabeln", icon: "📚", color: "#E4572E", action: "open-vocab" },
     { id: "verben", name: "Verben", icon: "🔤", color: "#3A86FF", action: "open-verbs" },
-    { id: "hoeren", name: "Hören", icon: "🎧", color: "#1FA6A0", desc: "Hörverständnis" },
+    { id: "hoeren", name: "Hören", icon: "🎧", color: "#1FA6A0", action: "open-listen" },
     { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", desc: "Aussprache üben" },
     { id: "lesen", name: "Lesen", icon: "📖", color: "#F6B519", desc: "Kurze Geschichten" },
   ];
@@ -1728,6 +1779,92 @@
     },
   ];
 
+  // ---------------------------------------------------------------
+  // Hören: Alltagssätze, Quellen und Stufen
+  // ---------------------------------------------------------------
+  const SENTENCES = [
+    { es: "¿Cómo te llamas?", de: "Wie heißt du?" },
+    { es: "Me llamo Ana.", de: "Ich heiße Ana." },
+    { es: "¿De dónde eres?", de: "Woher kommst du?" },
+    { es: "Soy de Alemania.", de: "Ich komme aus Deutschland." },
+    { es: "¿Dónde vives?", de: "Wo wohnst du?" },
+    { es: "Vivo en Berlín.", de: "Ich wohne in Berlin." },
+    { es: "¿Cuántos años tienes?", de: "Wie alt bist du?" },
+    { es: "Tengo treinta años.", de: "Ich bin dreißig Jahre alt." },
+    { es: "Tengo dos hermanos.", de: "Ich habe zwei Geschwister." },
+    { es: "Estoy bien, gracias.", de: "Mir geht es gut, danke." },
+    { es: "¿Qué hora es?", de: "Wie spät ist es?" },
+    { es: "Son las tres.", de: "Es ist drei Uhr." },
+    { es: "Hoy es lunes.", de: "Heute ist Montag." },
+    { es: "Hace mucho calor hoy.", de: "Heute ist es sehr heiß." },
+    { es: "Está lloviendo.", de: "Es regnet gerade." },
+    { es: "Quiero un café, por favor.", de: "Ich möchte einen Kaffee, bitte." },
+    { es: "La cuenta, por favor.", de: "Die Rechnung, bitte." },
+    { es: "¿Cuánto cuesta?", de: "Wie viel kostet das?" },
+    { es: "Tengo hambre.", de: "Ich habe Hunger." },
+    { es: "¿Qué quieres comer?", de: "Was möchtest du essen?" },
+    { es: "La comida está muy rica.", de: "Das Essen ist sehr lecker." },
+    { es: "El agua está fría.", de: "Das Wasser ist kalt." },
+    { es: "No me gusta el café.", de: "Ich mag keinen Kaffee." },
+    { es: "Me gusta mucho la playa.", de: "Ich mag den Strand sehr." },
+    { es: "¿Dónde está el baño?", de: "Wo ist die Toilette?" },
+    { es: "¿Dónde está la estación?", de: "Wo ist der Bahnhof?" },
+    { es: "Gire a la derecha.", de: "Biegen Sie rechts ab." },
+    { es: "Está muy cerca.", de: "Es ist ganz nah." },
+    { es: "El tren sale a las ocho.", de: "Der Zug fährt um acht Uhr ab." },
+    { es: "Necesito un billete para Madrid.", de: "Ich brauche eine Fahrkarte nach Madrid." },
+    { es: "No entiendo.", de: "Ich verstehe nicht." },
+    { es: "¿Puedes repetir, por favor?", de: "Kannst du das bitte wiederholen?" },
+    { es: "Hablo un poco de español.", de: "Ich spreche ein bisschen Spanisch." },
+    { es: "¿Hablas inglés?", de: "Sprichst du Englisch?" },
+    { es: "Estudio español todos los días.", de: "Ich lerne jeden Tag Spanisch." },
+    { es: "Estoy muy cansado.", de: "Ich bin sehr müde." },
+    { es: "Mi hermana es médica.", de: "Meine Schwester ist Ärztin." },
+    { es: "Trabajo en un hospital.", de: "Ich arbeite in einem Krankenhaus." },
+    { es: "Mañana vamos al cine.", de: "Morgen gehen wir ins Kino." },
+    { es: "Ayer comí paella.", de: "Gestern habe ich Paella gegessen." },
+    { es: "¿Qué haces el fin de semana?", de: "Was machst du am Wochenende?" },
+    { es: "Me gusta leer libros.", de: "Ich lese gern Bücher." },
+    { es: "El perro es muy bonito.", de: "Der Hund ist sehr hübsch." },
+    { es: "La casa es grande.", de: "Das Haus ist groß." },
+    { es: "Mi color favorito es el azul.", de: "Meine Lieblingsfarbe ist Blau." },
+    { es: "¿Tienes tiempo?", de: "Hast du Zeit?" },
+    { es: "¿Me ayudas, por favor?", de: "Hilfst du mir bitte?" },
+    { es: "Lo siento, llego tarde.", de: "Tut mir leid, ich komme zu spät." },
+    { es: "Quiero ir a España.", de: "Ich will nach Spanien fahren." },
+    { es: "Te quiero.", de: "Ich hab dich lieb." },
+    { es: "¡Que tengas un buen día!", de: "Hab einen schönen Tag!" },
+    { es: "¡Hasta mañana!", de: "Bis morgen!" },
+  ];
+
+  const LISTEN_SOURCES = [
+    { id: "words", name: "Wörter", icon: "🔤", color: "#E4572E", desc: "aus deinen Vokabeln" },
+    { id: "sentences", name: "Sätze", icon: "💬", color: "#3A86FF", desc: SENTENCES.length + " Alltagssätze" },
+    { id: "numbers", name: "Zahlen", icon: "🔢", color: "#1FA6A0", desc: "von 0 bis 100" },
+  ];
+
+  const LISTEN_LEVELS = [
+    {
+      n: 1, icon: "🙂", name: "Verstehen", desc: "Bedeutung wählen",
+      hint: { words: "Was bedeutet das Wort?", sentences: "Was bedeutet der Satz?", numbers: "Welche Zahl hörst du?" },
+    },
+    {
+      n: 2, icon: "👂", name: "Genau hinhören", desc: "Ähnliches unterscheiden",
+      hint: { words: "Welches Wort hörst du genau?", sentences: "Welchen Satz hörst du genau?", numbers: "Welche Zahl hörst du genau?" },
+    },
+    {
+      n: 3, icon: "✍️", name: "Diktat", desc: "aufschreiben",
+      hint: { words: "Schreibe auf Spanisch, was du hörst.", sentences: "Schreibe den Satz auf Spanisch.", numbers: "Schreibe die Zahl in Ziffern." },
+    },
+  ];
+
+  const NUMBER_WORDS = [
+    "cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve",
+    "diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve",
+    "veinte", "veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve",
+  ];
+  const TENS_WORDS = { 3: "treinta", 4: "cuarenta", 5: "cincuenta", 6: "sesenta", 7: "setenta", 8: "ochenta", 9: "noventa" };
+
   const SESSION_SIZE = 10;
   const LEARNED_LEVEL = 3;
   const MAX_LEVEL = 5;
@@ -1736,6 +1873,7 @@
   const XP_PERFECT_BONUS = 20;
   const XP_PER_LEVEL = 100;
   const MAX_STARS_PER_TENSE = VERB_GROUPS.length * LEVELS.length * 3;
+  const MAX_LISTEN_STARS = LISTEN_SOURCES.length * LISTEN_LEVELS.length * 3;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
 
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
@@ -1757,6 +1895,8 @@
     { id: "verbs-first", icon: "🔤", name: "Konjugator", desc: "Verb-Runde geschafft", test: () => state.verbSessions >= 1 },
     { id: "verbs-all-tenses", icon: "🧭", name: "Zeitreisender", desc: "Jede Zeitform geübt", test: () => TENSES.every((t) => state.verbTensesDone.includes(t.id)) },
     { id: "verbs-writer", icon: "✍️", name: "Schreibprofi", desc: "Stufe 3 mit 3 Sternen", test: () => Object.keys(state.verbStars).some((k) => k.endsWith("|3") && state.verbStars[k] === 3) },
+    { id: "listen-first", icon: "👂", name: "Gutes Gehör", desc: "Hör-Runde geschafft", test: () => state.listenSessions >= 1 },
+    { id: "listen-dictation", icon: "📝", name: "Diktat-Profi", desc: "Diktat mit 3 Sternen", test: () => Object.keys(state.listenStars).some((k) => k.endsWith("|3") && state.listenStars[k] === 3) },
   ];
 
   const app = document.getElementById("app");
@@ -1784,6 +1924,9 @@
       verbSessions: 0,
       verbTensesDone: [],
       verbLevel: 1,
+      listenStars: {},
+      listenSessions: 0,
+      listenLevel: 1,
     };
   }
 
@@ -1886,6 +2029,16 @@
 
   function totalVerbStars() {
     return TENSES.reduce((sum, t) => sum + tenseStars(t.id), 0);
+  }
+
+  function listenStarsFor(source, level) {
+    return state.listenStars[source + "|" + level] || 0;
+  }
+
+  function totalListenStars() {
+    let sum = 0;
+    LISTEN_SOURCES.forEach((s) => LISTEN_LEVELS.forEach((l) => { sum += listenStarsFor(s.id, l.n); }));
+    return sum;
   }
 
   // ---------- Konjugation ----------
@@ -2166,7 +2319,7 @@
   }
 
   function prepareTask(base, level) {
-    const task = Object.assign({}, base, { result: null, accentOnly: false, given: "" });
+    const task = Object.assign({}, base, { base, result: null, accentOnly: false, given: "" });
     if (level === 1) {
       const chars = [...task.answer];
       let order = shuffle(chars.map((_, i) => i));
@@ -2195,14 +2348,31 @@
       finishSession();
       return;
     }
-    s.task = prepareTask(s.queue.shift(), s.level);
+    const base = s.queue.shift();
+    s.task = s.kind === "listen" ? prepareListenTask(base, s.source, s.level) : prepareTask(base, s.level);
     s.fresh = true;
     render();
+    if (s.kind === "listen") speak(s.task.audio);
     focusInput();
   }
 
   function normalize(str) {
     return str.normalize("NFC").trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  // Beim Diktat zählen Satzzeichen und Groß-/Kleinschreibung nicht.
+  function normalizeListen(str) {
+    return normalize(str.replace(/[¿?¡!.,;:"'«»()]/g, " "));
+  }
+
+  function checkAnswer(s, t, given) {
+    if (s.kind === "listen" && s.source === "numbers") {
+      return { ok: given.replace(/\D/g, "") === t.answer, accentOnly: false };
+    }
+    const norm = s.kind === "listen" ? normalizeListen : normalize;
+    const a = norm(given);
+    const b = norm(t.answer);
+    return { ok: a === b, accentOnly: a !== b && stripAccents(a) === stripAccents(b) };
   }
 
   function stripAccents(str) {
@@ -2213,29 +2383,33 @@
     const s = session;
     const t = s.task;
     if (!t || t.result) return;
-    const ok = normalize(given) === normalize(t.answer);
+    const { ok, accentOnly } = checkAnswer(s, t, given);
     t.given = given;
     t.result = ok ? "right" : "wrong";
-    t.accentOnly = !ok && stripAccents(normalize(given)) === stripAccents(normalize(t.answer));
+    t.accentOnly = accentOnly;
     const first = !s.firstTry.has(t.id);
     if (first) s.firstTry.set(t.id, ok);
+    const spoken = s.kind === "listen" ? t.audio : t.answer;
 
     if (ok) {
       reward(s, t.id, first ? XP_FIRST_TRY : XP_RETRY);
       playCorrect();
-      speak(t.answer);
+      if (s.kind !== "listen") speak(spoken);
     } else {
       s.combo = 0;
-      s.queue.splice(Math.min(3, s.queue.length), 0, { id: t.id, verb: t.verb, person: t.person, tense: t.tense, answer: t.answer });
+      s.queue.splice(Math.min(3, s.queue.length), 0, t.base);
       playWrong();
-      setTimeout(() => speak(t.answer), 450);
+      setTimeout(() => {
+        if (session === s && s.task === t) speak(spoken);
+      }, 450);
     }
     saveState();
     render();
     if (ok && s.level !== 3) {
+      const delay = s.kind !== "listen" ? 1100 : s.source === "sentences" ? 2400 : 1600;
       setTimeout(() => {
         if (session === s && s.task === t) nextTask();
-      }, 1100);
+      }, delay);
     } else {
       focusInput();
     }
@@ -2261,6 +2435,10 @@
       state.verbStars[key] = Math.max(state.verbStars[key] || 0, s.stars);
       state.verbSessions++;
       if (!state.verbTensesDone.includes(s.tense)) state.verbTensesDone.push(s.tense);
+    } else if (s.kind === "listen") {
+      const key = s.source + "|" + s.level;
+      state.listenStars[key] = Math.max(state.listenStars[key] || 0, s.stars);
+      state.listenSessions++;
     } else {
       state.sessionsDone++;
     }
@@ -2271,6 +2449,128 @@
     render();
     playFanfare(s.stars);
     if (s.stars === 3) confetti();
+  }
+
+  // ---------- Hör-Runden ----------
+  function numberWord(n) {
+    if (n < 30) return NUMBER_WORDS[n];
+    if (n === 100) return "cien";
+    const unit = n % 10;
+    return TENS_WORDS[Math.floor(n / 10)] + (unit ? " y " + NUMBER_WORDS[unit] : "");
+  }
+
+  // Zahlen, die man beim Hören leicht verwechselt: 45/54, 16/60, 6/16 …
+  function nearNumbers(n) {
+    const tens = Math.floor(n / 10);
+    const unit = n % 10;
+    const strong = [];
+    if (n >= 10 && n < 100 && unit !== tens) strong.push(unit * 10 + tens);
+    if (n >= 13 && n <= 19) strong.push((n - 10) * 10);
+    if (n >= 30 && n < 100 && unit === 0) strong.push(10 + tens);
+    if (n >= 3 && n <= 9) strong.push(10 + n, n * 10);
+    const weak = [n + 1, n - 1, n + 10, n - 10];
+    const result = [];
+    [...shuffle(strong), ...shuffle(weak)].forEach((m) => {
+      if (m >= 0 && m <= 100 && m !== n && !result.includes(m)) result.push(m);
+    });
+    return result.slice(0, 2);
+  }
+
+  function farNumbers(n) {
+    const result = [];
+    while (result.length < 2) {
+      const m = Math.floor(Math.random() * 101);
+      if (Math.abs(m - n) >= 8 && result.every((r) => Math.abs(r - m) >= 8)) result.push(m);
+    }
+    return result;
+  }
+
+  function levenshtein(a, b) {
+    const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+    for (let i = 1; i <= a.length; i++) {
+      let prev = row[0];
+      row[0] = i;
+      for (let j = 1; j <= b.length; j++) {
+        const tmp = row[j];
+        row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+        prev = tmp;
+      }
+    }
+    return row[b.length];
+  }
+
+  // Zwei ähnlich klingende Alternativen: die nächsten Nachbarn nach Schreibweise, etwas zufällig gemischt.
+  function similarTo(target, pool) {
+    const plainTarget = stripAccents(normalizeListen(target));
+    const scored = [];
+    pool.forEach((x) => {
+      const plainX = stripAccents(normalizeListen(x));
+      if (plainX !== plainTarget && !scored.some((s) => s.plain === plainX)) {
+        scored.push({ x, plain: plainX, d: levenshtein(plainTarget, plainX) });
+      }
+    });
+    scored.sort((a, b) => a.d - b.d);
+    return shuffle(scored.slice(0, 5)).slice(0, 2).map((s) => s.x);
+  }
+
+  function meaningDistractors(base, source) {
+    const pool = source === "sentences"
+      ? shuffle(SENTENCES.map((s) => s.de))
+      : [...shuffle(CATS.get(base.cat).words.map((w) => w.de)), ...shuffle(VOCAB.map((w) => w.de))];
+    const result = [];
+    pool.forEach((d) => {
+      if (result.length < 2 && d !== base.de && !result.includes(d)) result.push(d);
+    });
+    return result;
+  }
+
+  // Wörter: bevorzugt schon gesehene Vokabeln, der Rest wird mit neuen aufgefüllt.
+  function buildListenTasks(source) {
+    if (source === "numbers") {
+      return shuffle([...Array(101).keys()]).slice(0, SESSION_SIZE)
+        .map((n) => ({ id: "n" + n, audio: numberWord(n), es: numberWord(n), de: String(n), num: n }));
+    }
+    if (source === "sentences") {
+      return shuffle(SENTENCES.slice()).slice(0, SESSION_SIZE)
+        .map((s) => ({ id: s.es, audio: s.es, es: s.es, de: s.de }));
+    }
+    const seen = shuffle(VOCAB.filter((w) => isSeen(w.es)));
+    const unseen = shuffle(VOCAB.filter((w) => !isSeen(w.es)));
+    return shuffle([...seen.slice(0, 6), ...unseen, ...seen.slice(6)].slice(0, SESSION_SIZE))
+      .map((w) => ({ id: w.es, audio: w.es, es: w.es, de: w.de, cat: w.cat }));
+  }
+
+  function prepareListenTask(base, source, level) {
+    const task = Object.assign({}, base, { base, result: null, accentOnly: false, given: "" });
+    if (source === "numbers") {
+      task.answer = base.de;
+      if (level < 3) task.options = shuffle([base.num, ...(level === 1 ? farNumbers(base.num) : nearNumbers(base.num))].map(String));
+      return task;
+    }
+    if (level === 1) {
+      task.answer = base.de;
+      task.options = shuffle([base.de, ...meaningDistractors(base, source)]);
+      return task;
+    }
+    task.answer = base.es;
+    if (level === 2) {
+      const pool = source === "sentences" ? SENTENCES.map((s) => s.es) : VOCAB.map((w) => w.es);
+      task.options = shuffle([base.es, ...similarTo(base.es, pool)]);
+    }
+    return task;
+  }
+
+  function startListen(source) {
+    if (!synth) return;
+    if (!state.sound) {
+      state.sound = true;
+      saveState();
+    }
+    const level = state.listenLevel;
+    const tasks = buildListenTasks(source);
+    newSession("listen", { source, level, queue: tasks, total: tasks.length, task: null });
+    view = "drill";
+    nextTask();
   }
 
   // ---------- Ton & Sprache ----------
@@ -2362,13 +2662,15 @@
     synth.onvoiceschanged = pickVoice;
   }
 
-  function speak(text) {
+  function speak(text, rate) {
     if (!synth || !state.sound) return;
     synth.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "es-ES";
     if (spanishVoice) u.voice = spanishVoice;
-    u.rate = 0.9;
+    u.rate = rate || 0.9;
+    u.onstart = () => document.body.classList.add("speaking");
+    u.onend = u.onerror = () => document.body.classList.remove("speaking");
     synth.speak(u);
   }
 
@@ -2432,7 +2734,7 @@
         <div class="chips">
           <span class="chip">🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
           <span class="chip">📚 ${learnedCount()} / ${VOCAB.length} Wörter</span>
-          <span class="chip">⭐ ${totalVerbStars()} Verb-Sterne</span>
+          <span class="chip">⭐ ${totalVerbStars() + totalListenStars()} Sterne</span>
           <span class="chip">🏅 ${state.badges.length} / ${BADGES.length}</span>
         </div>
       </section>`;
@@ -2454,6 +2756,7 @@
     const moduleDesc = {
       vokabeln: `${learnedCount()} / ${VOCAB.length} Wörter gelernt`,
       verben: `${starsText(totalVerbStars(), TENSES.length * MAX_STARS_PER_TENSE)} · ${TENSES.length} Zeitformen`,
+      hoeren: `${starsText(totalListenStars(), MAX_LISTEN_STARS)} · Wörter, Sätze, Zahlen`,
     };
     return `
       <header class="hero">
@@ -2467,7 +2770,7 @@
       </header>
       ${playerCard()}
       <h2 class="section-title">Was möchtest du lernen?</h2>
-      <div class="grid two">
+      <div class="grid two modules">
         ${active.map((m) => `
           <button class="tile big featured" data-action="${m.action}" style="--c:${m.color}">
             <span class="pill go">Los!</span>
@@ -2477,7 +2780,7 @@
           </button>`).join("")}
       </div>
       <h2 class="section-title">Demnächst</h2>
-      <div class="grid three">
+      <div class="grid two">
         ${upcoming.map((m) => `
           <button class="tile small locked" data-action="locked" aria-disabled="true" style="--c:${m.color}">
             <span class="pill">Bald</span>
@@ -2782,7 +3085,117 @@
       </div>`;
   }
 
+  function listenView() {
+    const lvl = state.listenLevel;
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
+        <h2>🎧 Hören<small>Hörverständnis trainieren</small></h2>
+        ${soundButton()}
+      </div>
+      ${synth ? "" : `<div class="notice">Dein Browser kann leider nichts vorlesen. Bitte öffne Poquito in Safari.</div>`}
+      ${synth && !state.sound ? `<div class="notice">🔇 Der Ton ist aus – er wird beim Start einer Runde automatisch eingeschaltet.</div>` : ""}
+      <div class="summary">
+        <div class="stat"><b>${totalListenStars()}</b><span>von ${MAX_LISTEN_STARS} Sternen</span></div>
+        <div class="stat"><b>${state.listenSessions}</b><span>Runden</span></div>
+        <div class="stat"><b>${lvl}</b><span>Stufe gewählt</span></div>
+      </div>
+      <p class="lead">Du hörst Spanisch und zeigst, was du verstanden hast. Mit 🐢 kannst du es dir langsamer anhören.</p>
+      <h2 class="section-title">Schwierigkeit</h2>
+      <div class="levels">
+        ${LISTEN_LEVELS.map((l) => `
+          <button class="level-btn ${l.n === lvl ? "on" : ""}" data-action="set-listen-level" data-level="${l.n}">
+            <b>${l.icon}</b>
+            <span>${esc(l.name)}</span>
+            <small>${esc(l.desc)}</small>
+          </button>`).join("")}
+      </div>
+      <h2 class="section-title">Was möchtest du hören?</h2>
+      <div class="grid">
+        ${LISTEN_SOURCES.map((src) => `
+          <button class="tile" data-action="start-listen" data-source="${src.id}" style="--c:${src.color}" ${synth ? "" : "disabled"}>
+            <span class="ico">${src.icon}</span>
+            <span class="name">${esc(src.name)}</span>
+            <span class="desc">${esc(src.desc)}</span>
+            <span class="stars-line">${starRow(listenStarsFor(src.id, lvl))} Stufe ${lvl}</span>
+          </button>`).join("")}
+      </div>`;
+  }
+
+  function listenFeedback() {
+    const s = session;
+    const t = s.task;
+    if (!t.result) return "";
+    const heard = s.source === "numbers" ? `${t.de} – ${t.es}` : t.es;
+    const translation = s.source === "numbers" ? "" : `<span class="fb-sub">${esc(t.de)}</span>`;
+    const nextBtn = `<button class="btn ${t.result === "right" ? "good" : ""}" data-action="next-task">Weiter</button>`;
+    if (t.result === "right") {
+      return `
+        <div class="feedback good">
+          ✓ ¡Correcto!
+          <span class="fb-answer">${esc(heard)}</span>
+          ${translation}
+          ${s.level === 3 ? nextBtn : ""}
+        </div>`;
+    }
+    return `
+      <div class="feedback bad">
+        ${t.accentOnly ? "Fast! Achte auf die Akzente." : "Leider falsch."} Du hast gehört:
+        <span class="fb-answer">${esc(heard)}</span>
+        ${translation}
+        ${nextBtn}
+      </div>`;
+  }
+
+  function listenAnswerArea() {
+    const s = session;
+    const t = s.task;
+    if (s.level < 3) {
+      const long = t.options.some((o) => o.length > 18);
+      return `
+        <div class="options ${long ? "long" : ""}">
+          ${t.options.map((o) => {
+            let cls = "light";
+            if (t.result && o === t.answer) cls = "is-right";
+            else if (t.result && o === t.given) cls = "picked-wrong";
+            return `<button class="btn ${cls}" data-action="option" data-value="${esc(o)}" ${t.result ? "disabled" : ""}>${esc(o)}</button>`;
+          }).join("")}
+        </div>`;
+    }
+    const numbers = s.source === "numbers";
+    const inputClass = t.result === "right" ? "correct" : t.result === "wrong" ? "wrong" : "";
+    return `
+      <input class="type-input ${inputClass}" type="text" value="${esc(t.given)}" ${t.result ? "readonly" : ""}
+        ${numbers ? `inputmode="numeric"` : ""} autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+        enterkeyhint="${t.result ? "next" : "done"}" aria-label="Was hast du gehört?">
+      ${t.result ? "" : `
+        ${numbers ? "" : `<div class="accents">${["á", "é", "í", "ó", "ú", "ñ", "ü"].map((a) => `<button class="accent" data-action="accent" data-char="${a}">${a}</button>`).join("")}</div>`}
+        <button class="btn" data-action="check">Prüfen</button>`}`;
+  }
+
+  function listenDrillView() {
+    const s = session;
+    const src = LISTEN_SOURCES.find((x) => x.id === s.source);
+    const level = LISTEN_LEVELS[s.level - 1];
+    const fresh = s.fresh;
+    s.fresh = false;
+    return `
+      ${sessionTopbar()}
+      <div class="stage">
+        <div class="prompt listen ${fresh ? "enter" : ""}">
+          <span class="cat-chip" style="--c:${src.color}">${src.icon} ${esc(src.name)}</span>
+          <span class="lang">Stufe ${s.level}</span>
+          <button class="play-btn" data-action="replay" aria-label="Nochmal anhören">🔊</button>
+          <button class="slow-btn" data-action="replay-slow">🐢 Langsamer</button>
+          <div class="task">${esc(level.hint[s.source])}</div>
+        </div>
+        ${listenAnswerArea()}
+        ${listenFeedback()}
+      </div>`;
+  }
+
   function drillView() {
+    if (session.kind === "listen") return listenDrillView();
     const s = session;
     const t = s.task;
     const tense = TENSE_BY_ID.get(s.tense);
@@ -2821,6 +3234,10 @@
       const group = VERB_GROUPS.find((g) => g.id === s.group);
       context = `<p>${esc(TENSE_BY_ID.get(s.tense).name)} · ${esc(group.name)} · Stufe ${s.level}</p>`;
       backAction = `data-action="open-tense" data-tense="${s.tense}"`;
+    } else if (s.kind === "listen") {
+      const src = LISTEN_SOURCES.find((x) => x.id === s.source);
+      context = `<p>Hören · ${esc(src.name)} · ${esc(LISTEN_LEVELS[s.level - 1].name)}</p>`;
+      backAction = `data-action="open-listen"`;
     } else {
       canRepeat = s.source.type !== "mistakes" || state.wrongStack.length > 0;
     }
@@ -2857,6 +3274,7 @@
     verbs: verbsView,
     tense: tenseView,
     rules: rulesView,
+    listen: listenView,
     drill: drillView,
     result: resultView,
   };
@@ -2879,7 +3297,7 @@
 
   // ---------- Bedienung ----------
   const BACK_ACTIONS = new Set(["home", "exit"]);
-  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "say", "locked", "toggle-sound", "accent"]);
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow"]);
 
   app.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".accent")) e.preventDefault();
@@ -2921,14 +3339,34 @@
       case "start-drill":
         startDrill(currentTense, el.dataset.group);
         break;
+      case "open-listen":
+        go("listen");
+        break;
+      case "start-listen":
+        startListen(el.dataset.source);
+        break;
       case "again":
         if (session.kind === "verbs") startDrill(session.tense, session.group);
+        else if (session.kind === "listen") startListen(session.source);
         else startVocab(session.source);
         break;
       case "set-level":
         state.verbLevel = Number(el.dataset.level);
         saveState();
         render();
+        break;
+      case "set-listen-level":
+        state.listenLevel = Number(el.dataset.level);
+        saveState();
+        render();
+        break;
+      case "replay":
+      case "replay-slow":
+        if (!state.sound) {
+          state.sound = true;
+          saveState();
+        }
+        speak(session.task.audio, action === "replay-slow" ? 0.55 : 0.9);
         break;
       case "flip":
         if (busy) return;
@@ -2979,7 +3417,7 @@
         nextTask();
         break;
       case "exit":
-        go(session.kind === "verbs" ? "tense" : "vocab");
+        go({ verbs: "tense", listen: "listen", vocab: "vocab" }[session.kind]);
         break;
       case "toggle-sound":
         state.sound = !state.sound;
@@ -2989,7 +3427,7 @@
         sfx.tap();
         break;
       case "reset":
-        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, XP, Abzeichen) löschen?")) {
+        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, Hören, XP, Abzeichen) löschen?")) {
           state = Object.assign(defaultState(), { sound: state.sound });
           saveState();
           render();
