@@ -204,6 +204,26 @@
   .voice-row .voice-select { flex: 1; min-width: 0; margin: 0; }
   .voice-row .btn { width: auto; padding: 12px 18px; }
 
+  .goal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -2px;
+    font-size: 0.9rem;
+    font-weight: 900;
+  }
+
+  .bar.goal-bar { height: 8px; margin: 6px 0 14px; }
+  .goal.met + .goal-bar > span { background: #FFF3CF; }
+  .goal-banner { background: linear-gradient(135deg, var(--good), #6FD99E); }
+  .goal-panel, .progress-panel { margin-bottom: 28px; }
+  .goal-panel p { color: var(--muted); font-size: 0.9rem; }
+  .goal-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .goal-options .level-btn { padding: 12px 6px; }
+
+  @media (max-width: 480px) {
+    .goal-options { grid-template-columns: repeat(2, 1fr); }
+  }
+
   .progress-panel { margin-bottom: 28px; }
   .progress-panel p { color: var(--muted); font-size: 0.9rem; }
   .progress-panel p b { color: var(--ink); }
@@ -2534,15 +2554,25 @@
   const SESSION_SIZE = 10;
   const LEARNED_LEVEL = 3;
   const MAX_LEVEL = 5;
-  const XP_FIRST_TRY = 10;
-  const XP_RETRY = 3;
-  const XP_PERFECT_BONUS = 20;
-  const XP_PER_LEVEL = 100;
+  // Wie bei Duolingo: wenige XP pro Antwort, Level-Schwellen wachsen stark an.
+  const XP_FIRST_TRY = 2;
+  const XP_RETRY = 1;
+  const XP_ROUND_BONUS = 5;
+  const XP_PERFECT_BONUS = 5;
+  const LEVEL_THRESHOLDS = [0, 60, 120, 200, 300, 450, 750, 1125, 1650, 2250, 3000, 3900, 4900, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 17000, 19000, 22500, 26000, 30000];
+  const DAILY_GOALS = [
+    { xp: 10, name: "Locker" },
+    { xp: 20, name: "Normal" },
+    { xp: 30, name: "Ernsthaft" },
+    { xp: 50, name: "Intensiv" },
+  ];
+  // Version 1 gab 10 XP pro Antwort, Version 2 gibt 2 – alte Stände werden einmalig umgerechnet.
+  const XP_SCHEME = 2;
   const MAX_STARS_PER_TENSE = VERB_GROUPS.length * LEVELS.length * 3;
   const MAX_LISTEN_STARS = LISTEN_SOURCES.length * LISTEN_LEVELS.length * 3;
   const MAX_PODCAST_STARS = PODCASTS.length * 3;
   const MAX_SPEAK_STARS = SPEAK_SOURCES.length * SPEAK_LEVELS.length * 3;
-  const XP_EPISODE = 30;
+  const XP_EPISODE = 15;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
 
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
@@ -2616,6 +2646,9 @@
       voiceURI: null,
       podcastPos: {},
       lastBackup: null,
+      xpScheme: XP_SCHEME,
+      dailyGoal: 20,
+      today: { day: null, xp: 0 },
     };
   }
 
@@ -2629,7 +2662,7 @@
     }
     if (raw) {
       try {
-        Object.assign(s, JSON.parse(raw));
+        Object.assign(s, migrate(JSON.parse(raw)));
       } catch (e) {
         // Beschädigte Daten nicht stillschweigend überschreiben, sondern beiseitelegen.
         try {
@@ -2641,6 +2674,14 @@
     }
     s.wrongStack = s.wrongStack.filter((id) => WORDS.has(id));
     return s;
+  }
+
+  function migrate(saved) {
+    if (saved.xpScheme !== XP_SCHEME) {
+      saved.xp = Math.round((saved.xp || 0) / 5);
+      saved.xpScheme = XP_SCHEME;
+    }
+    return saved;
   }
 
   function saveState() {
@@ -2695,7 +2736,7 @@
       }
       const when = data.savedAt ? new Date(data.savedAt).toLocaleString("de-DE") : "unbekannt";
       if (!confirm("Sicherung vom " + when + " laden? Dein aktueller Fortschritt wird dabei ersetzt.")) return;
-      state = Object.assign(defaultState(), data.state);
+      state = Object.assign(defaultState(), migrate(data.state));
       state.wrongStack = state.wrongStack.filter((id) => WORDS.has(id));
       saveState();
       if (synth) pickVoice();
@@ -2729,8 +2770,35 @@
     return c.words.filter((w) => isLearned(w.es)).length;
   }
 
+  function levelStart(level) {
+    const last = LEVEL_THRESHOLDS.length;
+    return level <= last ? LEVEL_THRESHOLDS[level - 1] : LEVEL_THRESHOLDS[last - 1] + (level - last) * 5000;
+  }
+
   function levelInfo(xp) {
-    return { level: Math.floor(xp / XP_PER_LEVEL) + 1, into: xp % XP_PER_LEVEL };
+    let level = 1;
+    while (xp >= levelStart(level + 1)) level++;
+    const start = levelStart(level);
+    const next = levelStart(level + 1);
+    return { level, into: xp - start, span: next - start, toNext: next - xp };
+  }
+
+  function todayXp() {
+    return state.today.day === todayKey() ? state.today.xp : 0;
+  }
+
+  // Zählt XP gesamt und fürs Tagesziel; meldet, ob das Tagesziel gerade erreicht wurde.
+  function addXp(amount, s) {
+    if (state.today.day !== todayKey()) state.today = { day: todayKey(), xp: 0 };
+    const before = state.today.xp;
+    state.today.xp += amount;
+    state.xp += amount;
+    const reached = before < state.dailyGoal && state.today.xp >= state.dailyGoal;
+    if (s) {
+      s.xp += amount;
+      if (reached) s.goalReached = true;
+    }
+    return reached;
   }
 
   function dayKey(d) {
@@ -3061,8 +3129,7 @@
   }
 
   function reward(s, id, gain) {
-    s.xp += gain;
-    state.xp += gain;
+    addXp(gain, s);
     s.combo++;
     s.bestCombo = Math.max(s.bestCombo, s.combo);
     s.done.add(id);
@@ -3205,9 +3272,9 @@
     s.firstRight = [...s.firstTry.values()].filter(Boolean).length;
     const ratio = s.firstRight / s.total;
     s.stars = ratio === 1 ? 3 : ratio >= 0.6 ? 2 : 1;
+    addXp(XP_ROUND_BONUS, s);
     if (ratio === 1) {
-      s.xp += XP_PERFECT_BONUS;
-      state.xp += XP_PERFECT_BONUS;
+      addXp(XP_PERFECT_BONUS, s);
       state.perfectSessions++;
     }
     if (s.kind === "verbs") {
@@ -3633,7 +3700,7 @@
     delete state.podcastPos[p.id];
     if (!state.podcastsHeard.includes(p.id)) {
       state.podcastsHeard.push(p.id);
-      state.xp += XP_EPISODE;
+      p.goalReached = addXp(XP_EPISODE);
       p.xp = XP_EPISODE;
     }
     bumpStreak();
@@ -3992,15 +4059,22 @@
   }
 
   function playerCard() {
-    const { level, into } = levelInfo(state.xp);
+    const { level, into, span, toNext } = levelInfo(state.xp);
     const streak = currentStreak();
+    const done = todayXp();
+    const goalMet = done >= state.dailyGoal;
     return `
       <section class="player">
         <div class="player-top">
           <span class="lvl">Level ${level}</span>
-          <span class="xp">noch ${XP_PER_LEVEL - into} XP bis Level ${level + 1}</span>
+          <span class="xp">noch ${toNext} XP bis Level ${level + 1}</span>
         </div>
-        <div class="bar"><span style="width:${(into / XP_PER_LEVEL) * 100}%"></span></div>
+        <div class="bar"><span style="width:${(into / span) * 100}%"></span></div>
+        <div class="goal ${goalMet ? "met" : ""}">
+          <span>🎯 Tagesziel ${goalMet ? "erreicht!" : ""}</span>
+          <span>${done} / ${state.dailyGoal} XP</span>
+        </div>
+        <div class="bar goal-bar"><span style="width:${Math.min(1, done / state.dailyGoal) * 100}%"></span></div>
         <div class="chips">
           <span class="chip">🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
           <span class="chip">📚 ${learnedCount()} / ${VOCAB.length} Wörter</span>
@@ -4062,10 +4136,26 @@
               <span class="desc">${esc(m.desc)}</span>
             </button>`).join("")}
         </div>` : ""}
+      ${goalPanel()}
       ${voicePanel()}
       ${progressPanel()}
       <h2 class="section-title">Abzeichen <small class="count">${state.badges.length} / ${BADGES.length}</small></h2>
       <div class="badges">${[...BADGES].sort((a, b) => state.badges.includes(b.id) - state.badges.includes(a.id)).map(badgeTile).join("")}</div>`;
+  }
+
+  function goalPanel() {
+    return `
+      <section class="panel goal-panel">
+        <h3>🎯 Dein Tagesziel</h3>
+        <p>Eine Runde bringt etwa 15–30 XP. Such dir aus, wie viel du täglich schaffen willst – kleine, regelmäßige Einheiten bringen am meisten.</p>
+        <div class="goal-options">
+          ${DAILY_GOALS.map((g) => `
+            <button class="level-btn ${g.xp === state.dailyGoal ? "on" : ""}" data-action="set-goal" data-goal="${g.xp}">
+              <span>${esc(g.name)}</span>
+              <small>${g.xp} XP am Tag</small>
+            </button>`).join("")}
+        </div>
+      </section>`;
   }
 
   function progressPanel() {
@@ -4717,6 +4807,7 @@
         ${p.finished ? `
           <div class="pc-done">
             <b>🎉 Folge fertig gehört!${p.xp ? ` +${p.xp} XP` : ""}</b>
+            ${p.goalReached ? `<div class="levelup goal-banner">🎯 Tagesziel erreicht!</div>` : ""}
             ${p.newBadges.length ? `<div class="badges">${p.newBadges.map(badgeTile).join("")}</div>` : ""}
             <div class="btn-stack pair">
               <button class="btn sun" data-action="start-quiz" data-id="${ep.id}">❓ Verständnisfragen</button>
@@ -4824,6 +4915,7 @@
             <div class="stat"><b>+${s.xp}</b><span>XP</span></div>
             <div class="stat"><b>${s.bestCombo}</b><span>beste Serie</span></div>
           </div>
+          ${s.goalReached ? `<div class="levelup goal-banner">🎯 Tagesziel erreicht! ${todayXp()} XP heute – ¡Muy bien!</div>` : ""}
           ${levelNow > levelBefore ? `<div class="levelup">🎊 Level ${levelNow} erreicht!</div>` : ""}
           ${s.newBadges.length ? `
             <div class="new-badges">
@@ -5030,6 +5122,11 @@
       case "say":
         speak(el.dataset.text);
         break;
+      case "set-goal":
+        state.dailyGoal = Number(el.dataset.goal);
+        saveState();
+        render();
+        break;
       case "export":
         exportProgress();
         break;
@@ -5130,6 +5227,7 @@
     render();
   });
 
+  saveState();
   requestPersistence();
   render();
 })();
