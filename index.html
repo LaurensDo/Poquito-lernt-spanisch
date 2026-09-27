@@ -988,6 +988,66 @@
 
   .quiz-q { font-size: clamp(1.3rem, 4.5vw, 1.7rem); font-weight: 900; line-height: 1.3; }
 
+  /* ---------- Sprechen ---------- */
+  .listen-row { display: flex; justify-content: center; gap: 10px; }
+  .listen-row .slow-btn { margin: 16px 0 0; }
+
+  .tip {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: var(--bg);
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .speak-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .mic-btn {
+    width: 110px;
+    height: 110px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 7px 0 var(--primary-dark);
+    color: #fff;
+    font-size: 3rem;
+    cursor: pointer;
+  }
+
+  .mic-btn:active { transform: translateY(5px); box-shadow: 0 2px 0 var(--primary-dark); }
+
+  .mic-btn.on {
+    background: var(--bad);
+    box-shadow: 0 7px 0 var(--bad-dark);
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  .mic-label { color: var(--muted); font-weight: 900; }
+  .interim { min-height: 1.5em; font-size: 1.2rem; font-weight: 800; text-align: center; }
+  .said { margin-top: 8px; font-size: 1.5rem; font-weight: 900; line-height: 1.4; }
+  .said .ok { color: var(--good-dark); }
+  .said .miss { color: var(--bad); text-decoration: underline wavy; }
+  .heard { margin-top: 6px; color: var(--muted); font-weight: 800; }
+  .feedback.neutral { background: var(--surface); color: var(--ink); box-shadow: 0 4px 0 var(--line); }
+
+  .row-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .row-btns .btn { margin-top: 0; }
+  .link-btn.inline { display: inline; margin: 0 0 0 4px; font-size: inherit; color: inherit; }
+
   /* ---------- Ergebnis ---------- */
   .result {
     margin-bottom: 22px;
@@ -1076,7 +1136,8 @@
     .grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .grid.two { grid-template-columns: repeat(2, 1fr); }
     .grid.three { grid-template-columns: repeat(3, 1fr); }
-    .grid.modules { grid-template-columns: repeat(4, 1fr); }
+    .grid.modules { grid-template-columns: repeat(5, 1fr); }
+    .grid.modules .tile.big { padding: 20px 16px; }
     .grid.modules > :last-child:nth-child(odd) { grid-column: auto; }
     .btn-stack.pair { grid-template-columns: 1fr 1fr; }
     .play-btn { width: 140px; height: 140px; font-size: 3.8rem; }
@@ -1087,7 +1148,7 @@
     .speak { width: 68px; height: 68px; font-size: 1.8rem; }
     .letter { width: 64px; height: 70px; font-size: 1.9rem; }
     .accent { width: 58px; height: 58px; }
-    .badges { grid-template-columns: repeat(7, 1fr); }
+    .badges { grid-template-columns: repeat(6, 1fr); }
   }
 
   @keyframes pulse {
@@ -1592,7 +1653,7 @@
     { id: "verben", name: "Verben", icon: "🔤", color: "#3A86FF", action: "open-verbs" },
     { id: "hoeren", name: "Hören", icon: "🎧", color: "#1FA6A0", action: "open-listen" },
     { id: "podcast", name: "Podcast", icon: "🎙️", color: "#9B5DE5", action: "open-podcasts" },
-    { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", desc: "Aussprache üben" },
+    { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", action: "open-speak" },
   ];
 
   // ---------------------------------------------------------------
@@ -2321,6 +2382,104 @@
   const FEMALE_VOICE_NAMES = ["Mónica", "Monica", "Paulina", "Marisol", "Luciana", "Isabela", "Soledad", "Angélica", "Francisca", "Esperanza", "Helena", "Laura", "Lucía", "Lucia", "Elvira", "Penélope", "Dalia"];
   const MALE_VOICE_NAMES = ["Jorge", "Juan", "Diego", "Carlos", "Enrique", "Pablo", "Álvaro", "Alvaro", "Andrés", "Miguel", "Raúl", "Tomás"];
 
+  // ---------------------------------------------------------------
+  // Sprechen: typische Aussprache-Hürden mit Tipps, Quellen und Stufen
+  // ---------------------------------------------------------------
+  const SOUNDS = [
+    {
+      id: "rr", title: "rr – gerolltes R",
+      tip: "Lass die Zungenspitze mehrmals schnell hinter den oberen Zähnen flattern. Am Wortanfang und bei rr wird immer gerollt.",
+      words: [
+        { es: "el perro", de: "der Hund" },
+        { es: "la guitarra", de: "die Gitarre" },
+        { es: "la radio", de: "das Radio" },
+        { es: "arriba", de: "oben" },
+      ],
+    },
+    {
+      id: "j", title: "j / g – wie „ch“ in „Bach“",
+      tip: "j und g vor e oder i sprichst du kratzig hinten im Hals, wie das deutsche „ch“ in „Bach“.",
+      words: [
+        { es: "el jamón", de: "der Schinken" },
+        { es: "la gente", de: "die Leute" },
+        { es: "joven", de: "jung" },
+        { es: "el ajo", de: "der Knoblauch" },
+      ],
+    },
+    {
+      id: "enye", title: "ñ – wie „nj“",
+      tip: "ñ klingt wie „nj“ – ähnlich wie in „Champagner“.",
+      words: [
+        { es: "el niño", de: "das Kind" },
+        { es: "mañana", de: "morgen" },
+        { es: "España", de: "Spanien" },
+        { es: "el año", de: "das Jahr" },
+      ],
+    },
+    {
+      id: "ll", title: "ll / y – wie „j“",
+      tip: "ll und y sprichst du in den meisten Regionen wie das deutsche „j“ in „ja“.",
+      words: [
+        { es: "la calle", de: "die Straße" },
+        { es: "llamar", de: "rufen / anrufen" },
+        { es: "yo", de: "ich" },
+        { es: "la playa", de: "der Strand" },
+      ],
+    },
+    {
+      id: "z", title: "z / ce / ci – gelispelt",
+      tip: "In Spanien klingen z sowie c vor e und i wie das englische „th“ in „think“. In Lateinamerika sagt man ein scharfes s.",
+      words: [
+        { es: "el zapato", de: "der Schuh" },
+        { es: "la cerveza", de: "das Bier" },
+        { es: "cinco", de: "fünf" },
+        { es: "la plaza", de: "der Platz" },
+      ],
+    },
+    {
+      id: "bv", title: "b und v – derselbe Laut",
+      tip: "b und v klingen gleich: am Wortanfang wie ein deutsches b, zwischen Vokalen weicher, mit fast geschlossenen Lippen.",
+      words: [
+        { es: "el vino", de: "der Wein" },
+        { es: "la vaca", de: "die Kuh" },
+        { es: "beber", de: "trinken" },
+        { es: "nuevo", de: "neu" },
+      ],
+    },
+    {
+      id: "h", title: "h – immer stumm",
+      tip: "Das h wird nie gesprochen: „hola“ klingt wie „ola“.",
+      words: [
+        { es: "hola", de: "hallo" },
+        { es: "hoy", de: "heute" },
+        { es: "el hombre", de: "der Mann" },
+        { es: "hablar", de: "sprechen" },
+      ],
+    },
+    {
+      id: "vokale", title: "Vokale – kurz und klar",
+      tip: "Spanische Vokale sind immer kurz und klar und werden nie gedehnt. Auch ein e am Wortende wird deutlich gesprochen.",
+      words: [
+        { es: "la mesa", de: "der Tisch" },
+        { es: "el libro", de: "das Buch" },
+        { es: "la luna", de: "der Mond" },
+        { es: "bueno", de: "gut" },
+      ],
+    },
+  ];
+
+  const SPEAK_SOURCES = [
+    { id: "sounds", name: "Schwierige Laute", icon: "👅", color: "#FF6B9A", desc: "rr, j, ñ, ll, z …" },
+    { id: "words", name: "Wörter", icon: "🔤", color: "#E4572E", desc: "aus deinen Vokabeln" },
+    { id: "sentences", name: "Sätze", icon: "💬", color: "#3A86FF", desc: "Alltagssätze" },
+  ];
+
+  const SPEAK_LEVELS = [
+    { n: 1, icon: "👀", name: "Nachsprechen", desc: "Text sehen & hören", hint: "Hör zu und sprich nach." },
+    { n: 2, icon: "👂", name: "Nach Gehör", desc: "nur hören", hint: "Hör genau hin und sprich nach – ohne Text." },
+    { n: 3, icon: "🧠", name: "Übersetzen", desc: "Deutsch → Spanisch", hint: "Sag es auf Spanisch." },
+  ];
+
   const SESSION_SIZE = 10;
   const LEARNED_LEVEL = 3;
   const MAX_LEVEL = 5;
@@ -2331,6 +2490,7 @@
   const MAX_STARS_PER_TENSE = VERB_GROUPS.length * LEVELS.length * 3;
   const MAX_LISTEN_STARS = LISTEN_SOURCES.length * LISTEN_LEVELS.length * 3;
   const MAX_PODCAST_STARS = PODCASTS.length * 3;
+  const MAX_SPEAK_STARS = SPEAK_SOURCES.length * SPEAK_LEVELS.length * 3;
   const XP_EPISODE = 30;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
 
@@ -2340,6 +2500,7 @@
   const TENSE_BY_ID = new Map(TENSES.map((t) => [t.id, t]));
   const VERB_BY_INF = new Map(VERBS.map((v) => [v.inf, v]));
   const PODCAST_BY_ID = new Map(PODCASTS.map((p) => [p.id, p]));
+  const SOUND_BY_ID = new Map(SOUNDS.map((s) => [s.id, s]));
 
   const BADGES = [
     { id: "first-session", icon: "🎉", name: "Erste Runde", desc: "Vokabel-Runde geschafft", test: () => state.sessionsDone >= 1 },
@@ -2358,6 +2519,8 @@
     { id: "listen-dictation", icon: "📝", name: "Diktat-Profi", desc: "Diktat mit 3 Sternen", test: () => Object.keys(state.listenStars).some((k) => k.endsWith("|3") && state.listenStars[k] === 3) },
     { id: "podcast-first", icon: "🎙️", name: "Zuhörer", desc: "Erste Folge gehört", test: () => state.podcastsHeard.length >= 1 },
     { id: "podcast-all", icon: "📻", name: "Podcast-Fan", desc: "Alle Folgen gehört", test: () => PODCASTS.every((p) => state.podcastsHeard.includes(p.id)) },
+    { id: "speak-first", icon: "🗣️", name: "Plaudertasche", desc: "Sprech-Runde geschafft", test: () => state.speakSessions >= 1 },
+    { id: "speak-pro", icon: "🎤", name: "Aussprache-Profi", desc: "Sprechen mit 3 Sternen", test: () => Object.values(state.speakStars).some((v) => v === 3) },
   ];
 
   const app = document.getElementById("app");
@@ -2392,6 +2555,10 @@
       podcastStars: {},
       podcastSpeed: 1,
       podcastShowDe: false,
+      speakStars: {},
+      speakSessions: 0,
+      speakLevel: 1,
+      speakMode: "auto",
     };
   }
 
@@ -2510,8 +2677,18 @@
     return PODCASTS.reduce((sum, p) => sum + (state.podcastStars[p.id] || 0), 0);
   }
 
+  function speakStarsFor(source, level) {
+    return state.speakStars[source + "|" + level] || 0;
+  }
+
+  function totalSpeakStars() {
+    let sum = 0;
+    SPEAK_SOURCES.forEach((s) => SPEAK_LEVELS.forEach((l) => { sum += speakStarsFor(s.id, l.n); }));
+    return sum;
+  }
+
   function totalStars() {
-    return totalVerbStars() + totalListenStars() + totalPodcastStars();
+    return totalVerbStars() + totalListenStars() + totalPodcastStars() + totalSpeakStars();
   }
 
   // ---------- Konjugation ----------
@@ -2821,13 +2998,16 @@
       finishSession();
       return;
     }
+    abortListening();
     const base = s.queue.shift();
     if (s.kind === "listen") s.task = prepareListenTask(base, s.source, s.level);
     else if (s.kind === "quiz") s.task = Object.assign({}, base, { base, result: null, accentOnly: false, given: "", options: shuffle([base.answer, ...base.wrong]) });
+    else if (s.kind === "speak") s.task = Object.assign({}, base, { base, result: null, heard: "", marks: null, recordingUrl: null });
     else s.task = prepareTask(base, s.level);
     s.fresh = true;
     render();
     if (s.kind === "listen") speak(s.task.audio);
+    if (s.kind === "speak" && s.level < 3) speak(s.task.es);
     focusInput();
   }
 
@@ -2918,6 +3098,10 @@
       state.listenSessions++;
     } else if (s.kind === "quiz") {
       state.podcastStars[s.episode] = Math.max(state.podcastStars[s.episode] || 0, s.stars);
+    } else if (s.kind === "speak") {
+      const key = s.source + "|" + s.level;
+      state.speakStars[key] = Math.max(state.speakStars[key] || 0, s.stars);
+      state.speakSessions++;
     } else {
       state.sessionsDone++;
     }
@@ -3344,6 +3528,253 @@
     nextTask();
   }
 
+  // ---------- Sprechen ----------
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  const canRecord = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+  let recognizer = null;
+  let recorder = null;
+
+  // "auto": Spracherkennung prüft; "record": aufnehmen und selbst vergleichen; "self": nur selbst bewerten.
+  function speakMode() {
+    if (state.speakMode === "record" && canRecord) return "record";
+    if (Recognition) return "auto";
+    return canRecord ? "record" : "self";
+  }
+
+  function buildSpeakTasks(source) {
+    if (source === "sounds") {
+      return shuffle(SOUNDS.flatMap((snd) => snd.words.map((w) => ({ id: w.es, es: w.es, de: w.de, sound: snd.id })))).slice(0, SESSION_SIZE);
+    }
+    if (source === "sentences") {
+      return shuffle(SENTENCES.slice()).slice(0, SESSION_SIZE).map((s) => ({ id: s.es, es: s.es, de: s.de }));
+    }
+    const seen = shuffle(VOCAB.filter((w) => isSeen(w.es)));
+    const unseen = shuffle(VOCAB.filter((w) => !isSeen(w.es)));
+    return shuffle([...seen.slice(0, 6), ...unseen, ...seen.slice(6)].slice(0, SESSION_SIZE))
+      .map((w) => ({ id: w.es, es: w.es, de: w.de }));
+  }
+
+  function startSpeak(source) {
+    if (!state.sound) {
+      state.sound = true;
+      saveState();
+    }
+    const tasks = buildSpeakTasks(source);
+    newSession("speak", { source, level: state.speakLevel, queue: tasks, total: tasks.length, task: null, listening: false, interim: "", notice: "" });
+    view = "drill";
+    nextTask();
+  }
+
+  // Die Erkennung schreibt Zahlen oft als Ziffern („30“) – für den Vergleich werden sie zu Wörtern.
+  function spokenWords(str) {
+    const withWords = str.replace(/\d+/g, (d) => (Number(d) <= 100 ? numberWord(Number(d)) : d));
+    return stripAccents(normalizeListen(withWords)).split(" ").filter(Boolean);
+  }
+
+  // Markiert jedes Wort des Zielsatzes, das (in richtiger Reihenfolge) erkannt wurde.
+  function compareSpoken(target, heard) {
+    const norm = target.split(/\s+/).map((tok) => spokenWords(tok).join(" "));
+    const keys = norm.map((n, i) => ({ n, i })).filter((x) => x.n);
+    const heardWords = spokenWords(heard);
+    const a = keys.map((k) => k.n);
+    const dp = Array.from({ length: a.length + 1 }, () => new Array(heardWords.length + 1).fill(0));
+    for (let i = a.length - 1; i >= 0; i--) {
+      for (let j = heardWords.length - 1; j >= 0; j--) {
+        dp[i][j] = a[i] === heardWords[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+      }
+    }
+    const marks = norm.map((n) => !n);
+    let i = 0;
+    let j = 0;
+    while (i < a.length && j < heardWords.length) {
+      if (a[i] === heardWords[j]) {
+        marks[keys[i].i] = true;
+        i++;
+        j++;
+      } else if (dp[i + 1][j] >= dp[i][j + 1]) i++;
+      else j++;
+    }
+    return { marks, matched: dp[0][0], total: a.length };
+  }
+
+  function evaluateSpeech(alternatives) {
+    const t = session.task;
+    let best = null;
+    alternatives.forEach((alt) => {
+      const r = compareSpoken(t.es, alt);
+      if (!best || r.matched > best.matched) best = Object.assign(r, { heard: alt });
+    });
+    const ok = best.matched === best.total || (best.total >= 4 && best.matched / best.total >= 0.8);
+    submitSpeak(ok, best.heard, best.marks);
+  }
+
+  function submitSpeak(ok, heard, marks) {
+    const s = session;
+    const t = s.task;
+    const first = !s.firstTry.has(t.id);
+    if (first) s.firstTry.set(t.id, ok);
+    t.result = ok ? "right" : "wrong";
+    t.heard = heard;
+    t.marks = marks;
+    if (ok) {
+      reward(s, t.id, first ? XP_FIRST_TRY : XP_RETRY);
+      playCorrect();
+      setTimeout(() => {
+        if (session === s && s.task === t) nextTask();
+      }, 1800);
+    } else {
+      s.combo = 0;
+      playWrong();
+    }
+    saveState();
+    render();
+  }
+
+  // Falsche Aufgaben kommen einmal wieder, damit man nicht an einem Wort hängen bleibt.
+  function speakGiveUp() {
+    const s = session;
+    const t = s.task;
+    if (!s.firstTry.has(t.id)) s.firstTry.set(t.id, false);
+    s.combo = 0;
+    if (!t.base.requeued) {
+      t.base.requeued = true;
+      s.queue.splice(Math.min(3, s.queue.length), 0, t.base);
+    }
+    nextTask();
+  }
+
+  function micPressed() {
+    const s = session;
+    if (s.listening) {
+      if (recognizer) recognizer.stop();
+      if (recorder && recorder.state === "recording") recorder.stop();
+      return;
+    }
+    if (synth) synth.cancel();
+    s.notice = "";
+    s.interim = "";
+    s.task.result = null;
+    if (speakMode() === "auto") startRecognition();
+    else startRecording();
+  }
+
+  function startRecognition() {
+    const s = session;
+    const rec = new Recognition();
+    recognizer = rec;
+    rec.lang = "es-ES";
+    rec.interimResults = true;
+    rec.maxAlternatives = 3;
+    rec.continuous = false;
+    let finalAlternatives = null;
+    rec.onresult = (e) => {
+      if (recognizer !== rec) return;
+      const res = e.results[e.results.length - 1];
+      s.interim = res[0].transcript;
+      if (res.isFinal) finalAlternatives = Array.from(res, (alt) => alt.transcript);
+      const el = app.querySelector(".interim");
+      if (el) el.textContent = s.interim;
+    };
+    rec.onerror = (e) => {
+      if (recognizer !== rec) return;
+      if (e.error === "service-not-allowed" && canRecord) {
+        state.speakMode = "record";
+        saveState();
+        s.notice = "Die Spracherkennung ist auf diesem Gerät nicht erlaubt – du übst jetzt mit Aufnahme und Vergleich. (Erlauben kannst du sie unter Einstellungen → Siri → Diktieren.)";
+      } else if (e.error === "not-allowed") {
+        s.notice = "Bitte erlaube den Zugriff aufs Mikrofon (Einstellungen → Safari → Mikrofon).";
+      } else if (e.error === "no-speech") {
+        s.notice = "Ich habe nichts gehört. Tippe nochmal aufs Mikrofon und sprich deutlich.";
+      } else if (e.error !== "aborted") {
+        s.notice = "Das hat nicht geklappt. Versuch es bitte nochmal.";
+      }
+    };
+    rec.onend = () => {
+      if (recognizer !== rec) return;
+      recognizer = null;
+      s.listening = false;
+      const heard = finalAlternatives || (s.interim ? [s.interim] : null);
+      if (heard && !s.notice) evaluateSpeech(heard);
+      else {
+        if (!s.notice) s.notice = "Ich habe nichts verstanden. Versuch es nochmal.";
+        render();
+      }
+    };
+    s.listening = true;
+    render();
+    try {
+      rec.start();
+    } catch (e) {
+      recognizer = null;
+      s.listening = false;
+      s.notice = "Das Mikrofon ließ sich nicht starten.";
+      render();
+    }
+  }
+
+  async function startRecording() {
+    const s = session;
+    const t = s.task;
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      s.notice = "Kein Zugriff aufs Mikrofon. Erlaube ihn unter Einstellungen → Safari → Mikrofon.";
+      render();
+      return;
+    }
+    if (session !== s || s.task !== t) {
+      stream.getTracks().forEach((track) => track.stop());
+      return;
+    }
+    const chunks = [];
+    const rec = new MediaRecorder(stream);
+    recorder = rec;
+    rec.ondataavailable = (e) => {
+      if (e.data.size) chunks.push(e.data);
+    };
+    rec.onstop = () => {
+      stream.getTracks().forEach((track) => track.stop());
+      if (recorder === rec) recorder = null;
+      if (rec.aborted || session !== s || s.task !== t) return;
+      s.listening = false;
+      if (t.recordingUrl) URL.revokeObjectURL(t.recordingUrl);
+      t.recordingUrl = URL.createObjectURL(new Blob(chunks, { type: rec.mimeType || "audio/mp4" }));
+      render();
+      playRecording();
+    };
+    rec.start();
+    s.listening = true;
+    render();
+    setTimeout(() => {
+      if (recorder === rec && rec.state === "recording") rec.stop();
+    }, 8000);
+  }
+
+  function playRecording() {
+    const t = session.task;
+    if (t.recordingUrl) new Audio(t.recordingUrl).play().catch(() => {});
+  }
+
+  function abortListening() {
+    if (recognizer) {
+      const rec = recognizer;
+      recognizer = null;
+      try {
+        rec.abort();
+      } catch (e) {
+        // war schon beendet
+      }
+    }
+    if (recorder) {
+      const rec = recorder;
+      recorder = null;
+      rec.aborted = true;
+      if (rec.state === "recording") rec.stop();
+    }
+    if (session) session.listening = false;
+  }
+
   // ---------- Effekte ----------
   function floatText(parent, text) {
     const el = document.createElement("div");
@@ -3428,6 +3859,7 @@
       verben: `${starsText(totalVerbStars(), TENSES.length * MAX_STARS_PER_TENSE)} · ${TENSES.length} Zeitformen`,
       hoeren: `${starsText(totalListenStars(), MAX_LISTEN_STARS)} · Wörter, Sätze, Zahlen`,
       podcast: `${state.podcastsHeard.length} / ${PODCASTS.length} Folgen gehört · ${starsText(totalPodcastStars(), MAX_PODCAST_STARS)}`,
+      sprechen: `${starsText(totalSpeakStars(), MAX_SPEAK_STARS)} · Laute, Wörter, Sätze`,
     };
     return `
       <header class="hero">
@@ -3450,16 +3882,17 @@
             <span class="desc">${esc(moduleDesc[m.id])}</span>
           </button>`).join("")}
       </div>
-      <h2 class="section-title">Demnächst</h2>
-      <div class="grid two">
-        ${upcoming.map((m) => `
-          <button class="tile small locked" data-action="locked" aria-disabled="true" style="--c:${m.color}">
-            <span class="pill">Bald</span>
-            <span class="ico">${m.icon}</span>
-            <span class="name">${esc(m.name)}</span>
-            <span class="desc">${esc(m.desc)}</span>
-          </button>`).join("")}
-      </div>
+      ${upcoming.length ? `
+        <h2 class="section-title">Demnächst</h2>
+        <div class="grid two">
+          ${upcoming.map((m) => `
+            <button class="tile small locked" data-action="locked" aria-disabled="true" style="--c:${m.color}">
+              <span class="pill">Bald</span>
+              <span class="ico">${m.icon}</span>
+              <span class="name">${esc(m.name)}</span>
+              <span class="desc">${esc(m.desc)}</span>
+            </button>`).join("")}
+        </div>` : ""}
       <h2 class="section-title">Abzeichen</h2>
       <div class="badges">${BADGES.map(badgeTile).join("")}</div>`;
   }
@@ -3857,6 +4290,145 @@
       </div>`;
   }
 
+  function speakView() {
+    const lvl = state.speakLevel;
+    const mode = speakMode();
+    const modeInfo = {
+      auto: `✅ Poquito hört zu und prüft deine Aussprache automatisch.${canRecord ? ` <button class="link-btn inline" data-action="set-speak-mode" data-mode="record">Lieber aufnehmen und selbst vergleichen</button>` : ""}`,
+      record: `🎙️ Du nimmst dich auf und vergleichst mit dem Original.${Recognition ? ` <button class="link-btn inline" data-action="set-speak-mode" data-mode="auto">Automatisch prüfen lassen</button>` : ""}`,
+      self: "Dein Browser kann nicht aufnehmen – sprich laut nach und bewerte dich selbst.",
+    }[mode];
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
+        <h2>🗣️ Sprechen<small>Aussprache üben</small></h2>
+        ${soundButton()}
+      </div>
+      <div class="notice">${modeInfo}</div>
+      <div class="summary">
+        <div class="stat"><b>${totalSpeakStars()}</b><span>von ${MAX_SPEAK_STARS} Sternen</span></div>
+        <div class="stat"><b>${state.speakSessions}</b><span>Runden</span></div>
+        <div class="stat"><b>${lvl}</b><span>Stufe gewählt</span></div>
+      </div>
+      <h2 class="section-title">Schwierigkeit</h2>
+      <div class="levels">
+        ${SPEAK_LEVELS.map((l) => `
+          <button class="level-btn ${l.n === lvl ? "on" : ""}" data-action="set-speak-level" data-level="${l.n}">
+            <b>${l.icon}</b>
+            <span>${esc(l.name)}</span>
+            <small>${esc(l.desc)}</small>
+          </button>`).join("")}
+      </div>
+      <h2 class="section-title">Was möchtest du sprechen?</h2>
+      <div class="grid">
+        ${SPEAK_SOURCES.map((src) => `
+          <button class="tile" data-action="start-speak" data-source="${src.id}" style="--c:${src.color}">
+            <span class="ico">${src.icon}</span>
+            <span class="name">${esc(src.name)}</span>
+            <span class="desc">${esc(src.desc)}</span>
+            <span class="stars-line">${starRow(speakStarsFor(src.id, lvl))} Stufe ${lvl}</span>
+          </button>`).join("")}
+      </div>
+      <section class="panel">
+        <h3>👅 Aussprache-Tipps</h3>
+        ${SOUNDS.map((snd) => `
+          <div class="example">
+            <div class="ex-text">
+              <div class="ex-use">${esc(snd.title)}</div>
+              <div class="ex-de">${esc(snd.tip)}</div>
+              <div class="ex-es">${snd.words.map((w) => esc(w.es)).join(" · ")}</div>
+            </div>
+            ${sayButton(snd.words.map((w) => w.es).join(", "))}
+          </div>`).join("")}
+      </section>`;
+  }
+
+  function speakDrillView() {
+    const s = session;
+    const t = s.task;
+    const src = SPEAK_SOURCES.find((x) => x.id === s.source);
+    const level = SPEAK_LEVELS[s.level - 1];
+    const snd = t.sound ? SOUND_BY_ID.get(t.sound) : null;
+    const mode = speakMode();
+    const attempted = t.result || t.recordingUrl;
+    const fresh = s.fresh;
+    s.fresh = false;
+
+    let main;
+    if (s.level === 1) main = `<div class="word">${esc(t.es)}</div><div class="sub">${esc(t.de)}</div>`;
+    else if (s.level === 2) main = attempted ? `<div class="word">${esc(t.es)}</div><div class="sub">${esc(t.de)}</div>` : `<button class="play-btn" data-action="speak" aria-label="Anhören">🔊</button>`;
+    else main = `<div class="word">${esc(t.de)}</div>${attempted ? `<div class="sub">${esc(t.es)}</div>` : ""}`;
+    const listenBtns = s.level < 3 || attempted
+      ? `<div class="listen-row">
+          ${s.level === 2 && !attempted ? "" : `<button class="slow-btn" data-action="speak">🔊 Anhören</button>`}
+          <button class="slow-btn" data-action="speak-slow">🐢 Langsam</button>
+        </div>`
+      : "";
+
+    let answer = "";
+    if (t.result && t.marks) {
+      answer = `
+        <div class="feedback ${t.result === "right" ? "good" : "bad"}">
+          ${t.result === "right" ? "✓ ¡Muy bien!" : "Fast! Die roten Wörter habe ich nicht erkannt."}
+          <div class="said">${t.es.split(/\s+/).map((tok, i) => `<span class="${t.marks[i] ? "ok" : "miss"}">${esc(tok)}</span>`).join(" ")}</div>
+          <div class="heard">Verstanden: „${esc(t.heard)}“</div>
+          ${t.result === "wrong" ? `
+            <div class="row-btns">
+              <button class="btn" data-action="mic">🎤 Nochmal</button>
+              <button class="btn light" data-action="speak-next">Weiter</button>
+            </div>` : ""}
+        </div>`;
+    } else if (mode === "record" && t.recordingUrl && !t.result) {
+      answer = `
+        <div class="feedback neutral">
+          Vergleiche deine Aufnahme mit dem Original:
+          <div class="row-btns">
+            <button class="btn light" data-action="play-mine">▶ Meine Aufnahme</button>
+            <button class="btn light" data-action="speak">🔊 Original</button>
+          </div>
+          <div class="row-btns">
+            <button class="btn good" data-action="speak-self" data-ok="1">✓ Klang gut</button>
+            <button class="btn bad" data-action="speak-self" data-ok="0">✗ Noch nicht</button>
+          </div>
+        </div>`;
+    } else if (mode === "self" && !t.result) {
+      answer = `
+        <div class="row-btns">
+          <button class="btn good" data-action="speak-self" data-ok="1">✓ Konnte ich</button>
+          <button class="btn bad" data-action="speak-self" data-ok="0">✗ Noch nicht</button>
+        </div>`;
+    } else if (t.result === "right") {
+      answer = `<div class="feedback good">✓ ¡Muy bien!</div>`;
+    }
+
+    const showMic = mode !== "self" && t.result !== "right" && !(t.result === "wrong" && t.marks);
+    const micLabel = s.listening
+      ? (mode === "auto" ? "Ich höre zu … sprich jetzt" : "Aufnahme läuft … tippen zum Stoppen")
+      : (t.recordingUrl ? "Nochmal aufnehmen" : "Tippen und sprechen");
+
+    return `
+      ${sessionTopbar()}
+      <div class="stage">
+        <div class="prompt ${fresh ? "enter" : ""}">
+          <span class="cat-chip" style="--c:${src.color}">${snd ? "👅 " + esc(snd.title) : src.icon + " " + esc(src.name)}</span>
+          <span class="lang">Stufe ${s.level}</span>
+          ${main}
+          ${listenBtns}
+          ${snd && s.level < 3 ? `<div class="tip">💡 ${esc(snd.tip)}</div>` : ""}
+          <div class="task">${esc(level.hint)}</div>
+        </div>
+        ${showMic ? `
+          <div class="speak-area">
+            <button class="mic-btn ${s.listening ? "on" : ""}" data-action="mic" aria-label="${esc(micLabel)}">${s.listening ? "■" : "🎤"}</button>
+            <div class="mic-label">${esc(micLabel)}</div>
+            ${mode === "auto" ? `<div class="interim">${esc(s.interim)}</div>` : ""}
+          </div>` : ""}
+        ${s.notice ? `<div class="notice">${esc(s.notice)}</div>` : ""}
+        ${answer}
+        ${t.result ? "" : `<button class="link-btn" data-action="speak-skip">Überspringen</button>`}
+      </div>`;
+  }
+
   function podcastsView() {
     const tile = (ep) => {
       const heard = state.podcastsHeard.includes(ep.id);
@@ -3959,6 +4531,7 @@
   function drillView() {
     if (session.kind === "listen") return listenDrillView();
     if (session.kind === "quiz") return quizView();
+    if (session.kind === "speak") return speakDrillView();
     const s = session;
     const t = s.task;
     const tense = TENSE_BY_ID.get(s.tense);
@@ -4004,6 +4577,10 @@
     } else if (s.kind === "quiz") {
       context = `<p>Podcast · ${esc(PODCAST_BY_ID.get(s.episode).title)}</p>`;
       backAction = `data-action="open-podcasts"`;
+    } else if (s.kind === "speak") {
+      const src = SPEAK_SOURCES.find((x) => x.id === s.source);
+      context = `<p>Sprechen · ${esc(src.name)} · ${esc(SPEAK_LEVELS[s.level - 1].name)}</p>`;
+      backAction = `data-action="open-speak"`;
     } else {
       canRepeat = s.source.type !== "mistakes" || state.wrongStack.length > 0;
     }
@@ -4043,6 +4620,7 @@
     listen: listenView,
     podcasts: podcastsView,
     episode: episodeView,
+    speak: speakView,
     drill: drillView,
     result: resultView,
   };
@@ -4057,6 +4635,7 @@
 
   function go(next) {
     if (synth) synth.cancel();
+    abortListening();
     stopPlayer();
     player = null;
     session = next === "session" || next === "drill" || next === "result" ? session : null;
@@ -4067,7 +4646,8 @@
 
   // ---------- Bedienung ----------
   const BACK_ACTIONS = new Set(["home", "exit"]);
-  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow"]);
+  // Keine Klick-Töne, wo gleich eigene Töne, Sprache oder das Mikrofon starten.
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self"]);
 
   app.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".accent")) e.preventDefault();
@@ -4149,6 +4729,7 @@
         if (session.kind === "verbs") startDrill(session.tense, session.group);
         else if (session.kind === "listen") startListen(session.source);
         else if (session.kind === "quiz") startQuiz(session.episode);
+        else if (session.kind === "speak") startSpeak(session.source);
         else startVocab(session.source);
         break;
       case "set-level":
@@ -4176,7 +4757,43 @@
         app.querySelector(".actions").classList.remove("hidden");
         break;
       case "speak":
-        speak(session.current);
+        speak(session.kind === "speak" ? session.task.es : session.current);
+        break;
+      case "speak-slow":
+        speak(session.task.es, 0.55);
+        break;
+      case "open-speak":
+        go("speak");
+        break;
+      case "set-speak-level":
+        state.speakLevel = Number(el.dataset.level);
+        saveState();
+        render();
+        break;
+      case "set-speak-mode":
+        state.speakMode = el.dataset.mode;
+        saveState();
+        render();
+        break;
+      case "start-speak":
+        startSpeak(el.dataset.source);
+        break;
+      case "mic":
+        micPressed();
+        break;
+      case "play-mine":
+        playRecording();
+        break;
+      case "speak-self":
+        if (el.dataset.ok === "1") submitSpeak(true, "", null);
+        else {
+          playWrong();
+          speakGiveUp();
+        }
+        break;
+      case "speak-next":
+      case "speak-skip":
+        speakGiveUp();
         break;
       case "say":
         speak(el.dataset.text);
@@ -4218,7 +4835,7 @@
         nextTask();
         break;
       case "exit":
-        go({ verbs: "tense", listen: "listen", quiz: "podcasts", vocab: "vocab" }[session.kind]);
+        go({ verbs: "tense", listen: "listen", quiz: "podcasts", speak: "speak", vocab: "vocab" }[session.kind]);
         break;
       case "toggle-sound":
         state.sound = !state.sound;
@@ -4228,7 +4845,7 @@
         sfx.tap();
         break;
       case "reset":
-        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, Hören, Podcast, XP, Abzeichen) löschen?")) {
+        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, Hören, Podcast, Sprechen, XP, Abzeichen) löschen?")) {
           state = Object.assign(defaultState(), { sound: state.sound });
           saveState();
           render();
