@@ -198,6 +198,12 @@
     font-weight: 900;
   }
 
+  .voice-panel { margin-bottom: 28px; }
+  .voice-panel p { color: var(--muted); font-size: 0.9rem; }
+  .voice-row { display: flex; gap: 10px; }
+  .voice-row .voice-select { flex: 1; min-width: 0; margin: 0; }
+  .voice-row .btn { width: auto; padding: 12px 18px; }
+
   .section-title .count { margin-left: 6px; color: var(--muted); font-size: 0.85rem; font-weight: 800; }
 
   .lead {
@@ -701,7 +707,7 @@
     table.conj td.pron { font-size: 0.72rem; }
   }
 
-  .verb-select {
+  .verb-select, .voice-select {
     width: 100%;
     margin-bottom: 12px;
     padding: 12px 14px;
@@ -2155,7 +2161,7 @@
       speakers: {
         C: { name: "Camarera", gender: "f", color: "#8D6E63" },
         P: { name: "Pablo", gender: "m", color: "#3A86FF" },
-        M: { name: "Marta", gender: "f", pitch: 1.12, color: "#E4572E" },
+        M: { name: "Marta", gender: "f", color: "#E4572E" },
       },
       lines: [
         { s: "C", es: "¡Hola, buenos días! ¿Qué te pongo?", de: "Hallo, guten Morgen! Was darf ich dir bringen?" },
@@ -2412,10 +2418,11 @@
     },
   ];
 
+  const VOICE_SAMPLE = "¡Hola! Me llamo Poquito. ¿Qué tal estás? Hoy vamos a aprender español juntos.";
   const PODCAST_SPEEDS = [0.75, 1, 1.25];
   // Safari spricht bei Rate 1 schon zügig und beschleunigt darüber sehr stark,
   // deshalb ist „1,25×“ bewusst nur leicht schneller.
-  const PODCAST_RATES = { 0.75: 0.75, 1: 1, 1.25: 1.1 };
+  const PODCAST_RATES = { 0.75: 0.6, 1: 0.8, 1.25: 0.9 };
   // Bekannte Namen spanischer Systemstimmen, um Sprecherinnen und Sprecher zu unterscheiden.
   const FEMALE_VOICE_NAMES = ["Mónica", "Monica", "Paulina", "Marisol", "Luciana", "Isabela", "Soledad", "Angélica", "Francisca", "Esperanza", "Helena", "Laura", "Lucía", "Lucia", "Elvira", "Penélope", "Dalia"];
   const MALE_VOICE_NAMES = ["Jorge", "Juan", "Diego", "Carlos", "Enrique", "Pablo", "Álvaro", "Alvaro", "Andrés", "Miguel", "Raúl", "Tomás"];
@@ -2598,6 +2605,7 @@
       speakSessions: 0,
       speakLevel: 1,
       speakMode: "auto",
+      voiceURI: null,
     };
   }
 
@@ -3351,17 +3359,38 @@
   const synth = "speechSynthesis" in window ? window.speechSynthesis : null;
   let spanishVoice = null;
 
+  // Spaß- und Effektstimmen von iOS/macOS klingen roboterhaft und kommen ans Ende.
+  const NOVELTY_VOICES = ["Eddy", "Flo", "Grandma", "Grandpa", "Oma", "Opa", "Abuela", "Abuelo", "Reed", "Rocko", "Sandy", "Shelley", "Albert", "Bahh", "Bells", "Boing", "Bubbles", "Cellos", "Jester", "Organ", "Superstar", "Trinoids", "Whisper", "Wobble", "Zarvox", "Fred", "Junior", "Kathy", "Ralph"];
+
+  function voiceScore(v) {
+    const id = (v.name + " " + (v.voiceURI || "")).toLowerCase();
+    const lang = v.lang.replace("_", "-");
+    let score = lang === "es-ES" ? 30 : 10;
+    if (id.includes("premium")) score += 25;
+    else if (/enhanced|erweitert|verbessert|neural|natural/.test(id)) score += 15;
+    if (NOVELTY_VOICES.some((n) => v.name.startsWith(n))) score -= 100;
+    return score;
+  }
+
+  function spanishVoices() {
+    if (!synth) return [];
+    return synth.getVoices()
+      .filter((v) => v.lang.toLowerCase().replace("_", "-").startsWith("es"))
+      .sort((a, b) => voiceScore(b) - voiceScore(a));
+  }
+
   function pickVoice() {
-    const voices = synth.getVoices();
-    spanishVoice =
-      voices.find((v) => v.lang === "es-ES") ||
-      voices.find((v) => v.lang.toLowerCase().startsWith("es")) ||
-      null;
+    const voices = spanishVoices();
+    spanishVoice = voices.find((v) => v.voiceURI === state.voiceURI) || voices[0] || null;
   }
 
   if (synth) {
     pickVoice();
-    synth.onvoiceschanged = pickVoice;
+    // Stimmen laden auf iOS verzögert – dann Auswahl aktualisieren.
+    synth.onvoiceschanged = () => {
+      pickVoice();
+      if (view === "home") render();
+    };
   }
 
   function speak(text, rate) {
@@ -3370,7 +3399,7 @@
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "es-ES";
     if (spanishVoice) u.voice = spanishVoice;
-    u.rate = rate || 0.9;
+    u.rate = rate || 0.85;
     u.onstart = () => document.body.classList.add("speaking");
     u.onend = u.onerror = () => document.body.classList.remove("speaking");
     synth.speak(u);
@@ -3380,25 +3409,38 @@
   let player = null;
   let wakeLock = null;
 
-  function voiceFor(gender) {
-    if (!synth) return null;
+  function hasGender(v, gender) {
     const names = gender === "m" ? MALE_VOICE_NAMES : FEMALE_VOICE_NAMES;
-    const voices = synth.getVoices()
-      .filter((v) => v.lang.toLowerCase().startsWith("es"))
-      .sort((a, b) => (b.lang === "es-ES") - (a.lang === "es-ES"));
-    return voices.find((v) => names.some((n) => v.name.includes(n))) || null;
+    return names.some((n) => v.name.includes(n));
   }
 
-  // Ohne passende Stimme unterscheiden sich die Sprecher über die Tonhöhe.
+  // Jeder Sprecher bekommt eine möglichst gute, passende und noch freie Stimme.
+  // Die Tonhöhe wird nie verstellt – das klingt unnatürlich.
+  function podcastVoices(ep) {
+    const good = spanishVoices().filter((v) => voiceScore(v) > 0);
+    const main = spanishVoice;
+    if (!ep.speakers) {
+      const narrator = main && hasGender(main, ep.narrator) ? main : good.find((v) => hasGender(v, ep.narrator)) || main;
+      return { narrator };
+    }
+    const used = new Set();
+    const result = {};
+    Object.entries(ep.speakers).forEach(([id, sp]) => {
+      const candidates = [main, ...good].filter((v) => v && !used.has(v.voiceURI));
+      const voice = candidates.find((v) => hasGender(v, sp.gender)) || candidates[0] || main;
+      if (voice) used.add(voice.voiceURI);
+      result[id] = voice;
+    });
+    return result;
+  }
+
   function voiceSettings(ep, line) {
-    const sp = ep.speakers ? ep.speakers[line.s] : { gender: ep.narrator };
-    const voice = voiceFor(sp.gender);
-    if (voice) return { voice, pitch: sp.pitch || 1 };
-    return { voice: spanishVoice, pitch: (sp.gender === "m" ? 0.8 : 1.1) * (sp.pitch || 1) };
+    const voices = podcastVoices(ep);
+    return { voice: ep.speakers ? voices[line.s] : voices.narrator, pitch: 1 };
   }
 
   function baseSeconds(ep, upto) {
-    return ep.lines.slice(0, upto).reduce((sum, l) => sum + l.es.split(/\s+/).length / 2.7 + 0.45, 0);
+    return ep.lines.slice(0, upto).reduce((sum, l) => sum + l.es.split(/\s+/).length / 3.2 + 0.45, 0);
   }
 
   function episodeSeconds(ep, upto) {
@@ -3932,8 +3974,33 @@
               <span class="desc">${esc(m.desc)}</span>
             </button>`).join("")}
         </div>` : ""}
+      ${voicePanel()}
       <h2 class="section-title">Abzeichen <small class="count">${state.badges.length} / ${BADGES.length}</small></h2>
       <div class="badges">${[...BADGES].sort((a, b) => state.badges.includes(b.id) - state.badges.includes(a.id)).map(badgeTile).join("")}</div>`;
+  }
+
+  function voiceLabel(v) {
+    const id = (v.name + " " + (v.voiceURI || "")).toLowerCase();
+    const quality = id.includes("premium") ? " ★ Premium" : /enhanced|erweitert|verbessert|neural|natural/.test(id) ? " ★ Erweitert" : "";
+    return v.name + " (" + v.lang.replace("_", "-") + ")" + quality;
+  }
+
+  function voicePanel() {
+    if (!synth) return "";
+    const voices = spanishVoices();
+    const best = voices[0];
+    return `
+      <section class="panel voice-panel">
+        <h3>🗣️ Spanische Stimme</h3>
+        <p>Die Stimme kommt von deinem iPad. Am natürlichsten klingen die Stimmen mit ★ Premium oder ★ Erweitert, z. B. Mónica oder Jorge. Laden kannst du sie unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Spanisch.</p>
+        <div class="voice-row">
+          <select class="voice-select" aria-label="Stimme wählen">
+            <option value="">Automatisch${best ? " – " + esc(voiceLabel(best)) : ""}</option>
+            ${voices.map((v) => `<option value="${esc(v.voiceURI)}" ${v.voiceURI === state.voiceURI ? "selected" : ""}>${esc(voiceLabel(v))}</option>`).join("")}
+          </select>
+          <button class="btn light" data-action="voice-test">▶ Probe</button>
+        </div>
+      </section>`;
   }
 
   function greeting() {
@@ -4701,7 +4768,7 @@
   // ---------- Bedienung ----------
   const BACK_ACTIONS = new Set(["home", "exit"]);
   // Keine Klick-Töne, wo gleich eigene Töne, Sprache oder das Mikrofon starten.
-  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self"]);
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self", "voice-test"]);
 
   app.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".accent")) e.preventDefault();
@@ -4852,6 +4919,13 @@
       case "say":
         speak(el.dataset.text);
         break;
+      case "voice-test":
+        if (!state.sound) {
+          state.sound = true;
+          saveState();
+        }
+        speak(VOICE_SAMPLE);
+        break;
       case "answer":
         answerCard(el.dataset.knew === "1");
         break;
@@ -4917,6 +4991,13 @@
   });
 
   app.addEventListener("change", (e) => {
+    if (e.target.classList.contains("voice-select")) {
+      state.voiceURI = e.target.value || null;
+      saveState();
+      pickVoice();
+      speak(VOICE_SAMPLE);
+      return;
+    }
     if (!e.target.classList.contains("verb-select")) return;
     unlockAudio();
     sfx.tap();
