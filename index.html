@@ -204,6 +204,12 @@
   .voice-row .voice-select { flex: 1; min-width: 0; margin: 0; }
   .voice-row .btn { width: auto; padding: 12px 18px; }
 
+  .progress-panel { margin-bottom: 28px; }
+  .progress-panel p { color: var(--muted); font-size: 0.9rem; }
+  .progress-panel p b { color: var(--ink); }
+  .notice.warn { background: #FDE3E4; color: var(--bad-dark); }
+  .pc-resume { margin-top: 10px; text-align: center; color: var(--muted); font-size: 0.9rem; font-weight: 800; }
+
   .section-title .count { margin-left: 6px; color: var(--muted); font-size: 0.85rem; font-weight: 800; }
 
   .lead {
@@ -2569,6 +2575,8 @@
   ];
 
   const app = document.getElementById("app");
+  let storageError = false;
+  let storagePersisted = false;
   let state = loadState();
   let view = "home";
   let lastView = null;
@@ -2606,16 +2614,30 @@
       speakLevel: 1,
       speakMode: "auto",
       voiceURI: null,
+      podcastPos: {},
+      lastBackup: null,
     };
   }
 
   function loadState() {
     const s = defaultState();
+    let raw = null;
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) Object.assign(s, JSON.parse(raw));
+      raw = localStorage.getItem(STORAGE_KEY);
     } catch (e) {
-      // ohne localStorage startet man eben frisch
+      storageError = true;
+    }
+    if (raw) {
+      try {
+        Object.assign(s, JSON.parse(raw));
+      } catch (e) {
+        // Beschädigte Daten nicht stillschweigend überschreiben, sondern beiseitelegen.
+        try {
+          localStorage.setItem(STORAGE_KEY + "_defekt", raw);
+        } catch (err) {
+          storageError = true;
+        }
+      }
     }
     s.wrongStack = s.wrongStack.filter((id) => WORDS.has(id));
     return s;
@@ -2624,9 +2646,63 @@
   function saveState() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      storageError = false;
     } catch (e) {
-      // Speichern nicht möglich (z. B. privater Modus)
+      storageError = true;
     }
+  }
+
+  // Bittet den Browser, die Daten nicht automatisch zu löschen (Safari gewährt das v. a. für Home-Bildschirm-Apps).
+  function requestPersistence() {
+    if (!navigator.storage || !navigator.storage.persist) return;
+    navigator.storage.persisted()
+      .then((granted) => granted || navigator.storage.persist())
+      .then((granted) => {
+        storagePersisted = !!granted;
+        if (view === "home") render();
+      })
+      .catch(() => {});
+  }
+
+  function exportProgress() {
+    const data = JSON.stringify({ app: "poquito", version: 1, savedAt: new Date().toISOString(), state }, null, 2);
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([data], { type: "application/json" }));
+    link.download = "poquito-fortschritt-" + todayKey() + ".json";
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(link.href);
+      link.remove();
+    }, 1000);
+    state.lastBackup = Date.now();
+    saveState();
+    render();
+  }
+
+  function importProgress(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      let data = null;
+      try {
+        data = JSON.parse(reader.result);
+      } catch (e) {
+        data = null;
+      }
+      if (!data || data.app !== "poquito" || !data.state || typeof data.state !== "object") {
+        alert("Diese Datei ist keine Poquito-Sicherung.");
+        return;
+      }
+      const when = data.savedAt ? new Date(data.savedAt).toLocaleString("de-DE") : "unbekannt";
+      if (!confirm("Sicherung vom " + when + " laden? Dein aktueller Fortschritt wird dabei ersetzt.")) return;
+      state = Object.assign(defaultState(), data.state);
+      state.wrongStack = state.wrongStack.filter((id) => WORDS.has(id));
+      saveState();
+      if (synth) pickVoice();
+      render();
+      alert("Sicherung geladen. ¡Bienvenido de nuevo! 🎉");
+    };
+    reader.readAsText(file);
   }
 
   // ---------- Lernstand ----------
@@ -3454,13 +3530,21 @@
 
   function openEpisode(id) {
     stopPlayer();
-    player = { id, index: 0, playing: false, started: false, finished: false, token: 0, xp: 0, newBadges: [] };
+    const resumeAt = state.podcastPos[id] || 0;
+    player = { id, index: resumeAt, playing: false, started: resumeAt > 0, finished: false, token: 0, xp: 0, newBadges: [] };
     view = "episode";
     render();
   }
 
+  function rememberPosition() {
+    if (player.finished) delete state.podcastPos[player.id];
+    else state.podcastPos[player.id] = player.index;
+    saveState();
+  }
+
   function stopPlayer() {
     if (!player) return;
+    if (player.started) rememberPosition();
     player.playing = false;
     player.token++;
     if (synth) synth.cancel();
@@ -3486,6 +3570,7 @@
         return;
       }
       p.index++;
+      rememberPosition();
       playLine();
       updatePlayer(true);
     };
@@ -3545,6 +3630,7 @@
     p.finished = true;
     releaseWakeLock();
     p.xp = 0;
+    delete state.podcastPos[p.id];
     if (!state.podcastsHeard.includes(p.id)) {
       state.podcastsHeard.push(p.id);
       state.xp += XP_EPISODE;
@@ -3569,6 +3655,8 @@
     app.querySelector(".pc-progress > span").style.width = (now / total) * 100 + "%";
     app.querySelector(".pc-now").textContent = formatTime(now);
     app.querySelector(".pc-total").textContent = formatTime(total);
+    const resume = app.querySelector(".pc-resume");
+    if (resume && player.playing) resume.remove();
     const main = app.querySelector(".pc-main");
     main.textContent = player.playing ? "⏸" : "▶";
     main.setAttribute("aria-label", player.playing ? "Pause" : "Abspielen");
@@ -3975,8 +4063,29 @@
             </button>`).join("")}
         </div>` : ""}
       ${voicePanel()}
+      ${progressPanel()}
       <h2 class="section-title">Abzeichen <small class="count">${state.badges.length} / ${BADGES.length}</small></h2>
       <div class="badges">${[...BADGES].sort((a, b) => state.badges.includes(b.id) - state.badges.includes(a.id)).map(badgeTile).join("")}</div>`;
+  }
+
+  function progressPanel() {
+    const standalone = window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
+    let status;
+    if (storageError) status = `<div class="notice warn">⚠️ Dein Fortschritt kann gerade nicht gespeichert werden (z. B. im privaten Modus von Safari). Öffne Poquito normal oder über das Home-Bildschirm-Symbol.</div>`;
+    else if (storagePersisted || standalone) status = `<p>✅ Dein Fortschritt wird nach jeder Antwort automatisch auf diesem Gerät gespeichert.</p>`;
+    else status = `<p>✅ Dein Fortschritt wird nach jeder Antwort automatisch gespeichert. <b>Tipp:</b> Nutze Poquito über das Symbol auf dem Home-Bildschirm – Safari löscht Daten von Webseiten sonst nach 7 Tagen ohne Besuch.</p>`;
+    const last = state.lastBackup ? new Date(state.lastBackup).toLocaleDateString("de-DE") : "noch nie";
+    return `
+      <section class="panel progress-panel">
+        <h3>💾 Dein Fortschritt</h3>
+        ${status}
+        <p>Mit einer Sicherung kannst du deinen Stand jederzeit wiederherstellen, auch auf einem anderen Gerät. Letzte Sicherung: <b>${last}</b>.</p>
+        <div class="row-btns">
+          <button class="btn light" data-action="export">⬇️ Sicherung speichern</button>
+          <button class="btn light" data-action="import">⬆️ Sicherung laden</button>
+        </div>
+        <input type="file" class="import-file" accept="application/json,.json" hidden>
+      </section>`;
   }
 
   function voiceLabel(v) {
@@ -4597,6 +4706,8 @@
         </div>
         <div class="progress pc-progress"><span style="width:${(now / total) * 100}%"></span></div>
         <div class="pc-time"><span class="pc-now">${formatTime(now)}</span><span class="pc-total">${formatTime(total)}</span></div>
+        ${p.index > 0 && !p.playing && !p.finished ? `
+          <div class="pc-resume">▶ Weiter ab Satz ${p.index + 1} von ${ep.lines.length} · <button class="link-btn inline" data-action="pc-restart">Von vorn</button></div>` : ""}
         <div class="pc-options">
           <div class="speeds">
             ${PODCAST_SPEEDS.map((x) => `<button class="speed ${x === state.podcastSpeed ? "on" : ""}" data-action="set-speed" data-speed="${x}">${String(x).replace(".", ",")}×</button>`).join("")}
@@ -4919,6 +5030,15 @@
       case "say":
         speak(el.dataset.text);
         break;
+      case "export":
+        exportProgress();
+        break;
+      case "import":
+        app.querySelector(".import-file").click();
+        break;
+      case "pc-restart":
+        jumpTo(0);
+        break;
       case "voice-test":
         if (!state.sound) {
           state.sound = true;
@@ -4991,6 +5111,11 @@
   });
 
   app.addEventListener("change", (e) => {
+    if (e.target.classList.contains("import-file")) {
+      if (e.target.files[0]) importProgress(e.target.files[0]);
+      e.target.value = "";
+      return;
+    }
     if (e.target.classList.contains("voice-select")) {
       state.voiceURI = e.target.value || null;
       saveState();
@@ -5005,6 +5130,7 @@
     render();
   });
 
+  requestPersistence();
   render();
 })();
 </script>
