@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#FFF4E6">
+<meta name="apple-mobile-web-app-title" content="Poquito">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
 <title>Poquito – Spanisch lernen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +46,19 @@
   }
 
   button, input, select { font: inherit; color: inherit; }
+
+  /* Schnelles Tippen ohne Doppeltipp-Zoom, kein Markieren beim langen Drücken */
+  button { touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+
+  :focus-visible { outline: 3px solid var(--sun-dark); outline-offset: 3px; }
+  .type-input:focus-visible { outline: none; }
+
+  .app.view-enter > * { animation: view-in 0.28s ease-out both; }
+
+  @media (hover: hover) {
+    .tile:not(.locked):hover { transform: translateY(-2px); }
+    .btn:hover:not(:disabled), .level-btn:hover, .icon-btn:hover { filter: brightness(1.04); }
+  }
 
   .app {
     display: flex;
@@ -181,6 +197,8 @@
     font-size: 1.2rem;
     font-weight: 900;
   }
+
+  .section-title .count { margin-left: 6px; color: var(--muted); font-size: 0.85rem; font-weight: 800; }
 
   .lead {
     margin: -8px 0 20px;
@@ -677,6 +695,12 @@
   table.conj em { font-style: normal; color: var(--primary); }
   table.conj td .say { width: 34px; height: 34px; font-size: 0.85rem; }
 
+  @media (max-width: 480px) {
+    .panel { padding: 16px 14px; }
+    table.conj th, table.conj td { padding: 7px 3px; font-size: 0.8rem; }
+    table.conj td.pron { font-size: 0.72rem; }
+  }
+
   .verb-select {
     width: 100%;
     margin-bottom: 12px;
@@ -867,7 +891,7 @@
   /* ---------- Podcast ---------- */
   .pc-player {
     position: sticky;
-    top: 0;
+    top: env(safe-area-inset-top, 0px);
     z-index: 5;
     margin-bottom: 18px;
     padding: 18px 20px;
@@ -1149,6 +1173,20 @@
     .letter { width: 64px; height: 70px; font-size: 1.9rem; }
     .accent { width: 58px; height: 58px; }
     .badges { grid-template-columns: repeat(6, 1fr); }
+  }
+
+  @keyframes view-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .confetti { display: none; }
   }
 
   @keyframes pulse {
@@ -2527,6 +2565,7 @@
   let state = loadState();
   let view = "home";
   let lastView = null;
+  let viewEnterTimer = null;
   let session = null;
   let busy = false;
   let currentTense = TENSES[0].id;
@@ -3829,7 +3868,7 @@
       <section class="player">
         <div class="player-top">
           <span class="lvl">Level ${level}</span>
-          <span class="xp">${into} / ${XP_PER_LEVEL} XP</span>
+          <span class="xp">noch ${XP_PER_LEVEL - into} XP bis Level ${level + 1}</span>
         </div>
         <div class="bar"><span style="width:${(into / XP_PER_LEVEL) * 100}%"></span></div>
         <div class="chips">
@@ -3866,7 +3905,7 @@
         <div class="logo">🌶️</div>
         <div>
           <h1>Poquito</h1>
-          <p>¡Aprende español!</p>
+          <p>${greeting()}</p>
         </div>
         <div class="spacer"></div>
         ${soundButton()}
@@ -3893,8 +3932,15 @@
               <span class="desc">${esc(m.desc)}</span>
             </button>`).join("")}
         </div>` : ""}
-      <h2 class="section-title">Abzeichen</h2>
-      <div class="badges">${BADGES.map(badgeTile).join("")}</div>`;
+      <h2 class="section-title">Abzeichen <small class="count">${state.badges.length} / ${BADGES.length}</small></h2>
+      <div class="badges">${[...BADGES].sort((a, b) => state.badges.includes(b.id) - state.badges.includes(a.id)).map(badgeTile).join("")}</div>`;
+  }
+
+  function greeting() {
+    const h = new Date().getHours();
+    if (h < 12) return "¡Buenos días! ☀️";
+    if (h < 20) return "¡Buenas tardes! 🌤️";
+    return "¡Buenas noches! 🌙";
   }
 
   function categoryTile(c) {
@@ -4053,8 +4099,12 @@
       </div>`;
   }
 
+  // Kurze Pronomen, damit die Tabellen auch auf dem Handy in die Breite passen.
+  const TABLE_PERSONS = ["yo", "tú", "él/ella/Ud.", "nosotros", "vosotros", "ellos/Uds."];
+  const TABLE_IMP_PERSONS = ["tú", "Ud.", "nosotros", "vosotros", "Uds."];
+
   function conjTable(verbs, tense, marked) {
-    const persons = personsFor(tense);
+    const persons = tense === "imperativo" ? TABLE_IMP_PERSONS : TABLE_PERSONS;
     const forms = verbs.map((v) => conj(v, tense));
     return `
       <div class="table-scroll">
@@ -4630,11 +4680,15 @@
     if (view !== lastView) {
       window.scrollTo(0, 0);
       lastView = view;
+      restartAnimation(app, "view-enter");
+      clearTimeout(viewEnterTimer);
+      viewEnterTimer = setTimeout(() => app.classList.remove("view-enter"), 320);
     }
   }
 
   function go(next) {
     if (synth) synth.cancel();
+    document.body.classList.remove("speaking");
     abortListening();
     stopPlayer();
     player = null;
