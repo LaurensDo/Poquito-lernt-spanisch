@@ -864,6 +864,190 @@
 
   .grid.modules > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 
+  /* ---------- Podcast ---------- */
+  .pc-player {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin-bottom: 18px;
+    padding: 18px 20px;
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 6px 0 var(--line), var(--shadow);
+  }
+
+  .pc-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+  }
+
+  .pc-btn {
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: 0 4px 0 var(--line);
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+
+  .pc-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--line); }
+
+  .pc-main {
+    width: 84px;
+    height: 84px;
+    background: var(--primary);
+    box-shadow: 0 6px 0 var(--primary-dark);
+    color: #fff;
+    font-size: 2rem;
+  }
+
+  .pc-main:active { box-shadow: 0 2px 0 var(--primary-dark); }
+  .pc-progress { flex: none; height: 10px; margin-top: 18px; }
+
+  .pc-time {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+
+  .pc-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .speeds {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 14px;
+    background: var(--bg);
+  }
+
+  .speed, .toggle {
+    padding: 9px 13px;
+    border: none;
+    border-radius: 11px;
+    background: transparent;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .speed.on { background: var(--primary); color: #fff; }
+  .toggle { background: var(--bg); }
+  .toggle.on { background: #E6F8EF; color: var(--good-dark); }
+
+  .pc-done {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 2px dashed var(--line);
+    text-align: center;
+  }
+
+  .pc-done b { display: block; margin-bottom: 12px; font-size: 1.15rem; }
+  .pc-done .badges { margin-bottom: 12px; grid-template-columns: repeat(auto-fit, minmax(110px, 150px)); justify-content: center; }
+  .pc-done .btn-stack { margin-bottom: 0; }
+
+  .transcript { padding: 8px; }
+
+  .line {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 14px;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .line .who {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--c);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .line .es { display: block; font-size: 1.12rem; font-weight: 800; line-height: 1.45; }
+  .line .de { display: block; margin-top: 2px; color: var(--muted); font-size: 0.95rem; font-weight: 700; }
+  .line.active { background: #FFF3CF; box-shadow: inset 4px 0 0 var(--sun); }
+
+  .quiz-q { font-size: clamp(1.3rem, 4.5vw, 1.7rem); font-weight: 900; line-height: 1.3; }
+
+  /* ---------- Sprechen ---------- */
+  .listen-row { display: flex; justify-content: center; gap: 10px; }
+  .listen-row .slow-btn { margin: 16px 0 0; }
+
+  .tip {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: var(--bg);
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .speak-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .mic-btn {
+    width: 110px;
+    height: 110px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 7px 0 var(--primary-dark);
+    color: #fff;
+    font-size: 3rem;
+    cursor: pointer;
+  }
+
+  .mic-btn:active { transform: translateY(5px); box-shadow: 0 2px 0 var(--primary-dark); }
+
+  .mic-btn.on {
+    background: var(--bad);
+    box-shadow: 0 7px 0 var(--bad-dark);
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  .mic-label { color: var(--muted); font-weight: 900; }
+  .interim { min-height: 1.5em; font-size: 1.2rem; font-weight: 800; text-align: center; }
+  .said { margin-top: 8px; font-size: 1.5rem; font-weight: 900; line-height: 1.4; }
+  .said .ok { color: var(--good-dark); }
+  .said .miss { color: var(--bad); text-decoration: underline wavy; }
+  .heard { margin-top: 6px; color: var(--muted); font-weight: 800; }
+  .feedback.neutral { background: var(--surface); color: var(--ink); box-shadow: 0 4px 0 var(--line); }
+
+  .row-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .row-btns .btn { margin-top: 0; }
+  .link-btn.inline { display: inline; margin: 0 0 0 4px; font-size: inherit; color: inherit; }
+
   /* ---------- Ergebnis ---------- */
   .result {
     margin-bottom: 22px;
@@ -951,7 +1135,9 @@
     .app { max-width: 1000px; padding-left: 36px; padding-right: 36px; }
     .grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .grid.two { grid-template-columns: repeat(2, 1fr); }
-    .grid.three, .grid.modules { grid-template-columns: repeat(3, 1fr); }
+    .grid.three { grid-template-columns: repeat(3, 1fr); }
+    .grid.modules { grid-template-columns: repeat(5, 1fr); }
+    .grid.modules .tile.big { padding: 20px 16px; }
     .grid.modules > :last-child:nth-child(odd) { grid-column: auto; }
     .btn-stack.pair { grid-template-columns: 1fr 1fr; }
     .play-btn { width: 140px; height: 140px; font-size: 3.8rem; }
@@ -962,7 +1148,7 @@
     .speak { width: 68px; height: 68px; font-size: 1.8rem; }
     .letter { width: 64px; height: 70px; font-size: 1.9rem; }
     .accent { width: 58px; height: 58px; }
-    .badges { grid-template-columns: repeat(7, 1fr); }
+    .badges { grid-template-columns: repeat(6, 1fr); }
   }
 
   @keyframes pulse {
@@ -1466,8 +1652,8 @@
     { id: "vokabeln", name: "Vokabeln", icon: "📚", color: "#E4572E", action: "open-vocab" },
     { id: "verben", name: "Verben", icon: "🔤", color: "#3A86FF", action: "open-verbs" },
     { id: "hoeren", name: "Hören", icon: "🎧", color: "#1FA6A0", action: "open-listen" },
-    { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", desc: "Aussprache üben" },
-    { id: "lesen", name: "Lesen", icon: "📖", color: "#F6B519", desc: "Kurze Geschichten" },
+    { id: "podcast", name: "Podcast", icon: "🎙️", color: "#9B5DE5", action: "open-podcasts" },
+    { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", action: "open-speak" },
   ];
 
   // ---------------------------------------------------------------
@@ -1865,6 +2051,435 @@
   ];
   const TENS_WORDS = { 3: "treinta", 4: "cuarenta", 5: "cincuenta", 6: "sesenta", 7: "setenta", 8: "ochenta", 9: "noventa" };
 
+  // ---------------------------------------------------------------
+  // Podcast: Geschichten (eine Erzählstimme) und Gespräche (mehrere
+  // Sprecher). Jede Zeile wird einzeln vorgelesen und mitmarkiert.
+  // ---------------------------------------------------------------
+  const PODCASTS = [
+    {
+      id: "madrid", type: "story", level: "A1", icon: "🏙️", color: "#E4572E", narrator: "f",
+      title: "Un día en Madrid", de: "Ein Tag in Madrid",
+      lines: [
+        { es: "Me llamo Lucía y vivo en Madrid.", de: "Ich heiße Lucía und wohne in Madrid." },
+        { es: "Tengo veintiocho años y trabajo en una librería en el centro.", de: "Ich bin achtundzwanzig Jahre alt und arbeite in einer Buchhandlung im Zentrum." },
+        { es: "Hoy es sábado y no tengo que trabajar.", de: "Heute ist Samstag und ich muss nicht arbeiten." },
+        { es: "Me despierto a las nueve, un poco más tarde que normalmente.", de: "Ich wache um neun Uhr auf, etwas später als sonst." },
+        { es: "Primero abro la ventana y miro el cielo.", de: "Zuerst öffne ich das Fenster und schaue in den Himmel." },
+        { es: "Hace sol y la temperatura es perfecta.", de: "Die Sonne scheint und die Temperatur ist perfekt." },
+        { es: "Me ducho, me visto y bajo a la calle.", de: "Ich dusche, ziehe mich an und gehe hinunter auf die Straße." },
+        { es: "En la esquina hay una cafetería pequeña que me encanta.", de: "An der Ecke gibt es ein kleines Café, das ich liebe." },
+        { es: "El camarero se llama Andrés y ya me conoce.", de: "Der Kellner heißt Andrés und kennt mich schon." },
+        { es: "—¡Buenos días, Lucía! ¿Lo de siempre? —me pregunta.", de: "„Guten Morgen, Lucía! Wie immer?“, fragt er mich." },
+        { es: "—Sí, un café con leche y una tostada con tomate, por favor.", de: "„Ja, einen Milchkaffee und einen Toast mit Tomate, bitte.“" },
+        { es: "Desayuno tranquilamente y leo el periódico.", de: "Ich frühstücke in Ruhe und lese die Zeitung." },
+        { es: "Después camino hasta el parque del Retiro.", de: "Danach gehe ich zu Fuß zum Retiro-Park." },
+        { es: "El Retiro es un parque muy grande y muy bonito.", de: "Der Retiro ist ein sehr großer und sehr schöner Park." },
+        { es: "Los sábados hay mucha gente: familias con niños, parejas y turistas.", de: "Samstags sind viele Leute dort: Familien mit Kindern, Paare und Touristen." },
+        { es: "Algunas personas corren, otras pasean en bicicleta.", de: "Manche joggen, andere fahren Fahrrad." },
+        { es: "En el lago, muchos jóvenes reman en barcas pequeñas.", de: "Auf dem See rudern viele junge Leute in kleinen Booten." },
+        { es: "Me siento en un banco a la sombra de un árbol.", de: "Ich setze mich auf eine Bank in den Schatten eines Baumes." },
+        { es: "Escucho a los músicos de la calle y miro a los niños que juegan con sus perros.", de: "Ich höre den Straßenmusikern zu und schaue den Kindern zu, die mit ihren Hunden spielen." },
+        { es: "Es mi lugar favorito de toda la ciudad.", de: "Das ist mein Lieblingsort in der ganzen Stadt." },
+        { es: "A la una llamo a mi amiga Carmen.", de: "Um ein Uhr rufe ich meine Freundin Carmen an." },
+        { es: "—Hola, Carmen, ¿comemos juntas hoy?", de: "„Hallo Carmen, essen wir heute zusammen?“" },
+        { es: "—¡Claro! Conozco un restaurante nuevo cerca de la Plaza Mayor.", de: "„Klar! Ich kenne ein neues Restaurant in der Nähe der Plaza Mayor.“" },
+        { es: "Nos encontramos a las dos delante del restaurante.", de: "Wir treffen uns um zwei Uhr vor dem Restaurant." },
+        { es: "En España comemos bastante tarde, normalmente entre las dos y las tres.", de: "In Spanien essen wir ziemlich spät, normalerweise zwischen zwei und drei Uhr." },
+        { es: "Pedimos una ensalada, pescado y, de postre, un flan.", de: "Wir bestellen einen Salat, Fisch und als Nachtisch einen Flan." },
+        { es: "Hablamos mucho: del trabajo, de la familia y de nuestros planes para el verano.", de: "Wir reden viel: über die Arbeit, die Familie und unsere Pläne für den Sommer." },
+        { es: "Carmen quiere viajar a México y yo quiero ir a la playa en Cádiz.", de: "Carmen will nach Mexiko reisen und ich will in Cádiz an den Strand." },
+        { es: "Por la tarde, vamos juntas al Museo del Prado.", de: "Am Nachmittag gehen wir zusammen ins Prado-Museum." },
+        { es: "Es uno de los museos más famosos del mundo.", de: "Es ist eines der berühmtesten Museen der Welt." },
+        { es: "Hay cuadros de Velázquez, de Goya y de muchos otros pintores.", de: "Dort gibt es Bilder von Velázquez, Goya und vielen anderen Malern." },
+        { es: "Mi cuadro favorito es Las Meninas.", de: "Mein Lieblingsbild ist „Las Meninas“." },
+        { es: "Siempre descubro algo nuevo en ese cuadro.", de: "In diesem Bild entdecke ich immer etwas Neues." },
+        { es: "Carmen prefiere las pinturas negras de Goya, que son un poco oscuras y misteriosas.", de: "Carmen mag lieber Goyas schwarze Gemälde, die ein bisschen düster und geheimnisvoll sind." },
+        { es: "Pasamos casi tres horas en el museo y no vemos ni la mitad.", de: "Wir verbringen fast drei Stunden im Museum und sehen nicht einmal die Hälfte." },
+        { es: "A las siete salimos del museo y estamos un poco cansadas.", de: "Um sieben Uhr verlassen wir das Museum und sind ein bisschen müde." },
+        { es: "Tomamos algo en una terraza y miramos a la gente.", de: "Wir trinken etwas auf einer Terrasse und schauen den Leuten zu." },
+        { es: "Por la noche, la ciudad está llena de vida.", de: "Abends ist die Stadt voller Leben." },
+        { es: "Las calles, los bares y las plazas están llenos de gente.", de: "Die Straßen, Bars und Plätze sind voller Menschen." },
+        { es: "Pero yo prefiero volver a casa temprano.", de: "Aber ich gehe lieber früh nach Hause." },
+        { es: "Ceno algo ligero, veo una película y a las once me voy a la cama.", de: "Ich esse etwas Leichtes zu Abend, schaue einen Film und gehe um elf ins Bett." },
+        { es: "Ha sido un sábado perfecto.", de: "Es war ein perfekter Samstag." },
+        { es: "Mañana es domingo y voy a visitar a mis padres.", de: "Morgen ist Sonntag und ich werde meine Eltern besuchen." },
+        { es: "Pero esa es otra historia.", de: "Aber das ist eine andere Geschichte." },
+      ],
+      quiz: [
+        { q: "An welchem Tag spielt die Geschichte?", a: "Am Samstag", wrong: ["Am Sonntag", "Am Montag"] },
+        { q: "Wo arbeitet Lucía?", a: "In einer Buchhandlung", wrong: ["In einem Café", "In einem Museum"] },
+        { q: "Was ist Lucías Lieblingsbild?", a: "Las Meninas", wrong: ["Ein Bild von Goya", "Ein Foto vom Retiro"] },
+      ],
+    },
+    {
+      id: "cafe", type: "dialog", level: "A1", icon: "☕", color: "#8D6E63",
+      title: "En la cafetería", de: "Im Café",
+      speakers: {
+        C: { name: "Camarera", gender: "f", color: "#8D6E63" },
+        P: { name: "Pablo", gender: "m", color: "#3A86FF" },
+        M: { name: "Marta", gender: "f", pitch: 1.12, color: "#E4572E" },
+      },
+      lines: [
+        { s: "C", es: "¡Hola, buenos días! ¿Qué te pongo?", de: "Hallo, guten Morgen! Was darf ich dir bringen?" },
+        { s: "P", es: "Buenos días. Un café solo, por favor.", de: "Guten Morgen. Einen Espresso, bitte." },
+        { s: "C", es: "¿Algo para comer? Tenemos cruasanes, tostadas y tortilla.", de: "Etwas zu essen? Wir haben Croissants, Toast und Tortilla." },
+        { s: "P", es: "¿La tortilla es de hoy?", de: "Ist die Tortilla von heute?" },
+        { s: "C", es: "Sí, claro, la hacemos cada mañana.", de: "Ja, klar, wir machen sie jeden Morgen frisch." },
+        { s: "P", es: "Entonces un trozo de tortilla, por favor.", de: "Dann ein Stück Tortilla, bitte." },
+        { s: "C", es: "Muy bien. ¿Para tomar aquí o para llevar?", de: "Sehr gut. Für hier oder zum Mitnehmen?" },
+        { s: "P", es: "Para tomar aquí. Estoy esperando a una amiga.", de: "Für hier. Ich warte auf eine Freundin." },
+        { s: "C", es: "Perfecto. Siéntate donde quieras, ahora te lo llevo.", de: "Perfekt. Setz dich, wohin du willst, ich bringe es dir gleich." },
+        { s: "M", es: "¡Pablo! Perdona, llego tarde. Había mucho tráfico.", de: "Pablo! Entschuldige die Verspätung. Es war viel Verkehr." },
+        { s: "P", es: "No pasa nada, Marta. Acabo de llegar.", de: "Kein Problem, Marta. Ich bin auch gerade erst gekommen." },
+        { s: "M", es: "¿Qué tal estás? ¡Hace mucho tiempo que no nos vemos!", de: "Wie geht's dir? Wir haben uns ewig nicht gesehen!" },
+        { s: "P", es: "Estoy muy bien, gracias. Tengo un trabajo nuevo.", de: "Mir geht es sehr gut, danke. Ich habe eine neue Arbeit." },
+        { s: "M", es: "¿De verdad? ¿Dónde trabajas ahora?", de: "Wirklich? Wo arbeitest du jetzt?" },
+        { s: "P", es: "En una escuela de idiomas. Enseño alemán a adultos.", de: "In einer Sprachschule. Ich unterrichte Erwachsene in Deutsch." },
+        { s: "M", es: "¡Qué bien! ¿Y te gusta?", de: "Wie schön! Und gefällt es dir?" },
+        { s: "P", es: "Me encanta. Los alumnos son muy simpáticos y aprenden muy rápido.", de: "Ich liebe es. Die Schüler sind sehr nett und lernen sehr schnell." },
+        { s: "M", es: "¿Y es difícil enseñar alemán? Dicen que es un idioma muy complicado.", de: "Und ist es schwer, Deutsch zu unterrichten? Man sagt, es ist eine sehr komplizierte Sprache." },
+        { s: "P", es: "Un poco, sobre todo los artículos: der, die, das. Pero con paciencia todo se aprende.", de: "Ein bisschen, vor allem die Artikel: der, die, das. Aber mit Geduld lernt man alles." },
+        { s: "M", es: "Yo quiero aprender inglés este año. Lo necesito para mi trabajo.", de: "Ich will dieses Jahr Englisch lernen. Ich brauche es für meine Arbeit." },
+        { s: "P", es: "Pues te recomiendo ver series en inglés con subtítulos. A mí me ayudó mucho.", de: "Dann empfehle ich dir, Serien auf Englisch mit Untertiteln zu schauen. Mir hat das sehr geholfen." },
+        { s: "C", es: "Aquí tienes: un café solo y la tortilla. ¿Y tú, qué vas a tomar?", de: "Bitte schön: ein Espresso und die Tortilla. Und was nimmst du?" },
+        { s: "M", es: "Para mí, un té verde y un zumo de naranja, por favor.", de: "Für mich einen grünen Tee und einen Orangensaft, bitte." },
+        { s: "C", es: "Enseguida.", de: "Kommt sofort." },
+        { s: "P", es: "¿Y tú, Marta? ¿Todavía trabajas en el hospital?", de: "Und du, Marta? Arbeitest du noch im Krankenhaus?" },
+        { s: "M", es: "Sí, sigo allí. Es mucho trabajo, pero me gusta ayudar a la gente.", de: "Ja, ich bin immer noch dort. Es ist viel Arbeit, aber ich helfe gern Menschen." },
+        { s: "P", es: "¿Y qué haces en tu tiempo libre?", de: "Und was machst du in deiner Freizeit?" },
+        { s: "M", es: "Hago yoga dos veces por semana y los domingos voy a la montaña.", de: "Ich mache zweimal pro Woche Yoga, und sonntags gehe ich in die Berge." },
+        { s: "P", es: "¡Qué envidia! Yo no hago nada de deporte.", de: "Da werde ich neidisch! Ich mache überhaupt keinen Sport." },
+        { s: "M", es: "Pues ven conmigo el domingo. Vamos a un pueblo muy bonito en la sierra.", de: "Dann komm doch am Sonntag mit. Wir fahren in ein sehr schönes Dorf in den Bergen." },
+        { s: "P", es: "¿Es muy difícil? No estoy en forma.", de: "Ist es sehr anstrengend? Ich bin nicht fit." },
+        { s: "M", es: "No, es fácil. Caminamos unas tres horas y después comemos en un restaurante típico.", de: "Nein, es ist leicht. Wir wandern etwa drei Stunden und essen danach in einem typischen Restaurant." },
+        { s: "P", es: "Eso me gusta más. ¿A qué hora salís?", de: "Das gefällt mir schon besser. Um wie viel Uhr fahrt ihr los?" },
+        { s: "M", es: "A las ocho de la mañana, desde la estación de autobuses.", de: "Um acht Uhr morgens, vom Busbahnhof." },
+        { s: "P", es: "¿A las ocho? ¡Qué temprano! Bueno, vale, allí estaré.", de: "Um acht? So früh! Na gut, ich werde da sein." },
+        { s: "M", es: "¡Genial! Lleva zapatos cómodos y una chaqueta, porque en la montaña hace frío.", de: "Super! Nimm bequeme Schuhe und eine Jacke mit, denn in den Bergen ist es kalt." },
+        { s: "P", es: "¿Y si llueve?", de: "Und wenn es regnet?" },
+        { s: "M", es: "Si llueve, nos quedamos en el pueblo y tomamos chocolate con churros.", de: "Wenn es regnet, bleiben wir im Dorf und trinken heiße Schokolade mit Churros." },
+        { s: "P", es: "¡Entonces espero que llueva!", de: "Dann hoffe ich, dass es regnet!" },
+        { s: "C", es: "Aquí tienes el té y el zumo.", de: "Hier hast du den Tee und den Saft." },
+        { s: "M", es: "Gracias. ¿Cuánto es todo?", de: "Danke. Was macht das zusammen?" },
+        { s: "C", es: "Son ocho euros con cincuenta.", de: "Das macht acht Euro fünfzig." },
+        { s: "P", es: "Hoy invito yo, Marta. Para celebrar mi trabajo nuevo.", de: "Heute lade ich dich ein, Marta. Um meine neue Arbeit zu feiern." },
+        { s: "M", es: "¡Muchas gracias! Entonces el domingo te invito yo a comer.", de: "Vielen Dank! Dann lade ich dich am Sonntag zum Essen ein." },
+        { s: "P", es: "Trato hecho.", de: "Abgemacht." },
+      ],
+      quiz: [
+        { q: "Was isst Pablo?", a: "Ein Stück Tortilla", wrong: ["Ein Croissant", "Einen Toast mit Tomate"] },
+        { q: "Wo arbeitet Pablo jetzt?", a: "In einer Sprachschule", wrong: ["In einem Krankenhaus", "In einem Café"] },
+        { q: "Wann fahren sie am Sonntag los?", a: "Um acht Uhr morgens", wrong: ["Um zehn Uhr", "Um drei Uhr nachmittags"] },
+      ],
+    },
+    {
+      id: "sevilla", type: "story", level: "A2", icon: "💃", color: "#F08A24", narrator: "f",
+      title: "Un viaje a Sevilla", de: "Eine Reise nach Sevilla",
+      lines: [
+        { es: "El verano pasado viajé a Sevilla con mi hermano Daniel.", de: "Letzten Sommer bin ich mit meinem Bruder Daniel nach Sevilla gereist." },
+        { es: "Era la primera vez que visitábamos Andalucía.", de: "Es war das erste Mal, dass wir Andalusien besuchten." },
+        { es: "Tomamos el tren de alta velocidad en Madrid y el viaje duró solo dos horas y media.", de: "Wir nahmen in Madrid den Schnellzug, und die Fahrt dauerte nur zweieinhalb Stunden." },
+        { es: "Cuando llegamos a la estación, hacía muchísimo calor.", de: "Als wir am Bahnhof ankamen, war es unglaublich heiß." },
+        { es: "El termómetro marcaba cuarenta grados.", de: "Das Thermometer zeigte vierzig Grad." },
+        { es: "Fuimos directamente al hotel, pero allí tuvimos el primer problema.", de: "Wir gingen direkt ins Hotel, aber dort hatten wir das erste Problem." },
+        { es: "La recepcionista no encontraba nuestra reserva.", de: "Die Rezeptionistin fand unsere Reservierung nicht." },
+        { es: "Daniel estaba nervioso y buscaba el correo de confirmación en su móvil.", de: "Daniel war nervös und suchte die Bestätigungsmail auf seinem Handy." },
+        { es: "Después de diez minutos, la recepcionista sonrió.", de: "Nach zehn Minuten lächelte die Rezeptionistin." },
+        { es: "—Perdonen, aquí está. Su habitación es la doscientos cuatro.", de: "„Entschuldigen Sie, hier ist sie. Sie haben Zimmer 204.“" },
+        { es: "La habitación era pequeña, pero tenía un balcón con vistas a la catedral.", de: "Das Zimmer war klein, aber es hatte einen Balkon mit Blick auf die Kathedrale." },
+        { es: "Por la tarde, cuando el sol ya no quemaba tanto, salimos a pasear.", de: "Am Nachmittag, als die Sonne nicht mehr so brannte, gingen wir spazieren." },
+        { es: "Visitamos el barrio de Santa Cruz, con sus calles estrechas y sus patios llenos de flores.", de: "Wir besuchten das Viertel Santa Cruz mit seinen engen Gassen und seinen Innenhöfen voller Blumen." },
+        { es: "En cada esquina olía a flores de naranjo y a jazmín.", de: "An jeder Ecke roch es nach Orangenblüten und Jasmin." },
+        { es: "Luego subimos a la Giralda, la torre de la catedral.", de: "Dann stiegen wir auf die Giralda, den Turm der Kathedrale." },
+        { es: "Desde arriba, la vista de la ciudad era increíble.", de: "Von oben war der Blick auf die Stadt unglaublich." },
+        { es: "Esa noche cenamos en un bar de tapas muy popular.", de: "An diesem Abend aßen wir in einer sehr beliebten Tapas-Bar." },
+        { es: "Pedimos tortilla, croquetas, jamón y un gazpacho muy frío.", de: "Wir bestellten Tortilla, Kroketten, Schinken und einen sehr kalten Gazpacho." },
+        { es: "Todo estaba riquísimo.", de: "Alles war superlecker." },
+        { es: "Después de cenar, paseamos junto al río hasta muy tarde.", de: "Nach dem Essen gingen wir bis spät am Fluss spazieren." },
+        { es: "Por la noche la temperatura era mucho más agradable y había mucha gente en la calle.", de: "Nachts war die Temperatur viel angenehmer, und es waren viele Leute auf der Straße." },
+        { es: "Al día siguiente fuimos al Real Alcázar, un palacio antiguo con jardines maravillosos.", de: "Am nächsten Tag gingen wir zum Real Alcázar, einem alten Palast mit wunderschönen Gärten." },
+        { es: "Mientras mi hermano sacaba fotos, yo me senté junto a una fuente.", de: "Während mein Bruder Fotos machte, setzte ich mich an einen Brunnen." },
+        { es: "Una señora mayor se sentó a mi lado y empezamos a hablar.", de: "Eine ältere Dame setzte sich neben mich und wir kamen ins Gespräch." },
+        { es: "Se llamaba Rocío y había vivido toda su vida en Sevilla.", de: "Sie hieß Rocío und hatte ihr ganzes Leben in Sevilla gelebt." },
+        { es: "Me contó muchas historias sobre la ciudad y sobre su familia.", de: "Sie erzählte mir viele Geschichten über die Stadt und über ihre Familie." },
+        { es: "Antes de irse, me dio un consejo: —Esta noche id a ver flamenco al barrio de Triana.", de: "Bevor sie ging, gab sie mir einen Tipp: „Geht heute Abend ins Viertel Triana und schaut euch Flamenco an.“" },
+        { es: "Y eso hicimos.", de: "Und genau das haben wir gemacht." },
+        { es: "Cruzamos el puente sobre el río Guadalquivir y encontramos un local pequeño.", de: "Wir überquerten die Brücke über den Guadalquivir und fanden ein kleines Lokal." },
+        { es: "No había escenario, solo unas sillas, una guitarra y una bailaora.", de: "Es gab keine Bühne, nur ein paar Stühle, eine Gitarre und eine Flamencotänzerin." },
+        { es: "Cuando empezó a bailar, todo el mundo se quedó en silencio.", de: "Als sie zu tanzen begann, wurden alle still." },
+        { es: "Fue un momento mágico que nunca voy a olvidar.", de: "Es war ein magischer Moment, den ich nie vergessen werde." },
+        { es: "Al terminar, la bailaora nos explicó que bailaba desde los seis años.", de: "Danach erzählte uns die Tänzerin, dass sie seit ihrem sechsten Lebensjahr tanzte." },
+        { es: "Su abuela también había sido bailaora en ese mismo barrio.", de: "Ihre Großmutter war im selben Viertel auch Flamencotänzerin gewesen." },
+        { es: "El último día compramos unos abanicos y un poco de aceite de oliva para nuestra madre.", de: "Am letzten Tag kauften wir ein paar Fächer und etwas Olivenöl für unsere Mutter." },
+        { es: "En el tren de vuelta, Daniel me preguntó: —¿Volvemos el año que viene?", de: "Im Zug zurück fragte Daniel mich: „Kommen wir nächstes Jahr wieder?“" },
+        { es: "—¡Por supuesto! —le contesté—. Pero en primavera, que hace menos calor.", de: "„Natürlich!“, antwortete ich. „Aber im Frühling, da ist es nicht so heiß.“" },
+      ],
+      quiz: [
+        { q: "Wie reisten die Geschwister nach Sevilla?", a: "Mit dem Zug", wrong: ["Mit dem Flugzeug", "Mit dem Auto"] },
+        { q: "Welches Problem gab es im Hotel?", a: "Die Reservierung wurde erst nicht gefunden", wrong: ["Das Zimmer war schmutzig", "Es gab keine freien Zimmer"] },
+        { q: "Was hat Rocío empfohlen?", a: "Flamenco in Triana anzuschauen", wrong: ["Auf die Giralda zu steigen", "Olivenöl zu kaufen"] },
+      ],
+    },
+    {
+      id: "piso", type: "dialog", level: "A2", icon: "🏠", color: "#3A86FF",
+      title: "Buscando piso", de: "Auf Wohnungssuche",
+      speakers: {
+        L: { name: "Laura", gender: "f", color: "#E4572E" },
+        R: { name: "Señor Ruiz", gender: "m", color: "#3A86FF" },
+      },
+      lines: [
+        { s: "L", es: "Buenas tardes. ¿Es usted el señor Ruiz?", de: "Guten Tag. Sind Sie Herr Ruiz?" },
+        { s: "R", es: "Sí, soy yo. Usted debe de ser Laura, ¿verdad?", de: "Ja, das bin ich. Sie müssen Laura sein, oder?" },
+        { s: "L", es: "Exacto. Hablamos ayer por teléfono sobre el piso.", de: "Genau. Wir haben gestern wegen der Wohnung telefoniert." },
+        { s: "R", es: "Encantado. Pase, pase. El piso está en la tercera planta, pero hay ascensor.", de: "Freut mich. Kommen Sie herein. Die Wohnung ist im dritten Stock, aber es gibt einen Aufzug." },
+        { s: "L", es: "¡Menos mal! Tengo muchas cajas llenas de libros.", de: "Zum Glück! Ich habe viele Kisten voller Bücher." },
+        { s: "R", es: "Mire, esta es la entrada. A la derecha está la cocina.", de: "Schauen Sie, das ist der Eingang. Rechts ist die Küche." },
+        { s: "L", es: "Es más grande de lo que pensaba. ¿La nevera y el horno están incluidos?", de: "Sie ist größer, als ich dachte. Sind Kühlschrank und Backofen dabei?" },
+        { s: "R", es: "Sí, todo es nuevo. También hay lavadora, pero no hay lavavajillas.", de: "Ja, alles ist neu. Es gibt auch eine Waschmaschine, aber keine Spülmaschine." },
+        { s: "L", es: "No importa, me gusta fregar los platos. Bueno, más o menos.", de: "Macht nichts, ich spüle gern ab. Na ja, mehr oder weniger." },
+        { s: "R", es: "Aquí está el salón. Tiene mucha luz porque las ventanas dan al sur.", de: "Hier ist das Wohnzimmer. Es ist sehr hell, weil die Fenster nach Süden gehen." },
+        { s: "L", es: "¡Qué bonito! Y ese balcón, ¿también es del piso?", de: "Wie schön! Und der Balkon, gehört der auch zur Wohnung?" },
+        { s: "R", es: "Sí. Es pequeño, pero caben una mesa y dos sillas.", de: "Ja. Er ist klein, aber ein Tisch und zwei Stühle passen darauf." },
+        { s: "L", es: "Perfecto para desayunar al sol. ¿Y cuántos dormitorios tiene?", de: "Perfekt zum Frühstücken in der Sonne. Und wie viele Schlafzimmer hat sie?" },
+        { s: "R", es: "Dos. El grande tiene un armario empotrado, y el pequeño puede ser un despacho.", de: "Zwei. Das große hat einen Einbauschrank, und das kleine kann ein Arbeitszimmer sein." },
+        { s: "L", es: "Muy bien, porque trabajo desde casa tres días a la semana.", de: "Sehr gut, denn ich arbeite drei Tage pro Woche von zu Hause." },
+        { s: "R", es: "Y aquí está el baño, con ducha.", de: "Und hier ist das Bad, mit Dusche." },
+        { s: "L", es: "Está muy limpio. ¿Es un barrio tranquilo?", de: "Es ist sehr sauber. Ist die Gegend ruhig?" },
+        { s: "R", es: "Bastante. Por la noche no hay mucho ruido. Hay un supermercado en la esquina y el metro está a cinco minutos.", de: "Ziemlich. Nachts ist es nicht sehr laut. An der Ecke gibt es einen Supermarkt, und die U-Bahn ist fünf Minuten entfernt." },
+        { s: "L", es: "¿Y hay parques cerca? Me gusta correr por las mañanas.", de: "Und gibt es Parks in der Nähe? Ich jogge morgens gern." },
+        { s: "R", es: "Sí, a diez minutos andando hay un parque muy grande con un lago.", de: "Ja, zehn Minuten zu Fuß gibt es einen sehr großen Park mit einem See." },
+        { s: "L", es: "¿Y cuánto es el alquiler?", de: "Und wie hoch ist die Miete?" },
+        { s: "R", es: "Novecientos euros al mes, con los gastos de comunidad incluidos.", de: "Neunhundert Euro im Monat, inklusive Hausgeld." },
+        { s: "L", es: "¿Y la luz y el agua?", de: "Und Strom und Wasser?" },
+        { s: "R", es: "Eso lo paga el inquilino. Normalmente son unos sesenta euros al mes.", de: "Das zahlt der Mieter. Normalerweise sind das etwa sechzig Euro im Monat." },
+        { s: "L", es: "Entiendo. ¿Hay que pagar fianza?", de: "Verstehe. Muss man eine Kaution zahlen?" },
+        { s: "R", es: "Sí, dos meses de fianza. Es lo normal.", de: "Ja, zwei Monatsmieten Kaution. Das ist üblich." },
+        { s: "L", es: "¿Se admiten mascotas? Tengo un gato muy tranquilo.", de: "Sind Haustiere erlaubt? Ich habe eine sehr ruhige Katze." },
+        { s: "R", es: "Un gato no es problema. Los perros grandes, en cambio, no.", de: "Eine Katze ist kein Problem. Große Hunde dagegen nicht." },
+        { s: "L", es: "¿Y los vecinos? ¿Cómo son?", de: "Und die Nachbarn? Wie sind sie?" },
+        { s: "R", es: "Muy amables. En el segundo vive una pareja mayor, y en el cuarto, una familia con dos niños.", de: "Sehr freundlich. Im zweiten Stock wohnt ein älteres Paar und im vierten eine Familie mit zwei Kindern." },
+        { s: "L", es: "¿Los niños hacen mucho ruido?", de: "Machen die Kinder viel Lärm?" },
+        { s: "R", es: "A veces juegan un poco por la tarde, pero nada grave.", de: "Manchmal spielen sie nachmittags ein bisschen, aber nichts Schlimmes." },
+        { s: "L", es: "Me gusta mucho el piso. ¿Desde cuándo está libre?", de: "Die Wohnung gefällt mir sehr. Ab wann ist sie frei?" },
+        { s: "R", es: "Desde el uno de octubre. Pero hay otras dos personas interesadas.", de: "Ab dem ersten Oktober. Aber es gibt noch zwei andere Interessenten." },
+        { s: "L", es: "Entonces no quiero esperar mucho. ¿Puedo darle una respuesta mañana por la mañana?", de: "Dann will ich nicht lange warten. Kann ich Ihnen morgen früh Bescheid geben?" },
+        { s: "R", es: "Claro. Llámeme antes de las doce.", de: "Natürlich. Rufen Sie mich vor zwölf Uhr an." },
+        { s: "L", es: "Muchas gracias por su tiempo, señor Ruiz.", de: "Vielen Dank für Ihre Zeit, Herr Ruiz." },
+        { s: "R", es: "De nada. Hasta mañana, Laura.", de: "Gern geschehen. Bis morgen, Laura." },
+      ],
+      quiz: [
+        { q: "Wie hoch ist die Miete?", a: "900 € im Monat", wrong: ["600 € im Monat", "1.200 € im Monat"] },
+        { q: "Welches Haustier hat Laura?", a: "Eine Katze", wrong: ["Einen großen Hund", "Keins"] },
+        { q: "Wann soll Laura Herrn Ruiz anrufen?", a: "Morgen vor zwölf Uhr", wrong: ["Heute Abend", "Am ersten Oktober"] },
+      ],
+    },
+    {
+      id: "pueblo", type: "story", level: "A2", icon: "🐕", color: "#22B573", narrator: "m",
+      title: "Los veranos en el pueblo", de: "Die Sommer im Dorf",
+      lines: [
+        { es: "Cuando era pequeño, pasaba todos los veranos en el pueblo de mi abuela.", de: "Als ich klein war, verbrachte ich jeden Sommer im Dorf meiner Großmutter." },
+        { es: "El pueblo estaba en las montañas de Asturias, en el norte de España.", de: "Das Dorf lag in den Bergen von Asturien, im Norden Spaniens." },
+        { es: "Allí no hacía tanto calor como en la ciudad, y todo era verde.", de: "Dort war es nicht so heiß wie in der Stadt, und alles war grün." },
+        { es: "Mi abuela vivía en una casa de piedra con un jardín enorme.", de: "Meine Großmutter wohnte in einem Steinhaus mit einem riesigen Garten." },
+        { es: "En el jardín tenía gallinas, un par de vacas y muchos árboles frutales.", de: "Im Garten hatte sie Hühner, ein paar Kühe und viele Obstbäume." },
+        { es: "Pero el animal más importante de la casa era Lobo, su perro.", de: "Aber das wichtigste Tier im Haus war Lobo, ihr Hund." },
+        { es: "Lobo era grande, negro y un poco viejo.", de: "Lobo war groß, schwarz und ein bisschen alt." },
+        { es: "Parecía peligroso, pero en realidad era muy cariñoso.", de: "Er sah gefährlich aus, war aber in Wirklichkeit sehr verschmust." },
+        { es: "Todas las mañanas me despertaba con su nariz fría.", de: "Jeden Morgen weckte er mich mit seiner kalten Nase." },
+        { es: "Después del desayuno, salíamos juntos a explorar el bosque.", de: "Nach dem Frühstück zogen wir zusammen los, um den Wald zu erkunden." },
+        { es: "Yo buscaba piedras bonitas y Lobo perseguía mariposas.", de: "Ich suchte schöne Steine und Lobo jagte Schmetterlingen hinterher." },
+        { es: "A veces bajábamos al río y yo me bañaba en el agua helada.", de: "Manchmal gingen wir zum Fluss hinunter und ich badete im eiskalten Wasser." },
+        { es: "Lobo nunca se metía en el agua; prefería esperarme en la orilla.", de: "Lobo ging nie ins Wasser; er wartete lieber am Ufer auf mich." },
+        { es: "A mediodía volvíamos a casa, porque mi abuela cocinaba muy bien.", de: "Mittags gingen wir nach Hause, denn meine Großmutter kochte sehr gut." },
+        { es: "Su especialidad era la fabada, un plato típico de Asturias con judías y chorizo.", de: "Ihre Spezialität war Fabada, ein typisches Gericht aus Asturien mit Bohnen und Chorizo." },
+        { es: "Por la tarde, mientras ella dormía la siesta, yo leía cómics en el porche.", de: "Nachmittags, während sie Siesta hielt, las ich auf der Veranda Comics." },
+        { es: "Lobo siempre dormía a mis pies.", de: "Lobo schlief immer zu meinen Füßen." },
+        { es: "Por la noche, nos sentábamos fuera y mi abuela me contaba historias.", de: "Abends saßen wir draußen und meine Großmutter erzählte mir Geschichten." },
+        { es: "Me hablaba de su juventud, de cuando no había televisión en el pueblo.", de: "Sie erzählte von ihrer Jugend, von der Zeit, als es im Dorf noch keinen Fernseher gab." },
+        { es: "En aquella época, la gente se reunía en la plaza para cantar y bailar.", de: "Damals trafen sich die Leute auf dem Platz, um zu singen und zu tanzen." },
+        { es: "Ella conoció a mi abuelo en una de esas fiestas.", de: "Sie lernte meinen Großvater auf einem dieser Feste kennen." },
+        { es: "Me encantaban esas noches, con el cielo lleno de estrellas.", de: "Ich liebte diese Nächte mit dem Himmel voller Sterne." },
+        { es: "Mi abuela conocía el nombre de muchas estrellas y me las enseñaba con el dedo.", de: "Meine Großmutter kannte die Namen vieler Sterne und zeigte sie mir mit dem Finger." },
+        { es: "Lobo, mientras tanto, dormía tranquilo junto a la puerta.", de: "Lobo schlief währenddessen ruhig neben der Tür." },
+        { es: "Un verano, cuando tenía diez años, Lobo desapareció.", de: "Eines Sommers, als ich zehn Jahre alt war, verschwand Lobo." },
+        { es: "Lo buscamos por todo el pueblo, pero no lo encontramos.", de: "Wir suchten ihn im ganzen Dorf, aber wir fanden ihn nicht." },
+        { es: "Yo lloré toda la noche.", de: "Ich weinte die ganze Nacht." },
+        { es: "A la mañana siguiente, oímos un ladrido en la puerta.", de: "Am nächsten Morgen hörten wir ein Bellen an der Tür." },
+        { es: "Era Lobo, sucio y cansado, pero muy contento.", de: "Es war Lobo, schmutzig und müde, aber sehr glücklich." },
+        { es: "Mi abuela le preparó un plato enorme de comida y yo lo abracé muy fuerte.", de: "Meine Großmutter machte ihm einen riesigen Napf mit Futter, und ich umarmte ihn ganz fest." },
+        { es: "Ese día no nos separamos ni un minuto.", de: "An diesem Tag trennten wir uns keine Minute." },
+        { es: "Nunca supimos dónde había pasado la noche.", de: "Wir haben nie erfahren, wo er die Nacht verbracht hatte." },
+        { es: "Ahora soy adulto y vivo en la ciudad.", de: "Heute bin ich erwachsen und lebe in der Stadt." },
+        { es: "Mi abuela ya no está, y Lobo tampoco.", de: "Meine Großmutter lebt nicht mehr, und Lobo auch nicht." },
+        { es: "Pero cada vez que huelo la hierba mojada, vuelvo a ser aquel niño feliz del pueblo.", de: "Aber jedes Mal, wenn ich nasses Gras rieche, bin ich wieder der glückliche Junge aus dem Dorf." },
+      ],
+      quiz: [
+        { q: "Wo lag das Dorf der Großmutter?", a: "In Asturien, im Norden Spaniens", wrong: ["In Andalusien, im Süden", "Auf Mallorca"] },
+        { q: "Was hat Lobo nie gemacht?", a: "Ins Wasser gehen", wrong: ["Schmetterlinge jagen", "Zu Füßen des Jungen schlafen"] },
+        { q: "Was passierte, als der Junge zehn war?", a: "Lobo verschwand eine Nacht lang", wrong: ["Die Großmutter zog in die Stadt", "Er fand einen Schatz im Wald"] },
+      ],
+    },
+    {
+      id: "mercado", type: "dialog", level: "A1", icon: "🍅", color: "#E5484D",
+      title: "En el mercado", de: "Auf dem Markt",
+      speakers: {
+        V: { name: "Paco", gender: "m", color: "#22B573" },
+        E: { name: "Doña Elena", gender: "f", color: "#9B5DE5" },
+      },
+      lines: [
+        { s: "V", es: "¡Buenos días, doña Elena! ¿Qué le pongo hoy?", de: "Guten Morgen, Doña Elena! Was darf es heute sein?" },
+        { s: "E", es: "Buenos días, Paco. Quiero hacer una ensalada para esta noche. Vienen mis hijos a cenar.", de: "Guten Morgen, Paco. Ich möchte für heute Abend einen Salat machen. Meine Kinder kommen zum Abendessen." },
+        { s: "V", es: "¿Cuántos van a ser?", de: "Wie viele werden Sie sein?" },
+        { s: "E", es: "Seis: mis dos hijos, sus mujeres y los dos nietos. Bueno, siete conmigo.", de: "Sechs: meine beiden Söhne, ihre Frauen und die zwei Enkel. Na ja, mit mir sieben." },
+        { s: "V", es: "¡Qué bien! Mire estos tomates. Son de Valencia y están buenísimos.", de: "Wie schön! Schauen Sie sich diese Tomaten an. Sie kommen aus Valencia und sind superlecker." },
+        { s: "E", es: "¿A cuánto están?", de: "Was kosten sie?" },
+        { s: "V", es: "A dos euros y medio el kilo.", de: "Zweieinhalb Euro das Kilo." },
+        { s: "E", es: "Póngame un kilo, por favor. Y dos pepinos.", de: "Geben Sie mir bitte ein Kilo. Und zwei Gurken." },
+        { s: "V", es: "Aquí tiene. ¿Algo más?", de: "Bitte schön. Sonst noch etwas?" },
+        { s: "E", es: "Sí, una lechuga y una cebolla roja.", de: "Ja, einen Kopfsalat und eine rote Zwiebel." },
+        { s: "V", es: "La lechuga hoy está muy fresca. Y la cebolla, ¿grande o pequeña?", de: "Der Kopfsalat ist heute sehr frisch. Und die Zwiebel, groß oder klein?" },
+        { s: "E", es: "Pequeña. A mis nietos no les gusta mucho la cebolla.", de: "Klein. Meine Enkel mögen Zwiebeln nicht besonders." },
+        { s: "V", es: "A los niños nunca les gusta la cebolla. Mi hija es igual.", de: "Kinder mögen nie Zwiebeln. Meine Tochter ist genauso." },
+        { s: "E", es: "Mi nieto pequeño solo quiere comer patatas fritas y helado.", de: "Mein kleiner Enkel will nur Pommes und Eis essen." },
+        { s: "V", es: "¡Como todos! ¿Y fruta? Tengo unas fresas muy dulces.", de: "Wie alle! Und Obst? Ich habe sehr süße Erdbeeren." },
+        { s: "E", es: "¿Cuánto cuestan las fresas?", de: "Wie viel kosten die Erdbeeren?" },
+        { s: "V", es: "Cuatro euros la caja. Pero si se lleva dos cajas, se las dejo en siete.", de: "Vier Euro die Schale. Aber wenn Sie zwei Schalen nehmen, bekommen Sie sie für sieben." },
+        { s: "E", es: "Vale, dos cajas. Con nata son el postre perfecto.", de: "Gut, zwei Schalen. Mit Sahne sind sie der perfekte Nachtisch." },
+        { s: "V", es: "¿Y para la ensalada no quiere aguacate? Hoy tengo unos aguacates muy buenos.", de: "Und wollen Sie für den Salat keine Avocado? Heute habe ich sehr gute Avocados." },
+        { s: "E", es: "¿Están maduros? La última vez estaban muy duros.", de: "Sind sie reif? Letztes Mal waren sie sehr hart." },
+        { s: "V", es: "Tóquelos usted misma. Estos se pueden comer hoy mismo.", de: "Fühlen Sie selbst. Die kann man noch heute essen." },
+        { s: "E", es: "Es verdad, están perfectos. Póngame dos.", de: "Stimmt, die sind perfekt. Geben Sie mir zwei." },
+        { s: "V", es: "Tiene razón. ¿Necesita algo más? ¿Patatas, ajos, pimientos?", de: "Da haben Sie recht. Brauchen Sie noch etwas? Kartoffeln, Knoblauch, Paprika?" },
+        { s: "E", es: "No, gracias, patatas tengo en casa. Ah, sí: medio kilo de naranjas para el zumo del desayuno.", de: "Nein danke, Kartoffeln habe ich zu Hause. Ach ja: ein halbes Kilo Orangen für den Saft zum Frühstück." },
+        { s: "V", es: "Medio kilo son solo tres naranjas. ¿Le pongo un kilo?", de: "Ein halbes Kilo sind nur drei Orangen. Soll ich Ihnen ein Kilo geben?" },
+        { s: "E", es: "Bueno, un kilo entonces. ¿Cuánto es todo?", de: "Na gut, dann ein Kilo. Was macht das alles zusammen?" },
+        { s: "V", es: "A ver: los tomates, dos cincuenta; los pepinos, un euro; la lechuga, uno veinte; la cebolla, cincuenta céntimos; las fresas, siete; los aguacates, tres; y las naranjas, dos euros.", de: "Mal sehen: die Tomaten zwei fünfzig, die Gurken ein Euro, der Salat eins zwanzig, die Zwiebel fünfzig Cent, die Erdbeeren sieben, die Avocados drei und die Orangen zwei Euro." },
+        { s: "V", es: "En total, diecisiete euros con veinte.", de: "Insgesamt siebzehn Euro zwanzig." },
+        { s: "E", es: "Aquí tiene veinte euros.", de: "Hier sind zwanzig Euro." },
+        { s: "V", es: "Y dos euros con ochenta de vuelta. Muchas gracias.", de: "Und zwei Euro achtzig zurück. Vielen Dank." },
+        { s: "E", es: "Gracias a usted, Paco. Por cierto, ¿cómo está su mujer?", de: "Ich danke Ihnen, Paco. Übrigens, wie geht es Ihrer Frau?" },
+        { s: "V", es: "Mucho mejor, gracias. La semana que viene vuelve a trabajar aquí en el puesto.", de: "Viel besser, danke. Nächste Woche arbeitet sie wieder hier am Stand." },
+        { s: "E", es: "¿Y ya puede caminar bien?", de: "Und kann sie schon wieder gut laufen?" },
+        { s: "V", es: "Sí, ya camina sin muletas. El médico dice que está casi recuperada.", de: "Ja, sie läuft schon ohne Krücken. Der Arzt sagt, sie ist fast wieder gesund." },
+        { s: "E", es: "Me alegro mucho. Dele recuerdos de mi parte.", de: "Das freut mich sehr. Grüßen Sie sie von mir." },
+        { s: "V", es: "Se los daré. ¡Que disfrute de la cena con su familia!", de: "Mache ich. Genießen Sie das Abendessen mit Ihrer Familie!" },
+        { s: "E", es: "Gracias. ¡Hasta el sábado, Paco!", de: "Danke. Bis Samstag, Paco!" },
+        { s: "V", es: "¡Hasta el sábado, doña Elena!", de: "Bis Samstag, Doña Elena!" },
+      ],
+      quiz: [
+        { q: "Warum kauft Doña Elena ein?", a: "Ihre Kinder kommen zum Abendessen", wrong: ["Sie feiert ein Fest", "Sie fährt in den Urlaub"] },
+        { q: "Wie viel kostet alles zusammen?", a: "17,20 €", wrong: ["20,00 €", "14,20 €"] },
+        { q: "Was gibt es zum Nachtisch?", a: "Erdbeeren mit Sahne", wrong: ["Orangen", "Eis"] },
+      ],
+    },
+  ];
+
+  const PODCAST_SPEEDS = [0.75, 1, 1.25];
+  // Safari spricht bei Rate 1 schon zügig und beschleunigt darüber sehr stark,
+  // deshalb ist „1,25×“ bewusst nur leicht schneller.
+  const PODCAST_RATES = { 0.75: 0.75, 1: 1, 1.25: 1.1 };
+  // Bekannte Namen spanischer Systemstimmen, um Sprecherinnen und Sprecher zu unterscheiden.
+  const FEMALE_VOICE_NAMES = ["Mónica", "Monica", "Paulina", "Marisol", "Luciana", "Isabela", "Soledad", "Angélica", "Francisca", "Esperanza", "Helena", "Laura", "Lucía", "Lucia", "Elvira", "Penélope", "Dalia"];
+  const MALE_VOICE_NAMES = ["Jorge", "Juan", "Diego", "Carlos", "Enrique", "Pablo", "Álvaro", "Alvaro", "Andrés", "Miguel", "Raúl", "Tomás"];
+
+  // ---------------------------------------------------------------
+  // Sprechen: typische Aussprache-Hürden mit Tipps, Quellen und Stufen
+  // ---------------------------------------------------------------
+  const SOUNDS = [
+    {
+      id: "rr", title: "rr – gerolltes R",
+      tip: "Lass die Zungenspitze mehrmals schnell hinter den oberen Zähnen flattern. Am Wortanfang und bei rr wird immer gerollt.",
+      words: [
+        { es: "el perro", de: "der Hund" },
+        { es: "la guitarra", de: "die Gitarre" },
+        { es: "la radio", de: "das Radio" },
+        { es: "arriba", de: "oben" },
+      ],
+    },
+    {
+      id: "j", title: "j / g – wie „ch“ in „Bach“",
+      tip: "j und g vor e oder i sprichst du kratzig hinten im Hals, wie das deutsche „ch“ in „Bach“.",
+      words: [
+        { es: "el jamón", de: "der Schinken" },
+        { es: "la gente", de: "die Leute" },
+        { es: "joven", de: "jung" },
+        { es: "el ajo", de: "der Knoblauch" },
+      ],
+    },
+    {
+      id: "enye", title: "ñ – wie „nj“",
+      tip: "ñ klingt wie „nj“ – ähnlich wie in „Champagner“.",
+      words: [
+        { es: "el niño", de: "das Kind" },
+        { es: "mañana", de: "morgen" },
+        { es: "España", de: "Spanien" },
+        { es: "el año", de: "das Jahr" },
+      ],
+    },
+    {
+      id: "ll", title: "ll / y – wie „j“",
+      tip: "ll und y sprichst du in den meisten Regionen wie das deutsche „j“ in „ja“.",
+      words: [
+        { es: "la calle", de: "die Straße" },
+        { es: "llamar", de: "rufen / anrufen" },
+        { es: "yo", de: "ich" },
+        { es: "la playa", de: "der Strand" },
+      ],
+    },
+    {
+      id: "z", title: "z / ce / ci – gelispelt",
+      tip: "In Spanien klingen z sowie c vor e und i wie das englische „th“ in „think“. In Lateinamerika sagt man ein scharfes s.",
+      words: [
+        { es: "el zapato", de: "der Schuh" },
+        { es: "la cerveza", de: "das Bier" },
+        { es: "cinco", de: "fünf" },
+        { es: "la plaza", de: "der Platz" },
+      ],
+    },
+    {
+      id: "bv", title: "b und v – derselbe Laut",
+      tip: "b und v klingen gleich: am Wortanfang wie ein deutsches b, zwischen Vokalen weicher, mit fast geschlossenen Lippen.",
+      words: [
+        { es: "el vino", de: "der Wein" },
+        { es: "la vaca", de: "die Kuh" },
+        { es: "beber", de: "trinken" },
+        { es: "nuevo", de: "neu" },
+      ],
+    },
+    {
+      id: "h", title: "h – immer stumm",
+      tip: "Das h wird nie gesprochen: „hola“ klingt wie „ola“.",
+      words: [
+        { es: "hola", de: "hallo" },
+        { es: "hoy", de: "heute" },
+        { es: "el hombre", de: "der Mann" },
+        { es: "hablar", de: "sprechen" },
+      ],
+    },
+    {
+      id: "vokale", title: "Vokale – kurz und klar",
+      tip: "Spanische Vokale sind immer kurz und klar und werden nie gedehnt. Auch ein e am Wortende wird deutlich gesprochen.",
+      words: [
+        { es: "la mesa", de: "der Tisch" },
+        { es: "el libro", de: "das Buch" },
+        { es: "la luna", de: "der Mond" },
+        { es: "bueno", de: "gut" },
+      ],
+    },
+  ];
+
+  const SPEAK_SOURCES = [
+    { id: "sounds", name: "Schwierige Laute", icon: "👅", color: "#FF6B9A", desc: "rr, j, ñ, ll, z …" },
+    { id: "words", name: "Wörter", icon: "🔤", color: "#E4572E", desc: "aus deinen Vokabeln" },
+    { id: "sentences", name: "Sätze", icon: "💬", color: "#3A86FF", desc: "Alltagssätze" },
+  ];
+
+  const SPEAK_LEVELS = [
+    { n: 1, icon: "👀", name: "Nachsprechen", desc: "Text sehen & hören", hint: "Hör zu und sprich nach." },
+    { n: 2, icon: "👂", name: "Nach Gehör", desc: "nur hören", hint: "Hör genau hin und sprich nach – ohne Text." },
+    { n: 3, icon: "🧠", name: "Übersetzen", desc: "Deutsch → Spanisch", hint: "Sag es auf Spanisch." },
+  ];
+
   const SESSION_SIZE = 10;
   const LEARNED_LEVEL = 3;
   const MAX_LEVEL = 5;
@@ -1874,6 +2489,9 @@
   const XP_PER_LEVEL = 100;
   const MAX_STARS_PER_TENSE = VERB_GROUPS.length * LEVELS.length * 3;
   const MAX_LISTEN_STARS = LISTEN_SOURCES.length * LISTEN_LEVELS.length * 3;
+  const MAX_PODCAST_STARS = PODCASTS.length * 3;
+  const MAX_SPEAK_STARS = SPEAK_SOURCES.length * SPEAK_LEVELS.length * 3;
+  const XP_EPISODE = 30;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
 
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
@@ -1881,6 +2499,8 @@
   const CATS = new Map(CATEGORIES.map((c) => [c.id, c]));
   const TENSE_BY_ID = new Map(TENSES.map((t) => [t.id, t]));
   const VERB_BY_INF = new Map(VERBS.map((v) => [v.inf, v]));
+  const PODCAST_BY_ID = new Map(PODCASTS.map((p) => [p.id, p]));
+  const SOUND_BY_ID = new Map(SOUNDS.map((s) => [s.id, s]));
 
   const BADGES = [
     { id: "first-session", icon: "🎉", name: "Erste Runde", desc: "Vokabel-Runde geschafft", test: () => state.sessionsDone >= 1 },
@@ -1897,6 +2517,10 @@
     { id: "verbs-writer", icon: "✍️", name: "Schreibprofi", desc: "Stufe 3 mit 3 Sternen", test: () => Object.keys(state.verbStars).some((k) => k.endsWith("|3") && state.verbStars[k] === 3) },
     { id: "listen-first", icon: "👂", name: "Gutes Gehör", desc: "Hör-Runde geschafft", test: () => state.listenSessions >= 1 },
     { id: "listen-dictation", icon: "📝", name: "Diktat-Profi", desc: "Diktat mit 3 Sternen", test: () => Object.keys(state.listenStars).some((k) => k.endsWith("|3") && state.listenStars[k] === 3) },
+    { id: "podcast-first", icon: "🎙️", name: "Zuhörer", desc: "Erste Folge gehört", test: () => state.podcastsHeard.length >= 1 },
+    { id: "podcast-all", icon: "📻", name: "Podcast-Fan", desc: "Alle Folgen gehört", test: () => PODCASTS.every((p) => state.podcastsHeard.includes(p.id)) },
+    { id: "speak-first", icon: "🗣️", name: "Plaudertasche", desc: "Sprech-Runde geschafft", test: () => state.speakSessions >= 1 },
+    { id: "speak-pro", icon: "🎤", name: "Aussprache-Profi", desc: "Sprechen mit 3 Sternen", test: () => Object.values(state.speakStars).some((v) => v === 3) },
   ];
 
   const app = document.getElementById("app");
@@ -1927,6 +2551,14 @@
       listenStars: {},
       listenSessions: 0,
       listenLevel: 1,
+      podcastsHeard: [],
+      podcastStars: {},
+      podcastSpeed: 1,
+      podcastShowDe: false,
+      speakStars: {},
+      speakSessions: 0,
+      speakLevel: 1,
+      speakMode: "auto",
     };
   }
 
@@ -2039,6 +2671,24 @@
     let sum = 0;
     LISTEN_SOURCES.forEach((s) => LISTEN_LEVELS.forEach((l) => { sum += listenStarsFor(s.id, l.n); }));
     return sum;
+  }
+
+  function totalPodcastStars() {
+    return PODCASTS.reduce((sum, p) => sum + (state.podcastStars[p.id] || 0), 0);
+  }
+
+  function speakStarsFor(source, level) {
+    return state.speakStars[source + "|" + level] || 0;
+  }
+
+  function totalSpeakStars() {
+    let sum = 0;
+    SPEAK_SOURCES.forEach((s) => SPEAK_LEVELS.forEach((l) => { sum += speakStarsFor(s.id, l.n); }));
+    return sum;
+  }
+
+  function totalStars() {
+    return totalVerbStars() + totalListenStars() + totalPodcastStars() + totalSpeakStars();
   }
 
   // ---------- Konjugation ----------
@@ -2348,11 +2998,16 @@
       finishSession();
       return;
     }
+    abortListening();
     const base = s.queue.shift();
-    s.task = s.kind === "listen" ? prepareListenTask(base, s.source, s.level) : prepareTask(base, s.level);
+    if (s.kind === "listen") s.task = prepareListenTask(base, s.source, s.level);
+    else if (s.kind === "quiz") s.task = Object.assign({}, base, { base, result: null, accentOnly: false, given: "", options: shuffle([base.answer, ...base.wrong]) });
+    else if (s.kind === "speak") s.task = Object.assign({}, base, { base, result: null, heard: "", marks: null, recordingUrl: null });
+    else s.task = prepareTask(base, s.level);
     s.fresh = true;
     render();
     if (s.kind === "listen") speak(s.task.audio);
+    if (s.kind === "speak" && s.level < 3) speak(s.task.es);
     focusInput();
   }
 
@@ -2389,19 +3044,21 @@
     t.accentOnly = accentOnly;
     const first = !s.firstTry.has(t.id);
     if (first) s.firstTry.set(t.id, ok);
-    const spoken = s.kind === "listen" ? t.audio : t.answer;
+    const spoken = { listen: t.audio, verbs: t.answer }[s.kind];
 
     if (ok) {
       reward(s, t.id, first ? XP_FIRST_TRY : XP_RETRY);
       playCorrect();
-      if (s.kind !== "listen") speak(spoken);
+      if (s.kind === "verbs") speak(spoken);
     } else {
       s.combo = 0;
       s.queue.splice(Math.min(3, s.queue.length), 0, t.base);
       playWrong();
-      setTimeout(() => {
-        if (session === s && s.task === t) speak(spoken);
-      }, 450);
+      if (spoken) {
+        setTimeout(() => {
+          if (session === s && s.task === t) speak(spoken);
+        }, 450);
+      }
     }
     saveState();
     render();
@@ -2439,6 +3096,12 @@
       const key = s.source + "|" + s.level;
       state.listenStars[key] = Math.max(state.listenStars[key] || 0, s.stars);
       state.listenSessions++;
+    } else if (s.kind === "quiz") {
+      state.podcastStars[s.episode] = Math.max(state.podcastStars[s.episode] || 0, s.stars);
+    } else if (s.kind === "speak") {
+      const key = s.source + "|" + s.level;
+      state.speakStars[key] = Math.max(state.speakStars[key] || 0, s.stars);
+      state.speakSessions++;
     } else {
       state.sessionsDone++;
     }
@@ -2674,6 +3337,444 @@
     synth.speak(u);
   }
 
+  // ---------- Podcast-Player ----------
+  let player = null;
+  let wakeLock = null;
+
+  function voiceFor(gender) {
+    if (!synth) return null;
+    const names = gender === "m" ? MALE_VOICE_NAMES : FEMALE_VOICE_NAMES;
+    const voices = synth.getVoices()
+      .filter((v) => v.lang.toLowerCase().startsWith("es"))
+      .sort((a, b) => (b.lang === "es-ES") - (a.lang === "es-ES"));
+    return voices.find((v) => names.some((n) => v.name.includes(n))) || null;
+  }
+
+  // Ohne passende Stimme unterscheiden sich die Sprecher über die Tonhöhe.
+  function voiceSettings(ep, line) {
+    const sp = ep.speakers ? ep.speakers[line.s] : { gender: ep.narrator };
+    const voice = voiceFor(sp.gender);
+    if (voice) return { voice, pitch: sp.pitch || 1 };
+    return { voice: spanishVoice, pitch: (sp.gender === "m" ? 0.8 : 1.1) * (sp.pitch || 1) };
+  }
+
+  function baseSeconds(ep, upto) {
+    return ep.lines.slice(0, upto).reduce((sum, l) => sum + l.es.split(/\s+/).length / 2.7 + 0.45, 0);
+  }
+
+  function episodeSeconds(ep, upto) {
+    return baseSeconds(ep, upto) / PODCAST_RATES[state.podcastSpeed];
+  }
+
+  function formatTime(sec) {
+    const s = Math.round(sec);
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+
+  function openEpisode(id) {
+    stopPlayer();
+    player = { id, index: 0, playing: false, started: false, finished: false, token: 0, xp: 0, newBadges: [] };
+    view = "episode";
+    render();
+  }
+
+  function stopPlayer() {
+    if (!player) return;
+    player.playing = false;
+    player.token++;
+    if (synth) synth.cancel();
+    releaseWakeLock();
+  }
+
+  function playLine() {
+    const p = player;
+    const ep = PODCAST_BY_ID.get(p.id);
+    const line = ep.lines[p.index];
+    const token = ++p.token;
+    if (synth.speaking || synth.pending) synth.cancel();
+    const u = new SpeechSynthesisUtterance(line.es);
+    const { voice, pitch } = voiceSettings(ep, line);
+    u.lang = voice ? voice.lang : "es-ES";
+    if (voice) u.voice = voice;
+    u.pitch = pitch;
+    u.rate = PODCAST_RATES[state.podcastSpeed];
+    u.onend = () => {
+      if (player !== p || token !== p.token || !p.playing) return;
+      if (p.index >= ep.lines.length - 1) {
+        finishEpisode();
+        return;
+      }
+      p.index++;
+      playLine();
+      updatePlayer(true);
+    };
+    synth.speak(u);
+  }
+
+  function startPlaying() {
+    const p = player;
+    if (!state.sound) {
+      state.sound = true;
+      saveState();
+    }
+    p.playing = true;
+    p.started = true;
+    p.finished = false;
+    requestWakeLock();
+    playLine();
+  }
+
+  function togglePlay() {
+    if (!synth) return;
+    if (player.playing) {
+      stopPlayer();
+    } else {
+      if (player.finished) player.index = 0;
+      startPlaying();
+    }
+    updatePlayer(player.playing);
+  }
+
+  function jumpTo(i) {
+    if (!synth) return;
+    player.index = i;
+    startPlaying();
+    updatePlayer(false);
+  }
+
+  function step(delta) {
+    const ep = PODCAST_BY_ID.get(player.id);
+    player.index = Math.max(0, Math.min(ep.lines.length - 1, player.index + delta));
+    player.finished = false;
+    player.started = true;
+    if (player.playing) playLine();
+    updatePlayer(true);
+  }
+
+  function setSpeed(speed) {
+    state.podcastSpeed = speed;
+    saveState();
+    if (player.playing) playLine();
+    updatePlayer(false);
+  }
+
+  function finishEpisode() {
+    const p = player;
+    p.playing = false;
+    p.finished = true;
+    releaseWakeLock();
+    p.xp = 0;
+    if (!state.podcastsHeard.includes(p.id)) {
+      state.podcastsHeard.push(p.id);
+      state.xp += XP_EPISODE;
+      p.xp = XP_EPISODE;
+    }
+    bumpStreak();
+    p.newBadges = unlockBadges();
+    saveState();
+    render();
+    playFanfare(p.xp ? 3 : 2);
+    if (p.xp) confetti();
+  }
+
+  // Nur Teil-Updates, damit der Text beim Mitlesen nicht springt.
+  function updatePlayer(scroll) {
+    if (view !== "episode" || !player) return;
+    const ep = PODCAST_BY_ID.get(player.id);
+    const lines = app.querySelectorAll(".line");
+    lines.forEach((el, i) => el.classList.toggle("active", player.started && i === player.index));
+    const total = episodeSeconds(ep, ep.lines.length);
+    const now = player.finished ? total : episodeSeconds(ep, player.index);
+    app.querySelector(".pc-progress > span").style.width = (now / total) * 100 + "%";
+    app.querySelector(".pc-now").textContent = formatTime(now);
+    app.querySelector(".pc-total").textContent = formatTime(total);
+    const main = app.querySelector(".pc-main");
+    main.textContent = player.playing ? "⏸" : "▶";
+    main.setAttribute("aria-label", player.playing ? "Pause" : "Abspielen");
+    app.querySelectorAll(".speed").forEach((b) => b.classList.toggle("on", Number(b.dataset.speed) === state.podcastSpeed));
+    if (scroll && lines[player.index]) lines[player.index].scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+
+  async function requestWakeLock() {
+    try {
+      if ("wakeLock" in navigator && !wakeLock) {
+        wakeLock = await navigator.wakeLock.request("screen");
+        wakeLock.addEventListener("release", () => { wakeLock = null; });
+      }
+    } catch (e) {
+      // Bildschirmsperre lässt sich nicht verhindern – die Wiedergabe läuft trotzdem.
+    }
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) wakeLock.release().catch(() => {});
+    wakeLock = null;
+  }
+
+  // Im Hintergrund stoppt Safari die Sprachausgabe – dann sauber pausieren.
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && player && player.playing) {
+      stopPlayer();
+      updatePlayer(false);
+    }
+  });
+
+  function startQuiz(id) {
+    const ep = PODCAST_BY_ID.get(id);
+    stopPlayer();
+    const tasks = ep.quiz.map((q, i) => ({ id: id + "|" + i, question: q.q, answer: q.a, wrong: q.wrong }));
+    newSession("quiz", { episode: id, level: 2, queue: shuffle(tasks), total: tasks.length, task: null });
+    view = "drill";
+    nextTask();
+  }
+
+  // ---------- Sprechen ----------
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  const canRecord = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+  let recognizer = null;
+  let recorder = null;
+
+  // "auto": Spracherkennung prüft; "record": aufnehmen und selbst vergleichen; "self": nur selbst bewerten.
+  function speakMode() {
+    if (state.speakMode === "record" && canRecord) return "record";
+    if (Recognition) return "auto";
+    return canRecord ? "record" : "self";
+  }
+
+  function buildSpeakTasks(source) {
+    if (source === "sounds") {
+      return shuffle(SOUNDS.flatMap((snd) => snd.words.map((w) => ({ id: w.es, es: w.es, de: w.de, sound: snd.id })))).slice(0, SESSION_SIZE);
+    }
+    if (source === "sentences") {
+      return shuffle(SENTENCES.slice()).slice(0, SESSION_SIZE).map((s) => ({ id: s.es, es: s.es, de: s.de }));
+    }
+    const seen = shuffle(VOCAB.filter((w) => isSeen(w.es)));
+    const unseen = shuffle(VOCAB.filter((w) => !isSeen(w.es)));
+    return shuffle([...seen.slice(0, 6), ...unseen, ...seen.slice(6)].slice(0, SESSION_SIZE))
+      .map((w) => ({ id: w.es, es: w.es, de: w.de }));
+  }
+
+  function startSpeak(source) {
+    if (!state.sound) {
+      state.sound = true;
+      saveState();
+    }
+    const tasks = buildSpeakTasks(source);
+    newSession("speak", { source, level: state.speakLevel, queue: tasks, total: tasks.length, task: null, listening: false, interim: "", notice: "" });
+    view = "drill";
+    nextTask();
+  }
+
+  // Die Erkennung schreibt Zahlen oft als Ziffern („30“) – für den Vergleich werden sie zu Wörtern.
+  function spokenWords(str) {
+    const withWords = str.replace(/\d+/g, (d) => (Number(d) <= 100 ? numberWord(Number(d)) : d));
+    return stripAccents(normalizeListen(withWords)).split(" ").filter(Boolean);
+  }
+
+  // Markiert jedes Wort des Zielsatzes, das (in richtiger Reihenfolge) erkannt wurde.
+  function compareSpoken(target, heard) {
+    const norm = target.split(/\s+/).map((tok) => spokenWords(tok).join(" "));
+    const keys = norm.map((n, i) => ({ n, i })).filter((x) => x.n);
+    const heardWords = spokenWords(heard);
+    const a = keys.map((k) => k.n);
+    const dp = Array.from({ length: a.length + 1 }, () => new Array(heardWords.length + 1).fill(0));
+    for (let i = a.length - 1; i >= 0; i--) {
+      for (let j = heardWords.length - 1; j >= 0; j--) {
+        dp[i][j] = a[i] === heardWords[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+      }
+    }
+    const marks = norm.map((n) => !n);
+    let i = 0;
+    let j = 0;
+    while (i < a.length && j < heardWords.length) {
+      if (a[i] === heardWords[j]) {
+        marks[keys[i].i] = true;
+        i++;
+        j++;
+      } else if (dp[i + 1][j] >= dp[i][j + 1]) i++;
+      else j++;
+    }
+    return { marks, matched: dp[0][0], total: a.length };
+  }
+
+  function evaluateSpeech(alternatives) {
+    const t = session.task;
+    let best = null;
+    alternatives.forEach((alt) => {
+      const r = compareSpoken(t.es, alt);
+      if (!best || r.matched > best.matched) best = Object.assign(r, { heard: alt });
+    });
+    const ok = best.matched === best.total || (best.total >= 4 && best.matched / best.total >= 0.8);
+    submitSpeak(ok, best.heard, best.marks);
+  }
+
+  function submitSpeak(ok, heard, marks) {
+    const s = session;
+    const t = s.task;
+    const first = !s.firstTry.has(t.id);
+    if (first) s.firstTry.set(t.id, ok);
+    t.result = ok ? "right" : "wrong";
+    t.heard = heard;
+    t.marks = marks;
+    if (ok) {
+      reward(s, t.id, first ? XP_FIRST_TRY : XP_RETRY);
+      playCorrect();
+      setTimeout(() => {
+        if (session === s && s.task === t) nextTask();
+      }, 1800);
+    } else {
+      s.combo = 0;
+      playWrong();
+    }
+    saveState();
+    render();
+  }
+
+  // Falsche Aufgaben kommen einmal wieder, damit man nicht an einem Wort hängen bleibt.
+  function speakGiveUp() {
+    const s = session;
+    const t = s.task;
+    if (!s.firstTry.has(t.id)) s.firstTry.set(t.id, false);
+    s.combo = 0;
+    if (!t.base.requeued) {
+      t.base.requeued = true;
+      s.queue.splice(Math.min(3, s.queue.length), 0, t.base);
+    }
+    nextTask();
+  }
+
+  function micPressed() {
+    const s = session;
+    if (s.listening) {
+      if (recognizer) recognizer.stop();
+      if (recorder && recorder.state === "recording") recorder.stop();
+      return;
+    }
+    if (synth) synth.cancel();
+    s.notice = "";
+    s.interim = "";
+    s.task.result = null;
+    if (speakMode() === "auto") startRecognition();
+    else startRecording();
+  }
+
+  function startRecognition() {
+    const s = session;
+    const rec = new Recognition();
+    recognizer = rec;
+    rec.lang = "es-ES";
+    rec.interimResults = true;
+    rec.maxAlternatives = 3;
+    rec.continuous = false;
+    let finalAlternatives = null;
+    rec.onresult = (e) => {
+      if (recognizer !== rec) return;
+      const res = e.results[e.results.length - 1];
+      s.interim = res[0].transcript;
+      if (res.isFinal) finalAlternatives = Array.from(res, (alt) => alt.transcript);
+      const el = app.querySelector(".interim");
+      if (el) el.textContent = s.interim;
+    };
+    rec.onerror = (e) => {
+      if (recognizer !== rec) return;
+      if (e.error === "service-not-allowed" && canRecord) {
+        state.speakMode = "record";
+        saveState();
+        s.notice = "Die Spracherkennung ist auf diesem Gerät nicht erlaubt – du übst jetzt mit Aufnahme und Vergleich. (Erlauben kannst du sie unter Einstellungen → Siri → Diktieren.)";
+      } else if (e.error === "not-allowed") {
+        s.notice = "Bitte erlaube den Zugriff aufs Mikrofon (Einstellungen → Safari → Mikrofon).";
+      } else if (e.error === "no-speech") {
+        s.notice = "Ich habe nichts gehört. Tippe nochmal aufs Mikrofon und sprich deutlich.";
+      } else if (e.error !== "aborted") {
+        s.notice = "Das hat nicht geklappt. Versuch es bitte nochmal.";
+      }
+    };
+    rec.onend = () => {
+      if (recognizer !== rec) return;
+      recognizer = null;
+      s.listening = false;
+      const heard = finalAlternatives || (s.interim ? [s.interim] : null);
+      if (heard && !s.notice) evaluateSpeech(heard);
+      else {
+        if (!s.notice) s.notice = "Ich habe nichts verstanden. Versuch es nochmal.";
+        render();
+      }
+    };
+    s.listening = true;
+    render();
+    try {
+      rec.start();
+    } catch (e) {
+      recognizer = null;
+      s.listening = false;
+      s.notice = "Das Mikrofon ließ sich nicht starten.";
+      render();
+    }
+  }
+
+  async function startRecording() {
+    const s = session;
+    const t = s.task;
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      s.notice = "Kein Zugriff aufs Mikrofon. Erlaube ihn unter Einstellungen → Safari → Mikrofon.";
+      render();
+      return;
+    }
+    if (session !== s || s.task !== t) {
+      stream.getTracks().forEach((track) => track.stop());
+      return;
+    }
+    const chunks = [];
+    const rec = new MediaRecorder(stream);
+    recorder = rec;
+    rec.ondataavailable = (e) => {
+      if (e.data.size) chunks.push(e.data);
+    };
+    rec.onstop = () => {
+      stream.getTracks().forEach((track) => track.stop());
+      if (recorder === rec) recorder = null;
+      if (rec.aborted || session !== s || s.task !== t) return;
+      s.listening = false;
+      if (t.recordingUrl) URL.revokeObjectURL(t.recordingUrl);
+      t.recordingUrl = URL.createObjectURL(new Blob(chunks, { type: rec.mimeType || "audio/mp4" }));
+      render();
+      playRecording();
+    };
+    rec.start();
+    s.listening = true;
+    render();
+    setTimeout(() => {
+      if (recorder === rec && rec.state === "recording") rec.stop();
+    }, 8000);
+  }
+
+  function playRecording() {
+    const t = session.task;
+    if (t.recordingUrl) new Audio(t.recordingUrl).play().catch(() => {});
+  }
+
+  function abortListening() {
+    if (recognizer) {
+      const rec = recognizer;
+      recognizer = null;
+      try {
+        rec.abort();
+      } catch (e) {
+        // war schon beendet
+      }
+    }
+    if (recorder) {
+      const rec = recorder;
+      recorder = null;
+      rec.aborted = true;
+      if (rec.state === "recording") rec.stop();
+    }
+    if (session) session.listening = false;
+  }
+
   // ---------- Effekte ----------
   function floatText(parent, text) {
     const el = document.createElement("div");
@@ -2734,7 +3835,7 @@
         <div class="chips">
           <span class="chip">🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
           <span class="chip">📚 ${learnedCount()} / ${VOCAB.length} Wörter</span>
-          <span class="chip">⭐ ${totalVerbStars() + totalListenStars()} Sterne</span>
+          <span class="chip">⭐ ${totalStars()} Sterne</span>
           <span class="chip">🏅 ${state.badges.length} / ${BADGES.length}</span>
         </div>
       </section>`;
@@ -2757,6 +3858,8 @@
       vokabeln: `${learnedCount()} / ${VOCAB.length} Wörter gelernt`,
       verben: `${starsText(totalVerbStars(), TENSES.length * MAX_STARS_PER_TENSE)} · ${TENSES.length} Zeitformen`,
       hoeren: `${starsText(totalListenStars(), MAX_LISTEN_STARS)} · Wörter, Sätze, Zahlen`,
+      podcast: `${state.podcastsHeard.length} / ${PODCASTS.length} Folgen gehört · ${starsText(totalPodcastStars(), MAX_PODCAST_STARS)}`,
+      sprechen: `${starsText(totalSpeakStars(), MAX_SPEAK_STARS)} · Laute, Wörter, Sätze`,
     };
     return `
       <header class="hero">
@@ -2779,16 +3882,17 @@
             <span class="desc">${esc(moduleDesc[m.id])}</span>
           </button>`).join("")}
       </div>
-      <h2 class="section-title">Demnächst</h2>
-      <div class="grid two">
-        ${upcoming.map((m) => `
-          <button class="tile small locked" data-action="locked" aria-disabled="true" style="--c:${m.color}">
-            <span class="pill">Bald</span>
-            <span class="ico">${m.icon}</span>
-            <span class="name">${esc(m.name)}</span>
-            <span class="desc">${esc(m.desc)}</span>
-          </button>`).join("")}
-      </div>
+      ${upcoming.length ? `
+        <h2 class="section-title">Demnächst</h2>
+        <div class="grid two">
+          ${upcoming.map((m) => `
+            <button class="tile small locked" data-action="locked" aria-disabled="true" style="--c:${m.color}">
+              <span class="pill">Bald</span>
+              <span class="ico">${m.icon}</span>
+              <span class="name">${esc(m.name)}</span>
+              <span class="desc">${esc(m.desc)}</span>
+            </button>`).join("")}
+        </div>` : ""}
       <h2 class="section-title">Abzeichen</h2>
       <div class="badges">${BADGES.map(badgeTile).join("")}</div>`;
   }
@@ -3044,17 +4148,7 @@
           </div>
           <div class="tools"><button class="btn light" data-action="unpick" ${t.picked.length ? "" : "disabled"}>⌫ Zurück</button></div>`}`;
     }
-    if (s.level === 2) {
-      return `
-        <div class="options">
-          ${t.options.map((o) => {
-            let cls = "light";
-            if (t.result && o === t.answer) cls = "is-right";
-            else if (t.result && o === t.given) cls = "picked-wrong";
-            return `<button class="btn ${cls}" data-action="option" data-value="${esc(o)}" ${t.result ? "disabled" : ""}>${esc(o)}</button>`;
-          }).join("")}
-        </div>`;
-    }
+    if (s.level === 2) return optionButtons(t);
     const inputClass = t.result === "right" ? "correct" : t.result === "wrong" ? "wrong" : "";
     return `
       <input class="type-input ${inputClass}" type="text" value="${esc(t.given)}" ${t.result ? "readonly" : ""}
@@ -3147,21 +4241,23 @@
       </div>`;
   }
 
+  function optionButtons(t) {
+    const long = t.options.some((o) => o.length > 18);
+    return `
+      <div class="options ${long ? "long" : ""}">
+        ${t.options.map((o) => {
+          let cls = "light";
+          if (t.result && o === t.answer) cls = "is-right";
+          else if (t.result && o === t.given) cls = "picked-wrong";
+          return `<button class="btn ${cls}" data-action="option" data-value="${esc(o)}" ${t.result ? "disabled" : ""}>${esc(o)}</button>`;
+        }).join("")}
+      </div>`;
+  }
+
   function listenAnswerArea() {
     const s = session;
     const t = s.task;
-    if (s.level < 3) {
-      const long = t.options.some((o) => o.length > 18);
-      return `
-        <div class="options ${long ? "long" : ""}">
-          ${t.options.map((o) => {
-            let cls = "light";
-            if (t.result && o === t.answer) cls = "is-right";
-            else if (t.result && o === t.given) cls = "picked-wrong";
-            return `<button class="btn ${cls}" data-action="option" data-value="${esc(o)}" ${t.result ? "disabled" : ""}>${esc(o)}</button>`;
-          }).join("")}
-        </div>`;
-    }
+    if (s.level < 3) return optionButtons(t);
     const numbers = s.source === "numbers";
     const inputClass = t.result === "right" ? "correct" : t.result === "wrong" ? "wrong" : "";
     return `
@@ -3194,8 +4290,248 @@
       </div>`;
   }
 
+  function speakView() {
+    const lvl = state.speakLevel;
+    const mode = speakMode();
+    const modeInfo = {
+      auto: `✅ Poquito hört zu und prüft deine Aussprache automatisch.${canRecord ? ` <button class="link-btn inline" data-action="set-speak-mode" data-mode="record">Lieber aufnehmen und selbst vergleichen</button>` : ""}`,
+      record: `🎙️ Du nimmst dich auf und vergleichst mit dem Original.${Recognition ? ` <button class="link-btn inline" data-action="set-speak-mode" data-mode="auto">Automatisch prüfen lassen</button>` : ""}`,
+      self: "Dein Browser kann nicht aufnehmen – sprich laut nach und bewerte dich selbst.",
+    }[mode];
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
+        <h2>🗣️ Sprechen<small>Aussprache üben</small></h2>
+        ${soundButton()}
+      </div>
+      <div class="notice">${modeInfo}</div>
+      <div class="summary">
+        <div class="stat"><b>${totalSpeakStars()}</b><span>von ${MAX_SPEAK_STARS} Sternen</span></div>
+        <div class="stat"><b>${state.speakSessions}</b><span>Runden</span></div>
+        <div class="stat"><b>${lvl}</b><span>Stufe gewählt</span></div>
+      </div>
+      <h2 class="section-title">Schwierigkeit</h2>
+      <div class="levels">
+        ${SPEAK_LEVELS.map((l) => `
+          <button class="level-btn ${l.n === lvl ? "on" : ""}" data-action="set-speak-level" data-level="${l.n}">
+            <b>${l.icon}</b>
+            <span>${esc(l.name)}</span>
+            <small>${esc(l.desc)}</small>
+          </button>`).join("")}
+      </div>
+      <h2 class="section-title">Was möchtest du sprechen?</h2>
+      <div class="grid">
+        ${SPEAK_SOURCES.map((src) => `
+          <button class="tile" data-action="start-speak" data-source="${src.id}" style="--c:${src.color}">
+            <span class="ico">${src.icon}</span>
+            <span class="name">${esc(src.name)}</span>
+            <span class="desc">${esc(src.desc)}</span>
+            <span class="stars-line">${starRow(speakStarsFor(src.id, lvl))} Stufe ${lvl}</span>
+          </button>`).join("")}
+      </div>
+      <section class="panel">
+        <h3>👅 Aussprache-Tipps</h3>
+        ${SOUNDS.map((snd) => `
+          <div class="example">
+            <div class="ex-text">
+              <div class="ex-use">${esc(snd.title)}</div>
+              <div class="ex-de">${esc(snd.tip)}</div>
+              <div class="ex-es">${snd.words.map((w) => esc(w.es)).join(" · ")}</div>
+            </div>
+            ${sayButton(snd.words.map((w) => w.es).join(", "))}
+          </div>`).join("")}
+      </section>`;
+  }
+
+  function speakDrillView() {
+    const s = session;
+    const t = s.task;
+    const src = SPEAK_SOURCES.find((x) => x.id === s.source);
+    const level = SPEAK_LEVELS[s.level - 1];
+    const snd = t.sound ? SOUND_BY_ID.get(t.sound) : null;
+    const mode = speakMode();
+    const attempted = t.result || t.recordingUrl;
+    const fresh = s.fresh;
+    s.fresh = false;
+
+    let main;
+    if (s.level === 1) main = `<div class="word">${esc(t.es)}</div><div class="sub">${esc(t.de)}</div>`;
+    else if (s.level === 2) main = attempted ? `<div class="word">${esc(t.es)}</div><div class="sub">${esc(t.de)}</div>` : `<button class="play-btn" data-action="speak" aria-label="Anhören">🔊</button>`;
+    else main = `<div class="word">${esc(t.de)}</div>${attempted ? `<div class="sub">${esc(t.es)}</div>` : ""}`;
+    const listenBtns = s.level < 3 || attempted
+      ? `<div class="listen-row">
+          ${s.level === 2 && !attempted ? "" : `<button class="slow-btn" data-action="speak">🔊 Anhören</button>`}
+          <button class="slow-btn" data-action="speak-slow">🐢 Langsam</button>
+        </div>`
+      : "";
+
+    let answer = "";
+    if (t.result && t.marks) {
+      answer = `
+        <div class="feedback ${t.result === "right" ? "good" : "bad"}">
+          ${t.result === "right" ? "✓ ¡Muy bien!" : "Fast! Die roten Wörter habe ich nicht erkannt."}
+          <div class="said">${t.es.split(/\s+/).map((tok, i) => `<span class="${t.marks[i] ? "ok" : "miss"}">${esc(tok)}</span>`).join(" ")}</div>
+          <div class="heard">Verstanden: „${esc(t.heard)}“</div>
+          ${t.result === "wrong" ? `
+            <div class="row-btns">
+              <button class="btn" data-action="mic">🎤 Nochmal</button>
+              <button class="btn light" data-action="speak-next">Weiter</button>
+            </div>` : ""}
+        </div>`;
+    } else if (mode === "record" && t.recordingUrl && !t.result) {
+      answer = `
+        <div class="feedback neutral">
+          Vergleiche deine Aufnahme mit dem Original:
+          <div class="row-btns">
+            <button class="btn light" data-action="play-mine">▶ Meine Aufnahme</button>
+            <button class="btn light" data-action="speak">🔊 Original</button>
+          </div>
+          <div class="row-btns">
+            <button class="btn good" data-action="speak-self" data-ok="1">✓ Klang gut</button>
+            <button class="btn bad" data-action="speak-self" data-ok="0">✗ Noch nicht</button>
+          </div>
+        </div>`;
+    } else if (mode === "self" && !t.result) {
+      answer = `
+        <div class="row-btns">
+          <button class="btn good" data-action="speak-self" data-ok="1">✓ Konnte ich</button>
+          <button class="btn bad" data-action="speak-self" data-ok="0">✗ Noch nicht</button>
+        </div>`;
+    } else if (t.result === "right") {
+      answer = `<div class="feedback good">✓ ¡Muy bien!</div>`;
+    }
+
+    const showMic = mode !== "self" && t.result !== "right" && !(t.result === "wrong" && t.marks);
+    const micLabel = s.listening
+      ? (mode === "auto" ? "Ich höre zu … sprich jetzt" : "Aufnahme läuft … tippen zum Stoppen")
+      : (t.recordingUrl ? "Nochmal aufnehmen" : "Tippen und sprechen");
+
+    return `
+      ${sessionTopbar()}
+      <div class="stage">
+        <div class="prompt ${fresh ? "enter" : ""}">
+          <span class="cat-chip" style="--c:${src.color}">${snd ? "👅 " + esc(snd.title) : src.icon + " " + esc(src.name)}</span>
+          <span class="lang">Stufe ${s.level}</span>
+          ${main}
+          ${listenBtns}
+          ${snd && s.level < 3 ? `<div class="tip">💡 ${esc(snd.tip)}</div>` : ""}
+          <div class="task">${esc(level.hint)}</div>
+        </div>
+        ${showMic ? `
+          <div class="speak-area">
+            <button class="mic-btn ${s.listening ? "on" : ""}" data-action="mic" aria-label="${esc(micLabel)}">${s.listening ? "■" : "🎤"}</button>
+            <div class="mic-label">${esc(micLabel)}</div>
+            ${mode === "auto" ? `<div class="interim">${esc(s.interim)}</div>` : ""}
+          </div>` : ""}
+        ${s.notice ? `<div class="notice">${esc(s.notice)}</div>` : ""}
+        ${answer}
+        ${t.result ? "" : `<button class="link-btn" data-action="speak-skip">Überspringen</button>`}
+      </div>`;
+  }
+
+  function podcastsView() {
+    const tile = (ep) => {
+      const heard = state.podcastsHeard.includes(ep.id);
+      return `
+        <button class="tile" data-action="open-episode" data-id="${ep.id}" style="--c:${ep.color}">
+          <span class="pill ${heard ? "go" : ""}">${heard ? "✓ " : ""}${ep.level}</span>
+          <span class="ico">${ep.icon}</span>
+          <span class="name">${esc(ep.title)}</span>
+          <span class="desc">${esc(ep.de)}</span>
+          <span class="desc">ca. ${formatTime(baseSeconds(ep, ep.lines.length))} Min</span>
+          <span class="stars-line">${starRow(state.podcastStars[ep.id] || 0)} Fragen</span>
+        </button>`;
+    };
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
+        <h2>🎙️ Podcast<small>Geschichten & Gespräche</small></h2>
+        ${soundButton()}
+      </div>
+      ${synth ? "" : `<div class="notice">Dein Browser kann leider nichts vorlesen. Bitte öffne Poquito in Safari.</div>`}
+      <div class="summary">
+        <div class="stat"><b>${state.podcastsHeard.length} / ${PODCASTS.length}</b><span>Folgen gehört</span></div>
+        <div class="stat"><b>${totalPodcastStars()}</b><span>von ${MAX_PODCAST_STARS} Sternen</span></div>
+        <div class="stat"><b>${String(state.podcastSpeed).replace(".", ",")}×</b><span>Tempo</span></div>
+      </div>
+      <p class="lead">Längere Geschichten und Gespräche zum Zuhören und Mitlesen, jeweils 2–3 Minuten. Tempo und Übersetzung stellst du im Player ein.</p>
+      <h2 class="section-title">📖 Geschichten</h2>
+      <div class="grid">${PODCASTS.filter((p) => p.type === "story").map(tile).join("")}</div>
+      <h2 class="section-title">💬 Gespräche</h2>
+      <div class="grid">${PODCASTS.filter((p) => p.type === "dialog").map(tile).join("")}</div>`;
+  }
+
+  function episodeView() {
+    const p = player;
+    const ep = PODCAST_BY_ID.get(p.id);
+    const total = episodeSeconds(ep, ep.lines.length);
+    const now = p.finished ? total : episodeSeconds(ep, p.index);
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="open-podcasts" aria-label="Zurück">←</button>
+        <h2>${ep.icon} ${esc(ep.title)}<small>${esc(ep.de)} · ${ep.type === "story" ? "Geschichte" : "Gespräch"} · ${ep.level}</small></h2>
+      </div>
+      ${synth ? "" : `<div class="notice">Dein Browser kann leider nichts vorlesen. Bitte öffne Poquito in Safari.</div>`}
+      <section class="pc-player">
+        <div class="pc-controls">
+          <button class="pc-btn" data-action="pc-prev" aria-label="Satz zurück">⏮</button>
+          <button class="pc-btn pc-main" data-action="pc-play" aria-label="${p.playing ? "Pause" : "Abspielen"}">${p.playing ? "⏸" : "▶"}</button>
+          <button class="pc-btn" data-action="pc-next" aria-label="Satz vor">⏭</button>
+        </div>
+        <div class="progress pc-progress"><span style="width:${(now / total) * 100}%"></span></div>
+        <div class="pc-time"><span class="pc-now">${formatTime(now)}</span><span class="pc-total">${formatTime(total)}</span></div>
+        <div class="pc-options">
+          <div class="speeds">
+            ${PODCAST_SPEEDS.map((x) => `<button class="speed ${x === state.podcastSpeed ? "on" : ""}" data-action="set-speed" data-speed="${x}">${String(x).replace(".", ",")}×</button>`).join("")}
+          </div>
+          <button class="toggle ${state.podcastShowDe ? "on" : ""}" data-action="toggle-de">🇩🇪 Übersetzung ${state.podcastShowDe ? "an" : "aus"}</button>
+        </div>
+        ${p.finished ? `
+          <div class="pc-done">
+            <b>🎉 Folge fertig gehört!${p.xp ? ` +${p.xp} XP` : ""}</b>
+            ${p.newBadges.length ? `<div class="badges">${p.newBadges.map(badgeTile).join("")}</div>` : ""}
+            <div class="btn-stack pair">
+              <button class="btn sun" data-action="start-quiz" data-id="${ep.id}">❓ Verständnisfragen</button>
+              <button class="btn light" data-action="pc-play">↺ Nochmal hören</button>
+            </div>
+          </div>` : ""}
+      </section>
+      <section class="panel transcript">
+        ${ep.lines.map((line, i) => {
+          const sp = ep.speakers ? ep.speakers[line.s] : null;
+          return `
+            <button class="line ${p.started && i === p.index ? "active" : ""}" data-action="jump" data-i="${i}" ${sp ? `style="--c:${sp.color}"` : ""}>
+              ${sp ? `<span class="who">${esc(sp.name)}</span>` : ""}
+              <span class="es">${esc(line.es)}</span>
+              ${state.podcastShowDe ? `<span class="de">${esc(line.de)}</span>` : ""}
+            </button>`;
+        }).join("")}
+      </section>
+      <button class="btn sun" data-action="start-quiz" data-id="${ep.id}">❓ Verständnisfragen (${ep.quiz.length})</button>`;
+  }
+
+  function quizView() {
+    const s = session;
+    const ep = PODCAST_BY_ID.get(s.episode);
+    const fresh = s.fresh;
+    s.fresh = false;
+    return `
+      ${sessionTopbar()}
+      <div class="stage">
+        <div class="prompt ${fresh ? "enter" : ""}">
+          <span class="cat-chip" style="--c:${ep.color}">${ep.icon} ${esc(ep.title)}</span>
+          <span class="lang">Verständnis</span>
+          <div class="quiz-q">${esc(s.task.question)}</div>
+        </div>
+        ${optionButtons(s.task)}
+        ${drillFeedback()}
+      </div>`;
+  }
+
   function drillView() {
     if (session.kind === "listen") return listenDrillView();
+    if (session.kind === "quiz") return quizView();
+    if (session.kind === "speak") return speakDrillView();
     const s = session;
     const t = s.task;
     const tense = TENSE_BY_ID.get(s.tense);
@@ -3238,6 +4574,13 @@
       const src = LISTEN_SOURCES.find((x) => x.id === s.source);
       context = `<p>Hören · ${esc(src.name)} · ${esc(LISTEN_LEVELS[s.level - 1].name)}</p>`;
       backAction = `data-action="open-listen"`;
+    } else if (s.kind === "quiz") {
+      context = `<p>Podcast · ${esc(PODCAST_BY_ID.get(s.episode).title)}</p>`;
+      backAction = `data-action="open-podcasts"`;
+    } else if (s.kind === "speak") {
+      const src = SPEAK_SOURCES.find((x) => x.id === s.source);
+      context = `<p>Sprechen · ${esc(src.name)} · ${esc(SPEAK_LEVELS[s.level - 1].name)}</p>`;
+      backAction = `data-action="open-speak"`;
     } else {
       canRepeat = s.source.type !== "mistakes" || state.wrongStack.length > 0;
     }
@@ -3275,6 +4618,9 @@
     tense: tenseView,
     rules: rulesView,
     listen: listenView,
+    podcasts: podcastsView,
+    episode: episodeView,
+    speak: speakView,
     drill: drillView,
     result: resultView,
   };
@@ -3289,6 +4635,9 @@
 
   function go(next) {
     if (synth) synth.cancel();
+    abortListening();
+    stopPlayer();
+    player = null;
     session = next === "session" || next === "drill" || next === "result" ? session : null;
     busy = false;
     view = next;
@@ -3297,7 +4646,8 @@
 
   // ---------- Bedienung ----------
   const BACK_ACTIONS = new Set(["home", "exit"]);
-  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow"]);
+  // Keine Klick-Töne, wo gleich eigene Töne, Sprache oder das Mikrofon starten.
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self"]);
 
   app.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".accent")) e.preventDefault();
@@ -3342,12 +4692,44 @@
       case "open-listen":
         go("listen");
         break;
+      case "open-podcasts":
+        go("podcasts");
+        break;
+      case "open-episode":
+        openEpisode(el.dataset.id);
+        break;
+      case "pc-play":
+        togglePlay();
+        break;
+      case "pc-prev":
+        step(-1);
+        break;
+      case "pc-next":
+        step(1);
+        break;
+      case "jump":
+        jumpTo(Number(el.dataset.i));
+        break;
+      case "set-speed":
+        setSpeed(Number(el.dataset.speed));
+        break;
+      case "toggle-de":
+        state.podcastShowDe = !state.podcastShowDe;
+        saveState();
+        render();
+        updatePlayer(player.started);
+        break;
+      case "start-quiz":
+        startQuiz(el.dataset.id);
+        break;
       case "start-listen":
         startListen(el.dataset.source);
         break;
       case "again":
         if (session.kind === "verbs") startDrill(session.tense, session.group);
         else if (session.kind === "listen") startListen(session.source);
+        else if (session.kind === "quiz") startQuiz(session.episode);
+        else if (session.kind === "speak") startSpeak(session.source);
         else startVocab(session.source);
         break;
       case "set-level":
@@ -3375,7 +4757,43 @@
         app.querySelector(".actions").classList.remove("hidden");
         break;
       case "speak":
-        speak(session.current);
+        speak(session.kind === "speak" ? session.task.es : session.current);
+        break;
+      case "speak-slow":
+        speak(session.task.es, 0.55);
+        break;
+      case "open-speak":
+        go("speak");
+        break;
+      case "set-speak-level":
+        state.speakLevel = Number(el.dataset.level);
+        saveState();
+        render();
+        break;
+      case "set-speak-mode":
+        state.speakMode = el.dataset.mode;
+        saveState();
+        render();
+        break;
+      case "start-speak":
+        startSpeak(el.dataset.source);
+        break;
+      case "mic":
+        micPressed();
+        break;
+      case "play-mine":
+        playRecording();
+        break;
+      case "speak-self":
+        if (el.dataset.ok === "1") submitSpeak(true, "", null);
+        else {
+          playWrong();
+          speakGiveUp();
+        }
+        break;
+      case "speak-next":
+      case "speak-skip":
+        speakGiveUp();
         break;
       case "say":
         speak(el.dataset.text);
@@ -3417,7 +4835,7 @@
         nextTask();
         break;
       case "exit":
-        go({ verbs: "tense", listen: "listen", vocab: "vocab" }[session.kind]);
+        go({ verbs: "tense", listen: "listen", quiz: "podcasts", speak: "speak", vocab: "vocab" }[session.kind]);
         break;
       case "toggle-sound":
         state.sound = !state.sound;
@@ -3427,7 +4845,7 @@
         sfx.tap();
         break;
       case "reset":
-        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, Hören, XP, Abzeichen) löschen?")) {
+        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, Hören, Podcast, Sprechen, XP, Abzeichen) löschen?")) {
           state = Object.assign(defaultState(), { sound: state.sound });
           saveState();
           render();
