@@ -580,6 +580,8 @@
     word-break: break-word;
   }
 
+  .word.long { font-size: clamp(1.35rem, 4.5vw, 1.8rem); line-height: 1.25; }
+
   .sub {
     margin-top: 8px;
     color: #8A6A2E;
@@ -1324,6 +1326,254 @@
     70% { transform: scale(1.3) rotate(8deg); }
     100% { transform: scale(1) rotate(0); }
   }
+
+  /* ---------- Tab-Leiste ---------- */
+  .tabbar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px max(8px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: rgba(255, 250, 243, 0.94);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  .tabbar[hidden] { display: none; }
+
+  .tabbar button {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    max-width: 190px;
+    padding: 6px 4px;
+    border: none;
+    border-radius: 14px;
+    background: none;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .tabbar button span { font-size: 1.5rem; line-height: 1.15; filter: grayscale(1); opacity: 0.55; }
+  .tabbar button.on { background: var(--surface); box-shadow: 0 3px 0 var(--line); color: var(--primary); }
+  .tabbar button.on span { filter: none; opacity: 1; }
+  body.has-tabs .app { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
+
+  /* ---------- Einstellungen ---------- */
+  .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .panel-head h3 { margin: 0; }
+  .panel-head .count { margin-left: 6px; color: var(--muted); font-size: 0.85rem; font-weight: 800; }
+  .btn.small { width: auto; padding: 10px 18px; font-size: 0.95rem; }
+  .btn.danger { color: var(--bad-dark); }
+  .danger-panel p { color: var(--muted); font-size: 0.9rem; }
+  .voice-panel .notice { margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
+
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-weight: 900;
+  }
+
+  .switch {
+    position: relative;
+    width: 58px;
+    height: 34px;
+    border: none;
+    border-radius: 99px;
+    background: var(--locked);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .switch span {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+  }
+
+  .switch.on { background: var(--good); }
+  .switch.on span { transform: translateX(24px); }
+
+  details.more { margin-top: 4px; }
+
+  details.more summary {
+    padding: 10px 0;
+    color: var(--ink);
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  details.more[open] summary { margin-bottom: 6px; }
+
+  /* ---------- Übersetzer ---------- */
+  .tr-box {
+    margin-bottom: 18px;
+    padding: 18px;
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 6px 0 var(--line), var(--shadow);
+  }
+
+  .tr-dir {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .tr-chip {
+    padding: 10px;
+    border-radius: 14px;
+    background: var(--bg);
+    font-weight: 900;
+    text-align: center;
+  }
+
+  .tr-swap { width: 48px; height: 48px; font-size: 1.3rem; }
+
+  .tr-input {
+    display: block;
+    width: 100%;
+    min-height: 110px;
+    margin-bottom: 12px;
+    padding: 14px 16px;
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    outline: none;
+    background: var(--surface);
+    font: inherit;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.45;
+    resize: vertical;
+  }
+
+  .tr-input:focus { border-color: var(--sun); }
+  .tr-buttons { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+  .tr-note { margin-bottom: 18px; }
+
+  .tr-result {
+    margin-bottom: 22px;
+    padding: 20px;
+    border-radius: 24px;
+    background: linear-gradient(160deg, #FFF3CF, #FFE1A6);
+    box-shadow: 0 6px 0 #F1CE84, var(--shadow);
+    animation: pop-in 0.3s ease-out;
+  }
+
+  .tr-label { color: #8A6A2E; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tr-main { margin: 6px 0 16px; font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 900; line-height: 1.25; word-break: break-word; }
+  .tr-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tr-actions .btn { width: auto; flex: 1 1 auto; padding: 12px 16px; font-size: 1rem; }
+
+  .tr-alts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    color: #8A6A2E;
+    font-size: 0.9rem;
+    font-weight: 900;
+  }
+
+  .tr-alt {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .tr-extra { margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(138, 106, 46, 0.2); }
+
+  .tr-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .tr-info small { margin-left: 4px; color: #8A6A2E; font-weight: 800; }
+  .tr-info .say { width: 38px; height: 38px; font-size: 0.95rem; }
+
+  .mw-list, .tr-history ul { margin: 0; padding: 0; list-style: none; }
+
+  .mw-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .mw-list li:first-child { border-top: none; }
+  .mw-text { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+  .mw-text b { font-weight: 900; }
+  .mw-text span, .mw-list small { color: var(--muted); font-weight: 700; }
+  .mw-list small { flex: none; font-size: 0.8rem; }
+
+  .mw-del {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: var(--bg);
+    color: var(--muted);
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .my-words p { color: var(--muted); font-size: 0.9rem; }
+
+  .tr-hist {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-top: 1px solid var(--line);
+    background: none;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .tr-history li:first-child .tr-hist { border-top: none; }
+  .tr-hist span { color: var(--muted); font-size: 0.9rem; font-weight: 700; }
+  .tr-hist b { font-weight: 900; }
+  .tr-credit { margin: 4px 0 0; color: var(--muted); font-size: 0.78rem; font-weight: 700; text-align: center; }
+
+  @media (max-width: 480px) {
+    .mw-list small { display: none; }
+    .tr-actions .btn { flex: 1 1 100%; }
+  }
 </style>
 </head>
 <body>
@@ -1333,6 +1583,11 @@
 </noscript>
 
 <main class="app" id="app"></main>
+<nav class="tabbar" id="tabbar" hidden>
+  <button data-tab="home"><span>📚</span>Lernen</button>
+  <button data-tab="translate"><span>💬</span>Übersetzen</button>
+  <button data-tab="settings"><span>⚙️</span>Einstellungen</button>
+</nav>
 
 <script>
 (function () {
@@ -2644,6 +2899,9 @@
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
   const WORDS = new Map(VOCAB.map((w) => [w.es, w]));
   const CATS = new Map(CATEGORIES.map((c) => [c.id, c]));
+  // Eigene Wörter aus dem Übersetzer – eine Kategorie, die mit dem Lernstand wächst
+  const MY_CAT = { id: "mine", name: "Meine Wörter", icon: "⭐", color: "#E0A100", words: [] };
+  CATS.set(MY_CAT.id, MY_CAT);
   const TENSE_BY_ID = new Map(TENSES.map((t) => [t.id, t]));
   const VERB_BY_INF = new Map(VERBS.map((v) => [v.inf, v]));
   const PODCAST_BY_ID = new Map(PODCASTS.map((p) => [p.id, p]));
@@ -2680,6 +2938,7 @@
   let session = null;
   let busy = false;
   let currentTense = TENSES[0].id;
+  let backupOpen = false;
   let lookupVerb = "tener";
 
   // ---------- Speichern ----------
@@ -2715,6 +2974,8 @@
       xpScheme: XP_SCHEME,
       dailyGoal: 20,
       today: { day: null, xp: 0 },
+      myWords: [],
+      translateDir: "de-es",
       rev: 0,
       savedAt: 0,
       epoch: newEpoch(),
@@ -2746,9 +3007,20 @@
         }
       }
     }
+    registerMyWords(s.myWords);
     s.wrongStack = s.wrongStack.filter((id) => WORDS.has(id));
     knownRev = s.rev || 0;
     return s;
+  }
+
+  // Macht die eigenen Wörter als Karteikarten verfügbar. Wörter, die es schon gibt, bleiben außen vor.
+  function registerMyWords(list) {
+    MY_CAT.words.forEach((w) => WORDS.delete(w.es));
+    const seen = new Set();
+    MY_CAT.words = list
+      .filter((w) => w && w.es && w.de && !WORDS.has(w.es) && !seen.has(w.es) && seen.add(w.es))
+      .map((w) => ({ es: w.es, de: w.de, cat: MY_CAT.id }));
+    MY_CAT.words.forEach((w) => WORDS.set(w.es, w));
   }
 
   function migrate(saved) {
@@ -2791,6 +3063,7 @@
   function adoptStored(stored, preferStored) {
     if (stored.epoch !== state.epoch) Object.assign(state, defaultState(), stored);
     else mergeInto(state, stored, preferStored);
+    registerMyWords(state.myWords);
     state.wrongStack = state.wrongStack.filter((id) => WORDS.has(id));
   }
 
@@ -2812,6 +3085,8 @@
       return out;
     };
     const union = (a, b) => [...new Set([...a, ...b])];
+    const myWords = new Map();
+    [...other.myWords, ...target.myWords].forEach((w) => myWords.set(w.es, w));
     const later = (a, b, key) => ((a[key] || "") >= (b[key] || "") ? a : b);
     const mine = target.streak;
     const theirs = other.streak;
@@ -2840,13 +3115,14 @@
       podcastStars: maxMap(target.podcastStars, other.podcastStars),
       speakStars: maxMap(target.speakStars, other.speakStars),
       speakSessions: Math.max(target.speakSessions, other.speakSessions),
+      myWords: [...myWords.values()],
       podcastPos: Object.assign({}, rest.podcastPos, pick.podcastPos),
       lastBackup: Math.max(target.lastBackup || 0, other.lastBackup || 0) || null,
       rev: Math.max(target.rev || 0, other.rev || 0),
       savedAt: Math.max(target.savedAt || 0, other.savedAt || 0),
       xpScheme: XP_SCHEME,
     });
-    ["sound", "verbLevel", "listenLevel", "podcastSpeed", "podcastShowDe", "speakLevel", "speakMode", "voiceURI", "dailyGoal"]
+    ["sound", "verbLevel", "listenLevel", "podcastSpeed", "podcastShowDe", "speakLevel", "speakMode", "voiceURI", "dailyGoal", "translateDir"]
       .forEach((key) => { target[key] = pick[key]; });
   }
 
@@ -2860,7 +3136,7 @@
     if (SYNC_RENDER_VIEWS.has(view)) render();
   }
 
-  const SYNC_RENDER_VIEWS = new Set(["home", "vocab", "verbs", "tense", "listen", "podcasts", "speak"]);
+  const SYNC_RENDER_VIEWS = new Set(["home", "vocab", "verbs", "tense", "listen", "podcasts", "speak", "settings"]);
 
   function hasProgress(s) {
     return s.xp > 0 || Object.keys(s.progress).length > 0 || s.podcastsHeard.length > 0;
@@ -2934,6 +3210,7 @@
       if (!confirm("Sicherung vom " + when + " laden? Sie wird mit deinem aktuellen Stand zusammengeführt – es geht nichts verloren.")) return;
       // Zusammenführen statt ersetzen: So lassen sich auch Stände aus Safari und der Home-Bildschirm-App vereinen.
       mergeInto(state, Object.assign(defaultState(), migrate(data.state)), !hasProgress(state));
+      registerMyWords(state.myWords);
       state.wrongStack = state.wrongStack.filter((id) => WORDS.has(id));
       saveState();
       if (synth) pickVoice();
@@ -3860,12 +4137,21 @@
   // Spaß- und Effektstimmen von iOS/macOS klingen roboterhaft und kommen ans Ende.
   const NOVELTY_VOICES = ["Eddy", "Flo", "Grandma", "Grandpa", "Oma", "Opa", "Abuela", "Abuelo", "Reed", "Rocko", "Sandy", "Shelley", "Albert", "Bahh", "Bells", "Boing", "Bubbles", "Cellos", "Jester", "Organ", "Superstar", "Trinoids", "Whisper", "Wobble", "Zarvox", "Fred", "Junior", "Kathy", "Ralph"];
 
-  function voiceScore(v) {
+  // "premium", "enhanced" oder "standard" – Premium/Erweitert klingen deutlich natürlicher.
+  function voiceQuality(v) {
     const id = (v.name + " " + (v.voiceURI || "")).toLowerCase();
-    const lang = v.lang.replace("_", "-");
-    let score = lang === "es-ES" ? 30 : 10;
-    if (id.includes("premium")) score += 25;
-    else if (/enhanced|erweitert|verbessert|neural|natural/.test(id)) score += 15;
+    if (id.includes("premium")) return "premium";
+    if (/enhanced|erweitert|verbessert|neural|natural/.test(id)) return "enhanced";
+    return "standard";
+  }
+
+  function voiceLang(v) {
+    return v ? v.lang.replace("_", "-") : "es-ES";
+  }
+
+  function voiceScore(v) {
+    let score = voiceLang(v) === "es-ES" ? 30 : 10;
+    score += { premium: 25, enhanced: 15, standard: 0 }[voiceQuality(v)];
     if (NOVELTY_VOICES.some((n) => v.name.startsWith(n))) score -= 100;
     return score;
   }
@@ -3887,7 +4173,7 @@
     // Stimmen laden auf iOS verzögert – dann Auswahl aktualisieren.
     synth.onvoiceschanged = () => {
       pickVoice();
-      if (view === "home") render();
+      if (view === "settings") render();
     };
   }
 
@@ -3895,7 +4181,8 @@
     if (!synth || !state.sound) return;
     synth.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "es-ES";
+    // Sprache und Stimme müssen zusammenpassen, sonst nimmt Safari die einfache Standardstimme.
+    u.lang = voiceLang(spanishVoice);
     if (spanishVoice) u.voice = spanishVoice;
     u.rate = rate || 0.85;
     u.onstart = () => document.body.classList.add("speaking");
@@ -3981,7 +4268,7 @@
     if (synth.speaking || synth.pending) synth.cancel();
     const u = new SpeechSynthesisUtterance(line.es);
     const { voice, pitch } = voiceSettings(ep, line);
-    u.lang = voice ? voice.lang : "es-ES";
+    u.lang = voiceLang(voice);
     if (voice) u.voice = voice;
     u.pitch = pitch;
     u.rate = PODCAST_RATES[state.podcastSpeed];
@@ -4397,6 +4684,334 @@
   }
 
   // ---------- Ansichten ----------
+  // ---------- Übersetzer ----------
+  // Online-Übersetzung über MyMemory (kostenlos, ohne Konto). Einzelne Wörter kommen zuerst
+  // aus dem geprüften Poquito-Wörterbuch – das klappt auch ohne Internet.
+  const MT_URL = "https://api.mymemory.translated.net/get";
+  const HISTORY_KEY = STORAGE_KEY + "_verlauf";
+  const MAX_INPUT = 1000;
+  const MAX_CARD = 80;
+  const LANG_NAMES = { de: "🇩🇪 Deutsch", es: "🇪🇸 Spanisch" };
+  const ARTICLES = /^(el|la|los|las|un|una|unos|unas|der|die|das|den|dem|des|ein|eine|einen|einem|einer) /;
+  const ES_HINTS = new Set("el la los las un una y o de del que en está estoy soy eres son muy pero por para con sin mi tu su yo tú usted qué cómo dónde cuándo hola gracias buenos buenas días no sí también hay tengo quiero puedo me te se lo le al".split(" "));
+  const DE_HINTS = new Set("der die das den dem ein eine einen und oder ist bin bist sind nicht ich du er sie wir ihr mit von zu im auf für aber auch wie was wo wann hallo danke bitte guten tag gut sehr kein keine haben habe hast möchte kann".split(" "));
+  const translator = { text: "", result: null, loading: false, error: "", note: "", token: 0 };
+
+  function trLangs(dir) {
+    return dir === "es-de" ? ["es", "de"] : ["de", "es"];
+  }
+
+  // Vergleichsformen: klein und ohne Satzzeichen (simple), zusätzlich ohne Akzente (plain)
+  function simple(str) {
+    return str.toLowerCase().replace(/[¿?¡!.,;:"'«»()…]/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function plain(str) {
+    return stripAccents(simple(str));
+  }
+
+  function sameMeaning(a, b) {
+    return plain(a).replace(ARTICLES, "") === plain(b).replace(ARTICLES, "");
+  }
+
+  function variants(text) {
+    return text.replace(/\([^)]*\)/g, " ").split("/").map(simple).filter(Boolean)
+      .flatMap((v) => [v, v.replace(ARTICLES, "")]);
+  }
+
+  function dictionary() {
+    const entries = new Map();
+    VOCAB.forEach((w) => entries.set(w.es, { es: w.es, de: w.de, cat: w.cat }));
+    VERBS.forEach((v) => entries.set(v.inf, Object.assign(entries.get(v.inf) || { es: v.inf, de: v.de }, { verb: v })));
+    MY_CAT.words.forEach((w) => entries.set(w.es, { es: w.es, de: w.de, cat: MY_CAT.id }));
+    return [...entries.values()];
+  }
+
+  function lookupDictionary(text, from) {
+    if (!text.trim() || text.trim().split(/\s+/).length > 4) return [];
+    const keys = new Set(variants(text));
+    const loose = new Set([...keys].map(stripAccents));
+    const exact = [];
+    const near = [];
+    dictionary().forEach((e) => {
+      const vs = variants(from === "es" ? e.es : e.de);
+      if (vs.some((v) => keys.has(v))) exact.push(e);
+      else if (vs.some((v) => loose.has(stripAccents(v)))) near.push(e);
+    });
+    return (exact.length ? exact : near).slice(0, 3);
+  }
+
+  let formIndex = null;
+
+  // Alle Formen der Poquito-Verben, um z. B. „tengo“ als tener · Presente · yo zu erkennen.
+  function verbForms() {
+    if (!formIndex) {
+      formIndex = new Map();
+      VERBS.forEach((v) => TENSES.forEach((t) => conj(v, t.id).forEach((form, person) => {
+        const key = form.toLowerCase();
+        if (!formIndex.has(key)) formIndex.set(key, []);
+        formIndex.get(key).push({ v, tense: t.id, person });
+      })));
+    }
+    return formIndex;
+  }
+
+  function grammarHints(text) {
+    const key = simple(text);
+    if (!key || key.split(" ").length > 3) return [];
+    const inf = VERB_BY_INF.get(key);
+    if (inf) return [{ v: inf, tense: null, persons: [] }];
+    const groups = new Map();
+    (verbForms().get(key) || []).forEach((h) => {
+      const id = h.v.inf + "|" + h.tense;
+      if (!groups.has(id)) groups.set(id, { v: h.v, tense: h.tense, persons: [] });
+      groups.get(id).persons.push(personsFor(h.tense)[h.person]);
+    });
+    return [...groups.values()].slice(0, 4);
+  }
+
+  function guessLang(text) {
+    const t = text.toLowerCase();
+    let es = /[ñ¿¡]/.test(t) ? 3 : 0;
+    let de = /[äöüß]/.test(t) ? 3 : 0;
+    if (/[áéíóú]/.test(t)) es += 2;
+    t.split(/[^a-záéíóúñüäöß]+/).forEach((w) => {
+      if (ES_HINTS.has(w)) es++;
+      if (DE_HINTS.has(w)) de++;
+    });
+    if (es === 0 && de === 0) {
+      // Einzelne Wörter: Welche Sprache kennt das Wörterbuch?
+      const inEs = lookupDictionary(text, "es").length > 0;
+      const inDe = lookupDictionary(text, "de").length > 0;
+      if (inEs !== inDe) return inEs ? "es" : "de";
+      return null;
+    }
+    if (es >= de + 2 || (es > 0 && de === 0)) return "es";
+    if (de >= es + 2 || (de > 0 && es === 0)) return "de";
+    return null;
+  }
+
+  function decodeEntities(str) {
+    const el = document.createElement("textarea");
+    el.innerHTML = str;
+    return el.value;
+  }
+
+  function byteLength(str) {
+    return new TextEncoder().encode(str).length;
+  }
+
+  // Der Dienst nimmt höchstens 500 Byte pro Anfrage – längere Texte satzweise aufteilen.
+  function chunkText(text) {
+    const pieces = [];
+    (text.match(/[^.!?…\n]+[.!?…]*\s*|\n+/g) || [text]).forEach((sentence) => {
+      if (byteLength(sentence) <= 450) {
+        pieces.push(sentence);
+        return;
+      }
+      let part = "";
+      sentence.split(/(\s+)/).forEach((word) => {
+        if (part && byteLength(part + word) > 450) {
+          pieces.push(part);
+          part = "";
+        }
+        part += word;
+      });
+      if (part) pieces.push(part);
+    });
+    const chunks = [];
+    let current = "";
+    pieces.forEach((piece) => {
+      if (current && byteLength(current + piece) > 450) {
+        chunks.push(current);
+        current = "";
+      }
+      current += piece;
+    });
+    if (current) chunks.push(current);
+    return chunks.map((c) => c.trim()).filter(Boolean);
+  }
+
+  async function fetchMt(chunk, from, to) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 12000);
+    try {
+      const res = await fetch(MT_URL + "?q=" + encodeURIComponent(chunk) + "&langpair=" + from + "|" + to, { signal: ctrl.signal });
+      if (res.status === 429) throw new Error("quota");
+      if (!res.ok) throw new Error("http");
+      const data = await res.json();
+      const main = data.responseData && data.responseData.translatedText;
+      if (data.quotaFinished || /MYMEMORY WARNING|ALL AVAILABLE FREE/i.test(main || "")) throw new Error("quota");
+      if (Number(data.responseStatus) !== 200 || !main) throw new Error("http");
+      return data;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  // Neuronale Übersetzung („MT!“) ist meist besser als Treffer aus dem Übersetzungsspeicher.
+  function mtCandidates(data, chunk) {
+    const target = plain(chunk);
+    const ownSegment = (data.matches || []).filter((m) => m.translation && plain(m.segment || "") === target && Number(m.match) >= 0.7);
+    const mt = ownSegment.filter((m) => m["created-by"] === "MT!");
+    const tm = ownSegment.filter((m) => m["created-by"] !== "MT!");
+    const endsWithPunct = /[.!?]$/.test(chunk.trim());
+    return [...mt.map((m) => m.translation), data.responseData.translatedText, ...tm.map((m) => m.translation)]
+      .map((t) => decodeEntities(t).trim())
+      .map((t) => (endsWithPunct ? t : t.replace(/\.+$/, "").trim()))
+      .filter(Boolean);
+  }
+
+  function uniqueTexts(list) {
+    const out = [];
+    list.forEach((t) => {
+      if (t && !out.some((o) => sameMeaning(o, t))) out.push(t);
+    });
+    return out;
+  }
+
+  async function translate() {
+    const text = translator.text.trim();
+    if (!text || translator.loading) return;
+    let [from, to] = trLangs(state.translateDir);
+    translator.note = "";
+    translator.error = "";
+    const guessed = guessLang(text);
+    if (guessed && guessed !== from) {
+      state.translateDir = guessed === "es" ? "es-de" : "de-es";
+      saveState();
+      [from, to] = trLangs(state.translateDir);
+      translator.note = "Sprache automatisch erkannt: " + LANG_NAMES[from] + " → " + LANG_NAMES[to];
+    }
+    const dict = lookupDictionary(text, from);
+    const token = ++translator.token;
+    translator.loading = true;
+    translator.result = null;
+    render();
+
+    let online = [];
+    let failure = null;
+    try {
+      if (navigator.onLine === false) throw new Error("offline");
+      const chunks = chunkText(text);
+      const parts = [];
+      for (const chunk of chunks) {
+        const candidates = mtCandidates(await fetchMt(chunk, from, to), chunk);
+        parts.push(candidates[0]);
+        if (chunks.length === 1) online = candidates;
+      }
+      if (chunks.length > 1) online = [parts.join(" ")];
+    } catch (e) {
+      failure = e;
+    }
+    if (token !== translator.token) return;
+    translator.loading = false;
+
+    // Kurze Eingaben: Das geprüfte Wörterbuch geht vor, die Online-Treffer werden zu Alternativen.
+    const short = text.split(/\s+/).length <= 3;
+    const fromDict = dict.map((e) => (to === "es" ? e.es : e.de));
+    const all = uniqueTexts(short ? [...fromDict, ...online] : [...online, ...fromDict]);
+    if (all.length) {
+      translator.result = {
+        dir: state.translateDir, from, to, source: text,
+        main: all[0], alts: all.slice(1, 4), dict,
+        hints: grammarHints(from === "es" ? text : all[0]),
+      };
+      addHistory(translator.result);
+      if (failure) translator.note = "Ohne Internet – die Übersetzung stammt aus dem Poquito-Wörterbuch.";
+    } else if (failure) {
+      translator.error = failure.message === "quota"
+        ? "Das kostenlose Tageskontingent für Übersetzungen ist aufgebraucht. Morgen geht es wieder – Wörter aus dem Poquito-Wörterbuch funktionieren weiterhin."
+        : failure.message === "offline" || failure.name === "TypeError"
+          ? "Keine Internetverbindung – für ganze Sätze braucht der Übersetzer Internet."
+          : "Die Übersetzung hat gerade nicht geklappt. Versuch es gleich nochmal.";
+    }
+    if (view === "translate") render();
+  }
+
+  function loadHistory() {
+    try {
+      const list = JSON.parse(localStorage.getItem(HISTORY_KEY));
+      return Array.isArray(list) ? list : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function addHistory(r) {
+    const list = loadHistory().filter((h) => !(h.source === r.source && h.dir === r.dir));
+    list.unshift({ dir: r.dir, source: r.source, main: r.main, alts: r.alts, at: Date.now() });
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, 30)));
+    } catch (e) {
+      // Verlauf ist nur Komfort.
+    }
+  }
+
+  function showHistory(i) {
+    const h = loadHistory()[i];
+    if (!h) return;
+    const [from, to] = trLangs(h.dir);
+    state.translateDir = h.dir;
+    saveState();
+    translator.text = h.source;
+    translator.error = "";
+    translator.note = "";
+    translator.result = {
+      dir: h.dir, from, to, source: h.source, main: h.main, alts: h.alts || [],
+      dict: lookupDictionary(h.source, from), hints: grammarHints(from === "es" ? h.source : h.main),
+    };
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  // Karteikarte: immer Spanisch vorne, Deutsch hinten
+  function cardPair(r) {
+    return r.from === "es" ? { es: r.source, de: r.main } : { es: r.main, de: r.source };
+  }
+
+  function saveMyWord() {
+    const r = translator.result;
+    if (!r) return;
+    const pair = cardPair(r);
+    if (pair.es.length > MAX_CARD || pair.de.length > MAX_CARD || WORDS.has(pair.es)) return;
+    state.myWords.push({ es: pair.es, de: pair.de, added: Date.now() });
+    registerMyWords(state.myWords);
+    saveState();
+    playCorrect();
+    render();
+  }
+
+  function removeMyWord(es) {
+    state.myWords = state.myWords.filter((w) => w.es !== es);
+    registerMyWords(state.myWords);
+    state.wrongStack = state.wrongStack.filter((id) => id !== es);
+    saveState();
+    render();
+  }
+
+  function copyText(text, button) {
+    const done = () => {
+      button.textContent = "✓ Kopiert";
+      setTimeout(() => { button.textContent = "📋 Kopieren"; }, 1500);
+    };
+    const fallback = () => {
+      const area = document.createElement("textarea");
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand("copy");
+        done();
+      } catch (e) {
+        // Dann eben nicht.
+      }
+      area.remove();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fallback);
+    else fallback();
+  }
+
   function esc(str) {
     return String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
   }
@@ -4469,6 +5084,7 @@
         <div class="spacer"></div>
         ${soundButton()}
       </header>
+      ${storageNotice()}
       ${playerCard()}
       ${resumeBanner()}
       <h2 class="section-title">Was möchtest du lernen?</h2>
@@ -4492,9 +5108,6 @@
               <span class="desc">${esc(m.desc)}</span>
             </button>`).join("")}
         </div>` : ""}
-      ${goalPanel()}
-      ${voicePanel()}
-      ${progressPanel()}
       <h2 class="section-title">Abzeichen <small class="count">${state.badges.length} / ${BADGES.length}</small></h2>
       <div class="badges">${[...BADGES].sort((a, b) => state.badges.includes(b.id) - state.badges.includes(a.id)).map(badgeTile).join("")}</div>`;
   }
@@ -4515,11 +5128,41 @@
       </section>`;
   }
 
+  // Nur wenn es wirklich etwas zu tun gibt: Speichern klappt nicht, oder Safari statt App.
+  function storageNotice() {
+    if (storageError) return `<div class="notice warn">⚠️ Dein Fortschritt kann gerade nicht gespeichert werden (z. B. im privaten Modus von Safari). Öffne Poquito über das Symbol auf deinem Home-Bildschirm.</div>`;
+    if (isAppleMobile() && !isHomeScreenApp()) {
+      return `<div class="notice">📱 Tipp: Öffne Poquito über das Symbol auf deinem Home-Bildschirm – dort bleibt dein Fortschritt dauerhaft gespeichert. <button class="link-btn inline" data-action="open-settings">Warum?</button></div>`;
+    }
+    return "";
+  }
+
+  function settingsView() {
+    return `
+      <header class="hero">
+        <div class="logo">⚙️</div>
+        <div>
+          <h1>Einstellungen</h1>
+          <p>Alles wird automatisch gespeichert.</p>
+        </div>
+        <div class="spacer"></div>
+        ${soundButton()}
+      </header>
+      ${goalPanel()}
+      ${voicePanel()}
+      ${progressPanel()}
+      <section class="panel danger-panel">
+        <h3>🗑️ Neu anfangen</h3>
+        <p>Löscht deinen Lernfortschritt. Deine Einstellungen und „Meine Wörter“ bleiben erhalten.</p>
+        <button class="btn light danger" data-action="reset">Lernfortschritt löschen</button>
+      </section>`;
+  }
+
   function goalPanel() {
     return `
       <section class="panel goal-panel">
-        <h3>🎯 Dein Tagesziel</h3>
-        <p>Eine Runde bringt etwa 15–30 XP. Such dir aus, wie viel du täglich schaffen willst – kleine, regelmäßige Einheiten bringen am meisten.</p>
+        <h3>🎯 Tagesziel</h3>
+        <p>Eine Runde bringt etwa 15–30 XP. Kleine, regelmäßige Einheiten bringen am meisten.</p>
         <div class="goal-options">
           ${DAILY_GOALS.map((g) => `
             <button class="level-btn ${g.xp === state.dailyGoal ? "on" : ""}" data-action="set-goal" data-goal="${g.xp}">
@@ -4541,48 +5184,197 @@
   function progressPanel() {
     const inApp = isHomeScreenApp();
     const safari = isAppleMobile() && !inApp;
-    const where = inApp ? "in der Poquito-App auf deinem Home-Bildschirm" : safari ? "in Safari" : "in diesem Browser";
-    let status;
-    if (storageError) status = `<div class="notice warn">⚠️ Dein Fortschritt kann gerade nicht gespeichert werden (z. B. im privaten Modus von Safari). Öffne Poquito normal oder über das Home-Bildschirm-Symbol.</div>`;
-    else status = `<p>✅ Wird nach jeder Antwort automatisch gespeichert – ${where}. Zuletzt gespeichert: <b>${state.savedAt ? timeText(state.savedAt) : "noch nicht"}</b>.</p>`;
+    const where = inApp ? "in der Poquito-App auf diesem iPad" : safari ? "in Safari" : "in diesem Browser";
+    const status = storageError
+      ? `<div class="notice warn">⚠️ Dein Fortschritt kann gerade nicht gespeichert werden (z. B. im privaten Modus von Safari). Öffne Poquito normal oder über das Home-Bildschirm-Symbol.</div>`
+      : `<p>✅ Nach jeder Antwort automatisch gespeichert – ${where}. Zuletzt: <b>${state.savedAt ? timeText(state.savedAt) : "gerade eben"}</b>.</p>`;
     const split = safari && !storageError ? `
-        <div class="notice">📱 <b>Wichtig:</b> Safari und das Poquito-Symbol auf dem Home-Bildschirm haben <b>getrennte Speicher</b>. Was du hier in Safari lernst, siehst du in der App nicht – und umgekehrt. Außerdem löscht Safari Daten von Webseiten nach 7 Tagen ohne Besuch. Lerne deshalb am besten immer über das Symbol. Deinen Stand von hier nimmst du mit: „Sicherung speichern“ und in der App „Sicherung laden“.</div>` : "";
+        <div class="notice">📱 Safari und das Poquito-Symbol auf dem Home-Bildschirm haben <b>getrennte Speicher</b>: Was du hier lernst, siehst du in der App nicht – und umgekehrt. Außerdem löscht Safari Daten von Webseiten nach 7 Tagen ohne Besuch. Lerne deshalb am besten immer über das Symbol.</div>` : "";
     const last = state.lastBackup ? timeText(state.lastBackup) : "noch nie";
     return `
       <section class="panel progress-panel">
-        <h3>💾 Dein Fortschritt</h3>
+        <h3>💾 Speichern</h3>
         ${status}
         ${split}
-        <p>Eine Sicherung schützt deinen Stand, falls das iPad Daten löscht. Beim Laden wird sie mit deinem aktuellen Stand zusammengeführt – so kannst du auch Stände aus Safari, der App oder von einem anderen Gerät vereinen. Letzte Sicherung: <b>${last}</b>.</p>
-        <div class="row-btns">
-          <button class="btn light" data-action="export">⬇️ Sicherung speichern</button>
-          <button class="btn light" data-action="import">⬆️ Sicherung laden</button>
-        </div>
-        <input type="file" class="import-file" accept="application/json,.json" hidden>
+        <details class="more" ${backupOpen ? "open" : ""}>
+          <summary data-action="toggle-backup">Sicherung für ein neues iPad (optional)</summary>
+          <p>Nur nötig, wenn du das Gerät wechselst oder Stände aus Safari und der App vereinen willst. Beim Laden wird die Sicherung mit deinem Stand zusammengeführt – es geht nichts verloren. Letzte Sicherung: <b>${last}</b>.</p>
+          <div class="row-btns">
+            <button class="btn light" data-action="export">⬇️ Sicherung speichern</button>
+            <button class="btn light" data-action="import">⬆️ Sicherung laden</button>
+          </div>
+          <input type="file" class="import-file" accept="application/json,.json" hidden>
+        </details>
       </section>`;
   }
 
   function voiceLabel(v) {
-    const id = (v.name + " " + (v.voiceURI || "")).toLowerCase();
-    const quality = id.includes("premium") ? " ★ Premium" : /enhanced|erweitert|verbessert|neural|natural/.test(id) ? " ★ Erweitert" : "";
-    return v.name + " (" + v.lang.replace("_", "-") + ")" + quality;
+    const quality = { premium: " ★ Premium", enhanced: " ★ Erweitert", standard: "" }[voiceQuality(v)];
+    return v.name + " (" + voiceLang(v) + ")" + quality;
   }
 
   function voicePanel() {
-    if (!synth) return "";
+    if (!synth) {
+      return `
+        <section class="panel voice-panel">
+          <h3>🗣️ Stimme</h3>
+          <p>Dieser Browser kann nicht vorlesen. Öffne Poquito in Safari oder über das Home-Bildschirm-Symbol.</p>
+        </section>`;
+    }
     const voices = spanishVoices();
-    const best = voices[0];
+    const current = spanishVoice;
+    const quality = current ? voiceQuality(current) : null;
+    const qualityText = { premium: "Premium – klingt sehr natürlich", enhanced: "Erweitert – klingt natürlich", standard: "Standard – klingt etwas künstlich" }[quality];
     return `
       <section class="panel voice-panel">
-        <h3>🗣️ Spanische Stimme</h3>
-        <p>Die Stimme kommt von deinem iPad. Am natürlichsten klingen die Stimmen mit ★ Premium oder ★ Erweitert, z. B. Mónica oder Jorge. Laden kannst du sie unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Spanisch.</p>
+        <h3>🗣️ Stimme & Ton</h3>
+        ${current
+          ? `<p>Poquito spricht mit <b>${esc(current.name)}</b> (${esc(voiceLang(current))}) · ${qualityText}.</p>`
+          : `<p>Es wurde noch keine spanische Stimme gefunden.</p>`}
+        ${quality !== "premium" ? `
+          <div class="notice">✨ <b>Tipp für eine natürlichere Aussprache:</b> Lade kostenlos eine Premium-Stimme. iPad-Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Spanisch → Spanien → z. B. <b>Mónica</b> oder <b>Marisol</b> → Qualität „Premium“ bzw. „Erweitert“ laden. Danach Poquito neu öffnen – die beste Stimme wird automatisch gewählt.</div>` : ""}
         <div class="voice-row">
           <select class="voice-select" aria-label="Stimme wählen">
-            <option value="">Automatisch${best ? " – " + esc(voiceLabel(best)) : ""}</option>
+            <option value="">Automatisch (beste Stimme)</option>
             ${voices.map((v) => `<option value="${esc(v.voiceURI)}" ${v.voiceURI === state.voiceURI ? "selected" : ""}>${esc(voiceLabel(v))}</option>`).join("")}
           </select>
           <button class="btn light" data-action="voice-test">▶ Probe</button>
         </div>
+        <div class="setting-row">
+          <span>Töne und Vorlesen</span>
+          <button class="switch ${state.sound ? "on" : ""}" data-action="toggle-sound-setting" role="switch" aria-checked="${state.sound}" aria-label="Töne und Vorlesen">
+            <span></span>
+          </button>
+        </div>
+      </section>`;
+  }
+
+  const ACCENT_CHARS = ["á", "é", "í", "ó", "ú", "ñ", "ü", "¿", "¡"];
+
+  function translateView() {
+    const [from, to] = trLangs(state.translateDir);
+    const r = translator.result;
+    return `
+      <header class="hero">
+        <div class="logo">💬</div>
+        <div>
+          <h1>Übersetzer</h1>
+          <p>Wörter und Sätze – Deutsch ⇄ Spanisch</p>
+        </div>
+        <div class="spacer"></div>
+        ${soundButton()}
+      </header>
+      <section class="tr-box">
+        <div class="tr-dir">
+          <span class="tr-chip">${LANG_NAMES[from]}</span>
+          <button class="icon-btn tr-swap" data-action="tr-swap" aria-label="Richtung tauschen">⇄</button>
+          <span class="tr-chip">${LANG_NAMES[to]}</span>
+        </div>
+        <textarea class="tr-input" rows="3" maxlength="${MAX_INPUT}" lang="${from}" enterkeyhint="go" autocapitalize="sentences"
+          autocorrect="${from === "de" ? "on" : "off"}" spellcheck="${from === "de"}"
+          placeholder="${from === "de" ? "Deutsches Wort oder Satz eingeben …" : "Spanisches Wort oder Satz eingeben …"}">${esc(translator.text)}</textarea>
+        ${from === "es" ? `<div class="accents">${ACCENT_CHARS.map((a) => `<button class="accent" data-action="accent" data-char="${a}">${a}</button>`).join("")}</div>` : ""}
+        <div class="tr-buttons">
+          <button class="btn" data-action="tr-go" ${translator.loading ? "disabled" : ""}>${translator.loading ? "Übersetze …" : "Übersetzen"}</button>
+          <button class="btn light" data-action="tr-clear">Leeren</button>
+        </div>
+      </section>
+      ${translator.note ? `<div class="notice tr-note">${esc(translator.note)}</div>` : ""}
+      ${translator.error ? `<div class="notice warn">${esc(translator.error)}</div>` : ""}
+      ${r ? resultCard(r) : ""}
+      ${myWordsPanel()}
+      ${historyPanel()}
+      <p class="tr-credit">Online-Übersetzung: MyMemory (translated.net) – dein Text wird dafür übertragen. Wörter aus dem Poquito-Wörterbuch funktionieren auch ohne Internet.</p>`;
+  }
+
+  function wordStatus(es) {
+    if (isLearned(es)) return "gelernt ✓";
+    if (isPracticing(es)) return "in Arbeit";
+    return "noch nicht geübt";
+  }
+
+  function resultCard(r) {
+    const pair = cardPair(r);
+    const saved = WORDS.has(pair.es);
+    const tooLong = pair.es.length > MAX_CARD || pair.de.length > MAX_CARD;
+    let saveBtn = `<button class="btn light" data-action="tr-save">⭐ Zum Lernen speichern</button>`;
+    if (saved) saveBtn = `<button class="btn light" disabled>✓ In deinen Vokabeln</button>`;
+    else if (tooLong) saveBtn = "";
+    const dictRows = r.dict.map((e) => {
+      const where = e.cat ? CATS.get(e.cat).name + " · " + wordStatus(e.es) : "Verb · " + VERB_GROUPS.find((g) => g.id === e.verb.group).name;
+      return `
+        <div class="tr-info">
+          <span>📚 <b lang="es">${esc(e.es)}</b> – ${esc(e.de)} <small>${esc(where)}</small></span>
+          ${sayButton(e.es)}
+        </div>`;
+    }).join("");
+    const hintRows = r.hints.map((h) => {
+      const link = `<button class="link-btn inline" data-action="open-conj" data-verb="${h.v.inf}" data-tense="${h.tense || "presente"}">Konjugation ansehen</button>`;
+      if (!h.tense) {
+        const group = VERB_GROUPS.find((g) => g.id === h.v.group).name;
+        return `<div class="tr-info"><span>🧩 <b lang="es">${esc(h.v.inf)}</b> ist ein Verb (${esc(h.v.de)}) · ${esc(group)}. ${link}</span></div>`;
+      }
+      const t = TENSE_BY_ID.get(h.tense);
+      return `<div class="tr-info"><span>🧩 Form von <b lang="es">${esc(h.v.inf)}</b> (${esc(h.v.de)}): ${esc(t.name)} – ${esc(h.persons.join(", "))}. ${link}</span></div>`;
+    }).join("");
+    return `
+      <section class="tr-result">
+        <div class="tr-label">${LANG_NAMES[r.to]}</div>
+        <div class="tr-main" lang="${r.to}">${esc(r.main)}</div>
+        <div class="tr-actions">
+          <button class="btn sun" data-action="tr-speak">🔊 ${r.to === "es" ? "Anhören" : "Spanisch anhören"}</button>
+          <button class="btn light" data-action="tr-copy">📋 Kopieren</button>
+          ${saveBtn}
+        </div>
+        ${r.alts.length ? `
+          <div class="tr-alts">
+            <span>Auch möglich:</span>
+            ${r.alts.map((a, i) => `<button class="tr-alt" data-action="tr-alt" data-i="${i}" lang="${r.to}">${esc(a)}</button>`).join("")}
+          </div>` : ""}
+        ${dictRows || hintRows ? `<div class="tr-extra">${dictRows}${hintRows}</div>` : ""}
+      </section>`;
+  }
+
+  function myWordsPanel() {
+    const words = [...MY_CAT.words].reverse();
+    return `
+      <section class="panel my-words">
+        <div class="panel-head">
+          <h3>⭐ Meine Wörter <small class="count">${words.length}</small></h3>
+          ${words.length ? `<button class="btn small" data-action="start" data-source="cat:mine">Lernen</button>` : ""}
+        </div>
+        ${words.length ? `
+          <ul class="mw-list">
+            ${words.map((w) => `
+              <li>
+                <span class="mw-text"><b lang="es">${esc(w.es)}</b><span>${esc(w.de)}</span></span>
+                <small>${wordStatus(w.es)}</small>
+                ${sayButton(w.es)}
+                <button class="mw-del" data-action="mw-del" data-es="${esc(w.es)}" aria-label="Entfernen">✕</button>
+              </li>`).join("")}
+          </ul>`
+        : `<p>Tippe bei einer Übersetzung auf „⭐ Zum Lernen speichern“. Die Wörter landen als Karteikarten unter <b>Vokabeln → Meine Wörter</b>.</p>`}
+      </section>`;
+  }
+
+  function historyPanel() {
+    const list = loadHistory().slice(0, 10);
+    if (!list.length) return "";
+    return `
+      <section class="panel tr-history">
+        <div class="panel-head">
+          <h3>🕘 Zuletzt übersetzt</h3>
+          <button class="link-btn inline" data-action="tr-history-clear">Verlauf löschen</button>
+        </div>
+        <ul>
+          ${list.map((h, i) => `
+            <li>
+              <button class="tr-hist" data-action="tr-history" data-i="${i}">
+                <span>${esc(h.source)}</span>
+                <b>${esc(h.main)}</b>
+              </button>
+            </li>`).join("")}
+        </ul>
       </section>`;
   }
 
@@ -4637,8 +5429,7 @@
         </button>
       </div>
       <h2 class="section-title">Nach Kategorie</h2>
-      <div class="grid">${CATEGORIES.map(categoryTile).join("")}</div>
-      <button class="link-btn" data-action="reset">Gesamten Fortschritt zurücksetzen</button>`;
+      <div class="grid">${(MY_CAT.words.length ? [MY_CAT, ...CATEGORIES] : CATEGORIES).map(categoryTile).join("")}</div>`;
   }
 
   function comboLabel() {
@@ -4665,13 +5456,13 @@
             <div class="face front">
               <span class="cat-chip" style="--c:${c.color}">${c.icon} ${esc(c.name)}</span>
               <span class="lang">Español</span>
-              <div class="word">${esc(w.es)}</div>
+              <div class="word ${w.es.length > 22 ? "long" : ""}">${esc(w.es)}</div>
               <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
               <span class="tap-hint">Tippen zum Umdrehen</span>
             </div>
             <div class="face back">
               <span class="lang">Deutsch</span>
-              <div class="word">${esc(w.de)}</div>
+              <div class="word ${w.de.length > 22 ? "long" : ""}">${esc(w.de)}</div>
               <div class="sub">${esc(w.es)}</div>
               <button class="speak" data-action="speak" aria-label="Vorlesen">🔊</button>
             </div>
@@ -5361,10 +6152,20 @@
     speak: speakView,
     drill: drillView,
     result: resultView,
+    translate: translateView,
+    settings: settingsView,
   };
+
+  // Die drei Hauptbereiche bekommen unten eine Tab-Leiste.
+  const TAB_VIEWS = new Set(["home", "translate", "settings"]);
+  const tabbar = document.getElementById("tabbar");
 
   function render() {
     app.innerHTML = VIEWS[view]();
+    const tabs = TAB_VIEWS.has(view);
+    tabbar.hidden = !tabs;
+    document.body.classList.toggle("has-tabs", tabs);
+    tabbar.querySelectorAll("[data-tab]").forEach((b) => b.classList.toggle("on", b.dataset.tab === view));
     if (view !== lastView) {
       window.scrollTo(0, 0);
       lastView = view;
@@ -5391,7 +6192,7 @@
   // ---------- Bedienung ----------
   const BACK_ACTIONS = new Set(["home", "exit"]);
   // Keine Klick-Töne, wo gleich eigene Töne, Sprache oder das Mikrofon starten.
-  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self", "voice-test"]);
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self", "voice-test", "tr-speak", "tr-save"]);
 
   app.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".accent")) e.preventDefault();
@@ -5559,6 +6360,86 @@
       case "resume":
         resumeRound();
         break;
+      case "open-settings":
+        go("settings");
+        break;
+      case "toggle-backup":
+        backupOpen = !el.closest("details").open;
+        break;
+      case "toggle-sound-setting":
+        state.sound = !state.sound;
+        if (!state.sound && synth) synth.cancel();
+        saveState();
+        render();
+        break;
+      case "open-conj":
+        currentTense = el.dataset.tense;
+        lookupVerb = el.dataset.verb;
+        go("rules");
+        {
+          const lookup = app.querySelector(".verb-select");
+          if (lookup) lookup.closest(".panel").scrollIntoView({ block: "start" });
+        }
+        break;
+      case "tr-go":
+        translate();
+        break;
+      case "tr-swap":
+        state.translateDir = state.translateDir === "de-es" ? "es-de" : "de-es";
+        if (translator.result) translator.text = translator.result.main;
+        translator.result = null;
+        translator.note = "";
+        translator.error = "";
+        saveState();
+        render();
+        break;
+      case "tr-clear":
+        translator.text = "";
+        translator.result = null;
+        translator.note = "";
+        translator.error = "";
+        translator.token++;
+        translator.loading = false;
+        render();
+        app.querySelector(".tr-input").focus();
+        break;
+      case "tr-speak": {
+        const r = translator.result;
+        if (!state.sound) {
+          state.sound = true;
+          saveState();
+        }
+        speak(r.to === "es" ? r.main : r.source);
+        break;
+      }
+      case "tr-copy":
+        copyText(translator.result.main, el);
+        break;
+      case "tr-save":
+        saveMyWord();
+        break;
+      case "tr-alt": {
+        const r = translator.result;
+        const i = Number(el.dataset.i);
+        [r.main, r.alts[i]] = [r.alts[i], r.main];
+        r.hints = grammarHints(r.from === "es" ? r.source : r.main);
+        render();
+        break;
+      }
+      case "tr-history":
+        showHistory(Number(el.dataset.i));
+        break;
+      case "tr-history-clear":
+        try {
+          localStorage.removeItem(HISTORY_KEY);
+        } catch (err) {
+          // nichts zu tun
+        }
+        render();
+        break;
+      case "mw-del":
+        removeMyWord(el.dataset.es);
+        break;
       case "discard-round":
         clearRound();
         render();
@@ -5592,10 +6473,11 @@
         submitDrill(el.dataset.value);
         break;
       case "accent": {
-        const input = app.querySelector(".type-input");
+        const input = app.querySelector(".type-input, .tr-input");
         const start = input.selectionStart == null ? input.value.length : input.selectionStart;
         const end = input.selectionEnd == null ? input.value.length : input.selectionEnd;
         input.setRangeText(el.dataset.char, start, end, "end");
+        if (input.classList.contains("tr-input")) translator.text = input.value;
         input.focus();
         sfx.select(1);
         break;
@@ -5617,8 +6499,10 @@
         sfx.tap();
         break;
       case "reset":
-        if (confirm("Wirklich den gesamten Fortschritt (Wörter, Verben, Hören, Podcast, Sprechen, XP, Abzeichen) löschen?")) {
-          state = Object.assign(defaultState(), { sound: state.sound });
+        if (confirm("Wirklich den gesamten Lernfortschritt (Wörter, Verben, Hören, Podcast, Sprechen, XP, Abzeichen) löschen? Deine Einstellungen und „Meine Wörter“ bleiben erhalten.")) {
+          const keep = ["sound", "voiceURI", "dailyGoal", "translateDir", "myWords"];
+          state = Object.assign(defaultState(), Object.fromEntries(keep.map((k) => [k, state[k]])));
+          registerMyWords(state.myWords);
           clearRound();
           saveState(true);
           render();
@@ -5628,11 +6512,29 @@
   });
 
   app.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey && e.target.classList.contains("tr-input")) {
+      e.preventDefault();
+      e.target.blur();
+      translate();
+      return;
+    }
     if (e.key !== "Enter" || !e.target.classList.contains("type-input") || !session || !session.task) return;
     e.preventDefault();
     unlockAudio();
     if (session.task.result) nextTask();
     else submitDrill(e.target.value);
+  });
+
+  app.addEventListener("input", (e) => {
+    if (e.target.classList.contains("tr-input")) translator.text = e.target.value;
+  });
+
+  tabbar.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-tab]");
+    if (!b || b.dataset.tab === view) return;
+    unlockAudio();
+    sfx.tap();
+    go(b.dataset.tab);
   });
 
   app.addEventListener("change", (e) => {
