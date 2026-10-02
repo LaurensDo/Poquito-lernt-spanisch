@@ -1371,6 +1371,28 @@
   /* ---------- Einstellungen ---------- */
   .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
   .panel-head h3 { margin: 0; }
+  .cloud-panel { margin-bottom: 28px; }
+  .cloud-panel .tr-credit { margin-top: 12px; }
+  .cloud-panel p { color: var(--muted); font-size: 0.92rem; }
+  .cloud-panel p b { color: var(--ink); }
+  .sync-steps { margin: 0 0 14px; padding-left: 22px; font-weight: 700; line-height: 1.55; }
+  .sync-steps li { margin-bottom: 6px; }
+  .sync-steps a { color: var(--primary); font-weight: 900; }
+
+  .sync-token {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 14px 16px;
+    border: 3px solid var(--line);
+    border-radius: 16px;
+    outline: none;
+    background: var(--surface);
+    font: inherit;
+    font-weight: 700;
+  }
+
+  .sync-token:focus { border-color: var(--sun); }
   .panel-head .count { margin-left: 6px; color: var(--muted); font-size: 0.85rem; font-weight: 800; }
   .btn.small { width: auto; padding: 10px 18px; font-size: 0.95rem; }
   .btn.danger { color: var(--bad-dark); }
@@ -3183,6 +3205,7 @@
       translateDir: "de-es",
       writeStars: {},
       writeSessions: 0,
+      resetAt: 0,
       rev: 0,
       savedAt: 0,
       epoch: newEpoch(),
@@ -3239,6 +3262,9 @@
     return saved;
   }
 
+  // Einstellungen gehören zum Gerät – beim Zusammenführen gewinnt immer eine Seite ganz.
+  const SETTING_KEYS = ["sound", "verbLevel", "listenLevel", "podcastSpeed", "podcastShowDe", "speakLevel", "speakMode", "voiceURI", "dailyGoal", "translateDir"];
+
   function readStored() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -3263,6 +3289,10 @@
       storageError = true;
     }
     saveRound();
+    if (!cloudBusy) {
+      cloudDirty = true;
+      scheduleCloudSync();
+    }
   }
 
   // Übernimmt einen anderswo gespeicherten Stand. Wurde dort zurückgesetzt, gilt er ganz;
@@ -3327,12 +3357,12 @@
       myWords: [...myWords.values()],
       podcastPos: Object.assign({}, rest.podcastPos, pick.podcastPos),
       lastBackup: Math.max(target.lastBackup || 0, other.lastBackup || 0) || null,
+      resetAt: Math.max(target.resetAt || 0, other.resetAt || 0),
       rev: Math.max(target.rev || 0, other.rev || 0),
       savedAt: Math.max(target.savedAt || 0, other.savedAt || 0),
       xpScheme: XP_SCHEME,
     });
-    ["sound", "verbLevel", "listenLevel", "podcastSpeed", "podcastShowDe", "speakLevel", "speakMode", "voiceURI", "dailyGoal", "translateDir"]
-      .forEach((key) => { target[key] = pick[key]; });
+    SETTING_KEYS.forEach((key) => { target[key] = pick[key]; });
   }
 
   // Ein anderer Tab (oder ein altes Safari-Fenster) hat gespeichert: diesen Stand übernehmen, bevor hier weitergelernt wird.
@@ -5628,6 +5658,193 @@
     if (r.stars === 3) confetti();
   }
 
+  // ---------- Geräte-Abgleich über GitHub ----------
+  // Der Lernstand liegt zusätzlich als nicht öffentliche Notiz („Gist“) im GitHub-Konto.
+  // Jedes Gerät führt beim Abgleich zusammen – so geht auf keinem Gerät etwas verloren.
+  const SYNC_KEY = STORAGE_KEY + "_abgleich";
+  const GH_API = "https://api.github.com";
+  const GIST_FILE = "poquito-fortschritt.json";
+  const TOKEN_URL = "https://github.com/settings/tokens/new?scopes=gist&description=Poquito";
+  const CLOUD_MIN_GAP = 30000;
+  const LOCAL_ONLY = new Set([...SETTING_KEYS, "rev", "savedAt", "epoch", "lastBackup"]);
+  let cloud = loadCloud();
+  let cloudBusy = false;
+  let cloudDirty = false;
+  let cloudTimer = null;
+  let cloudLastRun = 0;
+
+  function loadCloud() {
+    const base = { token: "", gistId: "", login: "", lastSync: 0, error: "" };
+    try {
+      return Object.assign(base, JSON.parse(localStorage.getItem(SYNC_KEY)) || {});
+    } catch (e) {
+      return base;
+    }
+  }
+
+  // Getrennt vom Lernstand gespeichert – der Schlüssel landet nie in einer Sicherung.
+  function saveCloud() {
+    try {
+      localStorage.setItem(SYNC_KEY, JSON.stringify(cloud));
+    } catch (e) {
+      // Ohne Speicher kein Abgleich.
+    }
+  }
+
+  function cloudReady() {
+    return !!(cloud.token && cloud.gistId && cloud.error !== "auth");
+  }
+
+  function deviceName() {
+    if (/iPad/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) return "iPad";
+    if (/iPhone/.test(navigator.userAgent)) return "iPhone";
+    return "Browser";
+  }
+
+  async function gh(path, options) {
+    const res = await fetch(GH_API + path, Object.assign({ cache: "no-store" }, options, {
+      headers: Object.assign({ Authorization: "Bearer " + cloud.token, Accept: "application/vnd.github+json" }, options && options.body ? { "Content-Type": "application/json" } : {}),
+    }));
+    if (res.status === 401) throw new Error("auth");
+    if (res.status === 404) throw new Error("missing");
+    if (!res.ok) throw new Error("http");
+    return res.json();
+  }
+
+  function cloudPayload() {
+    return JSON.stringify({ app: "poquito", version: 1, savedAt: new Date().toISOString(), device: deviceName(), state });
+  }
+
+  async function findOrCreateGist() {
+    for (let page = 1; page <= 5; page++) {
+      const list = await gh("/gists?per_page=100&page=" + page);
+      const hit = list.find((g) => g.files && g.files[GIST_FILE]);
+      if (hit) return hit.id;
+      if (list.length < 100) break;
+    }
+    const created = await gh("/gists", {
+      method: "POST",
+      body: JSON.stringify({ description: "Poquito – Lernstand (automatischer Abgleich)", public: false, files: { [GIST_FILE]: { content: cloudPayload() } } }),
+    });
+    return created.id;
+  }
+
+  // Vergleichbare Form: nur der Lernstand, Schlüssel sortiert
+  function progressKey(s) {
+    const sorted = (v) => {
+      if (Array.isArray(v)) return v.map(sorted);
+      if (v && typeof v === "object") return Object.keys(v).sort().reduce((o, k) => { o[k] = sorted(v[k]); return o; }, {});
+      return v;
+    };
+    return JSON.stringify(sorted(Object.fromEntries(Object.entries(s).filter(([k]) => !LOCAL_ONLY.has(k)))));
+  }
+
+  function mergeRemote(remote) {
+    const mine = state.resetAt || 0;
+    const theirs = remote.resetAt || 0;
+    if (theirs > mine) {
+      // Auf dem anderen Gerät wurde später neu angefangen: dessen Stand gilt, Einstellungen bleiben.
+      const keep = Object.fromEntries(SETTING_KEYS.map((k) => [k, state[k]]));
+      const myWords = new Map([...state.myWords, ...remote.myWords].map((w) => [w.es, w]));
+      Object.assign(state, defaultState(), remote, keep, { epoch: state.epoch, rev: state.rev, savedAt: state.savedAt, myWords: [...myWords.values()] });
+    } else if (theirs === mine) {
+      mergeInto(state, remote, false);
+    }
+    registerMyWords(state.myWords);
+    state.wrongStack = state.wrongStack.filter((id) => WORDS.has(id));
+  }
+
+  async function syncNow(options) {
+    const fast = options && options.fast;
+    if (!cloudReady() || cloudBusy) return;
+    cloudBusy = true;
+    cloudLastRun = Date.now();
+    clearTimeout(cloudTimer);
+    try {
+      let remote = null;
+      if (!fast) {
+        const gist = await gh("/gists/" + cloud.gistId);
+        const file = gist.files && gist.files[GIST_FILE];
+        if (file) {
+          const content = file.truncated ? await (await fetch(file.raw_url, { cache: "no-store" })).text() : file.content;
+          try {
+            const data = JSON.parse(content);
+            if (data && data.app === "poquito" && data.state) remote = Object.assign(defaultState(), migrate(data.state));
+          } catch (e) {
+            remote = null;
+          }
+        }
+        if (remote) {
+          const before = progressKey(state);
+          mergeRemote(remote);
+          if (progressKey(state) !== before) {
+            saveState();
+            if (SYNC_RENDER_VIEWS.has(view)) render();
+          }
+        }
+      }
+      if (fast || !remote || progressKey(state) !== progressKey(remote)) {
+        await gh("/gists/" + cloud.gistId, { method: "PATCH", keepalive: !!fast, body: JSON.stringify({ files: { [GIST_FILE]: { content: cloudPayload() } } }) });
+      }
+      cloud.lastSync = Date.now();
+      cloud.error = "";
+      cloudDirty = false;
+    } catch (e) {
+      if (e.message === "auth") cloud.error = "auth";
+      else if (e.message === "missing") cloud.gistId = "";
+      else cloud.error = "net";
+    }
+    cloudBusy = false;
+    saveCloud();
+    if (!cloud.gistId && cloud.token && cloud.error !== "auth") reconnectGist();
+    if (view === "settings") render();
+  }
+
+  async function reconnectGist() {
+    try {
+      cloud.gistId = await findOrCreateGist();
+      saveCloud();
+      syncNow();
+    } catch (e) {
+      cloud.error = e.message === "auth" ? "auth" : "net";
+      saveCloud();
+    }
+  }
+
+  // Nach Änderungen kurz warten (z. B. bis die Runde vorbei ist), höchstens alle 30 Sekunden.
+  function scheduleCloudSync() {
+    if (!cloudReady()) return;
+    clearTimeout(cloudTimer);
+    const wait = Math.max(5000, CLOUD_MIN_GAP - (Date.now() - cloudLastRun));
+    cloudTimer = setTimeout(() => syncNow(), wait);
+  }
+
+  async function connectCloud(token) {
+    cloud = { token: token.trim(), gistId: "", login: "", lastSync: 0, error: "" };
+    cloudBusy = true;
+    render();
+    try {
+      const user = await gh("/user");
+      cloud.login = user.login;
+      cloud.gistId = await findOrCreateGist();
+      cloudBusy = false;
+      saveCloud();
+      await syncNow();
+    } catch (e) {
+      cloudBusy = false;
+      cloud = { token: "", gistId: "", login: "", lastSync: 0, error: e.message === "auth" ? "bad-token" : "net-connect" };
+      saveCloud();
+    }
+    if (view === "settings") render();
+  }
+
+  function disconnectCloud() {
+    clearTimeout(cloudTimer);
+    cloud = { token: "", gistId: "", login: "", lastSync: 0, error: "" };
+    saveCloud();
+    render();
+  }
+
   function esc(str) {
     return String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
   }
@@ -5765,6 +5982,7 @@
         <div class="spacer"></div>
         ${soundButton()}
       </header>
+      ${cloudPanel()}
       ${goalPanel()}
       ${voicePanel()}
       ${progressPanel()}
@@ -5772,6 +5990,45 @@
         <h3>🗑️ Neu anfangen</h3>
         <p>Löscht deinen Lernfortschritt. Deine Einstellungen und „Meine Wörter“ bleiben erhalten.</p>
         <button class="btn light danger" data-action="reset">Lernfortschritt löschen</button>
+      </section>`;
+  }
+
+  function cloudPanel() {
+    const errors = {
+      auth: "Der GitHub-Schlüssel gilt nicht mehr (abgelaufen oder gelöscht). Bitte trenne die Verbindung und verbinde dich mit einem neuen Schlüssel.",
+      net: "Der letzte Abgleich hat nicht geklappt (keine Internetverbindung?). Poquito versucht es automatisch wieder.",
+      "bad-token": "Dieser Schlüssel funktioniert nicht. Bitte prüfe, ob du ihn vollständig kopiert hast und das Häkchen bei „gist“ gesetzt war.",
+      "net-connect": "GitHub war gerade nicht erreichbar. Bitte versuch es gleich nochmal.",
+    };
+    const notice = cloud.error && errors[cloud.error] ? `<div class="notice warn">⚠️ ${errors[cloud.error]}</div>` : "";
+    if (cloud.token && cloud.gistId) {
+      return `
+        <section class="panel cloud-panel">
+          <h3>☁️ Geräte-Abgleich</h3>
+          <p>✅ Verbunden mit GitHub${cloud.login ? ` (@${esc(cloud.login)})` : ""}. Dein Lernstand wird automatisch mit deinen anderen Geräten abgeglichen – beim Öffnen und nach dem Lernen.</p>
+          <p>Zuletzt abgeglichen: <b>${cloud.lastSync ? timeText(cloud.lastSync) : "noch nicht"}</b></p>
+          ${notice}
+          <div class="row-btns">
+            <button class="btn light" data-action="sync-now" ${cloudBusy ? "disabled" : ""}>${cloudBusy ? "Gleiche ab …" : "🔄 Jetzt abgleichen"}</button>
+            <button class="btn light" data-action="sync-disconnect">Trennen</button>
+          </div>
+        </section>`;
+    }
+    return `
+      <section class="panel cloud-panel">
+        <h3>☁️ Geräte-Abgleich</h3>
+        <p>Gleiche deinen Lernstand automatisch zwischen iPhone und iPad ab – über dein GitHub-Konto. Einmal pro Gerät einrichten, etwa 3 Minuten:</p>
+        <ol class="sync-steps">
+          <li>Öffne <a href="${TOKEN_URL}" target="_blank" rel="noopener">GitHub → neuen Zugangsschlüssel erstellen</a>. Falls nötig, melde dich bei GitHub an.</li>
+          <li>Wähle bei <b>Expiration</b> „<b>No expiration</b>“. Das Häkchen bei <b>gist</b> ist schon gesetzt – sonst nichts ankreuzen.</li>
+          <li>Tippe ganz unten auf <b>Generate token</b> und kopiere den Schlüssel (beginnt mit <b>ghp_</b>).</li>
+          <li>Füge ihn hier ein und tippe auf <b>Verbinden</b>.</li>
+          <li>Auf dem zweiten Gerät genauso – du kannst denselben Schlüssel nehmen (z. B. per AirDrop oder Notizen) oder einen neuen erstellen.</li>
+        </ol>
+        ${notice}
+        <input type="password" class="sync-token" placeholder="ghp_…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="GitHub-Schlüssel">
+        <button class="btn" data-action="sync-connect" ${cloudBusy ? "disabled" : ""}>${cloudBusy ? "Verbinde …" : "☁️ Verbinden"}</button>
+        <p class="tr-credit">Der Schlüssel erlaubt Poquito nur, private Notizen (Gists) in deinem Konto anzulegen und zu lesen. Er bleibt auf diesem Gerät und landet in keiner Sicherung.</p>
       </section>`;
   }
 
@@ -5804,7 +6061,7 @@
     const where = inApp ? "in der Poquito-App auf diesem iPad" : safari ? "in Safari" : "in diesem Browser";
     const status = storageError
       ? `<div class="notice warn">⚠️ Dein Fortschritt kann gerade nicht gespeichert werden (z. B. im privaten Modus von Safari). Öffne Poquito normal oder über das Home-Bildschirm-Symbol.</div>`
-      : `<p>✅ Nach jeder Antwort automatisch gespeichert – ${where}. Zuletzt: <b>${state.savedAt ? timeText(state.savedAt) : "gerade eben"}</b>.</p>`;
+      : `<p>✅ Nach jeder Antwort automatisch gespeichert – ${where}${cloudReady() ? " und mit deinen anderen Geräten abgeglichen" : ""}. Zuletzt: <b>${state.savedAt ? timeText(state.savedAt) : "gerade eben"}</b>.</p>`;
     const split = safari && !storageError ? `
         <div class="notice">📱 Safari und das Poquito-Symbol auf dem Home-Bildschirm haben <b>getrennte Speicher</b>: Was du hier lernst, siehst du in der App nicht – und umgekehrt. Außerdem löscht Safari Daten von Webseiten nach 7 Tagen ohne Besuch. Lerne deshalb am besten immer über das Symbol.</div>` : "";
     const last = state.lastBackup ? timeText(state.lastBackup) : "noch nie";
@@ -5814,8 +6071,8 @@
         ${status}
         ${split}
         <details class="more" ${backupOpen ? "open" : ""}>
-          <summary data-action="toggle-backup">Sicherung für ein neues iPad (optional)</summary>
-          <p>Nur nötig, wenn du das Gerät wechselst oder Stände aus Safari und der App vereinen willst. Beim Laden wird die Sicherung mit deinem Stand zusammengeführt – es geht nichts verloren. Letzte Sicherung: <b>${last}</b>.</p>
+          <summary data-action="toggle-backup">Notfall-Sicherung als Datei (optional)</summary>
+          <p>Im Alltag nicht nötig – dafür gibt es den Geräte-Abgleich. Nützlich als zusätzliche Kopie oder um Stände aus Safari und der App zu vereinen. Beim Laden wird die Sicherung mit deinem Stand zusammengeführt – es geht nichts verloren. Letzte Sicherung: <b>${last}</b>.</p>
           <div class="row-btns">
             <button class="btn light" data-action="export">⬇️ Sicherung speichern</button>
             <button class="btn light" data-action="import">⬆️ Sicherung laden</button>
@@ -7205,6 +7462,18 @@
         sfx.select(1);
         break;
       }
+      case "sync-connect": {
+        const token = app.querySelector(".sync-token").value.trim();
+        if (token) connectCloud(token);
+        break;
+      }
+      case "sync-now":
+        syncNow().then(() => render());
+        render();
+        break;
+      case "sync-disconnect":
+        if (confirm("Abgleich trennen? Dein Lernstand bleibt auf diesem Gerät erhalten.")) disconnectCloud();
+        break;
       case "toggle-backup":
         backupOpen = !el.closest("details").open;
         break;
@@ -7343,7 +7612,7 @@
       case "reset":
         if (confirm("Wirklich den gesamten Lernfortschritt (Wörter, Verben, Hören, Podcast, Sprechen, XP, Abzeichen) löschen? Deine Einstellungen und „Meine Wörter“ bleiben erhalten.")) {
           const keep = ["sound", "voiceURI", "dailyGoal", "translateDir", "myWords"];
-          state = Object.assign(defaultState(), Object.fromEntries(keep.map((k) => [k, state[k]])));
+          state = Object.assign(defaultState(), Object.fromEntries(keep.map((k) => [k, state[k]])), { resetAt: Date.now() });
           registerMyWords(state.myWords);
           clearRound();
           saveState(true);
@@ -7412,7 +7681,12 @@
   window.addEventListener("pageshow", () => syncFromStorage());
   window.addEventListener("focus", () => syncFromStorage());
   document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) syncFromStorage();
+    if (!document.hidden) {
+      syncFromStorage();
+      if (Date.now() - cloudLastRun > 20000) syncNow();
+    } else if (cloudDirty) {
+      syncNow({ fast: true });
+    }
   });
 
   saveState();
@@ -7420,6 +7694,7 @@
   const pending = loadRound();
   if (pending && pending.active && Date.now() - pending.savedAt < AUTO_RESUME_MS) resumeRound();
   else render();
+  setTimeout(() => syncNow(), 600);
 })();
 </script>
 
