@@ -1260,7 +1260,7 @@
     .grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .grid.two { grid-template-columns: repeat(2, 1fr); }
     .grid.three { grid-template-columns: repeat(3, 1fr); }
-    .grid.modules { grid-template-columns: repeat(5, 1fr); }
+    .grid.modules { grid-template-columns: repeat(3, 1fr); }
     .grid.modules .tile.big { padding: 20px 16px; }
     .grid.modules > :last-child:nth-child(odd) { grid-column: auto; }
     .btn-stack.pair { grid-template-columns: 1fr 1fr; }
@@ -1574,6 +1574,102 @@
     .mw-list small { display: none; }
     .tr-actions .btn { flex: 1 1 100%; }
   }
+
+  /* ---------- Schreiben ---------- */
+  .write-topic h3 { margin: 10px 0 6px; font-size: 1.3rem; }
+  .write-topic p { margin-bottom: 8px; }
+  .wt-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+
+  .wt-tense {
+    padding: 6px 12px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--c) 18%, white);
+    font-size: 0.85rem;
+    font-weight: 900;
+  }
+
+  .wt-ask { margin: 0 0 12px; padding-left: 20px; color: var(--muted); font-weight: 700; line-height: 1.5; }
+
+  .wt-starter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: #FFF3CF;
+    font-weight: 700;
+  }
+
+  .wt-words { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .write-topic .tr-alt { background: var(--bg); font-weight: 700; }
+  .write-topic .tr-alt b { font-weight: 900; }
+
+  .write-input {
+    display: block;
+    width: 100%;
+    min-height: 220px;
+    margin-bottom: 12px;
+    padding: 16px;
+    border: 3px solid var(--line);
+    border-radius: 20px;
+    outline: none;
+    background: var(--surface);
+    font: inherit;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.55;
+    resize: vertical;
+  }
+
+  .write-input:focus { border-color: var(--sun); }
+  .w-count { margin-bottom: 14px; color: var(--muted); font-weight: 800; text-align: center; }
+
+  .w-cat {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2px 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .w-cat:first-child { border-top: none; padding-top: 0; }
+  .w-cat-name { font-weight: 900; }
+  .w-cat-detail { grid-column: 1; color: var(--muted); font-size: 0.88rem; font-weight: 700; }
+  .w-pill { grid-row: 1 / span 2; grid-column: 2; padding: 6px 14px; border-radius: 99px; font-size: 0.9rem; font-weight: 900; }
+  .w-pill.good { background: #E6F8EF; color: var(--good-dark); }
+  .w-pill.ok { background: #FFF1CC; color: #8A6400; }
+  .w-pill.work { background: #FDE3E4; color: var(--bad-dark); }
+  .w-pill.none { background: var(--bg); color: var(--muted); }
+  .w-list { margin: 12px 0 0; padding: 0; list-style: none; }
+  .w-list li { padding: 6px 0; font-weight: 700; line-height: 1.45; }
+  .w-text { font-size: 1.1rem; line-height: 1.7; white-space: pre-wrap; }
+  .w-text mark { padding: 1px 2px; border-radius: 4px; color: inherit; }
+  mark.k-spelling { background: #FDE3E4; box-shadow: inset 0 -2px 0 var(--bad); }
+  mark.k-grammar { background: #FFE8CC; box-shadow: inset 0 -2px 0 #E8890C; }
+  mark.k-punct { background: #E3EEFF; box-shadow: inset 0 -2px 0 #3A86FF; }
+  mark.k-style { background: #EFE7FB; box-shadow: inset 0 -2px 0 #9B5DE5; }
+  .w-fixes { margin: 0; padding: 0; list-style: none; }
+
+  .w-fixes li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 0 8px 12px;
+    border-left: 4px solid var(--line);
+    margin-bottom: 6px;
+  }
+
+  .w-fixes li.k-spelling { border-color: var(--bad); }
+  .w-fixes li.k-grammar { border-color: #E8890C; }
+  .w-fixes li.k-punct { border-color: #3A86FF; }
+  .w-fixes li.k-style { border-color: #9B5DE5; }
+  .w-fixes s { color: var(--bad-dark); }
+  .w-fixes small { color: var(--muted); font-weight: 700; }
+  .w-corrected { background: linear-gradient(160deg, #F0FBF5, #DDF5E8); }
 </style>
 </head>
 <body>
@@ -2045,6 +2141,7 @@
     { id: "hoeren", name: "Hören", icon: "🎧", color: "#1FA6A0", action: "open-listen" },
     { id: "podcast", name: "Podcast", icon: "🎙️", color: "#9B5DE5", action: "open-podcasts" },
     { id: "sprechen", name: "Sprechen", icon: "🗣️", color: "#FF6B9A", action: "open-speak" },
+    { id: "schreiben", name: "Schreiben", icon: "✍️", color: "#2B9348", action: "open-write" },
   ];
 
   // ---------------------------------------------------------------
@@ -2872,6 +2969,90 @@
     { n: 3, icon: "🧠", name: "Übersetzen", desc: "Deutsch → Spanisch", hint: "Sag es auf Spanisch." },
   ];
 
+  // ---------- Schreiben: Themen je Zeitform ----------
+  // ask: Leitfragen · starter: möglicher Satzanfang · words: hilfreiche Wörter [es, de]
+  const WRITE_TOPICS = [
+    { tense: "presente", title: "Mein Alltag", task: "Beschreibe einen ganz normalen Tag.", ask: ["Wann stehst du auf?", "Was isst du zum Frühstück?", "Wie kommst du zur Arbeit?", "Was machst du am Abend?"], starter: "Normalmente me levanto a las…", words: [["levantarse", "aufstehen"], ["desayunar", "frühstücken"], ["el trabajo", "die Arbeit"], ["por la tarde", "am Nachmittag"], ["cenar", "zu Abend essen"]] },
+    { tense: "presente", title: "Meine Familie", task: "Stell deine Familie vor.", ask: ["Wer gehört zu deiner Familie?", "Wie sind sie?", "Was machen sie gern?"], starter: "Mi familia es…", words: [["los padres", "die Eltern"], ["el hermano", "der Bruder"], ["simpático", "sympathisch"], ["vivir", "wohnen"], ["le gusta", "er/sie mag"]] },
+    { tense: "presente", title: "Meine Stadt", task: "Erzähl, wo du wohnst und was es dort gibt.", ask: ["Wie heißt deine Stadt?", "Was gibt es dort?", "Was gefällt dir, was nicht?"], starter: "Vivo en…", words: [["el barrio", "das Viertel"], ["hay", "es gibt"], ["tranquilo", "ruhig"], ["el parque", "der Park"], ["me encanta", "ich liebe"]] },
+    { tense: "presente", title: "Mein Lieblingsessen", task: "Beschreibe dein Lieblingsessen.", ask: ["Was isst du am liebsten?", "Kochst du selbst?", "Wann und mit wem isst du es?"], starter: "Mi comida favorita es…", words: [["delicioso", "lecker"], ["cocinar", "kochen"], ["a menudo", "oft"], ["la verdura", "das Gemüse"], ["el restaurante", "das Restaurant"]] },
+    { tense: "presente", title: "Freizeit & Wochenende", task: "Was machst du in deiner Freizeit?", ask: ["Welche Hobbys hast du?", "Was machst du am Wochenende?", "Mit wem verbringst du deine Freizeit?"], starter: "En mi tiempo libre…", words: [["el tiempo libre", "die Freizeit"], ["jugar", "spielen"], ["leer", "lesen"], ["quedar con amigos", "sich mit Freunden treffen"], ["los fines de semana", "am Wochenende"]] },
+
+    { tense: "indefinido", title: "Mein letzter Urlaub", task: "Erzähl von deinem letzten Urlaub.", ask: ["Wohin bist du gefahren?", "Was hast du gesehen und gegessen?", "Was war das Beste?"], starter: "El verano pasado fui a…", words: [["viajar", "reisen"], ["visitar", "besuchen"], ["la playa", "der Strand"], ["probar", "probieren"], ["volver", "zurückkehren"]] },
+    { tense: "indefinido", title: "Gestern", task: "Was hast du gestern gemacht – von morgens bis abends?", ask: ["Wann bist du aufgestanden?", "Was hast du gegessen?", "Was hast du am Abend gemacht?"], starter: "Ayer me levanté a las…", words: [["ayer", "gestern"], ["luego", "dann"], ["después", "danach"], ["por la noche", "am Abend"], ["acostarse", "ins Bett gehen"]] },
+    { tense: "indefinido", title: "Ein besonderer Tag", task: "Erzähl von einem Tag, den du nie vergisst.", ask: ["Wann war das?", "Was ist passiert?", "Wie hat der Tag geendet?"], starter: "Un día…", words: [["de repente", "plötzlich"], ["conocer", "kennenlernen"], ["pasar", "passieren"], ["celebrar", "feiern"], ["al final", "am Ende"]] },
+    { tense: "indefinido", title: "Im Restaurant", task: "Erzähl von deinem letzten Restaurantbesuch.", ask: ["Wo warst du essen?", "Was hast du bestellt?", "Wie war es?"], starter: "La semana pasada cené en…", words: [["pedir", "bestellen"], ["el camarero", "der Kellner"], ["la cuenta", "die Rechnung"], ["pagar", "bezahlen"], ["estar rico", "lecker sein"]] },
+    { tense: "indefinido", title: "Ein Fest", task: "Erzähl von einem Fest oder Konzert, auf dem du warst.", ask: ["Wo und wann war es?", "Wer war dabei?", "Was habt ihr gemacht?"], starter: "El año pasado estuve en…", words: [["la fiesta", "das Fest"], ["bailar", "tanzen"], ["cantar", "singen"], ["la entrada", "die Eintrittskarte"], ["divertirse", "Spaß haben"]] },
+
+    { tense: "imperfecto", title: "Als ich ein Kind war", task: "Beschreibe, wie du als Kind warst.", ask: ["Wo hast du gewohnt?", "Was hast du gern gespielt?", "Wer waren deine Freunde?"], starter: "Cuando era niño, …", words: [["de pequeño", "als Kind"], ["siempre", "immer"], ["el colegio", "die Schule"], ["jugar", "spielen"], ["los veranos", "die Sommer"]] },
+    { tense: "imperfecto", title: "Meine erste Wohnung", task: "Beschreibe deine erste Wohnung.", ask: ["Wie groß war sie?", "Wie sah sie aus?", "Wie waren die Nachbarn?"], starter: "Mi primer piso era…", words: [["pequeño", "klein"], ["la cocina", "die Küche"], ["el vecino", "der Nachbar"], ["había", "es gab"], ["la luz", "das Licht"]] },
+    { tense: "imperfecto", title: "Früher war alles anders", task: "Was hast du früher regelmäßig gemacht?", ask: ["Was hast du früher oft gemacht?", "Was machst du heute nicht mehr?", "Was war damals schöner?"], starter: "Antes, todos los días…", words: [["antes", "früher"], ["cada día", "jeden Tag"], ["soler", "pflegen zu"], ["ya no", "nicht mehr"], ["mientras", "während"]] },
+    { tense: "imperfecto", title: "Bei meinen Großeltern", task: "Beschreibe die Zeit bei deinen Großeltern.", ask: ["Wo wohnten sie?", "Wie war ihr Haus?", "Was habt ihr zusammen gemacht?"], starter: "Mis abuelos vivían en…", words: [["los abuelos", "die Großeltern"], ["el pueblo", "das Dorf"], ["contar historias", "Geschichten erzählen"], ["el jardín", "der Garten"], ["cada domingo", "jeden Sonntag"]] },
+    { tense: "imperfecto", title: "Ein schöner Ort", task: "Beschreibe einen Ort aus deiner Erinnerung.", ask: ["Wie war das Wetter?", "Was gab es dort?", "Wie hast du dich gefühlt?"], starter: "Hacía sol y…", words: [["hacía calor", "es war warm"], ["el cielo", "der Himmel"], ["había", "es gab"], ["la gente", "die Leute"], ["estar contento", "froh sein"]] },
+
+    { tense: "perfecto", title: "Diese Woche", task: "Was hast du diese Woche schon gemacht?", ask: ["Was hast du schon geschafft?", "Was hast du noch nicht gemacht?", "Was war das Schönste?"], starter: "Esta semana he…", words: [["esta semana", "diese Woche"], ["ya", "schon"], ["todavía no", "noch nicht"], ["terminar", "beenden"], ["hacer deporte", "Sport machen"]] },
+    { tense: "perfecto", title: "Schon mal erlebt?", task: "Was hast du in deinem Leben schon (nie) gemacht?", ask: ["Welche Länder hast du schon besucht?", "Was hast du noch nie probiert?", "Was möchtest du unbedingt noch machen?"], starter: "Alguna vez he…", words: [["alguna vez", "schon einmal"], ["nunca", "nie"], ["probar", "probieren"], ["conocer", "kennenlernen"], ["viajar", "reisen"]] },
+    { tense: "perfecto", title: "Heute", task: "Erzähl, was du heute schon gemacht hast.", ask: ["Wann bist du aufgestanden?", "Was hast du gegessen?", "Mit wem hast du gesprochen?"], starter: "Hoy me he levantado a las…", words: [["hoy", "heute"], ["esta mañana", "heute Morgen"], ["desayunar", "frühstücken"], ["escribir", "schreiben"], ["llamar", "anrufen"]] },
+    { tense: "perfecto", title: "Spanisch lernen", task: "Was hast du beim Spanischlernen schon geschafft?", ask: ["Was hast du schon gelernt?", "Was war schwierig?", "Was hat dir Spaß gemacht?"], starter: "Este año he aprendido…", words: [["aprender", "lernen"], ["entender", "verstehen"], ["difícil", "schwierig"], ["mejorar", "verbessern"], ["las palabras", "die Wörter"]] },
+    { tense: "perfecto", title: "Neuigkeiten", task: "Schreib einer Freundin, was es bei dir Neues gibt.", ask: ["Was hat sich verändert?", "Was hast du Neues angefangen?", "Wen hast du getroffen?"], starter: "¡Hola! ¿Qué tal? Te cuento que he…", words: [["últimamente", "in letzter Zeit"], ["cambiar", "ändern"], ["empezar", "anfangen"], ["encontrar", "finden"], ["mudarse", "umziehen"]] },
+
+    { tense: "pluscuamperfecto", title: "Zu spät!", task: "Erzähl von einem Mal, als du zu spät kamst – was war schon passiert?", ask: ["Wohin wolltest du?", "Was war schon passiert, als du ankamst?", "Was hast du dann gemacht?"], starter: "Cuando llegué, el tren ya había salido.", words: [["ya", "schon"], ["llegar", "ankommen"], ["salir", "abfahren"], ["cuando", "als"], ["todavía no", "noch nicht"]] },
+    { tense: "pluscuamperfecto", title: "Eine Überraschung", task: "Jemand hatte etwas für dich vorbereitet.", ask: ["Wer hatte was vorbereitet?", "Was hattest du nicht gewusst?", "Wie hast du reagiert?"], starter: "Mis amigos habían preparado…", words: [["preparar", "vorbereiten"], ["invitar", "einladen"], ["la sorpresa", "die Überraschung"], ["esconder", "verstecken"], ["antes", "vorher"]] },
+    { tense: "pluscuamperfecto", title: "Das erste Mal", task: "Erzähl von einer Reise, auf der du etwas zum ersten Mal erlebt hast.", ask: ["Was hattest du vorher noch nie gemacht?", "Wie war es dann?", "Wie hast du dich gefühlt?"], starter: "Antes de ese viaje nunca había…", words: [["nunca", "nie"], ["ver", "sehen"], ["el mar", "das Meer"], ["volar", "fliegen"], ["probar", "probieren"]] },
+    { tense: "pluscuamperfecto", title: "Etwas vergessen", task: "Erzähl, wie du gemerkt hast, dass du etwas vergessen hattest.", ask: ["Was hattest du vergessen?", "Wann hast du es gemerkt?", "Wie ging es aus?"], starter: "De repente me di cuenta de que había olvidado…", words: [["olvidar", "vergessen"], ["darse cuenta", "merken"], ["la cita", "der Termin"], ["perder", "verlieren"], ["avisar", "Bescheid geben"]] },
+    { tense: "pluscuamperfecto", title: "Ein Missverständnis", task: "Erzähl von einem Missverständnis.", ask: ["Was hattest du gedacht?", "Was war wirklich passiert?", "Wie habt ihr es geklärt?"], starter: "No sabía que mi amiga ya había…", words: [["pensar", "denken"], ["decir", "sagen"], ["explicar", "erklären"], ["entender", "verstehen"], ["el malentendido", "das Missverständnis"]] },
+
+    { tense: "futuro", title: "In zehn Jahren", task: "Wie wird dein Leben in zehn Jahren aussehen?", ask: ["Wo wirst du wohnen?", "Was wirst du arbeiten?", "Was wirst du in deiner Freizeit machen?"], starter: "Dentro de diez años viviré en…", words: [["dentro de", "in (zeitlich)"], ["el futuro", "die Zukunft"], ["la familia", "die Familie"], ["trabajar", "arbeiten"], ["tener", "haben"]] },
+    { tense: "futuro", title: "Die nächsten Ferien", task: "Plane deine nächsten Ferien.", ask: ["Wohin wirst du fahren?", "Mit wem?", "Was wirst du dort machen?"], starter: "El próximo verano iré a…", words: [["el próximo verano", "nächsten Sommer"], ["alquilar", "mieten"], ["descansar", "sich ausruhen"], ["nadar", "schwimmen"], ["visitar", "besuchen"]] },
+    { tense: "futuro", title: "Gute Vorsätze", task: "Was wirst du im nächsten Jahr anders machen?", ask: ["Was wirst du mehr machen?", "Womit wirst du aufhören?", "Was wirst du lernen?"], starter: "El año que viene haré más…", words: [["el año que viene", "nächstes Jahr"], ["hacer deporte", "Sport machen"], ["comer sano", "gesund essen"], ["dejar de", "aufhören mit"], ["ahorrar", "sparen"]] },
+    { tense: "futuro", title: "Die Welt von morgen", task: "Wie wird die Welt in 50 Jahren sein?", ask: ["Wie werden wir wohnen?", "Wie werden wir reisen?", "Was wird sich ändern?"], starter: "En el futuro, las ciudades…", words: [["la tecnología", "die Technik"], ["el coche eléctrico", "das E-Auto"], ["el robot", "der Roboter"], ["cambiar", "verändern"], ["la ciudad", "die Stadt"]] },
+    { tense: "futuro", title: "Mein Wochenende", task: "Was wirst du am nächsten Wochenende machen?", ask: ["Was machst du am Samstag?", "Wen wirst du treffen?", "Was wirst du essen?"], starter: "Este fin de semana…", words: [["el sábado", "am Samstag"], ["quedar con", "sich treffen mit"], ["cocinar", "kochen"], ["ver una película", "einen Film sehen"], ["dormir", "schlafen"]] },
+
+    { tense: "condicional", title: "Eine Million Euro", task: "Was würdest du mit einer Million Euro machen?", ask: ["Was würdest du kaufen?", "Wem würdest du helfen?", "Würdest du weiter arbeiten?"], starter: "Con un millón de euros, yo…", words: [["comprar", "kaufen"], ["ayudar", "helfen"], ["viajar por el mundo", "um die Welt reisen"], ["regalar", "schenken"], ["dejar de trabajar", "aufhören zu arbeiten"]] },
+    { tense: "condicional", title: "Mein Traumjob", task: "Welchen Beruf hättest du gern?", ask: ["Was würdest du gern arbeiten?", "Wo würdest du arbeiten?", "Warum würde es dir gefallen?"], starter: "Me gustaría trabajar como…", words: [["me gustaría", "ich hätte gern"], ["ganar", "verdienen"], ["el equipo", "das Team"], ["poder", "können"], ["viajar", "reisen"]] },
+    { tense: "condicional", title: "Ratschläge", task: "Ein Freund ist total gestresst. Was würdest du ihm raten?", ask: ["Was sollte er tun?", "Was würdest du an seiner Stelle machen?", "Was sollte er lassen?"], starter: "Yo en tu lugar…", words: [["en tu lugar", "an deiner Stelle"], ["deberías", "du solltest"], ["descansar", "sich ausruhen"], ["salir", "ausgehen"], ["hablar con", "sprechen mit"]] },
+    { tense: "condicional", title: "Ein perfekter Tag", task: "Wie sähe dein perfekter Tag aus?", ask: ["Wo würdest du aufwachen?", "Was würdest du essen?", "Mit wem würdest du den Tag verbringen?"], starter: "Mi día perfecto empezaría…", words: [["empezar", "anfangen"], ["despertarse", "aufwachen"], ["pasear", "spazieren gehen"], ["el mar", "das Meer"], ["terminar", "enden"]] },
+    { tense: "condicional", title: "Woanders leben", task: "In welchem Land würdest du gern leben?", ask: ["Wo würdest du gern wohnen?", "Was würde dir dort gefallen?", "Was würdest du vermissen?"], starter: "Me encantaría vivir en…", words: [["me encantaría", "ich würde sehr gern"], ["el clima", "das Klima"], ["la montaña", "die Berge"], ["echar de menos", "vermissen"], ["aprender", "lernen"]] },
+
+    { tense: "subjuntivo", title: "Gute Wünsche", task: "Schreib einer Freundin gute Wünsche, z. B. zum Geburtstag.", ask: ["Was wünschst du ihr?", "Was hoffst du für das neue Jahr?", "Worauf freust du dich mit ihr?"], starter: "Espero que…", words: [["espero que", "ich hoffe, dass"], ["ojalá", "hoffentlich"], ["tener suerte", "Glück haben"], ["estar bien", "gesund sein"], ["pasarlo bien", "Spaß haben"]] },
+    { tense: "subjuntivo", title: "Tipps für Spanien", task: "Gib einem Freund Tipps für seine erste Spanienreise.", ask: ["Was soll er unbedingt probieren?", "Was soll er besuchen?", "Worauf soll er achten?"], starter: "Te recomiendo que…", words: [["te recomiendo que", "ich empfehle dir, dass"], ["es importante que", "es ist wichtig, dass"], ["probar", "probieren"], ["llevar", "mitnehmen"], ["visitar", "besuchen"]] },
+    { tense: "subjuntivo", title: "Der ideale Mitbewohner", task: "Beschreibe, wie dein idealer Mitbewohner sein soll.", ask: ["Wie soll er sein?", "Was soll er (nicht) machen?", "Was ist dir wichtig?"], starter: "Busco a alguien que…", words: [["busco a alguien que", "ich suche jemanden, der"], ["ser", "sein"], ["cocinar", "kochen"], ["ordenado", "ordentlich"], ["respetar", "respektieren"]] },
+    { tense: "subjuntivo", title: "Wenn ich Zeit habe", task: "Was machst du, wenn du endlich mehr Zeit hast?", ask: ["Was machst du, wenn du Urlaub hast?", "Was, wenn du in Rente bist?", "Was, wenn du gut Spanisch sprichst?"], starter: "Cuando tenga tiempo…", words: [["cuando", "wenn (zeitlich)"], ["tener tiempo", "Zeit haben"], ["por fin", "endlich"], ["viajar", "reisen"], ["aprender", "lernen"]] },
+    { tense: "subjuntivo", title: "Was mich stört", task: "Was stört dich – und was freut dich – an anderen Menschen?", ask: ["Was stört dich?", "Was freut dich?", "Was wünschst du dir von anderen?"], starter: "Me molesta que…", words: [["me molesta que", "mich stört, dass"], ["me alegra que", "mich freut, dass"], ["llegar tarde", "zu spät kommen"], ["hacer ruido", "Lärm machen"], ["ayudar", "helfen"]] },
+
+    { tense: "subjImperfecto", title: "Wenn ich reich wäre", task: "Was würdest du tun, wenn du sehr reich wärst?", ask: ["Was würdest du kaufen?", "Wo würdest du leben?", "Was würdest du anders machen?"], starter: "Si tuviera mucho dinero, …", words: [["si tuviera", "wenn ich hätte"], ["si fuera", "wenn ich wäre"], ["comprar", "kaufen"], ["ayudar", "helfen"], ["viajar", "reisen"]] },
+    { tense: "subjImperfecto", title: "Wenn ich zaubern könnte", task: "Was würdest du tun, wenn du zaubern könntest?", ask: ["Was würdest du ändern?", "Wem würdest du helfen?", "Was würdest du dir wünschen?"], starter: "Si pudiera hacer magia, …", words: [["si pudiera", "wenn ich könnte"], ["cambiar", "ändern"], ["desaparecer", "verschwinden"], ["volar", "fliegen"], ["el mundo", "die Welt"]] },
+    { tense: "subjImperfecto", title: "Wenn ich Bürgermeister wäre", task: "Was würdest du in deiner Stadt ändern?", ask: ["Was würdest du verbessern?", "Was würdest du bauen?", "Was dürfte es nicht mehr geben?"], starter: "Si fuera alcalde de mi ciudad, …", words: [["el alcalde", "der Bürgermeister"], ["mejorar", "verbessern"], ["construir", "bauen"], ["el parque", "der Park"], ["el medio ambiente", "die Umwelt"]] },
+    { tense: "subjImperfecto", title: "Was meine Eltern wollten", task: "Was wollten deine Eltern früher, dass du tust?", ask: ["Was sollte ich immer tun?", "Was durfte ich nicht?", "Was fandest du gut, was nicht?"], starter: "Mis padres querían que yo…", words: [["querían que", "sie wollten, dass"], ["pedían que", "sie baten, dass"], ["estudiar", "lernen"], ["ordenar", "aufräumen"], ["volver pronto", "früh zurückkommen"]] },
+    { tense: "subjImperfecto", title: "Eine Zeitreise", task: "Wohin würdest du reisen, wenn du durch die Zeit reisen könntest?", ask: ["In welche Zeit würdest du reisen?", "Wen würdest du treffen?", "Was würdest du dort machen?"], starter: "Si pudiera viajar en el tiempo, …", words: [["el pasado", "die Vergangenheit"], ["el futuro", "die Zukunft"], ["conocer", "kennenlernen"], ["ver", "sehen"], ["la época", "die Epoche"]] },
+
+    { tense: "imperativo", title: "Ein einfaches Rezept", task: "Erkläre ein einfaches Rezept Schritt für Schritt.", ask: ["Was braucht man?", "Was macht man zuerst?", "Wie serviert man es?"], starter: "Primero, corta…", words: [["cortar", "schneiden"], ["añadir", "hinzufügen"], ["mezclar", "mischen"], ["poner", "stellen / legen"], ["servir", "servieren"]] },
+    { tense: "imperativo", title: "Der Weg zu mir", task: "Erkläre einem Freund den Weg vom Bahnhof zu dir.", ask: ["Wo geht man los?", "Wo muss man abbiegen?", "Woran erkennt man dein Haus?"], starter: "Sal de la estación y…", words: [["girar", "abbiegen"], ["seguir recto", "geradeaus gehen"], ["cruzar", "überqueren"], ["a la derecha", "rechts"], ["a la izquierda", "links"]] },
+    { tense: "imperativo", title: "Hausregeln für Gäste", task: "Ein Freund wohnt bei dir. Gib ihm ein paar Hinweise.", ask: ["Wo findet er alles?", "Was soll er beachten?", "Was soll er nicht vergessen?"], starter: "Coge las llaves y…", words: [["coger", "nehmen"], ["cerrar", "schließen"], ["usar", "benutzen"], ["no olvides", "vergiss nicht"], ["llamar", "anrufen"]] },
+    { tense: "imperativo", title: "Gesund leben", task: "Gib Tipps für ein gesundes Leben.", ask: ["Was soll man essen?", "Wie viel soll man schlafen?", "Was soll man lassen?"], starter: "Come mucha fruta y…", words: [["comer", "essen"], ["beber agua", "Wasser trinken"], ["dormir", "schlafen"], ["hacer deporte", "Sport machen"], ["no fumes", "rauch nicht"]] },
+    { tense: "imperativo", title: "Tipps zum Spanischlernen", task: "Gib jemandem Tipps, wie man gut Spanisch lernt.", ask: ["Was soll man jeden Tag machen?", "Was hilft beim Sprechen?", "Was soll man nicht tun?"], starter: "Escucha música en español y…", words: [["escuchar", "hören"], ["leer", "lesen"], ["practicar", "üben"], ["repetir", "wiederholen"], ["no tengas miedo", "hab keine Angst"]] },
+  ];
+
+  const WRITE_SENTENCES = { min: 4, max: 8 };
+  const XP_WRITE = 10;
+  const CONNECTORS = ["y", "pero", "porque", "después", "luego", "entonces", "también", "además", "cuando", "mientras", "aunque", "por eso", "sin embargo", "primero", "al final", "finalmente", "por ejemplo", "así que", "ya que", "pues", "antes", "de repente", "si", "por la mañana", "por la tarde", "por la noche"];
+  // Weitere häufige Verben – damit Poquito beim Schreiben möglichst viele Zeitformen erkennt.
+  const EXTRA_VERBS = [
+    ..."ayudar bajar bañar cambiar caminar celebrar cenar charlar cocinar contestar cortar cruzar cuidar dejar desayunar descansar dibujar disfrutar durar enseñar entrar esperar explicar firmar fumar ganar gastar girar gritar guardar invitar lavar levantar limpiar llamar llenar llevar llorar mandar mejorar mezclar mirar molestar montar nadar necesitar olvidar ordenar organizar pagar parar participar pasar pasear pintar practicar preguntar preocupar preparar quedar quitar regalar regresar reservar respetar sacar saltar saludar terminar tocar tomar usar viajar visitar alquilar ahorrar avisar arreglar aceptar acompañar alegrar apagar borrar echar encantar enviar escuchar estudiar gustar importar intentar odiar olvidar pensar quedar relajar tirar tratar trabajar aprobar"
+      .split(" ").map((inf) => ({ inf })),
+    ..."beber comprender deber depender esconder meter prometer responder temer vender toser correr aprender"
+      .split(" ").map((inf) => ({ inf })),
+    ..."añadir compartir decidir discutir existir permitir recibir subir sufrir asistir aplaudir insistir ocurrir vivir"
+      .split(" ").map((inf) => ({ inf })),
+    { inf: "abrir", part: "abierto" }, { inf: "escribir", part: "escrito" }, { inf: "describir", part: "descrito" }, { inf: "romper", part: "roto" },
+    { inf: "despertar", stem: "e>ie" }, { inf: "comenzar", stem: "e>ie" }, { inf: "perder", stem: "e>ie" }, { inf: "sentar", stem: "e>ie" },
+    { inf: "recordar", stem: "o>ue" }, { inf: "probar", stem: "o>ue" }, { inf: "mostrar", stem: "o>ue" }, { inf: "costar", stem: "o>ue" },
+    { inf: "soñar", stem: "o>ue" }, { inf: "almorzar", stem: "o>ue" }, { inf: "acostar", stem: "o>ue" }, { inf: "mover", stem: "o>ue" },
+    { inf: "volar", stem: "o>ue" }, { inf: "morir", stem: "o>ue", part: "muerto" }, { inf: "servir", stem: "e>i" }, { inf: "sentir", stem: "e>ie" },
+    { inf: "divertir", stem: "e>ie" }, { inf: "mentir", stem: "e>ie" }, { inf: "seguir", stem: "e>i", yo: "sigo" },
+    { inf: "elegir", stem: "e>i", yo: "elijo" }, { inf: "construir", yo: "construyo" },
+  ];
+
   const SESSION_SIZE = 10;
   const LEARNED_LEVEL = 3;
   const MAX_LEVEL = 5;
@@ -2908,6 +3089,8 @@
   const SOUND_BY_ID = new Map(SOUNDS.map((s) => [s.id, s]));
 
   const BADGES = [
+    { id: "write-first", icon: "✍️", name: "Schreiberling", desc: "Ersten Text geschrieben", test: () => state.writeSessions >= 1 },
+    { id: "write-pro", icon: "🖋️", name: "Feder-Profi", desc: "Text mit 3 Sternen", test: () => Object.values(state.writeStars).some((v) => v === 3) },
     { id: "first-session", icon: "🎉", name: "Erste Runde", desc: "Vokabel-Runde geschafft", test: () => state.sessionsDone >= 1 },
     { id: "perfect", icon: "⭐", name: "Perfekt", desc: "Runde ohne Fehler", test: () => state.perfectSessions >= 1 },
     { id: "learned-10", icon: "🌱", name: "Keimling", desc: "10 Wörter gelernt", test: () => learnedCount() >= 10 },
@@ -2976,6 +3159,8 @@
       today: { day: null, xp: 0 },
       myWords: [],
       translateDir: "de-es",
+      writeStars: {},
+      writeSessions: 0,
       rev: 0,
       savedAt: 0,
       epoch: newEpoch(),
@@ -3115,6 +3300,8 @@
       podcastStars: maxMap(target.podcastStars, other.podcastStars),
       speakStars: maxMap(target.speakStars, other.speakStars),
       speakSessions: Math.max(target.speakSessions, other.speakSessions),
+      writeStars: maxMap(target.writeStars, other.writeStars),
+      writeSessions: Math.max(target.writeSessions, other.writeSessions),
       myWords: [...myWords.values()],
       podcastPos: Object.assign({}, rest.podcastPos, pick.podcastPos),
       lastBackup: Math.max(target.lastBackup || 0, other.lastBackup || 0) || null,
@@ -3136,7 +3323,7 @@
     if (SYNC_RENDER_VIEWS.has(view)) render();
   }
 
-  const SYNC_RENDER_VIEWS = new Set(["home", "vocab", "verbs", "tense", "listen", "podcasts", "speak", "settings"]);
+  const SYNC_RENDER_VIEWS = new Set(["home", "vocab", "verbs", "tense", "listen", "podcasts", "speak", "settings", "write"]);
 
   function hasProgress(s) {
     return s.xp > 0 || Object.keys(s.progress).length > 0 || s.podcastsHeard.length > 0;
@@ -3365,8 +3552,12 @@
     return sum;
   }
 
+  function totalWriteStars() {
+    return WRITE_FOCUS.reduce((sum, id) => sum + (state.writeStars[id] || 0), 0);
+  }
+
   function totalStars() {
-    return totalVerbStars() + totalListenStars() + totalPodcastStars() + totalSpeakStars();
+    return totalVerbStars() + totalListenStars() + totalPodcastStars() + totalSpeakStars() + totalWriteStars();
   }
 
   // ---------- Konjugation ----------
@@ -5012,6 +5203,410 @@
     else fallback();
   }
 
+  // ---------- Schreiben: Analyse & Bewertung ----------
+  // Rechtschreibung und Grammatik prüft LanguageTool (kostenlos, ohne Konto);
+  // Zeitformen, Umfang und Ausdruck wertet Poquito selbst aus.
+  const LT_URL = "https://api.languagetool.org/v2/check";
+  const WRITE_KEY = STORAGE_KEY + "_schreiben";
+  const WRITE_HISTORY_KEY = STORAGE_KEY + "_texte";
+  const WRITE_FOCUS = [...TENSES.map((t) => t.id), "frei"];
+  const MAX_WRITE_STARS = WRITE_FOCUS.length * 3;
+  const MAX_WRITE_CHARS = 2000;
+  const NOT_VERBS = new Set("qué café bebé josé sofá mamá papá día tía todavía policía alegría compañía mía tuya suya guía vía energía para cara clara rara primera tercera cualquiera ahí allí aquí así sí mí además después jamás quizá según también".split(" "));
+  const CLITICS = /(?:selo|sela|selos|selas|melo|mela|telo|tela|me|te|se|lo|la|los|las|le|les|nos)$/;
+
+  function vowelPlain(str) {
+    return str.replace(/[áéíóú]/g, (c) => "aeiou"["áéíóú".indexOf(c)]);
+  }
+
+  let writeIndex = null;
+
+  function writeVerbIndex() {
+    if (writeIndex) return writeIndex;
+    const forms = new Map();
+    const parts = new Set();
+    const infinitives = new Set();
+    const simple = TENSES.map((t) => t.id).filter((id) => id !== "perfecto" && id !== "pluscuamperfecto");
+    [...VERBS, ...EXTRA_VERBS].forEach((v) => {
+      if (infinitives.has(v.inf)) return;
+      infinitives.add(v.inf);
+      parts.add(participio(v));
+      simple.forEach((tense) => conj(v, tense).forEach((form) => {
+        const key = form.toLowerCase();
+        if (!forms.has(key)) forms.set(key, new Set());
+        forms.get(key).add(tense);
+      }));
+    });
+    const nouns = new Set();
+    VOCAB.forEach((w) => {
+      const m = w.es.toLowerCase().match(/^(?:el|la|los|las) (\S+)$/);
+      if (m) nouns.add(m[1]);
+    });
+    writeIndex = { forms, parts, infinitives, nouns };
+    return writeIndex;
+  }
+
+  // Zeitform einer unbekannten Verbform an ihrer Endung erkennen (nur eindeutige Endungen)
+  function tenseBySuffix(word, index) {
+    if (word.length < 4 || NOT_VERBS.has(word) || index.nouns.has(word) || index.nouns.has(word.replace(/e?s$/, ""))) return null;
+    const cond = word.match(/^(.+[aei]r)(?:ía|ías|íamos|íais|ían)$/);
+    if (cond) {
+      // „-ería“ ist oft ein Geschäft (panadería) – nur zählen, wenn das Verb bekannt ist
+      if (!/er(?:ía|ías|íamos|íais|ían)$/.test(word) || index.infinitives.has(cond[1])) return "condicional";
+      return null;
+    }
+    if (/[aei]r(?:é|ás|á|emos|éis|án)$/.test(word)) return "futuro";
+    if (/(?:aba|abas|ábamos|abais|aban)$/.test(word)) return "imperfecto";
+    if (/(?:ía|ías|íamos|íais|ían)$/.test(word)) return "imperfecto";
+    if (/(?:ieras?|iéramos|ierais|ieran|iese|iesen)$/.test(word)) return "subjImperfecto";
+    if (/(?:aras|áramos|arais|aran)$/.test(word) && index.infinitives.has(word.replace(/(?:aras|áramos|arais|aran)$/, "ar"))) return "subjImperfecto";
+    if (/(?:aste|asteis|aron|iste|isteis|ieron|ió)$/.test(word)) return "indefinido";
+    if (/[^aeiouáéíóú][óé]$/.test(word)) return "indefinido";
+    return null;
+  }
+
+  // Findet die Verbformen im Text und ordnet sie Zeitformen zu.
+  function findTenses(text, focus) {
+    const index = writeVerbIndex();
+    const words = text.toLowerCase().match(/[a-záéíóúüñ]+/g) || [];
+    const found = new Map();
+    const add = (tense, form) => {
+      if (!found.has(tense)) found.set(tense, []);
+      if (!found.get(tense).includes(form)) found.get(tense).push(form);
+    };
+    for (let i = 0; i < words.length; i++) {
+      const w = words[i];
+      const next = words[i + 1];
+      const isPart = next && (index.parts.has(next) || /(?:ado|ido)$/.test(next));
+      if (isPart && HABER_PRES.includes(w)) {
+        add("perfecto", w + " " + next);
+        i++;
+        continue;
+      }
+      if (isPart && HABER_IMPF.includes(w)) {
+        add("pluscuamperfecto", w + " " + next);
+        i++;
+        continue;
+      }
+      let tenses = index.forms.get(w);
+      if (!tenses && CLITICS.test(w)) {
+        const base = vowelPlain(w.replace(CLITICS, ""));
+        const imp = index.forms.get(base);
+        if (base.length >= 2 && imp && imp.has("imperativo")) tenses = new Set(["imperativo"]);
+      }
+      if (tenses) {
+        add(tenses.has(focus) ? focus : [...tenses][0], w);
+        continue;
+      }
+      if (words[i - 1] === "yo" && w.length > 2 && w.endsWith("o")) {
+        add("presente", w);
+        continue;
+      }
+      const guess = tenseBySuffix(w, index);
+      if (guess) add(guess, w);
+    }
+    return found;
+  }
+
+  function textStats(text) {
+    const sentences = text.split(/[.!?…]+|\n+/)
+      .map((part) => part.trim())
+      .filter((part) => (part.match(/[a-záéíóúüñ]+/gi) || []).length >= 2);
+    const words = text.toLowerCase().match(/[a-záéíóúüñ]+/g) || [];
+    const content = words.filter((w) => w.length >= 3);
+    const variety = content.length ? new Set(content).size / content.length : 0;
+    const plainText = " " + words.join(" ") + " ";
+    const connectors = CONNECTORS.filter((c) => plainText.includes(" " + c + " "));
+    return { sentences: sentences.length, words: words.length, avgLen: sentences.length ? words.length / sentences.length : 0, variety, connectors };
+  }
+
+  async function checkSpanish(text) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 15000);
+    try {
+      const res = await fetch(LT_URL, { method: "POST", body: new URLSearchParams({ text, language: "es" }), signal: ctrl.signal });
+      if (!res.ok) throw new Error("http");
+      const data = await res.json();
+      return data.matches || [];
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  function issueKind(m) {
+    const type = (m.rule && m.rule.issueType) || "";
+    const cat = (m.rule && m.rule.category && m.rule.category.id) || "";
+    if (type === "misspelling" || cat === "TYPOS" || cat === "DIACRITICS") return "spelling";
+    if (type === "typographical" || type === "whitespace" || ["TYPOGRAPHY", "PUNCTUATION", "CASING"].includes(cat)) return "punct";
+    if (type === "style" || type === "locale-violation" || ["STYLE", "REDUNDANCY"].includes(cat)) return "style";
+    return "grammar";
+  }
+
+  const ISSUE_NAMES = { spelling: "Rechtschreibung", grammar: "Grammatik", punct: "Zeichensetzung", style: "Stil-Tipp" };
+
+  function explainIssue(id, wrong, fix, kind) {
+    const w = wrong.toLowerCase();
+    const f = (fix || "").toLowerCase();
+    if (fix && f !== w && stripAccents(f) === stripAccents(w)) return "Akzent fehlt oder ist falsch";
+    if (fix && f === w && fix !== wrong) return "Groß- und Kleinschreibung";
+    if (/QUESTION|EXCLAMATION|INTERROG/.test(id) || /[¿¡]/.test(fix || "")) return "Fragen beginnen mit ¿, Ausrufe mit ¡";
+    if (/AGREEMENT|CONCORD/.test(id)) return /VERB|SUBJECT/.test(id) ? "Verbform passt nicht zur Person" : "Geschlecht oder Anzahl passen nicht zusammen";
+    return ISSUE_NAMES[kind];
+  }
+
+  // Bei mehreren Vorschlägen den nehmen, der dein Hauptwort behält („mi amigos“ → „mis amigos“, nicht „mi amigo“).
+  function bestFix(wrong, options) {
+    const last = wrong.toLowerCase().split(/\s+/).pop();
+    if (options.length > 1 && /\s/.test(wrong)) {
+      const keeps = options.find((o) => o.toLowerCase().split(/\s+/).pop() === last);
+      if (keeps) return keeps;
+    }
+    return options[0] || "";
+  }
+
+  function toIssues(text, matches) {
+    return matches.map((m) => {
+      const wrong = text.substr(m.offset, m.length);
+      const options = (m.replacements || []).map((r) => r.value).slice(0, 5);
+      const fix = bestFix(wrong, options);
+      const alt = options.find((o) => o !== fix) || "";
+      const kind = issueKind(m);
+      const id = (m.rule && m.rule.id) || "";
+      return { offset: m.offset, length: m.length, wrong, fix, alt, kind, label: explainIssue(id, wrong, fix, kind), message: m.message || "" };
+    });
+  }
+
+  const QUESTION_WORDS = { que: "qué", como: "cómo", donde: "dónde", cuando: "cuándo", cuanto: "cuánto", cuanta: "cuánta", cuantos: "cuántos", cuantas: "cuántas", quien: "quién", quienes: "quiénes", cual: "cuál", cuales: "cuáles" };
+
+  // Fragewörter am Anfang einer Frage/eines Ausrufs brauchen einen Akzent (¿Cómo …? ¡Qué …!).
+  // Wünsche wie „¡Que tengas un buen día!“ bleiben ohne Akzent.
+  function addQuestionWordIssues(text, issues) {
+    const re = /(^|[.!?…]\s+|[¿¡]\s*)([a-záéíóúA-ZÁÉÍÓÚ]+)([^.!?…]*)([?!])/g;
+    let m;
+    while ((m = re.exec(text))) {
+      re.lastIndex = m.index + m[0].length - 1;
+      const word = m[2];
+      const accented = QUESTION_WORDS[word.toLowerCase()];
+      if (!accented) continue;
+      const nextWord = (m[3].trim().split(/\s+/)[0] || "").toLowerCase();
+      if (accented === "qué" && (findTenses(nextWord, "subjuntivo").has("subjuntivo") || ["te", "le", "lo", "les", "os", "se"].includes(nextWord))) continue;
+      const fixedWord = word[0] === word[0].toUpperCase() ? accented[0].toUpperCase() + accented.slice(1) : accented;
+      const offset = m.index + m[1].length;
+      const existing = issues.find((i) => i.offset <= offset && i.offset + i.length >= offset + word.length);
+      if (existing) {
+        existing.fix = (existing.fix || existing.wrong).replace(word, fixedWord);
+        existing.label += " – und Fragewörter tragen einen Akzent";
+      } else {
+        issues.push({ offset, length: word.length, wrong: word, fix: fixedWord, alt: "", kind: "spelling", label: "Fragewörter tragen einen Akzent (qué, cómo, dónde …)", message: "" });
+      }
+    }
+    return issues;
+  }
+
+  // Korrigierte Fassung: Vorschläge von hinten nach vorn einsetzen (ohne Stil-Tipps)
+  function correctedText(text, issues) {
+    let out = text;
+    let limit = Infinity;
+    [...issues].sort((a, b) => b.offset - a.offset).forEach((i) => {
+      if (i.kind === "style" || !i.fix || i.offset + i.length > limit) return;
+      out = out.slice(0, i.offset) + i.fix + out.slice(i.offset + i.length);
+      limit = i.offset;
+    });
+    return out;
+  }
+
+  function rating(points, good, ok) {
+    if (points >= good) return { level: "good", text: "gut" };
+    if (points >= ok) return { level: "ok", text: "okay" };
+    return { level: "work", text: "üben" };
+  }
+
+  function evaluateWriting(text, focus, topic, issues) {
+    const stats = textStats(text);
+    const found = findTenses(text, focus);
+    const focusForms = found.get(focus) || [];
+    const tensesUsed = [...found.keys()];
+
+    let correctness = null;
+    let errors = 0;
+    if (issues) {
+      const count = (k) => issues.filter((i) => i.kind === k).length;
+      errors = count("spelling") + count("grammar") + count("punct");
+      const weighted = count("spelling") + count("grammar") + 0.5 * count("punct");
+      const per100 = (weighted / Math.max(stats.words, 1)) * 100;
+      correctness = per100 <= 2 ? 50 : per100 <= 5 ? 40 : per100 <= 9 ? 28 : per100 <= 14 ? 16 : 6;
+    }
+    const tenseCount = focus === "frei" ? tensesUsed.length : focusForms.length;
+    const tensePts = tenseCount >= 2 ? 25 : tenseCount === 1 ? 14 : 0;
+    const inRange = stats.sentences >= WRITE_SENTENCES.min && stats.sentences <= WRITE_SENTENCES.max;
+    const nearRange = stats.sentences >= WRITE_SENTENCES.min - 1 && stats.sentences <= WRITE_SENTENCES.max + 2;
+    const expr = (inRange ? 8 : nearRange ? 4 : 0)
+      + (stats.avgLen >= 6 ? 5 : stats.avgLen >= 4 ? 3 : 0)
+      + (stats.connectors.length >= 2 ? 6 : stats.connectors.length === 1 ? 3 : 0)
+      + (stats.variety >= 0.65 ? 6 : stats.variety >= 0.5 ? 3 : 0);
+
+    const total = correctness === null ? ((tensePts + expr) / 50) * 100 : correctness + tensePts + expr;
+    let stars = total >= 80 ? 3 : total >= 55 ? 2 : 1;
+    const tooShort = stats.sentences < WRITE_SENTENCES.min - 1 || stats.words < 20;
+    if (tooShort) stars = 1;
+    if (correctness === null) stars = Math.min(stars, 2);
+
+    const tense = focus === "frei" ? null : TENSE_BY_ID.get(focus);
+    const good = [];
+    const tips = [];
+    if (issues && errors === 0) good.push("Keine Rechtschreib- oder Grammatikfehler gefunden – ¡Perfecto!");
+    if (tense && focusForms.length) good.push(`${focusForms.length}× ${tense.name}: ${focusForms.slice(0, 5).join(", ")}`);
+    if (!tense && tensesUsed.length >= 2) good.push("Abwechslungsreich: " + tensesUsed.map((id) => TENSE_BY_ID.get(id).name).join(", "));
+    if (stats.connectors.length >= 2) good.push("Gute Verbindungswörter: " + stats.connectors.slice(0, 4).join(", "));
+    const topicWords = topic.words.map((w) => w[0]).filter((es) => simple(text).includes(stripArticle(es)));
+    if (topicWords.length) good.push("Themenwörter benutzt: " + topicWords.slice(0, 4).join(", "));
+
+    if (tooShort) tips.push(`Schreib ${WRITE_SENTENCES.min}–${WRITE_SENTENCES.max} Sätze – dann kann Poquito dich richtig bewerten.`);
+    if (tense && !focusForms.length) tips.push(`Ich habe kein ${tense.name} gefunden. Versuch es z. B. so: „${topic.starter}“`);
+    if (tense && focusForms.length === 1) tips.push(`Benutze das ${tense.name} noch ein- oder zweimal mehr.`);
+    if (issues && issues.some((i) => i.label.startsWith("Akzent"))) tips.push("Achte auf die Akzente – sie verändern oft die Bedeutung (esta ≠ está).");
+    if (issues && issues.some((i) => i.label.startsWith("Fragen"))) tips.push("Fragen und Ausrufe bekommen im Spanischen auch vorne ein Zeichen: ¿…? und ¡…!");
+    if (stats.connectors.length < 2 && !tooShort) tips.push("Verbinde deine Sätze mit y, pero, porque, después oder también.");
+    if (stats.avgLen < 5 && !tooShort) tips.push("Deine Sätze sind recht kurz – verbinde zwei Gedanken zu einem Satz.");
+    if (stats.variety < 0.5 && stats.words >= 20) tips.push("Einige Wörter wiederholen sich oft – probier ein paar Alternativen.");
+
+    return {
+      stars,
+      stats,
+      found: [...found.entries()],
+      focusForms,
+      errors,
+      issues: issues || [],
+      checked: !!issues,
+      corrected: issues ? correctedText(text, issues) : text,
+      cats: [
+        { name: "Rechtschreibung & Grammatik", ...(correctness === null ? { level: "none", text: "nicht geprüft" } : rating(correctness, 40, 28)),
+          detail: correctness === null ? "Ohne Internet konnte das nicht geprüft werden." : errors ? `${errors} Fehler gefunden` : "fehlerfrei" },
+        { name: tense ? "Zeitform: " + tense.name : "Zeitformen", ...rating(tensePts, 25, 14),
+          detail: tense ? (focusForms.length ? focusForms.length + "× benutzt" : "nicht gefunden") : tensesUsed.length + " verschiedene" },
+        { name: "Umfang & Ausdruck", ...rating(expr, 19, 11),
+          detail: `${stats.sentences} Sätze · ${stats.words} Wörter` },
+      ],
+      good: good.slice(0, 3),
+      tips: tips.slice(0, 3),
+    };
+  }
+
+  function stripArticle(es) {
+    return simple(es).replace(ARTICLES, "");
+  }
+
+  // ---------- Schreiben: Ablauf ----------
+  const writing = loadWriting();
+
+  function loadWriting() {
+    const base = { id: 0, focus: "presente", topic: null, text: "", awarded: 0, result: null, checking: false, error: "" };
+    let saved = null;
+    try {
+      saved = JSON.parse(localStorage.getItem(WRITE_KEY));
+    } catch (e) {
+      saved = null;
+    }
+    if (!saved || typeof saved !== "object") return base;
+    return Object.assign(base, {
+      id: saved.id || 0,
+      focus: WRITE_FOCUS.includes(saved.focus) ? saved.focus : "presente",
+      topic: WRITE_TOPICS[saved.topic] ? saved.topic : null,
+      text: typeof saved.text === "string" ? saved.text : "",
+      awarded: saved.awarded || 0,
+    });
+  }
+
+  // Entwurf sofort sichern – nichts geht verloren, wenn die App geschlossen wird.
+  function saveWriting() {
+    try {
+      localStorage.setItem(WRITE_KEY, JSON.stringify({ id: writing.id, focus: writing.focus, topic: writing.topic, text: writing.text, awarded: writing.awarded }));
+    } catch (e) {
+      // Ohne Speicher eben ohne Entwurf.
+    }
+  }
+
+  function startWriting(focus) {
+    const unsaved = writing.topic !== null && !writing.awarded && writing.text.trim().length > 20;
+    if (unsaved && !confirm("Dein angefangener Text wird verworfen. Neues Thema würfeln?")) return;
+    const pool = WRITE_TOPICS.map((t, i) => i).filter((i) => (focus === "frei" || WRITE_TOPICS[i].tense === focus) && i !== writing.topic);
+    Object.assign(writing, { id: Date.now(), focus, topic: pool[Math.floor(Math.random() * pool.length)], text: "", awarded: 0, result: null, error: "" });
+    saveWriting();
+    go("compose");
+  }
+
+  function loadWriteHistory() {
+    try {
+      const list = JSON.parse(localStorage.getItem(WRITE_HISTORY_KEY));
+      return Array.isArray(list) ? list.filter((h) => WRITE_TOPICS[h.topic]) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveWriteHistory(stars) {
+    const list = loadWriteHistory().filter((h) => h.id !== writing.id);
+    list.unshift({ id: writing.id, at: Date.now(), focus: writing.focus, topic: writing.topic, text: writing.text, stars });
+    try {
+      localStorage.setItem(WRITE_HISTORY_KEY, JSON.stringify(list.slice(0, 20)));
+    } catch (e) {
+      // Verlauf ist nur Komfort.
+    }
+  }
+
+  function openWriteHistory(i) {
+    const h = loadWriteHistory()[i];
+    if (!h) return;
+    Object.assign(writing, { id: h.id, focus: h.focus, topic: h.topic, text: h.text, awarded: h.stars, result: null, error: "" });
+    saveWriting();
+    go("compose");
+  }
+
+  function writeCountText(text) {
+    const stats = textStats(text);
+    return `${stats.sentences} ${stats.sentences === 1 ? "Satz" : "Sätze"} (Ziel ${WRITE_SENTENCES.min}–${WRITE_SENTENCES.max}) · ${stats.words} Wörter`;
+  }
+
+  async function checkWriting() {
+    const text = writing.text.trim();
+    if (!text || writing.checking) return;
+    if (guessLang(text) === "de") {
+      writing.error = "Das sieht nach Deutsch aus – schreib bitte auf Spanisch 😉";
+      render();
+      return;
+    }
+    writing.checking = true;
+    writing.error = "";
+    render();
+    let issues = null;
+    try {
+      issues = addQuestionWordIssues(text, toIssues(text, await checkSpanish(text)));
+    } catch (e) {
+      issues = null;
+    }
+    writing.checking = false;
+    const r = evaluateWriting(text, writing.focus, WRITE_TOPICS[writing.topic], issues);
+    r.text = text;
+    r.startXp = state.xp;
+    // XP gibt es beim ersten Prüfen – nach dem Überarbeiten nur noch für zusätzliche Sterne.
+    r.xp = writing.awarded ? 5 * Math.max(0, r.stars - writing.awarded) : XP_WRITE + 5 * r.stars;
+    if (!writing.awarded) state.writeSessions++;
+    if (r.xp) r.goalReached = addXp(r.xp);
+    writing.awarded = Math.max(writing.awarded, r.stars);
+    state.writeStars[writing.focus] = Math.max(state.writeStars[writing.focus] || 0, r.stars);
+    bumpStreak();
+    r.newBadges = unlockBadges();
+    saveState();
+    saveWriting();
+    saveWriteHistory(r.stars);
+    writing.result = r;
+    if (view !== "compose") return;
+    view = "writeResult";
+    render();
+    playFanfare(r.stars);
+    if (r.stars === 3) confetti();
+  }
+
   function esc(str) {
     return String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
   }
@@ -5073,6 +5668,7 @@
       hoeren: `${starsText(totalListenStars(), MAX_LISTEN_STARS)} · Wörter, Sätze, Zahlen`,
       podcast: `${state.podcastsHeard.length} / ${PODCASTS.length} Folgen gehört · ${starsText(totalPodcastStars(), MAX_PODCAST_STARS)}`,
       sprechen: `${starsText(totalSpeakStars(), MAX_SPEAK_STARS)} · Laute, Wörter, Sätze`,
+      schreiben: `${starsText(totalWriteStars(), MAX_WRITE_STARS)} · Texte zu Themen`,
     };
     return `
       <header class="hero">
@@ -5376,6 +5972,175 @@
             </li>`).join("")}
         </ul>
       </section>`;
+  }
+
+  function focusName(focus) {
+    return focus === "frei" ? "Freies Thema" : TENSE_BY_ID.get(focus).name;
+  }
+
+  function writeView() {
+    const history = loadWriteHistory();
+    const draft = writing.topic !== null && writing.text.trim() && !writing.awarded ? WRITE_TOPICS[writing.topic] : null;
+    const tile = (id, icon, name, desc, color) => `
+      <button class="tile" data-action="w-start" data-focus="${id}" style="--c:${color}">
+        <span class="ico">${icon}</span>
+        <span class="name">${esc(name)}</span>
+        <span class="desc">${esc(desc)}</span>
+        <span class="stars-line">${starRow(state.writeStars[id] || 0)}</span>
+      </button>`;
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="home" aria-label="Zurück">←</button>
+        <h2>✍️ Schreiben<small>Freie Texte mit Bewertung</small></h2>
+        ${soundButton()}
+      </div>
+      ${draft ? `
+        <section class="resume-card">
+          <div class="rc-text">
+            <b>✏️ Angefangener Text</b>
+            <span>${esc(draft.title)} · ${esc(focusName(writing.focus))} · ${esc(writeCountText(writing.text))}</span>
+          </div>
+          <div class="rc-btns"><button class="btn" data-action="w-continue">▶ Weiter</button></div>
+        </section>` : ""}
+      <div class="summary">
+        <div class="stat"><b>${state.writeSessions}</b><span>Texte geschrieben</span></div>
+        <div class="stat"><b>${totalWriteStars()}</b><span>von ${MAX_WRITE_STARS} Sternen</span></div>
+        <div class="stat"><b>${WRITE_SENTENCES.min}–${WRITE_SENTENCES.max}</b><span>Sätze pro Text</span></div>
+      </div>
+      <p class="lead">Wähle eine Zeitform – Poquito würfelt dir ein passendes Thema. Du schreibst ${WRITE_SENTENCES.min}–${WRITE_SENTENCES.max} Sätze und bekommst eine Bewertung für Rechtschreibung, Grammatik, Zeitform und Ausdruck.</p>
+      <h2 class="section-title">Welche Zeitform willst du üben?</h2>
+      <div class="grid">
+        ${TENSES.map((t) => tile(t.id, t.icon, t.name, t.de, t.color)).join("")}
+        ${tile("frei", "🎲", "Freies Thema", "beliebige Zeitformen", "#6C757D")}
+      </div>
+      ${history.length ? `
+        <section class="panel tr-history">
+          <div class="panel-head"><h3>📝 Meine Texte</h3></div>
+          <ul>
+            ${history.slice(0, 10).map((h, i) => `
+              <li>
+                <button class="tr-hist" data-action="w-history" data-i="${i}">
+                  <span>${esc(WRITE_TOPICS[h.topic].title)} · ${esc(focusName(h.focus))} · ${timeText(h.at)} · ${starRow(h.stars)}</span>
+                  <b lang="es">${esc(h.text.length > 90 ? h.text.slice(0, 90) + " …" : h.text)}</b>
+                </button>
+              </li>`).join("")}
+          </ul>
+        </section>` : ""}`;
+  }
+
+  function composeView() {
+    const topic = WRITE_TOPICS[writing.topic];
+    const tense = TENSE_BY_ID.get(topic.tense);
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="open-write" aria-label="Zurück">←</button>
+        <h2>✍️ ${esc(focusName(writing.focus))}<small>${esc(topic.title)}</small></h2>
+        ${soundButton()}
+      </div>
+      <section class="panel write-topic">
+        <div class="wt-head">
+          <span class="wt-tense" style="--c:${tense.color}">${tense.icon} ${esc(writing.focus === "frei" ? "passt gut zu: " + tense.name : tense.name + " – " + tense.de)}</span>
+          <button class="btn light small" data-action="w-shuffle">🔀 Anderes Thema</button>
+        </div>
+        <h3>${esc(topic.title)}</h3>
+        <p>${esc(topic.task)}</p>
+        <ul class="wt-ask">${topic.ask.map((q) => `<li>${esc(q)}</li>`).join("")}</ul>
+        <div class="wt-starter">
+          <span>💡 So könntest du anfangen: <b lang="es">${esc(topic.starter)}</b></span>
+          <button class="tr-alt" data-action="w-insert" data-text="${esc(topic.starter.replace(/…$/, ""))}">Übernehmen</button>
+        </div>
+        <div class="wt-words">
+          ${topic.words.map(([es, de]) => `<button class="tr-alt" data-action="w-insert" data-text="${esc(es)}"><b lang="es">${esc(es)}</b> · ${esc(de)}</button>`).join("")}
+        </div>
+        <button class="link-btn inline" data-action="w-rules" data-tense="${tense.id}">📘 Regeln: ${esc(tense.name)}</button>
+      </section>
+      <textarea class="write-input" rows="8" maxlength="${MAX_WRITE_CHARS}" lang="es" autocapitalize="sentences" autocorrect="off" spellcheck="false"
+        placeholder="Escribe aquí tu texto …">${esc(writing.text)}</textarea>
+      <div class="accents">${ACCENT_CHARS.map((a) => `<button class="accent" data-action="accent" data-char="${a}">${a}</button>`).join("")}</div>
+      <div class="w-count">${esc(writeCountText(writing.text))}</div>
+      ${writing.error ? `<div class="notice warn">${esc(writing.error)}</div>` : ""}
+      <button class="btn good" data-action="w-check" ${writing.checking ? "disabled" : ""}>${writing.checking ? "Poquito prüft deinen Text …" : "✅ Text prüfen"}</button>
+      <p class="tr-credit">Rechtschreibung & Grammatik: LanguageTool – dein Text wird dafür übertragen.</p>`;
+  }
+
+  function markedText(text, issues) {
+    let html = "";
+    let pos = 0;
+    [...issues].sort((a, b) => a.offset - b.offset).forEach((i) => {
+      if (i.offset < pos) return;
+      html += esc(text.slice(pos, i.offset)) + `<mark class="k-${i.kind}">${esc(text.substr(i.offset, i.length))}</mark>`;
+      pos = i.offset + i.length;
+    });
+    return html + esc(text.slice(pos));
+  }
+
+  function writeResultView() {
+    const r = writing.result;
+    const topic = WRITE_TOPICS[writing.topic];
+    const titles = { 3: "¡Excelente!", 2: "¡Muy bien!", 1: "¡Sigue así!" };
+    const texts = { 3: "Ein richtig guter Text!", 2: "Schon gut – mit ein paar Kleinigkeiten.", 1: "Ein Anfang! Überarbeite ihn mit den Tipps unten." };
+    const levelBefore = levelInfo(r.startXp).level;
+    const levelNow = levelInfo(state.xp).level;
+    const shown = r.issues.filter((i) => i.kind !== "style" || i.fix);
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="open-write" aria-label="Zurück">←</button>
+        <h2>✍️ Bewertung<small>${esc(topic.title)} · ${esc(focusName(writing.focus))}</small></h2>
+        ${soundButton()}
+      </div>
+      <section class="result">
+        <div class="stars">${[1, 2, 3].map((i) => `<span class="${i <= r.stars ? "on" : ""}">★</span>`).join("")}</div>
+        <h2>${titles[r.stars]}</h2>
+        <p>${texts[r.stars]}</p>
+        <div class="summary">
+          <div class="stat"><b>${r.stats.sentences}</b><span>Sätze</span></div>
+          <div class="stat"><b>${r.checked ? r.errors : "–"}</b><span>Fehler</span></div>
+          <div class="stat"><b>+${r.xp}</b><span>XP</span></div>
+        </div>
+        ${r.goalReached ? `<div class="levelup goal-banner">🎯 Tagesziel erreicht! ${todayXp()} XP heute – ¡Muy bien!</div>` : ""}
+        ${levelNow > levelBefore ? `<div class="levelup">🎊 Level ${levelNow} erreicht!</div>` : ""}
+        ${r.newBadges.length ? `
+          <div class="new-badges">
+            <h3>Neues Abzeichen!</h3>
+            <div class="badges">${r.newBadges.map(badgeTile).join("")}</div>
+          </div>` : ""}
+      </section>
+      <section class="panel w-cats">
+        ${r.cats.map((c) => `
+          <div class="w-cat">
+            <span class="w-cat-name">${esc(c.name)}</span>
+            <span class="w-cat-detail">${esc(c.detail)}</span>
+            <span class="w-pill ${c.level}">${esc(c.text)}</span>
+          </div>`).join("")}
+        ${r.good.length ? `<ul class="w-list good">${r.good.map((g) => `<li>👍 ${esc(g)}</li>`).join("")}</ul>` : ""}
+        ${r.tips.length ? `<ul class="w-list tips">${r.tips.map((g) => `<li>💡 ${esc(g)}</li>`).join("")}</ul>` : ""}
+      </section>
+      <section class="panel">
+        <h3>📄 Dein Text</h3>
+        <p class="w-text" lang="es">${markedText(r.text, shown)}</p>
+        ${shown.length ? `
+          <ul class="w-fixes">
+            ${shown.map((i) => `
+              <li class="k-${i.kind}">
+                <span><s>${esc(i.wrong)}</s>${i.fix ? ` → <b>${esc(i.fix)}</b>` : ""}${i.alt && i.kind === "grammar" ? ` <small>(oder: ${esc(i.alt)})</small>` : ""}</span>
+                <small>${esc(i.label)}${i.label === ISSUE_NAMES[i.kind] && i.message ? " – " + esc(i.message) : ""}</small>
+              </li>`).join("")}
+          </ul>` : ""}
+        ${!r.checked ? `<div class="notice">Ohne Internet konnten Rechtschreibung und Grammatik nicht geprüft werden – höchstens 2 Sterne. Prüf den Text später nochmal.</div>` : ""}
+      </section>
+      ${r.checked && r.corrected !== r.text ? `
+        <section class="panel w-corrected">
+          <div class="panel-head">
+            <h3>✨ So wäre es richtig</h3>
+            <button class="say" data-action="w-speak" aria-label="Vorlesen">🔊</button>
+          </div>
+          <p class="w-text" lang="es">${esc(r.corrected)}</p>
+        </section>` : ""}
+      <div class="btn-stack">
+        <button class="btn" data-action="w-revise">✏️ Text überarbeiten</button>
+        <button class="btn sun" data-action="w-start" data-focus="${writing.focus}">🎲 Neues Thema</button>
+        <button class="btn light" data-action="open-write">Zur Übersicht</button>
+      </div>`;
   }
 
   function greeting() {
@@ -6154,6 +6919,9 @@
     result: resultView,
     translate: translateView,
     settings: settingsView,
+    write: writeView,
+    compose: composeView,
+    writeResult: writeResultView,
   };
 
   // Die drei Hauptbereiche bekommen unten eine Tab-Leiste.
@@ -6192,7 +6960,7 @@
   // ---------- Bedienung ----------
   const BACK_ACTIONS = new Set(["home", "exit"]);
   // Keine Klick-Töne, wo gleich eigene Töne, Sprache oder das Mikrofon starten.
-  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self", "voice-test", "tr-speak", "tr-save"]);
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self", "voice-test", "tr-speak", "tr-save", "w-insert", "w-speak", "w-check"]);
 
   app.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".accent")) e.preventDefault();
@@ -6363,6 +7131,48 @@
       case "open-settings":
         go("settings");
         break;
+      case "open-write":
+        go("write");
+        break;
+      case "w-start":
+        startWriting(el.dataset.focus);
+        break;
+      case "w-shuffle":
+        startWriting(writing.focus);
+        break;
+      case "w-continue":
+      case "w-revise":
+        go("compose");
+        break;
+      case "w-check":
+        checkWriting();
+        break;
+      case "w-history":
+        openWriteHistory(Number(el.dataset.i));
+        break;
+      case "w-rules":
+        currentTense = el.dataset.tense;
+        go("rules");
+        break;
+      case "w-speak":
+        if (!state.sound) {
+          state.sound = true;
+          saveState();
+        }
+        speak(writing.result.corrected);
+        break;
+      case "w-insert": {
+        const input = app.querySelector(".write-input");
+        const start = input.selectionStart == null ? input.value.length : input.selectionStart;
+        const end = input.selectionEnd == null ? input.value.length : input.selectionEnd;
+        const before = input.value.slice(0, start);
+        const piece = (before && !/\s$/.test(before) ? " " : "") + el.dataset.text + " ";
+        input.setRangeText(piece, start, end, "end");
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        input.focus();
+        sfx.select(1);
+        break;
+      }
       case "toggle-backup":
         backupOpen = !el.closest("details").open;
         break;
@@ -6473,11 +7283,11 @@
         submitDrill(el.dataset.value);
         break;
       case "accent": {
-        const input = app.querySelector(".type-input, .tr-input");
+        const input = app.querySelector(".type-input, .tr-input, .write-input");
         const start = input.selectionStart == null ? input.value.length : input.selectionStart;
         const end = input.selectionEnd == null ? input.value.length : input.selectionEnd;
         input.setRangeText(el.dataset.char, start, end, "end");
-        if (input.classList.contains("tr-input")) translator.text = input.value;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
         input.focus();
         sfx.select(1);
         break;
@@ -6527,6 +7337,12 @@
 
   app.addEventListener("input", (e) => {
     if (e.target.classList.contains("tr-input")) translator.text = e.target.value;
+    if (e.target.classList.contains("write-input")) {
+      writing.text = e.target.value;
+      saveWriting();
+      const counter = app.querySelector(".w-count");
+      if (counter) counter.textContent = writeCountText(writing.text);
+    }
   });
 
   tabbar.addEventListener("click", (e) => {
