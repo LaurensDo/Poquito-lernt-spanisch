@@ -1604,8 +1604,13 @@
   }
 
   .wt-words { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-  .write-topic .tr-alt { background: var(--bg); font-weight: 700; }
-  .write-topic .tr-alt b { font-weight: 900; }
+  .write-guide .tr-alt { background: var(--bg); font-weight: 700; }
+  .write-guide .tr-alt b { font-weight: 900; }
+  .write-guide { border-left: 6px solid var(--c); }
+  .write-guide h3 { margin-bottom: 8px; }
+  .write-guide p { margin-bottom: 8px; }
+  .wg-contrast { color: var(--muted); font-size: 0.92rem; }
+  .wg-label { margin: 12px 0 8px; color: var(--muted); font-size: 0.8rem; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; }
 
   .write-input {
     display: block;
@@ -2970,72 +2975,89 @@
   ];
 
   // ---------- Schreiben: Themen je Zeitform ----------
-  // ask: Leitfragen · starter: möglicher Satzanfang · words: hilfreiche Wörter [es, de]
+  // ask: Leitfragen · starter: möglicher Satzanfang
   const WRITE_TOPICS = [
-    { tense: "presente", title: "Mein Alltag", task: "Beschreibe einen ganz normalen Tag.", ask: ["Wann stehst du auf?", "Was isst du zum Frühstück?", "Wie kommst du zur Arbeit?", "Was machst du am Abend?"], starter: "Normalmente me levanto a las…", words: [["levantarse", "aufstehen"], ["desayunar", "frühstücken"], ["el trabajo", "die Arbeit"], ["por la tarde", "am Nachmittag"], ["cenar", "zu Abend essen"]] },
-    { tense: "presente", title: "Meine Familie", task: "Stell deine Familie vor.", ask: ["Wer gehört zu deiner Familie?", "Wie sind sie?", "Was machen sie gern?"], starter: "Mi familia es…", words: [["los padres", "die Eltern"], ["el hermano", "der Bruder"], ["simpático", "sympathisch"], ["vivir", "wohnen"], ["le gusta", "er/sie mag"]] },
-    { tense: "presente", title: "Meine Stadt", task: "Erzähl, wo du wohnst und was es dort gibt.", ask: ["Wie heißt deine Stadt?", "Was gibt es dort?", "Was gefällt dir, was nicht?"], starter: "Vivo en…", words: [["el barrio", "das Viertel"], ["hay", "es gibt"], ["tranquilo", "ruhig"], ["el parque", "der Park"], ["me encanta", "ich liebe"]] },
-    { tense: "presente", title: "Mein Lieblingsessen", task: "Beschreibe dein Lieblingsessen.", ask: ["Was isst du am liebsten?", "Kochst du selbst?", "Wann und mit wem isst du es?"], starter: "Mi comida favorita es…", words: [["delicioso", "lecker"], ["cocinar", "kochen"], ["a menudo", "oft"], ["la verdura", "das Gemüse"], ["el restaurante", "das Restaurant"]] },
-    { tense: "presente", title: "Freizeit & Wochenende", task: "Was machst du in deiner Freizeit?", ask: ["Welche Hobbys hast du?", "Was machst du am Wochenende?", "Mit wem verbringst du deine Freizeit?"], starter: "En mi tiempo libre…", words: [["el tiempo libre", "die Freizeit"], ["jugar", "spielen"], ["leer", "lesen"], ["quedar con amigos", "sich mit Freunden treffen"], ["los fines de semana", "am Wochenende"]] },
+    { tense: "presente", title: "Mein Alltag", task: "Beschreibe einen ganz normalen Tag.", ask: ["Wann stehst du auf?", "Was isst du zum Frühstück?", "Wie kommst du zur Arbeit?", "Was machst du am Abend?"], starter: "Normalmente me levanto a las…" },
+    { tense: "presente", title: "Meine Familie", task: "Stell deine Familie vor.", ask: ["Wer gehört zu deiner Familie?", "Wie sind sie?", "Was machen sie gern?"], starter: "Mi familia es…" },
+    { tense: "presente", title: "Meine Stadt", task: "Erzähl, wo du wohnst und was es dort gibt.", ask: ["Wie heißt deine Stadt?", "Was gibt es dort?", "Was gefällt dir, was nicht?"], starter: "Vivo en…" },
+    { tense: "presente", title: "Mein Lieblingsessen", task: "Beschreibe dein Lieblingsessen.", ask: ["Was isst du am liebsten?", "Kochst du selbst?", "Wann und mit wem isst du es?"], starter: "Mi comida favorita es…" },
+    { tense: "presente", title: "Freizeit & Wochenende", task: "Was machst du in deiner Freizeit?", ask: ["Welche Hobbys hast du?", "Was machst du am Wochenende?", "Mit wem verbringst du deine Freizeit?"], starter: "En mi tiempo libre…" },
 
-    { tense: "indefinido", title: "Mein letzter Urlaub", task: "Erzähl von deinem letzten Urlaub.", ask: ["Wohin bist du gefahren?", "Was hast du gesehen und gegessen?", "Was war das Beste?"], starter: "El verano pasado fui a…", words: [["viajar", "reisen"], ["visitar", "besuchen"], ["la playa", "der Strand"], ["probar", "probieren"], ["volver", "zurückkehren"]] },
-    { tense: "indefinido", title: "Gestern", task: "Was hast du gestern gemacht – von morgens bis abends?", ask: ["Wann bist du aufgestanden?", "Was hast du gegessen?", "Was hast du am Abend gemacht?"], starter: "Ayer me levanté a las…", words: [["ayer", "gestern"], ["luego", "dann"], ["después", "danach"], ["por la noche", "am Abend"], ["acostarse", "ins Bett gehen"]] },
-    { tense: "indefinido", title: "Ein besonderer Tag", task: "Erzähl von einem Tag, den du nie vergisst.", ask: ["Wann war das?", "Was ist passiert?", "Wie hat der Tag geendet?"], starter: "Un día…", words: [["de repente", "plötzlich"], ["conocer", "kennenlernen"], ["pasar", "passieren"], ["celebrar", "feiern"], ["al final", "am Ende"]] },
-    { tense: "indefinido", title: "Im Restaurant", task: "Erzähl von deinem letzten Restaurantbesuch.", ask: ["Wo warst du essen?", "Was hast du bestellt?", "Wie war es?"], starter: "La semana pasada cené en…", words: [["pedir", "bestellen"], ["el camarero", "der Kellner"], ["la cuenta", "die Rechnung"], ["pagar", "bezahlen"], ["estar rico", "lecker sein"]] },
-    { tense: "indefinido", title: "Ein Fest", task: "Erzähl von einem Fest oder Konzert, auf dem du warst.", ask: ["Wo und wann war es?", "Wer war dabei?", "Was habt ihr gemacht?"], starter: "El año pasado estuve en…", words: [["la fiesta", "das Fest"], ["bailar", "tanzen"], ["cantar", "singen"], ["la entrada", "die Eintrittskarte"], ["divertirse", "Spaß haben"]] },
+    { tense: "indefinido", title: "Mein letzter Urlaub", task: "Erzähl von deinem letzten Urlaub.", ask: ["Wohin bist du gefahren?", "Was hast du gesehen und gegessen?", "Was war das Beste?"], starter: "El verano pasado fui a…" },
+    { tense: "indefinido", title: "Gestern", task: "Was hast du gestern gemacht – von morgens bis abends?", ask: ["Wann bist du aufgestanden?", "Was hast du gegessen?", "Was hast du am Abend gemacht?"], starter: "Ayer me levanté a las…" },
+    { tense: "indefinido", title: "Ein besonderer Tag", task: "Erzähl von einem Tag, den du nie vergisst.", ask: ["Wann war das?", "Was ist passiert?", "Wie hat der Tag geendet?"], starter: "Un día…" },
+    { tense: "indefinido", title: "Im Restaurant", task: "Erzähl von deinem letzten Restaurantbesuch.", ask: ["Wo warst du essen?", "Was hast du bestellt?", "Wie war es?"], starter: "La semana pasada cené en…" },
+    { tense: "indefinido", title: "Ein Fest", task: "Erzähl von einem Fest oder Konzert, auf dem du warst.", ask: ["Wo und wann war es?", "Wer war dabei?", "Was habt ihr gemacht?"], starter: "El año pasado estuve en…" },
 
-    { tense: "imperfecto", title: "Als ich ein Kind war", task: "Beschreibe, wie du als Kind warst.", ask: ["Wo hast du gewohnt?", "Was hast du gern gespielt?", "Wer waren deine Freunde?"], starter: "Cuando era niño, …", words: [["de pequeño", "als Kind"], ["siempre", "immer"], ["el colegio", "die Schule"], ["jugar", "spielen"], ["los veranos", "die Sommer"]] },
-    { tense: "imperfecto", title: "Meine erste Wohnung", task: "Beschreibe deine erste Wohnung.", ask: ["Wie groß war sie?", "Wie sah sie aus?", "Wie waren die Nachbarn?"], starter: "Mi primer piso era…", words: [["pequeño", "klein"], ["la cocina", "die Küche"], ["el vecino", "der Nachbar"], ["había", "es gab"], ["la luz", "das Licht"]] },
-    { tense: "imperfecto", title: "Früher war alles anders", task: "Was hast du früher regelmäßig gemacht?", ask: ["Was hast du früher oft gemacht?", "Was machst du heute nicht mehr?", "Was war damals schöner?"], starter: "Antes, todos los días…", words: [["antes", "früher"], ["cada día", "jeden Tag"], ["soler", "pflegen zu"], ["ya no", "nicht mehr"], ["mientras", "während"]] },
-    { tense: "imperfecto", title: "Bei meinen Großeltern", task: "Beschreibe die Zeit bei deinen Großeltern.", ask: ["Wo wohnten sie?", "Wie war ihr Haus?", "Was habt ihr zusammen gemacht?"], starter: "Mis abuelos vivían en…", words: [["los abuelos", "die Großeltern"], ["el pueblo", "das Dorf"], ["contar historias", "Geschichten erzählen"], ["el jardín", "der Garten"], ["cada domingo", "jeden Sonntag"]] },
-    { tense: "imperfecto", title: "Ein schöner Ort", task: "Beschreibe einen Ort aus deiner Erinnerung.", ask: ["Wie war das Wetter?", "Was gab es dort?", "Wie hast du dich gefühlt?"], starter: "Hacía sol y…", words: [["hacía calor", "es war warm"], ["el cielo", "der Himmel"], ["había", "es gab"], ["la gente", "die Leute"], ["estar contento", "froh sein"]] },
+    { tense: "imperfecto", title: "Als ich ein Kind war", task: "Beschreibe, wie du als Kind warst.", ask: ["Wo hast du gewohnt?", "Was hast du gern gespielt?", "Wer waren deine Freunde?"], starter: "Cuando era niño, …" },
+    { tense: "imperfecto", title: "Meine erste Wohnung", task: "Beschreibe deine erste Wohnung.", ask: ["Wie groß war sie?", "Wie sah sie aus?", "Wie waren die Nachbarn?"], starter: "Mi primer piso era…" },
+    { tense: "imperfecto", title: "Früher war alles anders", task: "Was hast du früher regelmäßig gemacht?", ask: ["Was hast du früher oft gemacht?", "Was machst du heute nicht mehr?", "Was war damals schöner?"], starter: "Antes, todos los días…" },
+    { tense: "imperfecto", title: "Bei meinen Großeltern", task: "Beschreibe die Zeit bei deinen Großeltern.", ask: ["Wo wohnten sie?", "Wie war ihr Haus?", "Was habt ihr zusammen gemacht?"], starter: "Mis abuelos vivían en…" },
+    { tense: "imperfecto", title: "Ein schöner Ort", task: "Beschreibe einen Ort aus deiner Erinnerung.", ask: ["Wie war das Wetter?", "Was gab es dort?", "Wie hast du dich gefühlt?"], starter: "Hacía sol y…" },
 
-    { tense: "perfecto", title: "Diese Woche", task: "Was hast du diese Woche schon gemacht?", ask: ["Was hast du schon geschafft?", "Was hast du noch nicht gemacht?", "Was war das Schönste?"], starter: "Esta semana he…", words: [["esta semana", "diese Woche"], ["ya", "schon"], ["todavía no", "noch nicht"], ["terminar", "beenden"], ["hacer deporte", "Sport machen"]] },
-    { tense: "perfecto", title: "Schon mal erlebt?", task: "Was hast du in deinem Leben schon (nie) gemacht?", ask: ["Welche Länder hast du schon besucht?", "Was hast du noch nie probiert?", "Was möchtest du unbedingt noch machen?"], starter: "Alguna vez he…", words: [["alguna vez", "schon einmal"], ["nunca", "nie"], ["probar", "probieren"], ["conocer", "kennenlernen"], ["viajar", "reisen"]] },
-    { tense: "perfecto", title: "Heute", task: "Erzähl, was du heute schon gemacht hast.", ask: ["Wann bist du aufgestanden?", "Was hast du gegessen?", "Mit wem hast du gesprochen?"], starter: "Hoy me he levantado a las…", words: [["hoy", "heute"], ["esta mañana", "heute Morgen"], ["desayunar", "frühstücken"], ["escribir", "schreiben"], ["llamar", "anrufen"]] },
-    { tense: "perfecto", title: "Spanisch lernen", task: "Was hast du beim Spanischlernen schon geschafft?", ask: ["Was hast du schon gelernt?", "Was war schwierig?", "Was hat dir Spaß gemacht?"], starter: "Este año he aprendido…", words: [["aprender", "lernen"], ["entender", "verstehen"], ["difícil", "schwierig"], ["mejorar", "verbessern"], ["las palabras", "die Wörter"]] },
-    { tense: "perfecto", title: "Neuigkeiten", task: "Schreib einer Freundin, was es bei dir Neues gibt.", ask: ["Was hat sich verändert?", "Was hast du Neues angefangen?", "Wen hast du getroffen?"], starter: "¡Hola! ¿Qué tal? Te cuento que he…", words: [["últimamente", "in letzter Zeit"], ["cambiar", "ändern"], ["empezar", "anfangen"], ["encontrar", "finden"], ["mudarse", "umziehen"]] },
+    { tense: "perfecto", title: "Diese Woche", task: "Was hast du diese Woche schon gemacht?", ask: ["Was hast du schon geschafft?", "Was hast du noch nicht gemacht?", "Was war das Schönste?"], starter: "Esta semana he…" },
+    { tense: "perfecto", title: "Schon mal erlebt?", task: "Was hast du in deinem Leben schon (nie) gemacht?", ask: ["Welche Länder hast du schon besucht?", "Was hast du noch nie probiert?", "Was möchtest du unbedingt noch machen?"], starter: "Alguna vez he…" },
+    { tense: "perfecto", title: "Heute", task: "Erzähl, was du heute schon gemacht hast.", ask: ["Wann bist du aufgestanden?", "Was hast du gegessen?", "Mit wem hast du gesprochen?"], starter: "Hoy me he levantado a las…" },
+    { tense: "perfecto", title: "Spanisch lernen", task: "Was hast du beim Spanischlernen schon geschafft?", ask: ["Was hast du schon gelernt?", "Was war schwierig?", "Was hat dir Spaß gemacht?"], starter: "Este año he aprendido…" },
+    { tense: "perfecto", title: "Neuigkeiten", task: "Schreib einer Freundin, was es bei dir Neues gibt.", ask: ["Was hat sich verändert?", "Was hast du Neues angefangen?", "Wen hast du getroffen?"], starter: "¡Hola! ¿Qué tal? Te cuento que he…" },
 
-    { tense: "pluscuamperfecto", title: "Zu spät!", task: "Erzähl von einem Mal, als du zu spät kamst – was war schon passiert?", ask: ["Wohin wolltest du?", "Was war schon passiert, als du ankamst?", "Was hast du dann gemacht?"], starter: "Cuando llegué, el tren ya había salido.", words: [["ya", "schon"], ["llegar", "ankommen"], ["salir", "abfahren"], ["cuando", "als"], ["todavía no", "noch nicht"]] },
-    { tense: "pluscuamperfecto", title: "Eine Überraschung", task: "Jemand hatte etwas für dich vorbereitet.", ask: ["Wer hatte was vorbereitet?", "Was hattest du nicht gewusst?", "Wie hast du reagiert?"], starter: "Mis amigos habían preparado…", words: [["preparar", "vorbereiten"], ["invitar", "einladen"], ["la sorpresa", "die Überraschung"], ["esconder", "verstecken"], ["antes", "vorher"]] },
-    { tense: "pluscuamperfecto", title: "Das erste Mal", task: "Erzähl von einer Reise, auf der du etwas zum ersten Mal erlebt hast.", ask: ["Was hattest du vorher noch nie gemacht?", "Wie war es dann?", "Wie hast du dich gefühlt?"], starter: "Antes de ese viaje nunca había…", words: [["nunca", "nie"], ["ver", "sehen"], ["el mar", "das Meer"], ["volar", "fliegen"], ["probar", "probieren"]] },
-    { tense: "pluscuamperfecto", title: "Etwas vergessen", task: "Erzähl, wie du gemerkt hast, dass du etwas vergessen hattest.", ask: ["Was hattest du vergessen?", "Wann hast du es gemerkt?", "Wie ging es aus?"], starter: "De repente me di cuenta de que había olvidado…", words: [["olvidar", "vergessen"], ["darse cuenta", "merken"], ["la cita", "der Termin"], ["perder", "verlieren"], ["avisar", "Bescheid geben"]] },
-    { tense: "pluscuamperfecto", title: "Ein Missverständnis", task: "Erzähl von einem Missverständnis.", ask: ["Was hattest du gedacht?", "Was war wirklich passiert?", "Wie habt ihr es geklärt?"], starter: "No sabía que mi amiga ya había…", words: [["pensar", "denken"], ["decir", "sagen"], ["explicar", "erklären"], ["entender", "verstehen"], ["el malentendido", "das Missverständnis"]] },
+    { tense: "pluscuamperfecto", title: "Zu spät!", task: "Erzähl von einem Mal, als du zu spät kamst – was war schon passiert?", ask: ["Wohin wolltest du?", "Was war schon passiert, als du ankamst?", "Was hast du dann gemacht?"], starter: "Cuando llegué, el tren ya había salido." },
+    { tense: "pluscuamperfecto", title: "Eine Überraschung", task: "Jemand hatte etwas für dich vorbereitet.", ask: ["Wer hatte was vorbereitet?", "Was hattest du nicht gewusst?", "Wie hast du reagiert?"], starter: "Mis amigos habían preparado…" },
+    { tense: "pluscuamperfecto", title: "Das erste Mal", task: "Erzähl von einer Reise, auf der du etwas zum ersten Mal erlebt hast.", ask: ["Was hattest du vorher noch nie gemacht?", "Wie war es dann?", "Wie hast du dich gefühlt?"], starter: "Antes de ese viaje nunca había…" },
+    { tense: "pluscuamperfecto", title: "Etwas vergessen", task: "Erzähl, wie du gemerkt hast, dass du etwas vergessen hattest.", ask: ["Was hattest du vergessen?", "Wann hast du es gemerkt?", "Wie ging es aus?"], starter: "De repente me di cuenta de que había olvidado…" },
+    { tense: "pluscuamperfecto", title: "Ein Missverständnis", task: "Erzähl von einem Missverständnis.", ask: ["Was hattest du gedacht?", "Was war wirklich passiert?", "Wie habt ihr es geklärt?"], starter: "No sabía que mi amiga ya había…" },
 
-    { tense: "futuro", title: "In zehn Jahren", task: "Wie wird dein Leben in zehn Jahren aussehen?", ask: ["Wo wirst du wohnen?", "Was wirst du arbeiten?", "Was wirst du in deiner Freizeit machen?"], starter: "Dentro de diez años viviré en…", words: [["dentro de", "in (zeitlich)"], ["el futuro", "die Zukunft"], ["la familia", "die Familie"], ["trabajar", "arbeiten"], ["tener", "haben"]] },
-    { tense: "futuro", title: "Die nächsten Ferien", task: "Plane deine nächsten Ferien.", ask: ["Wohin wirst du fahren?", "Mit wem?", "Was wirst du dort machen?"], starter: "El próximo verano iré a…", words: [["el próximo verano", "nächsten Sommer"], ["alquilar", "mieten"], ["descansar", "sich ausruhen"], ["nadar", "schwimmen"], ["visitar", "besuchen"]] },
-    { tense: "futuro", title: "Gute Vorsätze", task: "Was wirst du im nächsten Jahr anders machen?", ask: ["Was wirst du mehr machen?", "Womit wirst du aufhören?", "Was wirst du lernen?"], starter: "El año que viene haré más…", words: [["el año que viene", "nächstes Jahr"], ["hacer deporte", "Sport machen"], ["comer sano", "gesund essen"], ["dejar de", "aufhören mit"], ["ahorrar", "sparen"]] },
-    { tense: "futuro", title: "Die Welt von morgen", task: "Wie wird die Welt in 50 Jahren sein?", ask: ["Wie werden wir wohnen?", "Wie werden wir reisen?", "Was wird sich ändern?"], starter: "En el futuro, las ciudades…", words: [["la tecnología", "die Technik"], ["el coche eléctrico", "das E-Auto"], ["el robot", "der Roboter"], ["cambiar", "verändern"], ["la ciudad", "die Stadt"]] },
-    { tense: "futuro", title: "Mein Wochenende", task: "Was wirst du am nächsten Wochenende machen?", ask: ["Was machst du am Samstag?", "Wen wirst du treffen?", "Was wirst du essen?"], starter: "Este fin de semana…", words: [["el sábado", "am Samstag"], ["quedar con", "sich treffen mit"], ["cocinar", "kochen"], ["ver una película", "einen Film sehen"], ["dormir", "schlafen"]] },
+    { tense: "futuro", title: "In zehn Jahren", task: "Wie wird dein Leben in zehn Jahren aussehen?", ask: ["Wo wirst du wohnen?", "Was wirst du arbeiten?", "Was wirst du in deiner Freizeit machen?"], starter: "Dentro de diez años viviré en…" },
+    { tense: "futuro", title: "Die nächsten Ferien", task: "Plane deine nächsten Ferien.", ask: ["Wohin wirst du fahren?", "Mit wem?", "Was wirst du dort machen?"], starter: "El próximo verano iré a…" },
+    { tense: "futuro", title: "Gute Vorsätze", task: "Was wirst du im nächsten Jahr anders machen?", ask: ["Was wirst du mehr machen?", "Womit wirst du aufhören?", "Was wirst du lernen?"], starter: "El año que viene haré más…" },
+    { tense: "futuro", title: "Die Welt von morgen", task: "Wie wird die Welt in 50 Jahren sein?", ask: ["Wie werden wir wohnen?", "Wie werden wir reisen?", "Was wird sich ändern?"], starter: "En el futuro, las ciudades…" },
+    { tense: "futuro", title: "Mein Wochenende", task: "Was wirst du am nächsten Wochenende machen?", ask: ["Was machst du am Samstag?", "Wen wirst du treffen?", "Was wirst du essen?"], starter: "Este fin de semana…" },
 
-    { tense: "condicional", title: "Eine Million Euro", task: "Was würdest du mit einer Million Euro machen?", ask: ["Was würdest du kaufen?", "Wem würdest du helfen?", "Würdest du weiter arbeiten?"], starter: "Con un millón de euros, yo…", words: [["comprar", "kaufen"], ["ayudar", "helfen"], ["viajar por el mundo", "um die Welt reisen"], ["regalar", "schenken"], ["dejar de trabajar", "aufhören zu arbeiten"]] },
-    { tense: "condicional", title: "Mein Traumjob", task: "Welchen Beruf hättest du gern?", ask: ["Was würdest du gern arbeiten?", "Wo würdest du arbeiten?", "Warum würde es dir gefallen?"], starter: "Me gustaría trabajar como…", words: [["me gustaría", "ich hätte gern"], ["ganar", "verdienen"], ["el equipo", "das Team"], ["poder", "können"], ["viajar", "reisen"]] },
-    { tense: "condicional", title: "Ratschläge", task: "Ein Freund ist total gestresst. Was würdest du ihm raten?", ask: ["Was sollte er tun?", "Was würdest du an seiner Stelle machen?", "Was sollte er lassen?"], starter: "Yo en tu lugar…", words: [["en tu lugar", "an deiner Stelle"], ["deberías", "du solltest"], ["descansar", "sich ausruhen"], ["salir", "ausgehen"], ["hablar con", "sprechen mit"]] },
-    { tense: "condicional", title: "Ein perfekter Tag", task: "Wie sähe dein perfekter Tag aus?", ask: ["Wo würdest du aufwachen?", "Was würdest du essen?", "Mit wem würdest du den Tag verbringen?"], starter: "Mi día perfecto empezaría…", words: [["empezar", "anfangen"], ["despertarse", "aufwachen"], ["pasear", "spazieren gehen"], ["el mar", "das Meer"], ["terminar", "enden"]] },
-    { tense: "condicional", title: "Woanders leben", task: "In welchem Land würdest du gern leben?", ask: ["Wo würdest du gern wohnen?", "Was würde dir dort gefallen?", "Was würdest du vermissen?"], starter: "Me encantaría vivir en…", words: [["me encantaría", "ich würde sehr gern"], ["el clima", "das Klima"], ["la montaña", "die Berge"], ["echar de menos", "vermissen"], ["aprender", "lernen"]] },
+    { tense: "condicional", title: "Eine Million Euro", task: "Was würdest du mit einer Million Euro machen?", ask: ["Was würdest du kaufen?", "Wem würdest du helfen?", "Würdest du weiter arbeiten?"], starter: "Con un millón de euros, yo…" },
+    { tense: "condicional", title: "Mein Traumjob", task: "Welchen Beruf hättest du gern?", ask: ["Was würdest du gern arbeiten?", "Wo würdest du arbeiten?", "Warum würde es dir gefallen?"], starter: "Me gustaría trabajar como…" },
+    { tense: "condicional", title: "Ratschläge", task: "Ein Freund ist total gestresst. Was würdest du ihm raten?", ask: ["Was sollte er tun?", "Was würdest du an seiner Stelle machen?", "Was sollte er lassen?"], starter: "Yo en tu lugar…" },
+    { tense: "condicional", title: "Ein perfekter Tag", task: "Wie sähe dein perfekter Tag aus?", ask: ["Wo würdest du aufwachen?", "Was würdest du essen?", "Mit wem würdest du den Tag verbringen?"], starter: "Mi día perfecto empezaría…" },
+    { tense: "condicional", title: "Woanders leben", task: "In welchem Land würdest du gern leben?", ask: ["Wo würdest du gern wohnen?", "Was würde dir dort gefallen?", "Was würdest du vermissen?"], starter: "Me encantaría vivir en…" },
 
-    { tense: "subjuntivo", title: "Gute Wünsche", task: "Schreib einer Freundin gute Wünsche, z. B. zum Geburtstag.", ask: ["Was wünschst du ihr?", "Was hoffst du für das neue Jahr?", "Worauf freust du dich mit ihr?"], starter: "Espero que…", words: [["espero que", "ich hoffe, dass"], ["ojalá", "hoffentlich"], ["tener suerte", "Glück haben"], ["estar bien", "gesund sein"], ["pasarlo bien", "Spaß haben"]] },
-    { tense: "subjuntivo", title: "Tipps für Spanien", task: "Gib einem Freund Tipps für seine erste Spanienreise.", ask: ["Was soll er unbedingt probieren?", "Was soll er besuchen?", "Worauf soll er achten?"], starter: "Te recomiendo que…", words: [["te recomiendo que", "ich empfehle dir, dass"], ["es importante que", "es ist wichtig, dass"], ["probar", "probieren"], ["llevar", "mitnehmen"], ["visitar", "besuchen"]] },
-    { tense: "subjuntivo", title: "Der ideale Mitbewohner", task: "Beschreibe, wie dein idealer Mitbewohner sein soll.", ask: ["Wie soll er sein?", "Was soll er (nicht) machen?", "Was ist dir wichtig?"], starter: "Busco a alguien que…", words: [["busco a alguien que", "ich suche jemanden, der"], ["ser", "sein"], ["cocinar", "kochen"], ["ordenado", "ordentlich"], ["respetar", "respektieren"]] },
-    { tense: "subjuntivo", title: "Wenn ich Zeit habe", task: "Was machst du, wenn du endlich mehr Zeit hast?", ask: ["Was machst du, wenn du Urlaub hast?", "Was, wenn du in Rente bist?", "Was, wenn du gut Spanisch sprichst?"], starter: "Cuando tenga tiempo…", words: [["cuando", "wenn (zeitlich)"], ["tener tiempo", "Zeit haben"], ["por fin", "endlich"], ["viajar", "reisen"], ["aprender", "lernen"]] },
-    { tense: "subjuntivo", title: "Was mich stört", task: "Was stört dich – und was freut dich – an anderen Menschen?", ask: ["Was stört dich?", "Was freut dich?", "Was wünschst du dir von anderen?"], starter: "Me molesta que…", words: [["me molesta que", "mich stört, dass"], ["me alegra que", "mich freut, dass"], ["llegar tarde", "zu spät kommen"], ["hacer ruido", "Lärm machen"], ["ayudar", "helfen"]] },
+    { tense: "subjuntivo", title: "Gute Wünsche", task: "Schreib einer Freundin gute Wünsche, z. B. zum Geburtstag.", ask: ["Was wünschst du ihr?", "Was hoffst du für das neue Jahr?", "Worauf freust du dich mit ihr?"], starter: "Espero que…" },
+    { tense: "subjuntivo", title: "Tipps für Spanien", task: "Gib einem Freund Tipps für seine erste Spanienreise.", ask: ["Was soll er unbedingt probieren?", "Was soll er besuchen?", "Worauf soll er achten?"], starter: "Te recomiendo que…" },
+    { tense: "subjuntivo", title: "Der ideale Mitbewohner", task: "Beschreibe, wie dein idealer Mitbewohner sein soll.", ask: ["Wie soll er sein?", "Was soll er (nicht) machen?", "Was ist dir wichtig?"], starter: "Busco a alguien que…" },
+    { tense: "subjuntivo", title: "Wenn ich Zeit habe", task: "Was machst du, wenn du endlich mehr Zeit hast?", ask: ["Was machst du, wenn du Urlaub hast?", "Was, wenn du in Rente bist?", "Was, wenn du gut Spanisch sprichst?"], starter: "Cuando tenga tiempo…" },
+    { tense: "subjuntivo", title: "Was mich stört", task: "Was stört dich – und was freut dich – an anderen Menschen?", ask: ["Was stört dich?", "Was freut dich?", "Was wünschst du dir von anderen?"], starter: "Me molesta que…" },
 
-    { tense: "subjImperfecto", title: "Wenn ich reich wäre", task: "Was würdest du tun, wenn du sehr reich wärst?", ask: ["Was würdest du kaufen?", "Wo würdest du leben?", "Was würdest du anders machen?"], starter: "Si tuviera mucho dinero, …", words: [["si tuviera", "wenn ich hätte"], ["si fuera", "wenn ich wäre"], ["comprar", "kaufen"], ["ayudar", "helfen"], ["viajar", "reisen"]] },
-    { tense: "subjImperfecto", title: "Wenn ich zaubern könnte", task: "Was würdest du tun, wenn du zaubern könntest?", ask: ["Was würdest du ändern?", "Wem würdest du helfen?", "Was würdest du dir wünschen?"], starter: "Si pudiera hacer magia, …", words: [["si pudiera", "wenn ich könnte"], ["cambiar", "ändern"], ["desaparecer", "verschwinden"], ["volar", "fliegen"], ["el mundo", "die Welt"]] },
-    { tense: "subjImperfecto", title: "Wenn ich Bürgermeister wäre", task: "Was würdest du in deiner Stadt ändern?", ask: ["Was würdest du verbessern?", "Was würdest du bauen?", "Was dürfte es nicht mehr geben?"], starter: "Si fuera alcalde de mi ciudad, …", words: [["el alcalde", "der Bürgermeister"], ["mejorar", "verbessern"], ["construir", "bauen"], ["el parque", "der Park"], ["el medio ambiente", "die Umwelt"]] },
-    { tense: "subjImperfecto", title: "Was meine Eltern wollten", task: "Was wollten deine Eltern früher, dass du tust?", ask: ["Was sollte ich immer tun?", "Was durfte ich nicht?", "Was fandest du gut, was nicht?"], starter: "Mis padres querían que yo…", words: [["querían que", "sie wollten, dass"], ["pedían que", "sie baten, dass"], ["estudiar", "lernen"], ["ordenar", "aufräumen"], ["volver pronto", "früh zurückkommen"]] },
-    { tense: "subjImperfecto", title: "Eine Zeitreise", task: "Wohin würdest du reisen, wenn du durch die Zeit reisen könntest?", ask: ["In welche Zeit würdest du reisen?", "Wen würdest du treffen?", "Was würdest du dort machen?"], starter: "Si pudiera viajar en el tiempo, …", words: [["el pasado", "die Vergangenheit"], ["el futuro", "die Zukunft"], ["conocer", "kennenlernen"], ["ver", "sehen"], ["la época", "die Epoche"]] },
+    { tense: "subjImperfecto", title: "Wenn ich reich wäre", task: "Was würdest du tun, wenn du sehr reich wärst?", ask: ["Was würdest du kaufen?", "Wo würdest du leben?", "Was würdest du anders machen?"], starter: "Si tuviera mucho dinero, …" },
+    { tense: "subjImperfecto", title: "Wenn ich zaubern könnte", task: "Was würdest du tun, wenn du zaubern könntest?", ask: ["Was würdest du ändern?", "Wem würdest du helfen?", "Was würdest du dir wünschen?"], starter: "Si pudiera hacer magia, …" },
+    { tense: "subjImperfecto", title: "Wenn ich Bürgermeister wäre", task: "Was würdest du in deiner Stadt ändern?", ask: ["Was würdest du verbessern?", "Was würdest du bauen?", "Was dürfte es nicht mehr geben?"], starter: "Si fuera alcalde de mi ciudad, …" },
+    { tense: "subjImperfecto", title: "Was meine Eltern wollten", task: "Was wollten deine Eltern früher, dass du tust?", ask: ["Was sollte ich immer tun?", "Was durfte ich nicht?", "Was fandest du gut, was nicht?"], starter: "Mis padres querían que yo…" },
+    { tense: "subjImperfecto", title: "Eine Zeitreise", task: "Wohin würdest du reisen, wenn du durch die Zeit reisen könntest?", ask: ["In welche Zeit würdest du reisen?", "Wen würdest du treffen?", "Was würdest du dort machen?"], starter: "Si pudiera viajar en el tiempo, …" },
 
-    { tense: "imperativo", title: "Ein einfaches Rezept", task: "Erkläre ein einfaches Rezept Schritt für Schritt.", ask: ["Was braucht man?", "Was macht man zuerst?", "Wie serviert man es?"], starter: "Primero, corta…", words: [["cortar", "schneiden"], ["añadir", "hinzufügen"], ["mezclar", "mischen"], ["poner", "stellen / legen"], ["servir", "servieren"]] },
-    { tense: "imperativo", title: "Der Weg zu mir", task: "Erkläre einem Freund den Weg vom Bahnhof zu dir.", ask: ["Wo geht man los?", "Wo muss man abbiegen?", "Woran erkennt man dein Haus?"], starter: "Sal de la estación y…", words: [["girar", "abbiegen"], ["seguir recto", "geradeaus gehen"], ["cruzar", "überqueren"], ["a la derecha", "rechts"], ["a la izquierda", "links"]] },
-    { tense: "imperativo", title: "Hausregeln für Gäste", task: "Ein Freund wohnt bei dir. Gib ihm ein paar Hinweise.", ask: ["Wo findet er alles?", "Was soll er beachten?", "Was soll er nicht vergessen?"], starter: "Coge las llaves y…", words: [["coger", "nehmen"], ["cerrar", "schließen"], ["usar", "benutzen"], ["no olvides", "vergiss nicht"], ["llamar", "anrufen"]] },
-    { tense: "imperativo", title: "Gesund leben", task: "Gib Tipps für ein gesundes Leben.", ask: ["Was soll man essen?", "Wie viel soll man schlafen?", "Was soll man lassen?"], starter: "Come mucha fruta y…", words: [["comer", "essen"], ["beber agua", "Wasser trinken"], ["dormir", "schlafen"], ["hacer deporte", "Sport machen"], ["no fumes", "rauch nicht"]] },
-    { tense: "imperativo", title: "Tipps zum Spanischlernen", task: "Gib jemandem Tipps, wie man gut Spanisch lernt.", ask: ["Was soll man jeden Tag machen?", "Was hilft beim Sprechen?", "Was soll man nicht tun?"], starter: "Escucha música en español y…", words: [["escuchar", "hören"], ["leer", "lesen"], ["practicar", "üben"], ["repetir", "wiederholen"], ["no tengas miedo", "hab keine Angst"]] },
+    { tense: "imperativo", title: "Ein einfaches Rezept", task: "Erkläre ein einfaches Rezept Schritt für Schritt.", ask: ["Was braucht man?", "Was macht man zuerst?", "Wie serviert man es?"], starter: "Primero, corta…" },
+    { tense: "imperativo", title: "Der Weg zu mir", task: "Erkläre einem Freund den Weg vom Bahnhof zu dir.", ask: ["Wo geht man los?", "Wo muss man abbiegen?", "Woran erkennt man dein Haus?"], starter: "Sal de la estación y…" },
+    { tense: "imperativo", title: "Hausregeln für Gäste", task: "Ein Freund wohnt bei dir. Gib ihm ein paar Hinweise.", ask: ["Wo findet er alles?", "Was soll er beachten?", "Was soll er nicht vergessen?"], starter: "Coge las llaves y…" },
+    { tense: "imperativo", title: "Gesund leben", task: "Gib Tipps für ein gesundes Leben.", ask: ["Was soll man essen?", "Wie viel soll man schlafen?", "Was soll man lassen?"], starter: "Come mucha fruta y…" },
+    { tense: "imperativo", title: "Tipps zum Spanischlernen", task: "Gib jemandem Tipps, wie man gut Spanisch lernt.", ask: ["Was soll man jeden Tag machen?", "Was hilft beim Sprechen?", "Was soll man nicht tun?"], starter: "Escucha música en español y…" },
   ];
+
+  // Pro Zeitform: welche Art Text, wann man sie nimmt, Abgrenzung und Signalwörter [es, de]
+  const WRITE_GUIDE = {
+    presente: { type: "Beschreiben, was jetzt oder regelmäßig passiert", rule: "Das Presente nimmst du für Gewohnheiten, Tatsachen und alles, was jetzt gilt. Dein Text beschreibt also, wie es normalerweise ist.", contrast: "Was genau in diesem Moment passiert, sagt man oft mit estar + -ando: Estoy escribiendo.", signals: [["normalmente", "normalerweise"], ["siempre", "immer"], ["todos los días", "jeden Tag"], ["a veces", "manchmal"], ["a menudo", "oft"], ["casi nunca", "fast nie"], ["los lunes", "montags"], ["ahora", "jetzt"]] },
+    indefinido: { type: "Erzählen: eine Geschichte mit Ereignissen", rule: "Das Indefinido treibt die Handlung voran: abgeschlossene Ereignisse, die nacheinander passiert sind – erst das, dann das.", contrast: "Für Beschreibungen (Wetter, Gefühle, wie etwas war) nimmst du das Imperfecto: Hacía sol (Imperfecto) cuando llegamos (Indefinido).", signals: [["ayer", "gestern"], ["anoche", "gestern Abend"], ["la semana pasada", "letzte Woche"], ["el año pasado", "letztes Jahr"], ["hace dos días", "vor zwei Tagen"], ["un día", "eines Tages"], ["de repente", "plötzlich"], ["en 2019", "im Jahr 2019"]] },
+    imperfecto: { type: "Beschreiben: wie etwas früher war", rule: "Das Imperfecto malt das Bild: wie Menschen, Orte und das Wetter waren und was man früher regelmäßig gemacht hat. Es erzählt keine einzelnen Ereignisse.", contrast: "Passiert etwas Einmaliges, wechselst du ins Indefinido: Mientras leía (Imperfecto), sonó el teléfono (Indefinido).", signals: [["antes", "früher"], ["de niño", "als Kind"], ["en aquella época", "damals"], ["siempre", "immer"], ["todos los veranos", "jeden Sommer"], ["a menudo", "oft"], ["normalmente", "normalerweise"], ["mientras", "während"]] },
+    perfecto: { type: "Berichten, was bis jetzt passiert ist", rule: "Das Perfecto verbindet die Vergangenheit mit heute: Dinge in einem Zeitraum, der noch läuft (heute, diese Woche), und Erfahrungen (schon mal, noch nie).", contrast: "Ist der Zeitraum vorbei (ayer, el año pasado), nimmst du das Indefinido.", signals: [["hoy", "heute"], ["esta mañana", "heute Morgen"], ["esta semana", "diese Woche"], ["este año", "dieses Jahr"], ["ya", "schon"], ["todavía no", "noch nicht"], ["alguna vez", "schon einmal"], ["nunca", "nie"]] },
+    pluscuamperfecto: { type: "Rückblick: was vorher schon passiert war", rule: "Das Pluscuamperfecto zeigt, was schon passiert war, bevor etwas anderes in der Vergangenheit geschah.", contrast: "Die spätere Handlung steht im Indefinido: Cuando llegué (Indefinido), el tren ya había salido (Pluscuamperfecto).", signals: [["ya", "schon"], ["todavía no", "noch nicht"], ["antes de", "vor"], ["nunca antes", "nie zuvor"], ["cuando", "als"], ["porque", "weil"], ["hasta entonces", "bis dahin"]] },
+    futuro: { type: "Vorausblicken: Pläne und Vorhersagen", rule: "Das Futuro beschreibt, was kommen wird: Pläne, Vorhersagen, Versprechen und Vermutungen.", contrast: "Für feste, nahe Pläne sagt man im Alltag oft auch ir a + Infinitiv: Voy a viajar.", signals: [["mañana", "morgen"], ["la semana que viene", "nächste Woche"], ["el próximo año", "nächstes Jahr"], ["dentro de diez años", "in zehn Jahren"], ["pronto", "bald"], ["algún día", "eines Tages"], ["en el futuro", "in Zukunft"]] },
+    condicional: { type: "Träumen und raten: was wäre, was würdest du tun", rule: "Das Condicional ist das „würde“: Wünsche, Träume, höfliche Bitten und Ratschläge.", contrast: "Mit „wenn“ (si) steht im Nebensatz das Subjuntivo imperfecto: Si tuviera tiempo, viajaría.", signals: [["me gustaría", "ich hätte gern"], ["me encantaría", "ich würde sehr gern"], ["en tu lugar", "an deiner Stelle"], ["yo que tú", "an deiner Stelle"], ["quizás", "vielleicht"], ["en ese caso", "in dem Fall"]] },
+    subjuntivo: { type: "Wünschen, raten, Gefühle zeigen", rule: "Das Subjuntivo steht nach Ausdrücken für Wunsch, Gefühl, Rat oder Zweifel – meistens nach que.", contrast: "Nach Tatsachen steht der Indikativ: Creo que viene. – Aber: No creo que venga.", signals: [["espero que", "ich hoffe, dass"], ["ojalá", "hoffentlich"], ["quiero que", "ich will, dass"], ["te recomiendo que", "ich empfehle dir"], ["es importante que", "es ist wichtig, dass"], ["me alegra que", "mich freut, dass"], ["para que", "damit"], ["cuando", "wenn (Zukunft)"]] },
+    subjImperfecto: { type: "Gedankenspiele: was wäre, wenn …", rule: "Das Subjuntivo imperfecto brauchst du für unwirkliche Bedingungen (si tuviera …) und nach Wünschen in der Vergangenheit (quería que …).", contrast: "Die Folge steht im Condicional: Si fuera rico (Subj. imperfecto), viajaría por el mundo (Condicional).", signals: [["si", "wenn"], ["como si", "als ob"], ["ojalá", "wenn doch nur"], ["quería que", "ich wollte, dass"], ["me gustaría que", "ich hätte gern, dass"], ["aunque", "auch wenn"]] },
+    imperativo: { type: "Anleiten: Schritt für Schritt", rule: "Der Imperativ gibt Anweisungen und Tipps – kurze, klare Sätze, am besten in einer Reihenfolge.", contrast: "Verneint nimmst du die Form des Subjuntivo: ¡Corta! – ¡No cortes!", signals: [["primero", "zuerst"], ["luego", "dann"], ["después", "danach"], ["a continuación", "anschließend"], ["por último", "zum Schluss"], ["no olvides", "vergiss nicht"], ["por favor", "bitte"]] },
+  };
+
+  // Verbindungswörter, die jeden Text strukturieren
+  const TEXT_LINKS = [["al principio", "am Anfang"], ["primero", "zuerst"], ["luego", "dann"], ["después", "danach"], ["además", "außerdem"], ["porque", "weil"], ["pero", "aber"], ["por eso", "deshalb"], ["sin embargo", "jedoch"], ["al final", "am Ende"]];
 
   const WRITE_SENTENCES = { min: 4, max: 8 };
   const XP_WRITE = 10;
-  const CONNECTORS = ["y", "pero", "porque", "después", "luego", "entonces", "también", "además", "cuando", "mientras", "aunque", "por eso", "sin embargo", "primero", "al final", "finalmente", "por ejemplo", "así que", "ya que", "pues", "antes", "de repente", "si", "por la mañana", "por la tarde", "por la noche"];
+  const CONNECTORS = ["y", "pero", "porque", "después", "luego", "entonces", "también", "además", "cuando", "mientras", "aunque", "por eso", "sin embargo", "primero", "al final", "finalmente", "por ejemplo", "así que", "ya que", "pues", "antes", "de repente", "si", "por la mañana", "por la tarde", "por la noche", "al principio", "a continuación", "por último", "en cambio"];
   // Weitere häufige Verben – damit Poquito beim Schreiben möglichst viele Zeitformen erkennt.
   const EXTRA_VERBS = [
     ..."ayudar bajar bañar cambiar caminar celebrar cenar charlar cocinar contestar cortar cruzar cuidar dejar desayunar descansar dibujar disfrutar durar enseñar entrar esperar explicar firmar fumar ganar gastar girar gritar guardar invitar lavar levantar limpiar llamar llenar llevar llorar mandar mejorar mezclar mirar molestar montar nadar necesitar olvidar ordenar organizar pagar parar participar pasar pasear pintar practicar preguntar preocupar preparar quedar quitar regalar regresar reservar respetar sacar saltar saludar terminar tocar tomar usar viajar visitar alquilar ahorrar avisar arreglar aceptar acompañar alegrar apagar borrar echar encantar enviar escuchar estudiar gustar importar intentar odiar olvidar pensar quedar relajar tirar tratar trabajar aprobar"
@@ -5457,16 +5479,19 @@
     if (issues && errors === 0) good.push("Keine Rechtschreib- oder Grammatikfehler gefunden – ¡Perfecto!");
     if (tense && focusForms.length) good.push(`${focusForms.length}× ${tense.name}: ${focusForms.slice(0, 5).join(", ")}`);
     if (!tense && tensesUsed.length >= 2) good.push("Abwechslungsreich: " + tensesUsed.map((id) => TENSE_BY_ID.get(id).name).join(", "));
+    const guide = WRITE_GUIDE[tense ? tense.id : topic.tense];
+    const plainText = " " + simple(text) + " ";
+    const signalsUsed = guide.signals.map((w) => w[0]).filter((es) => plainText.includes(" " + simple(es) + " "));
+    if (signalsUsed.length) good.push("Signalwörter benutzt: " + signalsUsed.slice(0, 4).join(", "));
     if (stats.connectors.length >= 2) good.push("Gute Verbindungswörter: " + stats.connectors.slice(0, 4).join(", "));
-    const topicWords = topic.words.map((w) => w[0]).filter((es) => simple(text).includes(stripArticle(es)));
-    if (topicWords.length) good.push("Themenwörter benutzt: " + topicWords.slice(0, 4).join(", "));
 
     if (tooShort) tips.push(`Schreib ${WRITE_SENTENCES.min}–${WRITE_SENTENCES.max} Sätze – dann kann Poquito dich richtig bewerten.`);
     if (tense && !focusForms.length) tips.push(`Ich habe kein ${tense.name} gefunden. Versuch es z. B. so: „${topic.starter}“`);
     if (tense && focusForms.length === 1) tips.push(`Benutze das ${tense.name} noch ein- oder zweimal mehr.`);
     if (issues && issues.some((i) => i.label.startsWith("Akzent"))) tips.push("Achte auf die Akzente – sie verändern oft die Bedeutung (esta ≠ está).");
     if (issues && issues.some((i) => i.label.startsWith("Fragen"))) tips.push("Fragen und Ausrufe bekommen im Spanischen auch vorne ein Zeichen: ¿…? und ¡…!");
-    if (stats.connectors.length < 2 && !tooShort) tips.push("Verbinde deine Sätze mit y, pero, porque, después oder también.");
+    if (tense && !signalsUsed.length && !tooShort) tips.push(`Signalwörter wie ${guide.signals.slice(0, 2).map((w) => w[0]).join(" oder ")} zeigen sofort, welche Zeit gemeint ist.`);
+    if (stats.connectors.length < 2 && !tooShort) tips.push("Verbinde deine Sätze mit al principio, luego, porque, pero oder al final.");
     if (stats.avgLen < 5 && !tooShort) tips.push("Deine Sätze sind recht kurz – verbinde zwei Gedanken zu einem Satz.");
     if (stats.variety < 0.5 && stats.words >= 20) tips.push("Einige Wörter wiederholen sich oft – probier ein paar Alternativen.");
 
@@ -5490,10 +5515,6 @@
       good: good.slice(0, 3),
       tips: tips.slice(0, 3),
     };
-  }
-
-  function stripArticle(es) {
-    return simple(es).replace(ARTICLES, "");
   }
 
   // ---------- Schreiben: Ablauf ----------
@@ -6028,9 +6049,14 @@
         </section>` : ""}`;
   }
 
+  function insertChip([es, de]) {
+    return `<button class="tr-alt" data-action="w-insert" data-text="${esc(es)}"><b lang="es">${esc(es)}</b> · ${esc(de)}</button>`;
+  }
+
   function composeView() {
     const topic = WRITE_TOPICS[writing.topic];
     const tense = TENSE_BY_ID.get(topic.tense);
+    const guide = WRITE_GUIDE[tense.id];
     return `
       <div class="topbar">
         <button class="icon-btn" data-action="open-write" aria-label="Zurück">←</button>
@@ -6049,10 +6075,16 @@
           <span>💡 So könntest du anfangen: <b lang="es">${esc(topic.starter)}</b></span>
           <button class="tr-alt" data-action="w-insert" data-text="${esc(topic.starter.replace(/…$/, ""))}">Übernehmen</button>
         </div>
-        <div class="wt-words">
-          ${topic.words.map(([es, de]) => `<button class="tr-alt" data-action="w-insert" data-text="${esc(es)}"><b lang="es">${esc(es)}</b> · ${esc(de)}</button>`).join("")}
-        </div>
-        <button class="link-btn inline" data-action="w-rules" data-tense="${tense.id}">📘 Regeln: ${esc(tense.name)}</button>
+      </section>
+      <section class="panel write-guide" style="--c:${tense.color}">
+        <h3>📘 ${esc(guide.type)}</h3>
+        <p>${esc(guide.rule)}</p>
+        <p class="wg-contrast">⚖️ ${esc(guide.contrast)}</p>
+        <div class="wg-label">Signalwörter fürs ${esc(tense.name)}</div>
+        <div class="wt-words">${guide.signals.map(insertChip).join("")}</div>
+        <div class="wg-label">Verbindungswörter für deinen Text</div>
+        <div class="wt-words">${TEXT_LINKS.map(insertChip).join("")}</div>
+        <button class="link-btn inline" data-action="w-rules" data-tense="${tense.id}">Alle Regeln zum ${esc(tense.name)} ansehen</button>
       </section>
       <textarea class="write-input" rows="8" maxlength="${MAX_WRITE_CHARS}" lang="es" autocapitalize="sentences" autocorrect="off" spellcheck="false"
         placeholder="Escribe aquí tu texto …">${esc(writing.text)}</textarea>
