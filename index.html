@@ -1372,6 +1372,8 @@
   .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
   .panel-head h3 { margin: 0; }
   .cloud-panel { margin-bottom: 28px; }
+  .update-banner { display: block; width: 100%; border: none; text-align: left; font: inherit; font-weight: 800; cursor: pointer; }
+  .version-line { margin: -10px 0 16px; color: var(--muted); font-size: 0.8rem; font-weight: 800; }
   .cloud-panel .tr-credit { margin-top: 12px; }
   .cloud-panel p { color: var(--muted); font-size: 0.92rem; }
   .cloud-panel p b { color: var(--ink); }
@@ -3120,6 +3122,8 @@
   const MAX_SPEAK_STARS = SPEAK_SOURCES.length * SPEAK_LEVELS.length * 3;
   const XP_EPISODE = 15;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
+  // Bei jeder neuen Version hochzählen – daran erkennt die App, dass sie sich aktualisieren soll.
+  const APP_VERSION = "2026-10-03.1";
 
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
   const WORDS = new Map(VOCAB.map((w) => [w.es, w]));
@@ -5845,6 +5849,44 @@
     render();
   }
 
+  // ---------- Updates ----------
+  // iOS hält Home-Bildschirm-Apps gern lange im Zwischenspeicher. Poquito schaut deshalb selbst nach,
+  // ob online eine neuere Version liegt, und lädt sich dann neu (der Lernstand bleibt ja gespeichert).
+  let updateReady = false;
+  let updateCheckedAt = 0;
+
+  async function checkForUpdate() {
+    if (!/^https?:/.test(location.protocol) || Date.now() - updateCheckedAt < 5 * 60 * 1000) return;
+    updateCheckedAt = Date.now();
+    try {
+      const res = await fetch(location.pathname + "?update=" + Date.now(), { cache: "no-store" });
+      const match = (await res.text()).match(/const APP_VERSION = "([^"]+)"/);
+      if (!match || match[1] === APP_VERSION) return;
+      let tried = null;
+      try {
+        tried = sessionStorage.getItem("poquitoUpdate");
+        sessionStorage.setItem("poquitoUpdate", match[1]);
+      } catch (e) {
+        tried = match[1];
+      }
+      // Nur einmal pro Version automatisch neu laden – und nie mitten in einer Runde.
+      const busy = view === "session" || view === "drill" || view === "compose" || view === "episode";
+      if (tried !== match[1] && !busy) {
+        location.replace(location.pathname + "?v=" + encodeURIComponent(match[1]));
+        return;
+      }
+      updateReady = true;
+      if (TAB_VIEWS.has(view)) render();
+    } catch (e) {
+      // Offline – dann eben beim nächsten Mal.
+    }
+  }
+
+  function updateBanner() {
+    if (!updateReady) return "";
+    return `<button class="notice update-banner" data-action="do-update">✨ Eine neue Version von Poquito ist da – <b>tippen zum Aktualisieren</b></button>`;
+  }
+
   function esc(str) {
     return String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
   }
@@ -5918,6 +5960,7 @@
         <div class="spacer"></div>
         ${soundButton()}
       </header>
+      ${updateBanner()}
       ${storageNotice()}
       ${playerCard()}
       ${resumeBanner()}
@@ -5982,6 +6025,8 @@
         <div class="spacer"></div>
         ${soundButton()}
       </header>
+      ${updateBanner()}
+      <p class="version-line">Version ${APP_VERSION}</p>
       ${cloudPanel()}
       ${goalPanel()}
       ${voicePanel()}
@@ -7474,6 +7519,9 @@
       case "sync-disconnect":
         if (confirm("Abgleich trennen? Dein Lernstand bleibt auf diesem Gerät erhalten.")) disconnectCloud();
         break;
+      case "do-update":
+        location.replace(location.pathname + "?v=" + Date.now());
+        break;
       case "toggle-backup":
         backupOpen = !el.closest("details").open;
         break;
@@ -7683,6 +7731,7 @@
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) {
       syncFromStorage();
+      checkForUpdate();
       if (Date.now() - cloudLastRun > 20000) syncNow();
     } else if (cloudDirty) {
       syncNow({ fast: true });
@@ -7695,6 +7744,7 @@
   if (pending && pending.active && Date.now() - pending.savedAt < AUTO_RESUME_MS) resumeRound();
   else render();
   setTimeout(() => syncNow(), 600);
+  setTimeout(() => checkForUpdate(), 1500);
 })();
 </script>
 
