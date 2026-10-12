@@ -203,7 +203,7 @@
   .voice-row { display: flex; gap: 10px; }
   .voice-row .voice-select { flex: 1; min-width: 0; margin: 0; }
   .voice-row .btn { width: auto; padding: 12px 18px; }
-  .engine-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .engine-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
   .engine-options .level-btn { padding: 14px 8px; }
   .sub-title { margin: 18px 0 8px; font-size: 1rem; font-weight: 900; }
 
@@ -264,6 +264,61 @@
   .mt-go { flex: none; color: var(--primary); font-size: 0.9rem; font-weight: 900; }
   .mission-task.done .mt-go { color: var(--muted); }
   .mission-foot { margin: 12px 0 0; color: var(--muted); font-size: 0.85rem; font-weight: 700; line-height: 1.45; }
+
+  .level-invite {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding: 16px 18px;
+    border-radius: 22px;
+    background: #EAF1FF;
+    box-shadow: 0 5px 0 #C9D9F7;
+  }
+
+  .level-invite div { flex: 1; min-width: 0; }
+  .level-invite b { display: block; font-size: 1.05rem; font-weight: 900; }
+  .level-invite span { color: var(--muted); font-size: 0.85rem; font-weight: 700; line-height: 1.4; }
+  .level-invite .btn { width: auto; padding: 12px 20px; }
+  .level-banner { background: linear-gradient(135deg, #22B573, #6FD99E); }
+
+  .preset-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
+  .preset-row .btn { padding: 12px 8px; }
+  .hint { color: var(--muted); font-size: 0.85rem; }
+  .goal-card {
+    margin-bottom: 18px;
+    padding: 16px 18px;
+    border: 3px solid var(--sun);
+    border-radius: 22px;
+    background: var(--surface);
+  }
+
+  .goal-card small { display: block; color: var(--sun-dark); font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.04em; }
+  .goal-card b { display: block; font-size: 1.1rem; font-weight: 900; }
+  .goal-card span { color: var(--muted); font-size: 0.9rem; font-weight: 700; line-height: 1.45; }
+  .lvl-row { margin-bottom: 12px; padding: 14px 16px; border-radius: 20px; background: var(--surface); box-shadow: 0 4px 0 var(--line); }
+  .lvl-row.goal { outline: 3px solid var(--sun); }
+  .lvl-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .lvl-head .ico { font-size: 1.6rem; }
+  .lvl-head div { flex: 1; min-width: 0; }
+  .lvl-head b { display: block; font-weight: 900; }
+  .lvl-head small { color: var(--muted); font-weight: 700; }
+  .lvl-head .pill.goal { position: static; background: #FFF1CC; color: #8A6400; }
+  .lvl-seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .lvl-seg button {
+    padding: 10px 4px;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 0.85rem;
+    font-weight: 900;
+  }
+
+  .lvl-seg button.on { border-color: var(--primary); background: #EAF1FF; color: var(--primary); }
+  .lvl-meta { margin: 8px 0 0; color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+  .lvl-row .link-btn { margin: 6px 0 0; }
+  .lvl-chip { margin-top: 4px; color: var(--muted); font-size: 0.78rem; font-weight: 800; }
 
   .progress-panel { margin-bottom: 28px; }
   .progress-panel p { color: var(--muted); font-size: 0.9rem; }
@@ -3348,11 +3403,41 @@
   const XP_PERFECT_BONUS = 5;
   const LEVEL_THRESHOLDS = [0, 60, 120, 200, 300, 450, 750, 1125, 1650, 2250, 3000, 3900, 4900, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 17000, 19000, 22500, 26000, 30000];
   // Tagesaufgabe: die Zeitform des Tages wechselt, abwechselnd stehen Verbgruppen und Zusatzübungen an.
-  const MISSION_TENSES = ["presente", "indefinido", "imperfecto", "perfecto", "futuro", "condicional", "imperativo", "subjuntivo", "pluscuamperfecto", "subjImperfecto"];
-  const MISSION_GROUPS = ["regular", "irregular", "special", "mixed"];
   const MISSION_MIN_STARS = 2;
   const MISSION_DONE_XP = 20;
   const MISSION_BONUS_XP = 15;
+  const MISSION_EXTRA_XP = 10;
+  // Lernpfad: In dieser Reihenfolge lernt man die Zeitformen sinnvoll (A1 → B2).
+  const TENSE_PATH = ["presente", "perfecto", "indefinido", "imperfecto", "futuro", "imperativo", "condicional", "subjuntivo", "pluscuamperfecto", "subjImperfecto"];
+  // Stand je Zeitform: 0 = neu für mich, 1 = übe ich noch, 2 = kann ich.
+  const LEVEL_STATES = [
+    { n: 0, name: "Neu", icon: "🌱" },
+    { n: 1, name: "Übe ich", icon: "🌿" },
+    { n: 2, name: "Kann ich", icon: "🌳" },
+  ];
+  const LEVEL_PRESETS = {
+    A2: { presente: 2, perfecto: 1, indefinido: 0, imperfecto: 0, futuro: 0, imperativo: 0, condicional: 0, subjuntivo: 0, pluscuamperfecto: 0, subjImperfecto: 0 },
+    B1: { presente: 2, perfecto: 2, indefinido: 1, imperfecto: 1, futuro: 1, imperativo: 1, condicional: 0, subjuntivo: 0, pluscuamperfecto: 0, subjImperfecto: 0 },
+    B2: { presente: 2, perfecto: 2, indefinido: 2, imperfecto: 2, futuro: 2, imperativo: 2, condicional: 2, subjuntivo: 1, pluscuamperfecto: 1, subjImperfecto: 0 },
+  };
+  const TENSE_WHY = {
+    presente: "Die Basis für alles: Gewohnheiten, Fakten und Pläne.",
+    perfecto: "Damit erzählst du, was heute oder gerade eben passiert ist, und sprichst über Erfahrungen.",
+    indefinido: "Damit erzählst du abgeschlossene Ereignisse: gestern, letztes Jahr, in 2010.",
+    imperfecto: "Für Beschreibungen und Gewohnheiten in der Vergangenheit. Zusammen mit dem Indefinido erzählst du Geschichten.",
+    futuro: "Für Pläne, Versprechen und Vermutungen.",
+    imperativo: "Für Bitten, Anweisungen und Ratschläge.",
+    condicional: "Für höfliche Bitten und Wünsche: me gustaría, podrías …",
+    subjuntivo: "Für Wünsche, Zweifel und Gefühle: quiero que vengas. Die größte Hürde auf dem Weg zu B2.",
+    pluscuamperfecto: "Für das, was vor einem anderen Ereignis in der Vergangenheit passiert war.",
+    subjImperfecto: "Für höfliche Wünsche und Unwirkliches: quisiera, si tuviera …",
+  };
+  // Automatisches Lernen: ab hier gilt eine Zeitform als gekonnt bzw. wieder als wackelig.
+  const MASTER_ACC = 0.85;
+  const MASTER_SESSIONS = 3;
+  const MASTER_DAYS = 2;
+  const SHAKY_ACC = 0.55;
+  const REVIEW_DAYS = { 1: 3, 2: 7 };
   // Version 1 gab 10 XP pro Antwort, Version 2 gibt 2 – alte Stände werden einmalig umgerechnet.
   const XP_SCHEME = 2;
   const MAX_STARS_PER_TENSE = VERB_GROUPS.length * LEVELS.length * 3;
@@ -3362,7 +3447,7 @@
   const XP_EPISODE = 15;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
   // Bei jeder neuen Version hochzählen – daran erkennt die App, dass sie sich aktualisieren soll.
-  const APP_VERSION = "2026-10-12.1";
+  const APP_VERSION = "2026-10-12.2";
 
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
   const WORDS = new Map(VOCAB.map((w) => [w.es, w]));
@@ -3445,8 +3530,12 @@
       podcastPos: {},
       lastBackup: null,
       xpScheme: XP_SCHEME,
-      mission: { day: null, done: [] },
+      mission: { day: null, done: [], plan: null },
       missionDays: [],
+      tenseLvl: {},
+      tenseStats: {},
+      focusTense: null,
+      levelSetup: false,
       myWords: [],
       translateDir: "de-es",
       writeStars: {},
@@ -3578,9 +3667,24 @@
     const streak = mine.lastDay === theirs.lastDay
       ? { count: Math.max(mine.count, theirs.count), lastDay: mine.lastDay }
       : later(mine, theirs, "lastDay");
+    // Tagesaufgabe: gleicher Tag und gleicher Plan → erledigte Teile vereinen; sonst gewinnt der frühere Plan.
     const mission = target.mission.day === other.mission.day
-      ? { day: target.mission.day, done: union(target.mission.done, other.mission.done) }
+      ? mergeMission(target.mission, other.mission)
       : later(target.mission, other.mission, "day");
+    const byStamp = (a, b) => (a && b ? (a[1] >= b[1] ? a : b) : a || b);
+    const mergeStamped = (a, b) => {
+      const out = Object.assign({}, a);
+      Object.entries(b || {}).forEach(([k, v]) => { out[k] = byStamp(out[k], v); });
+      return out;
+    };
+    const mergeStats = (a, b) => {
+      const out = Object.assign({}, a);
+      Object.entries(b || {}).forEach(([k, v]) => {
+        const mine = out[k];
+        if (!mine || v.sessions > mine.sessions || (v.sessions === mine.sessions && (v.last || "") > (mine.last || ""))) out[k] = v;
+      });
+      return out;
+    };
     Object.assign(target, {
       progress,
       wrongStack,
@@ -3588,6 +3692,10 @@
       streak,
       mission,
       missionDays: union(target.missionDays, other.missionDays).sort().slice(-90),
+      tenseLvl: mergeStamped(target.tenseLvl, other.tenseLvl),
+      tenseStats: mergeStats(target.tenseStats, other.tenseStats),
+      focusTense: byStamp(target.focusTense, other.focusTense) || null,
+      levelSetup: !!(target.levelSetup || other.levelSetup),
       badges: union(target.badges, other.badges),
       sessionsDone: Math.max(target.sessionsDone, other.sessionsDone),
       perfectSessions: Math.max(target.perfectSessions, other.perfectSessions),
@@ -3624,7 +3732,7 @@
     if (SYNC_RENDER_VIEWS.has(view)) render();
   }
 
-  const SYNC_RENDER_VIEWS = new Set(["home", "vocab", "verbs", "tense", "listen", "podcasts", "speak", "settings", "write"]);
+  const SYNC_RENDER_VIEWS = new Set(["home", "vocab", "verbs", "tense", "listen", "podcasts", "speak", "settings", "write", "level"]);
 
   function hasProgress(s) {
     return s.xp > 0 || Object.keys(s.progress).length > 0 || s.podcastsHeard.length > 0;
@@ -4456,8 +4564,8 @@
     return task;
   }
 
-  function startDrill(tense, group) {
-    const level = state.verbLevel;
+  function startDrill(tense, group, forcedLevel) {
+    const level = forcedLevel || state.verbLevel;
     const tasks = buildTasks(tense, group);
     newSession("verbs", { tense, group, level, queue: tasks, total: tasks.length, task: null });
     view = "drill";
@@ -4567,6 +4675,7 @@
       state.verbStars[key] = Math.max(state.verbStars[key] || 0, s.stars);
       state.verbSessions++;
       if (!state.verbTensesDone.includes(s.tense)) state.verbTensesDone.push(s.tense);
+      s.levelNote = learnFromRound(s);
     } else if (s.kind === "listen") {
       const key = s.source + "|" + s.level;
       state.listenStars[key] = Math.max(state.listenStars[key] || 0, s.stars);
@@ -4835,36 +4944,53 @@
   // Feste Texte (Vokabeln, Sätze, Zahlen, Verbformen, Podcasts, …) liegen als MP3 mit der App.
   // Alles andere – und alles, was nicht lädt – liest weiter die Stimme des Geräts vor.
   const AUDIO_DIR = "audio/";
+  // k = Kastilisch (Piper, Spanien), n = Natürlich (Kokoro, eher lateinamerikanisch). Jede Stimme hat ihr Verzeichnis und Manifest.
+  const ENGINES = { k: { prefix: "k", manifest: "manifest-k.json" }, n: { prefix: "", manifest: "manifest.json" } };
   const SILENT_WAV = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=";
   const voiceEl = new Audio();
   voiceEl.preload = "auto";
-  let clips = null;
+  const clipSets = { k: null, n: null };
   let speakToken = 0;
   let voiceUnlocked = false;
 
   function loadClips() {
     if (!/^https?:/.test(location.protocol)) return;
-    fetch(AUDIO_DIR + "manifest.json?v=" + APP_VERSION)
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error("http"))))
-      .then((data) => {
-        clips = data.clips || null;
-        if (view === "settings") render();
-      })
-      .catch(() => {
-        clips = null;
-      });
+    Object.entries(ENGINES).forEach(([id, e]) => {
+      fetch(AUDIO_DIR + e.manifest + "?v=" + APP_VERSION)
+        .then((res) => (res.ok ? res.json() : Promise.reject(new Error("http"))))
+        .then((data) => {
+          clipSets[id] = data.clips || null;
+          if (view === "settings") render();
+        })
+        .catch(() => {
+          clipSets[id] = null;
+        });
+    });
+  }
+
+  // Welche Aufnahmen gerade sprechen: die gewählte Stimme; ist sie nicht da, die andere; sonst das Gerät.
+  function currentEngine() {
+    const want = state.voiceEngine;
+    if (want === "device") return null;
+    const order = want === "n" ? ["n", "k"] : ["k", "n"];
+    return order.find((id) => clipSets[id]) || null;
   }
 
   function naturalVoiceOn() {
-    return !!clips && state.voiceEngine !== "device";
+    return currentEngine() !== null;
+  }
+
+  function anyClips() {
+    return !!(clipSets.k || clipSets.n);
   }
 
   function clipFor(text, voice) {
-    if (!naturalVoiceOn()) return null;
-    const entry = clips[String(text).trim()];
+    const id = currentEngine();
+    if (!id) return null;
+    const entry = clipSets[id][String(text).trim()];
     const v = voice || "f";
     const hit = entry && entry[v];
-    return hit ? { url: AUDIO_DIR + v + "/" + hit[0] + ".mp3", ms: hit[1] } : null;
+    return hit ? { url: AUDIO_DIR + ENGINES[id].prefix + v + "/" + hit[0] + ".mp3", ms: hit[1] } : null;
   }
 
   function cancelSpeech() {
@@ -5096,7 +5222,7 @@
   }
 
   function togglePlay() {
-    if (!synth && !clips) return;
+    if (!synth && !anyClips()) return;
     if (player.playing) {
       stopPlayer();
     } else {
@@ -5107,7 +5233,7 @@
   }
 
   function jumpTo(i) {
-    if (!synth && !clips) return;
+    if (!synth && !anyClips()) return;
     player.index = i;
     startPlaying();
     updatePlayer(false);
@@ -6450,25 +6576,128 @@
     return `<button class="notice update-banner" data-action="do-update">✨ Eine neue Version von Poquito ist da – <b>tippen zum Aktualisieren</b></button>`;
   }
 
-  // ---------- Tagesaufgabe ----------
+  // ---------- Lernstand & Tagesaufgabe ----------
+  // Poquito merkt sich je Zeitform, was du kannst (Selbsteinschätzung + deine Antworten) und stellt daraus
+  // jeden Tag einen Plan zusammen: ein Ziel zum Lernen, etwas zum Auffrischen oder Entdecken, Wortschatz.
   function dayNumber(key) {
     const [y, m, d] = key.split("-").map(Number);
     return Math.floor(Date.UTC(y, m - 1, d) / 86400000);
   }
 
-  // Hängt nur vom Datum ab – alle Geräte bekommen dieselbe Aufgabe.
-  function missionFor(key) {
-    const dn = dayNumber(key);
+  function daysSince(key) {
+    return key ? dayNumber(todayKey()) - dayNumber(key) : null;
+  }
+
+  function tenseLevelOf(id) {
+    const e = state.tenseLvl[id];
+    return e ? e[0] : LEVEL_PRESETS.B1[id];
+  }
+
+  function setTenseLevel(id, lvl) {
+    state.tenseLvl[id] = [lvl, Date.now()];
+  }
+
+  function recommendedFocus() {
+    return TENSE_PATH.find((id) => tenseLevelOf(id) < 2) || null;
+  }
+
+  // Das Ziel: von dir gewählt, sonst die nächste noch nicht gekonnte Zeitform im Lernpfad.
+  function focusId() {
+    const chosen = state.focusTense && state.focusTense[0];
+    return chosen && tenseLevelOf(chosen) < 2 ? chosen : recommendedFocus();
+  }
+
+  // Die Verbgruppe, in der du in dieser Zeitform am wenigsten Sterne hast – so kommt alles dran.
+  function groupFor(tense, dn) {
+    const groups = ["regular", "irregular", "special"].filter((g) => verbsFor(g, tense).length > 0);
+    const stars = (g) => LEVELS.reduce((sum, l) => sum + starsFor(tense, g, l.n), 0);
+    const order = groups.map((g, i) => ({ g, s: stars(g), r: (i + dn) % groups.length })).sort((a, b) => a.s - b.s || a.r - b.r);
+    return order[0].s >= LEVELS.length * MISSION_MIN_STARS && dn % 2 === 0 ? "mixed" : order[0].g;
+  }
+
+  // Die Stufe: wer eine Zeitform schon kann, beginnt beim Schreiben; wer sie neu lernt, bei den Buchstaben.
+  function levelFor(tense, group) {
+    const self = tenseLevelOf(tense);
+    const start = self === 2 ? 3 : self === 1 ? 2 : 1;
+    for (let l = start; l <= LEVELS.length; l++) {
+      if (starsFor(tense, group, l) < MISSION_MIN_STARS) return l;
+    }
+    return LEVELS.length;
+  }
+
+  function extraFor(dn) {
     const listen = dn % 2 === 0;
     const pick = Math.floor(dn / 2) % 3;
-    return {
-      day: key,
-      tense: MISSION_TENSES[dn % MISSION_TENSES.length],
-      group: MISSION_GROUPS[(dn + Math.floor(dn / 10)) % MISSION_GROUPS.length],
-      extra: listen ? "listen" : "speak",
-      extraSource: (listen ? ["sentences", "words", "numbers"] : ["sentences", "sounds", "words"])[pick],
-      writeTense: MISSION_TENSES[(dn + 5) % MISSION_TENSES.length],
-    };
+    return { kind: listen ? "listen" : "speak", source: (listen ? ["sentences", "words", "numbers"] : ["sentences", "sounds", "words"])[pick] };
+  }
+
+  // Der Plan für einen Tag. Wird einmal erstellt und dann festgehalten, damit er sich während des Tages nicht verschiebt.
+  function buildPlan(key) {
+    const dn = dayNumber(key);
+    // Der erste Platz gehört immer deinem Ziel. Sind alle Zeitformen gekonnt, wird die schwächste vertieft.
+    const goal = focusId();
+    let focus;
+    if (goal) {
+      focus = { tense: goal, kind: state.focusTense && state.focusTense[0] === goal ? "chosen" : "goal" };
+    } else {
+      const weakest = TENSE_PATH.slice().sort((a, b) => ((state.tenseStats[a] || { acc: 0.7 }).acc - (state.tenseStats[b] || { acc: 0.7 }).acc) || TENSE_PATH.indexOf(a) - TENSE_PATH.indexOf(b))[0];
+      focus = { tense: weakest, kind: "deepen" };
+    }
+    focus.group = groupFor(focus.tense, dn);
+    focus.level = levelFor(focus.tense, focus.group);
+
+    const due = TENSE_PATH.filter((id) => id !== focus.tense && tenseLevelOf(id) >= 1).map((id) => {
+      const st = state.tenseStats[id];
+      const gap = st && st.last ? daysSince(st.last) : 99;
+      const acc = st ? st.acc : 0.6;
+      return { id, gap, acc, score: gap / REVIEW_DAYS[tenseLevelOf(id)] + (1 - acc) * 2 };
+    }).filter((c) => c.gap >= 1).sort((a, b) => b.score - a.score || TENSE_PATH.indexOf(a.id) - TENSE_PATH.indexOf(b.id));
+    const fresh = TENSE_PATH.find((id) => id !== focus.tense && tenseLevelOf(id) === 0);
+    let review;
+    if (due.length && (due[0].score >= 1 || !fresh)) {
+      review = { tense: due[0].id, kind: "review", gap: due[0].gap, acc: Math.round(due[0].acc * 100) };
+    } else if (fresh) {
+      review = { tense: fresh, kind: "discover" };
+    } else {
+      const other = TENSE_PATH.filter((id) => id !== focus.tense)[dn % (TENSE_PATH.length - 1)];
+      review = { tense: other, kind: "review", gap: daysSince((state.tenseStats[other] || {}).last), acc: Math.round(((state.tenseStats[other] || { acc: 0.7 }).acc) * 100) };
+    }
+    review.group = groupFor(review.tense, dn + 1);
+    review.level = levelFor(review.tense, review.group);
+
+    return { v: 2, stamp: Date.now(), focus, review, extra: extraFor(dn), writeTense: focus.tense };
+  }
+
+  // Zwei Geräte haben denselben Tag bearbeitet: derselbe Plan → erledigte Teile vereinen; sonst gewinnt der frühere Plan.
+  function mergeMission(a, b) {
+    if (!a.plan || !b.plan) {
+      const withPlan = a.plan ? a : b.plan ? b : null;
+      return { day: a.day, done: [...new Set([...a.done, ...b.done])], plan: withPlan ? withPlan.plan : null };
+    }
+    if (a.plan.stamp === b.plan.stamp) return { day: a.day, done: [...new Set([...a.done, ...b.done])], plan: a.plan };
+    const win = a.plan.stamp < b.plan.stamp ? a : b;
+    return { day: win.day, done: win.done.slice(), plan: win.plan };
+  }
+
+  function ensurePlan() {
+    const key = todayKey();
+    if (!state.mission || state.mission.day !== key) state.mission = { day: key, done: [], plan: null };
+    if (!state.mission.plan) {
+      state.mission.plan = buildPlan(key);
+      state.mission.done = state.mission.done.filter((id) => id !== "verb");
+      saveState();
+    }
+    return state.mission.plan;
+  }
+
+  // Niveau oder Ziel wurden geändert: den heutigen Plan neu berechnen und erledigte Aufgaben behalten, wenn sie gleich bleiben.
+  function replan() {
+    const old = state.mission;
+    if (!old || old.day !== todayKey() || !old.plan) return;
+    const plan = buildPlan(old.day);
+    const same = (id) => old.plan[id] && plan[id] && old.plan[id].tense === plan[id].tense;
+    const done = old.done.filter((id) => (id === "focus" || id === "review" ? same(id) : true));
+    state.mission = { day: old.day, done, plan };
   }
 
   function missionDone() {
@@ -6487,20 +6716,44 @@
     return n;
   }
 
+  function agoText(days) {
+    if (days === null || days === undefined || days >= 99) return "noch nicht geübt";
+    return days === 0 ? "heute geübt" : days === 1 ? "zuletzt gestern" : `zuletzt vor ${days} Tagen`;
+  }
+
   function missionTasks() {
-    const m = missionFor(todayKey());
+    const plan = ensurePlan();
     const done = missionDone();
-    const tense = TENSE_BY_ID.get(m.tense);
-    const group = VERB_GROUPS.find((g) => g.id === m.group);
     const fromMistakes = state.wrongStack.length >= 3;
     const src = (list, id) => list.find((x) => x.id === id).name;
-    const extraName = m.extra === "listen" ? "🎧 Hören: " + src(LISTEN_SOURCES, m.extraSource) : "🗣️ Sprechen: " + src(SPEAK_SOURCES, m.extraSource);
+    const extraName = plan.extra.kind === "listen" ? "🎧 Hören: " + src(LISTEN_SOURCES, plan.extra.source) : "🗣️ Sprechen: " + src(SPEAK_SOURCES, plan.extra.source);
+    const drillDesc = (t) => `${VERB_GROUPS.find((g) => g.id === t.group).name} · Stufe ${t.level} ${LEVELS[t.level - 1].name}`;
+    const f = plan.focus;
+    const r = plan.review;
+    const fName = TENSE_BY_ID.get(f.tense).name;
+    const rName = TENSE_BY_ID.get(r.tense).name;
+    const fTitle = f.kind === "deepen" ? `💪 Vertiefen: ${fName}` : `🎯 Dein Ziel: ${fName}`;
+    const fSt = state.tenseStats[f.tense];
+    const rTitle = r.kind === "discover" ? `🔭 Neu entdecken: ${rName}` : `🔁 Auffrischen: ${rName}`;
     return [
-      { id: "verb", title: `🔤 Verben: ${tense.name}`, desc: `${group.name} · ${tense.de}`, done: done.includes("verb") },
+      { id: "focus", title: fTitle, desc: drillDesc(f) + (fSt ? ` · ${Math.round(fSt.acc * 100)} % auf Anhieb` : " · noch nicht geübt"), done: done.includes("focus") },
+      { id: "review", title: rTitle, desc: r.kind === "discover" ? "Erst die Regeln, dann üben · " + drillDesc(r) : drillDesc(r) + " · " + agoText(r.gap), done: done.includes("review") },
       { id: "vocab", title: "📚 Vokabeln", desc: fromMistakes ? `Fehlerstapel wiederholen (${state.wrongStack.length})` : "Gemischte Runde", done: done.includes("vocab") },
-      { id: "extra", title: extraName, desc: "1 Runde", done: done.includes("extra") },
-      { id: "write", title: `✍️ Schreiben: ${TENSE_BY_ID.get(m.writeTense).name}`, desc: `Bonus · 1 Text · +${MISSION_BONUS_XP} XP`, done: done.includes("write"), bonus: true },
+      { id: "extra", title: extraName, desc: `Bonus · 1 Runde · +${MISSION_EXTRA_XP} XP`, done: done.includes("extra"), bonus: true },
+      { id: "write", title: `✍️ Schreiben: ${TENSE_BY_ID.get(plan.writeTense).name}`, desc: `Bonus · 1 Text · +${MISSION_BONUS_XP} XP`, done: done.includes("write"), bonus: true },
     ];
+  }
+
+  function levelInvite() {
+    if (state.levelSetup) return "";
+    return `
+      <section class="level-invite">
+        <div>
+          <b>🧭 Dein Niveau einstellen</b>
+          <span>Sag Poquito in 30 Sekunden, welche Zeitformen du schon kannst. Danach passt sich deine Tagesaufgabe an dich an.</span>
+        </div>
+        <button class="btn" data-action="open-level">Los</button>
+      </section>`;
   }
 
   function missionCard() {
@@ -6511,6 +6764,7 @@
     const streak = missionStreak();
     const today = new Date().toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" });
     return `
+      ${levelInvite()}
       <section class="mission ${all ? "complete" : ""}">
         <div class="mission-head">
           <div>
@@ -6527,45 +6781,97 @@
               <span class="mt-go">${t.done ? "nochmal" : "Los"} ›</span>
             </button>`).join("")}
         </div>
-        <p class="mission-foot">${all ? `Heute gemeistert – ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge. Weiter üben macht trotzdem Spaß!` : `Meistere alle drei mit mindestens ${MISSION_MIN_STARS} Sternen. Täglich wechseln Zeitform, Verbgruppe und Übung. ${streak ? `🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge.` : ""}`}</p>
+        <p class="mission-foot">${all ? `Heute gemeistert – ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge. Weiter üben macht trotzdem Spaß!` : `Meistere die ersten drei mit mindestens ${MISSION_MIN_STARS} Sternen. Die Aufgaben passen sich deinem Stand an. ${streak ? `🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge.` : ""}`}</p>
+        <button class="link-btn" data-action="open-level">🧭 Niveau & Ziel anpassen</button>
       </section>`;
   }
 
+  // Beim Entdecken einer neuen Zeitform kommt erst die Erklärung, dann die Übung.
+  let pendingDrill = null;
+
   function startMissionTask(id) {
-    const m = missionFor(todayKey());
-    if (id === "verb") {
-      currentTense = m.tense;
-      startDrill(m.tense, m.group);
+    const plan = ensurePlan();
+    if (id === "focus" || id === "review") {
+      const t = plan[id];
+      currentTense = t.tense;
+      const st = state.tenseStats[t.tense];
+      if (t.kind === "discover" && !(st && st.sessions)) {
+        pendingDrill = { tense: t.tense, group: t.group, level: t.level };
+        go("rules");
+      } else {
+        startDrill(t.tense, t.group, t.level);
+      }
     } else if (id === "vocab") {
       startVocab(state.wrongStack.length >= 3 ? { type: "mistakes" } : { type: "all" });
     } else if (id === "extra") {
-      if (m.extra === "listen") startListen(m.extraSource);
-      else startSpeak(m.extraSource);
+      if (plan.extra.kind === "listen") startListen(plan.extra.source);
+      else startSpeak(plan.extra.source);
     } else if (id === "write") {
-      startWriting(m.writeTense);
+      startWriting(plan.writeTense);
     }
+  }
+
+  // Lernt aus der Runde: Trefferquote je Zeitform, und der Stand rückt vor oder wieder zurück.
+  function learnFromRound(s) {
+    const t = s.tense;
+    const ratio = s.firstRight / s.total;
+    const st = state.tenseStats[t] || { sessions: 0, n: 0, acc: ratio, days: 0, last: "" };
+    st.acc = st.sessions ? Math.round((st.acc * 0.55 + ratio * 0.45) * 1000) / 1000 : Math.round(ratio * 1000) / 1000;
+    st.sessions++;
+    st.n += s.total;
+    const today = todayKey();
+    if (st.last !== today) st.days++;
+    st.last = today;
+    state.tenseStats[t] = st;
+    const lvl = tenseLevelOf(t);
+    if (lvl === 0) {
+      setTenseLevel(t, 1);
+      return { tense: t, to: 1 };
+    }
+    if (lvl === 1 && st.sessions >= MASTER_SESSIONS && st.days >= MASTER_DAYS && st.acc >= MASTER_ACC && s.level >= 2) {
+      setTenseLevel(t, 2);
+      if (state.focusTense && state.focusTense[0] === t) state.focusTense = [null, Date.now()];
+      return { tense: t, to: 2, next: focusId() };
+    }
+    if (lvl === 2 && st.sessions >= 2 && st.acc < SHAKY_ACC) {
+      setTenseLevel(t, 1);
+      return { tense: t, to: 1, shaky: true };
+    }
+    return null;
+  }
+
+  function levelBanner(n) {
+    if (!n) return "";
+    const name = TENSE_BY_ID.get(n.tense).name;
+    if (n.to === 2) {
+      const next = n.next ? ` Nächstes Ziel: ${TENSE_BY_ID.get(n.next).name}.` : " Du kannst jetzt alle Zeitformen – ich frische jetzt dein Schwächstes auf.";
+      return `<div class="levelup level-banner">🌳 ${esc(name)} sitzt jetzt sicher!${esc(next)}</div>`;
+    }
+    if (n.shaky) return `<div class="levelup level-banner">🌿 ${esc(name)} wackelt noch – ich nehme sie wieder öfter in deine Tagesaufgabe.</div>`;
+    return `<div class="levelup level-banner">🌿 ${esc(name)} ist jetzt in „Übe ich“ und kommt regelmäßig in deine Tagesaufgabe.</div>`;
   }
 
   // Wird nach jeder Runde aufgerufen; liefert die neu geschafften Teile für die Anzeige.
   function missionProgress(kind, s) {
-    const m = missionFor(todayKey());
+    const plan = ensurePlan();
+    const key = todayKey();
     let id = null;
-    if (kind === "verbs" && s.tense === m.tense) id = "verb";
-    else if (kind === "vocab") id = "vocab";
-    else if (kind === m.extra) id = "extra";
-    else if (kind === "write" && writing.focus === m.writeTense) id = "write";
+    if (kind === "verbs") {
+      id = ["focus", "review"].find((x) => plan[x].tense === s.tense && s.level >= plan[x].level && !state.mission.done.includes(x)) || null;
+    } else if (kind === "vocab") id = "vocab";
+    else if (kind === plan.extra.kind) id = "extra";
+    else if (kind === "write" && writing.focus === plan.writeTense) id = "write";
     const stars = s.stars;
     if (!id || stars < MISSION_MIN_STARS) return [];
-    const key = todayKey();
-    if (!state.mission || state.mission.day !== key) state.mission = { day: key, done: [] };
     if (state.mission.done.includes(id)) return [];
     state.mission.done.push(id);
     const out = [{ id, xp: 0, all: false, streak: 0 }];
-    if (id === "write") {
-      addXp(MISSION_BONUS_XP, s);
-      out[0].xp = MISSION_BONUS_XP;
+    if (id === "write" || id === "extra") {
+      const bonus = id === "write" ? MISSION_BONUS_XP : MISSION_EXTRA_XP;
+      addXp(bonus, s);
+      out[0].xp = bonus;
     }
-    const core = ["verb", "vocab", "extra"];
+    const core = ["focus", "review", "vocab"];
     if (core.every((c) => state.mission.done.includes(c)) && !state.missionDays.includes(key)) {
       state.missionDays.push(key);
       state.missionDays = state.missionDays.sort().slice(-90);
@@ -6579,10 +6885,56 @@
 
   function missionBanners(list) {
     return (list || []).map((x) => {
-      const names = { verb: "Verben", vocab: "Vokabeln", extra: "Hören/Sprechen", write: "Schreiben (Bonus)" };
+      const names = { focus: "Ziel-Zeitform", review: "Auffrischen", vocab: "Vokabeln", extra: "Hören/Sprechen (Bonus)", write: "Schreiben (Bonus)" };
       if (x.all) return `<div class="levelup goal-banner">🏆 Tagesaufgabe gemeistert! +${x.xp} XP · ${x.streak} ${x.streak === 1 ? "Tag" : "Tage"} in Folge</div>`;
       return `<div class="levelup goal-banner">🎯 Tagesaufgabe: ${names[x.id]} geschafft!${x.xp ? ` +${x.xp} XP` : ""}</div>`;
     }).join("");
+  }
+
+  // ---------- Mein Niveau ----------
+  let levelFrom = "home";
+
+  function levelView() {
+    const goal = focusId();
+    const chosen = state.focusTense && state.focusTense[0] === goal;
+    const goalText = goal
+      ? `<small>🎯 Dein Ziel</small><b>${TENSE_BY_ID.get(goal).icon} ${esc(TENSE_BY_ID.get(goal).name)}</b><span>${chosen ? "Dieses Ziel hast du gewählt. " : "Mein Vorschlag als Nächstes im Lernpfad. "}${esc(TENSE_WHY[goal])}</span>`
+      : `<b>🎉 Du kannst alle Zeitformen!</b><span>Poquito frischt jetzt täglich deine schwächste auf.</span>`;
+    return `
+      <div class="topbar">
+        <button class="icon-btn" data-action="level-done" aria-label="Zurück">←</button>
+        <h2>🧭 Mein Niveau<small>Was kannst du schon?</small></h2>
+        ${soundButton()}
+      </div>
+      <p class="lead">Sag Poquito, welche Zeitformen du schon kannst. Deine Tagesaufgabe richtet sich danach. Außerdem lernt Poquito aus deinen Antworten und passt den Stand von allein an.</p>
+      <section class="panel">
+        <h3>⚡ Schnell einstellen</h3>
+        <div class="preset-row">
+          ${["A2", "B1", "B2"].map((p) => `<button class="btn light" data-action="lvl-preset" data-preset="${p}">${p}</button>`).join("")}
+        </div>
+        <p class="hint">Das ist nur ein Startpunkt. Darunter kannst du jede Zeitform einzeln ändern.</p>
+      </section>
+      <section class="goal-card">${goalText}</section>
+      ${TENSE_PATH.map((id) => {
+        const t = TENSE_BY_ID.get(id);
+        const lvl = tenseLevelOf(id);
+        const st = state.tenseStats[id];
+        const isGoal = id === goal;
+        return `
+          <section class="lvl-row ${isGoal ? "goal" : ""}">
+            <div class="lvl-head">
+              <span class="ico">${t.icon}</span>
+              <div><b>${esc(t.name)}</b><small>${esc(t.de)}</small></div>
+              ${isGoal ? `<span class="pill goal">🎯 Ziel</span>` : ""}
+            </div>
+            <div class="lvl-seg" role="group" aria-label="${esc(t.name)}">
+              ${LEVEL_STATES.map((l) => `<button class="${l.n === lvl ? "on" : ""}" data-action="lvl-set" data-tense="${id}" data-lvl="${l.n}">${l.icon} ${l.name}</button>`).join("")}
+            </div>
+            <p class="lvl-meta">${st ? `${Math.round(st.acc * 100)} % auf Anhieb · ${st.sessions} ${st.sessions === 1 ? "Runde" : "Runden"} · ${agoText(daysSince(st.last))}` : "Hier noch nicht geübt"}</p>
+            ${lvl < 2 ? `<button class="link-btn" data-action="lvl-focus" data-tense="${id}">${chosen && isGoal ? "Ziel entfernen" : "🎯 Als Ziel setzen"}</button>` : ""}
+          </section>`;
+      }).join("")}
+      <div class="btn-stack"><button class="btn" data-action="level-done">Fertig</button></div>`;
   }
 
   // ---------- Wörterbuch ----------
@@ -6988,6 +7340,11 @@
       ${updateBanner()}
       <p class="version-line">Version ${APP_VERSION}</p>
       ${cloudPanel()}
+      <section class="panel">
+        <h3>🧭 Mein Niveau</h3>
+        <p>Welche Zeitformen kannst du schon? Danach richtet sich deine Tagesaufgabe.</p>
+        <button class="btn light" data-action="open-level">Niveau & Ziel anpassen</button>
+      </section>
       ${voicePanel()}
       ${progressPanel()}
       <section class="panel danger-panel">
@@ -7077,28 +7434,36 @@
   }
 
   function voicePanel() {
-    const natural = naturalVoiceOn();
+    const engine = currentEngine();
+    const natural = engine !== null;
     const voices = synth ? spanishVoices() : [];
     const current = spanishVoice;
     const quality = current ? voiceQuality(current) : null;
     const qualityText = { premium: "Premium – klingt sehr natürlich", enhanced: "Erweitert – klingt natürlich", standard: "Standard – klingt etwas künstlich" }[quality];
-    const engineBtn = (id, label) => `<button class="level-btn ${(state.voiceEngine === "device" ? "device" : "auto") === id ? "on" : ""}" data-action="set-engine" data-engine="${id}"><span>${label}</span></button>`;
+    const chosen = state.voiceEngine === "device" ? "device" : state.voiceEngine === "n" ? "n" : "k";
+    const engineBtn = (id, label) => `<button class="level-btn ${chosen === id ? "on" : ""}" data-action="set-engine" data-engine="${id}"><span>${label}</span></button>`;
+    const info = {
+      k: "Poquito spricht mit einer neuronalen Stimme aus Spanien (weiblich und männlich): kastilische Aussprache, z und c wie englisches „th“. Das gilt für alle festen Inhalte wie Vokabeln, Sätze, Zahlen, Verbformen und Podcasts. Eigene Texte (Übersetzer, Schreiben) liest weiterhin die Gerätestimme vor.",
+      n: "Poquito spricht mit einer sehr natürlich klingenden KI-Stimme (weiblich: Dora, männlich: Alex). Sie spricht eher lateinamerikanisch: z und c wie „s“. Eigene Texte (Übersetzer, Schreiben) liest weiterhin die Gerätestimme vor.",
+      device: "Poquito spricht mit der Stimme deines Geräts.",
+    };
     return `
       <section class="panel voice-panel">
         <h3>🗣️ Stimme & Ton</h3>
         <div class="engine-options">
-          ${engineBtn("auto", "✨ Natürlich")}
-          ${engineBtn("device", "📱 Gerätestimme")}
+          ${engineBtn("k", "🇪🇸 Kastilisch")}
+          ${engineBtn("n", "✨ Natürlich")}
+          ${engineBtn("device", "📱 Gerät")}
         </div>
-        ${state.voiceEngine === "device"
-          ? `<p>Poquito spricht mit der Stimme deines Geräts.</p>`
+        ${chosen === "device"
+          ? `<p>${info.device}</p>`
           : natural
-            ? `<p>Poquito spricht mit einer natürlichen KI-Stimme (weiblich: Dora, männlich: Alex). Das gilt für alle festen Inhalte wie Vokabeln, Sätze, Zahlen, Verbformen und Podcasts. Eigene Texte (Übersetzer, Schreiben) liest weiterhin die Gerätestimme vor.</p>`
-            : `<p>Die natürliche Stimme wird gerade geladen oder ist offline nicht verfügbar – so lange spricht die Gerätestimme.</p>`}
+            ? `<p>${info[engine]}${engine !== chosen ? " (Die gewählte Stimme ist gerade nicht verfügbar.)" : ""}</p>`
+            : `<p>Die Stimmen werden gerade geladen oder sind offline nicht verfügbar – so lange spricht die Gerätestimme.</p>`}
         <div class="voice-row">
           <button class="btn light" data-action="voice-test">▶ Stimme anhören</button>
         </div>
-        ${natural && state.voiceEngine !== "device" ? `<p class="tr-credit">Natürliche Stimme: Kokoro-82M (Apache-2.0) – Spanisch, eher lateinamerikanische Aussprache (z/c wie s).</p>` : ""}
+        ${natural && chosen !== "device" ? `<p class="tr-credit">${engine === "k" ? "Kastilische Stimme: Piper TTS mit dem Sharvard-Korpus (Aubanel, Davis & Kim 2014, CC BY 3.0)." : "Natürliche Stimme: Kokoro-82M (Apache-2.0)."}</p>` : ""}
         ${synth ? `
           <h4 class="sub-title">Gerätestimme${natural ? " (für eigene Texte)" : ""}</h4>
           ${current ? `<p>Aktuell: <b>${esc(current.name)}</b> (${esc(voiceLang(current))}) · ${qualityText}.</p>` : `<p>Es wurde noch keine spanische Stimme gefunden.</p>`}
@@ -7544,6 +7909,10 @@
         <div class="stat"><b>${state.verbTensesDone.length} / ${TENSES.length}</b><span>Zeitformen geübt</span></div>
       </div>
       <p class="lead">Wähle eine Zeitform. Dort findest du die Regeln und Übungen in drei Stufen.</p>
+      <button class="rules-link" data-action="open-level">
+        <span class="ico">🧭</span>
+        <span><b>Mein Niveau & Ziel</b><span>${focusId() ? `Dein Ziel: ${esc(TENSE_BY_ID.get(focusId()).name)}` : "Du kannst alle Zeitformen"} · Was kannst du schon?</span></span>
+      </button>
       ${moods.map((mood) => `
         <h2 class="section-title">${esc(mood)}</h2>
         <div class="grid">
@@ -7553,6 +7922,7 @@
               <span class="name">${esc(t.name)}</span>
               <span class="desc">${esc(t.de)}</span>
               <span class="stars-line">${starsText(tenseStars(t.id), MAX_STARS_PER_TENSE)}</span>
+              <span class="lvl-chip">${LEVEL_STATES[tenseLevelOf(t.id)].icon} ${LEVEL_STATES[tenseLevelOf(t.id)].name}${t.id === focusId() ? " · 🎯 Ziel" : ""}</span>
             </button>`).join("")}
         </div>`).join("")}`;
   }
@@ -7676,7 +8046,9 @@
         </select>
         ${conjTable([verbForLookup], t.id, false)}
       </section>
-      <button class="btn" data-action="open-tense" data-tense="${t.id}">Jetzt üben</button>`;
+      ${pendingDrill && pendingDrill.tense === t.id
+        ? `<button class="btn" data-action="m-drill">▶ Jetzt üben (Tagesaufgabe)</button>`
+        : `<button class="btn" data-action="open-tense" data-tense="${t.id}">Jetzt üben</button>`}`;
   }
 
   function drillAnswerArea() {
@@ -8172,6 +8544,7 @@
             <div class="stat"><b>${s.bestCombo}</b><span>beste Serie</span></div>
           </div>
           ${missionBanners(s.missions)}
+          ${levelBanner(s.levelNote)}
           ${levelNow > levelBefore ? `<div class="levelup">🎊 Level ${levelNow} erreicht!</div>` : ""}
           ${s.newBadges.length ? `
             <div class="new-badges">
@@ -8203,6 +8576,7 @@
     translate: translateView,
     dictionary: dictionaryView,
     settings: settingsView,
+    level: levelView,
     write: writeView,
     compose: composeView,
     writeResult: writeResultView,
@@ -8234,6 +8608,7 @@
     stopPlayer();
     player = null;
     const staying = next === "session" || next === "drill" || next === "result";
+    if (next !== "rules") pendingDrill = null;
     view = next;
     if (session && !staying) saveRound(); // offene Runde bleibt zum Fortsetzen
     session = staying ? session : null;
@@ -8324,7 +8699,7 @@
         startListen(el.dataset.source);
         break;
       case "again":
-        if (session.kind === "verbs") startDrill(session.tense, session.group);
+        if (session.kind === "verbs") startDrill(session.tense, session.group, session.level);
         else if (session.kind === "listen") startListen(session.source);
         else if (session.kind === "quiz") startQuiz(session.episode);
         else if (session.kind === "speak") startSpeak(session.source);
@@ -8399,6 +8774,44 @@
       case "m-start":
         startMissionTask(el.dataset.task);
         break;
+      case "m-drill":
+        if (pendingDrill) {
+          const d = pendingDrill;
+          pendingDrill = null;
+          startDrill(d.tense, d.group, d.level);
+        }
+        break;
+      case "open-level":
+        levelFrom = view === "level" ? levelFrom : view;
+        go("level");
+        break;
+      case "level-done":
+        state.levelSetup = true;
+        replan();
+        saveState();
+        go(levelFrom === "level" ? "home" : levelFrom);
+        break;
+      case "lvl-set":
+        setTenseLevel(el.dataset.tense, Number(el.dataset.lvl));
+        replan();
+        saveState();
+        render();
+        break;
+      case "lvl-preset":
+        TENSE_PATH.forEach((id) => setTenseLevel(id, LEVEL_PRESETS[el.dataset.preset][id]));
+        state.focusTense = [null, Date.now()];
+        replan();
+        saveState();
+        render();
+        break;
+      case "lvl-focus": {
+        const same = state.focusTense && state.focusTense[0] === el.dataset.tense;
+        state.focusTense = [same ? null : el.dataset.tense, Date.now()];
+        replan();
+        saveState();
+        render();
+        break;
+      }
       case "export":
         exportProgress();
         break;
