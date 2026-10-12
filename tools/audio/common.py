@@ -16,6 +16,9 @@ PIPER_SPEAKERS = {"f": 1, "m": 0}
 PIPER_LENGTH = {"number": 1.0}   # Dehnung der Laute; sonst PIPER_LENGTH_DEFAULT (passt das Tempo an die andere Stimme an)
 PIPER_LENGTH_DEFAULT = 1.15
 PIPER_DIR = {"f": "kf", "m": "km"}
+# Wörter, die das Modell aus dem Text heraus schlecht betont: stattdessen diese Lautfolge sprechen lassen
+# (espeak-Schreibweise). „sí“: Das í kam sonst als kurzer harter Laut hinter einem langen s.
+PIPER_PHONEMES = {"sí": "sˈii."}
 
 
 def piper_length(kind):
