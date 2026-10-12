@@ -14,7 +14,8 @@ Kurze Einzelwörter spricht das Modell allein schlecht; sie werden deshalb in ei
 Benötigt: pip install torch kokoro faster-whisper lameenc scipy soundfile numpy
 Modell: Kokoro-82M (Apache-2.0), https://github.com/hexgrad/kokoro
 """
-import argparse, hashlib, json, os, re, time, unicodedata
+import argparse, json, os, re, sys, time, unicodedata
+sys.path.insert(0, os.path.dirname(__file__))
 import numpy as np
 import lameenc
 from scipy.signal import resample_poly
@@ -22,16 +23,9 @@ import torch
 from kokoro import KPipeline
 from faster_whisper import WhisperModel
 
-VOICE_NAMES = {"f": "ef_dora", "m": "em_alex"}
-SPEEDS = {"vocab": 0.9, "form": 0.9, "verb": 0.9, "number": 0.9, "sound": 0.88, "sentence": 0.92, "example": 0.92, "podcast": 0.92, "sample": 0.92, "misc": 0.92}
-CARRIERS = ["Ahora", "Mira:", "Dime:", "Escucha:", "Dice:", "Oye:"]
-TAG = "kokoro-v1.0-es-4"
+from common import VOICE_NAMES, SPEEDS, CARRIERS, TAG, file_id  # noqa: E402
 SR = 24000
 SHORT_WORDS = 4
-
-
-def file_id(voice, speed, text):
-    return hashlib.sha1(f"{TAG}|{voice}|{speed}|{text}".encode()).hexdigest()[:12]
 
 
 UNITS = ["cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve", "veinte", "veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"]

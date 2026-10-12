@@ -1,0 +1,994 @@
+{"text": "adiós", "voice": "f", "id": "769cd4ceb0f9", "ms": 766}
+{"text": "buenas noches", "voice": "f", "id": "ec07cc563892", "ms": 1155}
+{"text": "¿Qué tal?", "voice": "f", "id": "db9851804b7f", "ms": 725}
+{"text": "¿Cómo te llamas?", "voice": "f", "id": "43e51b07da7f", "ms": 1180}
+{"text": "bienvenido", "voice": "f", "id": "010c9ca5db94", "ms": 892}
+{"text": "de nada", "voice": "f", "id": "805c3b53d081", "ms": 727}
+{"text": "¡Buen provecho!", "voice": "f", "id": "4cbf7c66a255", "ms": 1173}
+{"text": "cero", "voice": "f", "id": "b370745b2445", "ms": 613}
+{"text": "tres", "voice": "f", "id": "d98222f1b4cc", "ms": 629}
+{"text": "seis", "voice": "f", "id": "a0149a92188f", "ms": 613}
+{"text": "nueve", "voice": "f", "id": "62c54e595700", "ms": 668}
+{"text": "doce", "voice": "f", "id": "f48efd754a17", "ms": 719}
+{"text": "quince", "voice": "f", "id": "b037bfcfb8f4", "ms": 769}
+{"text": "treinta", "voice": "f", "id": "a90eb2fd35d8", "ms": 818}
+{"text": "cien", "voice": "f", "id": "a094926408aa", "ms": 595}
+{"text": "rojo", "voice": "f", "id": "bb9a6fa214e0", "ms": 694}
+{"text": "amarillo", "voice": "f", "id": "60003b94319b", "ms": 848}
+{"text": "marrón", "voice": "f", "id": "b728ecb56943", "ms": 714}
+{"text": "naranja", "voice": "f", "id": "22bb620e57a4", "ms": 804}
+{"text": "el padre", "voice": "f", "id": "d916088f6184", "ms": 857}
+{"text": "la hermana", "voice": "f", "id": "c235e8622d19", "ms": 812}
+{"text": "el abuelo", "voice": "f", "id": "b7a37370ac36", "ms": 802}
+{"text": "la tía", "voice": "f", "id": "e99807bcc509", "ms": 684}
+{"text": "el marido", "voice": "f", "id": "0e9284194786", "ms": 846}
+{"text": "la niña", "voice": "f", "id": "f0173616b2e5", "ms": 775}
+{"text": "la amiga", "voice": "f", "id": "32d8c312a559", "ms": 811}
+{"text": "la leche", "voice": "f", "id": "61376726c0a0", "ms": 852}
+{"text": "el zumo", "voice": "f", "id": "b8499640cfba", "ms": 782}
+{"text": "la manzana", "voice": "f", "id": "a550c7abeec4", "ms": 940}
+{"text": "la verdura", "voice": "f", "id": "22ca11806305", "ms": 868}
+{"text": "el arroz", "voice": "f", "id": "fa4a1aa786e8", "ms": 816}
+{"text": "la carne", "voice": "f", "id": "4e84c7210e19", "ms": 803}
+{"text": "la sopa", "voice": "f", "id": "c15aca899df5", "ms": 829}
+{"text": "el helado", "voice": "f", "id": "8d8e06286ba8", "ms": 778}
+{"text": "la cena", "voice": "f", "id": "b41dd2a2b09d", "ms": 754}
+{"text": "el pájaro", "voice": "f", "id": "a33d2b6229d0", "ms": 903}
+{"text": "el cerdo", "voice": "f", "id": "748a77b50be2", "ms": 812}
+{"text": "el pato", "voice": "f", "id": "3ab119d4293e", "ms": 833}
+{"text": "el pez", "voice": "f", "id": "9e42c1cc81fc", "ms": 742}
+{"text": "la mariposa", "voice": "f", "id": "a95e42e81258", "ms": 1041}
+{"text": "el ojo", "voice": "f", "id": "d00595dd7b79", "ms": 790}
+{"text": "el diente", "voice": "f", "id": "b05c09a19be6", "ms": 879}
+{"text": "la mano", "voice": "f", "id": "879d9555a998", "ms": 726}
+{"text": "el pie", "voice": "f", "id": "ae0c20d9634e", "ms": 689}
+{"text": "la camisa", "voice": "f", "id": "e8882316b045", "ms": 966}
+{"text": "la falda", "voice": "f", "id": "6dd9785e6b26", "ms": 803}
+{"text": "el abrigo", "voice": "f", "id": "70ab36621770", "ms": 823}
+{"text": "el sombrero", "voice": "f", "id": "da86e4bd676b", "ms": 986}
+{"text": "la cocina", "voice": "f", "id": "9e5d2b4320c9", "ms": 898}
+{"text": "el salón", "voice": "f", "id": "d422d091f5d9", "ms": 854}
+{"text": "la ventana", "voice": "f", "id": "f830a74948b9", "ms": 875}
+{"text": "la lámpara", "voice": "f", "id": "3c3d888d0257", "ms": 888}
+{"text": "la casa", "voice": "f", "id": "bb97d7471ad8", "ms": 852}
+{"text": "la ciudad", "voice": "f", "id": "fdae5271d5c9", "ms": 854}
+{"text": "el parque", "voice": "f", "id": "662c74f41c11", "ms": 835}
+{"text": "el supermercado", "voice": "f", "id": "9cc781d3c1cb", "ms": 1257}
+{"text": "el hospital", "voice": "f", "id": "61bafe8fedfd", "ms": 907}
+{"text": "la estación", "voice": "f", "id": "b61cc7f82d46", "ms": 907}
+{"text": "el libro", "voice": "f", "id": "f7511e29e198", "ms": 827}
+{"text": "el tren", "voice": "f", "id": "995948b81f61", "ms": 734}
+{"text": "el barco", "voice": "f", "id": "6a948a74df77", "ms": 853}
+{"text": "la maleta", "voice": "f", "id": "fd35ba58770d", "ms": 848}
+{"text": "las vacaciones", "voice": "f", "id": "c308666588b8", "ms": 1083}
+{"text": "todo recto", "voice": "f", "id": "fa80dbdd993b", "ms": 1015}
+{"text": "el sol", "voice": "f", "id": "a9140c8c4d5a", "ms": 684}
+{"text": "el viento", "voice": "f", "id": "8487f569ec5b", "ms": 855}
+{"text": "hace calor", "voice": "f", "id": "3c667260020c", "ms": 956}
+{"text": "el mar", "voice": "f", "id": "6e22ca1b7294", "ms": 657}
+{"text": "el árbol", "voice": "f", "id": "ef5717bce0e8", "ms": 779}
+{"text": "mañana", "voice": "f", "id": "f9b318ce89c9", "ms": 792}
+{"text": "pronto", "voice": "f", "id": "3c067f15e2e4", "ms": 773}
+{"text": "temprano", "voice": "f", "id": "8e473294063c", "ms": 818}
+{"text": "a veces", "voice": "f", "id": "358b479f9970", "ms": 770}
+{"text": "la tarde", "voice": "f", "id": "57e8e5f83ae7", "ms": 792}
+{"text": "el minuto", "voice": "f", "id": "6cee5c8ccf58", "ms": 877}
+{"text": "el mes", "voice": "f", "id": "a28f55c0a21f", "ms": 730}
+{"text": "el martes", "voice": "f", "id": "cce67185e97d", "ms": 858}
+{"text": "el viernes", "voice": "f", "id": "4ff8a432f52e", "ms": 857}
+{"text": "enero", "voice": "f", "id": "4edba79e2130", "ms": 643}
+{"text": "abril", "voice": "f", "id": "c8277ad84128", "ms": 691}
+{"text": "julio", "voice": "f", "id": "3c6d60a55eba", "ms": 695}
+{"text": "octubre", "voice": "f", "id": "95e02a6241bb", "ms": 784}
+{"text": "el médico", "voice": "f", "id": "7d68aac85854", "ms": 896}
+{"text": "la profesora", "voice": "f", "id": "9655cfc6303b", "ms": 1063}
+{"text": "el camarero", "voice": "f", "id": "7ccef46f31f8", "ms": 968}
+{"text": "el vendedor", "voice": "f", "id": "afa302a3d659", "ms": 900}
+{"text": "ser", "voice": "f", "id": "efbb3906bd46", "ms": 538}
+{"text": "hacer", "voice": "f", "id": "5a9cc62663d9", "ms": 649}
+{"text": "llegar", "voice": "f", "id": "3822ffabec29", "ms": 693}
+{"text": "beber", "voice": "f", "id": "3e532ffe3318", "ms": 634}
+{"text": "vivir", "voice": "f", "id": "49be88161564", "ms": 669}
+{"text": "saber", "voice": "f", "id": "a1246c757772", "ms": 668}
+{"text": "ver", "voice": "f", "id": "6793ff10cec8", "ms": 532}
+{"text": "leer", "voice": "f", "id": "9bd3a192588d", "ms": 644}
+{"text": "cerrar", "voice": "f", "id": "152d689e22d2", "ms": 696}
+{"text": "dar", "voice": "f", "id": "9b1ec9111cee", "ms": 553}
+{"text": "buscar", "voice": "f", "id": "cc435d835760", "ms": 733}
+{"text": "aprender", "voice": "f", "id": "a3beed80c15b", "ms": 835}
+{"text": "grande", "voice": "f", "id": "1acdae30a138", "ms": 741}
+{"text": "bajo", "voice": "f", "id": "27952662c2dd", "ms": 669}
+{"text": "bueno", "voice": "f", "id": "acfa06c2ffb8", "ms": 648}
+{"text": "nuevo", "voice": "f", "id": "2a53c3ef8b11", "ms": 667}
+{"text": "rápido", "voice": "f", "id": "1ed6b4c4c1ff", "ms": 766}
+{"text": "difícil", "voice": "f", "id": "a66b4a33a963", "ms": 844}
+{"text": "caliente", "voice": "f", "id": "6a59a1ccc023", "ms": 868}
+{"text": "sucio", "voice": "f", "id": "36d217406a50", "ms": 746}
+{"text": "triste", "voice": "f", "id": "585cdb684c5c", "ms": 819}
+{"text": "enfadado", "voice": "f", "id": "903b155d41b9", "ms": 902}
+{"text": "aburrido", "voice": "f", "id": "8f0f569bdb7f", "ms": 800}
+{"text": "el miedo", "voice": "f", "id": "c9025a955de8", "ms": 768}
+{"text": "tener sueño", "voice": "f", "id": "be76de852a86", "ms": 1077}
+{"text": "¿quién?", "voice": "f", "id": "105531461c5a", "ms": 629}
+{"text": "¿de dónde?", "voice": "f", "id": "757d6814ff90", "ms": 828}
+{"text": "¿cómo?", "voice": "f", "id": "a896048e5b78", "ms": 651}
+{"text": "¿cuántos?", "voice": "f", "id": "948f79dd1b57", "ms": 824}
+{"text": "Soy de Alemania.", "voice": "f", "id": "dda9453c87c3", "ms": 1134}
+{"text": "¿Cuántos años tienes?", "voice": "f", "id": "f57e073217ba", "ms": 1448}
+{"text": "Estoy bien, gracias.", "voice": "f", "id": "df2aee2c351d", "ms": 1481}
+{"text": "Hoy es lunes.", "voice": "f", "id": "1cf24a32f526", "ms": 950}
+{"text": "Quiero un café, por favor.", "voice": "f", "id": "22affda86968", "ms": 1770}
+{"text": "Tengo hambre.", "voice": "f", "id": "c9dfb7481258", "ms": 1006}
+{"text": "El agua está fría.", "voice": "f", "id": "20e954151454", "ms": 1341}
+{"text": "¿Dónde está el baño?", "voice": "f", "id": "3256f451cdd8", "ms": 1343}
+{"text": "Está muy cerca.", "voice": "f", "id": "dcd5d4edaaee", "ms": 1262}
+{"text": "No entiendo.", "voice": "f", "id": "7704027d6755", "ms": 933}
+{"text": "¿Hablas inglés?", "voice": "f", "id": "857293feba32", "ms": 1053}
+{"text": "Mi hermana es médica.", "voice": "f", "id": "9fca9465ba53", "ms": 1592}
+{"text": "El perro es muy bonito.", "voice": "f", "id": "139e9d9f23f3", "ms": 1784}
+{"text": "¿Tienes tiempo?", "voice": "f", "id": "0587d09e5234", "ms": 1092}
+{"text": "Quiero ir a España.", "voice": "f", "id": "de9a4913bba2", "ms": 1371}
+{"text": "¡Hasta mañana!", "voice": "f", "id": "cb58cb37a1c9", "ms": 1038}
+{"text": "Tengo veintiocho años y trabajo en una librería en el centro.", "voice": "f", "id": "6f799f63b890", "ms": 4243}
+{"text": "Primero abro la ventana y miro el cielo.", "voice": "f", "id": "09c21111c0ed", "ms": 3053}
+{"text": "En la esquina hay una cafetería pequeña que me encanta.", "voice": "f", "id": "7fdea6ff4755", "ms": 3616}
+{"text": "—Sí, un café con leche y una tostada con tomate, por favor.", "voice": "f", "id": "42059ee3792f", "ms": 3943}
+{"text": "El Retiro es un parque muy grande y muy bonito.", "voice": "f", "id": "23bf41ff2753", "ms": 3341}
+{"text": "En el lago, muchos jóvenes reman en barcas pequeñas.", "voice": "f", "id": "45e27b170382", "ms": 3695}
+{"text": "Es mi lugar favorito de toda la ciudad.", "voice": "f", "id": "a960c1f67d88", "ms": 2899}
+{"text": "—¡Claro! Conozco un restaurante nuevo cerca de la Plaza Mayor.", "voice": "f", "id": "a1314239d8e1", "ms": 4182}
+{"text": "Pedimos una ensalada, pescado y, de postre, un flan.", "voice": "f", "id": "9f46d5fe18b1", "ms": 3790}
+{"text": "Por la tarde, vamos juntas al Museo del Prado.", "voice": "f", "id": "f4a439678163", "ms": 3286}
+{"text": "Mi cuadro favorito es Las Meninas.", "voice": "f", "id": "56c0c291e896", "ms": 2604}
+{"text": "Pasamos casi tres horas en el museo y no vemos ni la mitad.", "voice": "f", "id": "74be7fff2a73", "ms": 4172}
+{"text": "Por la noche, la ciudad está llena de vida.", "voice": "f", "id": "761f305d6a67", "ms": 3047}
+{"text": "Ceno algo ligero, veo una película y a las once me voy a la cama.", "voice": "f", "id": "9aebdd2db406", "ms": 4417}
+{"text": "Pero esa es otra historia.", "voice": "f", "id": "bd8a61199fff", "ms": 2168}
+{"text": "¿Algo para comer? Tenemos cruasanes, tostadas y tortilla.", "voice": "f", "id": "9295edb92bc6", "ms": 4140}
+{"text": "Entonces un trozo de tortilla, por favor.", "voice": "m", "id": "27efb2ea36b6", "ms": 3229}
+{"text": "Perfecto. Siéntate donde quieras, ahora te lo llevo.", "voice": "f", "id": "a07c1c526b7e", "ms": 3472}
+{"text": "¿Qué tal estás? ¡Hace mucho tiempo que no nos vemos!", "voice": "f", "id": "fcef0b619cf7", "ms": 3323}
+{"text": "En una escuela de idiomas. Enseño alemán a adultos.", "voice": "m", "id": "8698764f2281", "ms": 3669}
+{"text": "¿Y es difícil enseñar alemán? Dicen que es un idioma muy complicado.", "voice": "f", "id": "2245ccb2565e", "ms": 4887}
+{"text": "Pues te recomiendo ver series en inglés con subtítulos. A mí me ayudó mucho.", "voice": "m", "id": "8c2bca51a9a3", "ms": 5215}
+{"text": "Enseguida.", "voice": "f", "id": "9b5f49723fa8", "ms": 1009}
+{"text": "¿Y qué haces en tu tiempo libre?", "voice": "m", "id": "1adf5285851a", "ms": 2542}
+{"text": "Pues ven conmigo el domingo. Vamos a un pueblo muy bonito en la sierra.", "voice": "f", "id": "d0c486aa327e", "ms": 4624}
+{"text": "Eso me gusta más. ¿A qué hora salís?", "voice": "m", "id": "fbcaa8d1bc4f", "ms": 2718}
+{"text": "¡Genial! Lleva zapatos cómodos y una chaqueta, porque en la montaña hace frío.", "voice": "f", "id": "c801e56f07c4", "ms": 5029}
+{"text": "¡Entonces espero que llueva!", "voice": "m", "id": "6f0389e20626", "ms": 2082}
+{"text": "Son ocho euros con cincuenta.", "voice": "f", "id": "eb2f216c5cc5", "ms": 2298}
+{"text": "Trato hecho.", "voice": "m", "id": "706642b68626", "ms": 1203}
+{"text": "Tomamos el tren de alta velocidad en Madrid y el viaje duró solo dos horas y media.", "voice": "f", "id": "eb2690ff2ac9", "ms": 5710}
+{"text": "Fuimos directamente al hotel, pero allí tuvimos el primer problema.", "voice": "f", "id": "c544dc5af366", "ms": 4342}
+{"text": "Después de diez minutos, la recepcionista sonrió.", "voice": "f", "id": "0f1e7c4e52a0", "ms": 3647}
+{"text": "Por la tarde, cuando el sol ya no quemaba tanto, salimos a pasear.", "voice": "f", "id": "e38474a9dd15", "ms": 4396}
+{"text": "Luego subimos a la Giralda, la torre de la catedral.", "voice": "f", "id": "7d8922c2c990", "ms": 3424}
+{"text": "Pedimos tortilla, croquetas, jamón y un gazpacho muy frío.", "voice": "f", "id": "1505a571a31d", "ms": 4187}
+{"text": "Por la noche la temperatura era mucho más agradable y había mucha gente en la calle.", "voice": "f", "id": "5f27a21383cf", "ms": 5556}
+{"text": "Una señora mayor se sentó a mi lado y empezamos a hablar.", "voice": "f", "id": "e0456d18b8c7", "ms": 4070}
+{"text": "Antes de irse, me dio un consejo: —Esta noche id a ver flamenco al barrio de Triana.", "voice": "f", "id": "6d750c38a59c", "ms": 5537}
+{"text": "No había escenario, solo unas sillas, una guitarra y una bailaora.", "voice": "f", "id": "8502d6694906", "ms": 4553}
+{"text": "Al terminar, la bailaora nos explicó que bailaba desde los seis años.", "voice": "f", "id": "2d5f4df4f01c", "ms": 4724}
+{"text": "En el tren de vuelta, Daniel me preguntó: —¿Volvemos el año que viene?", "voice": "f", "id": "4bc63ba837db", "ms": 4541}
+{"text": "Sí, soy yo. Usted debe de ser Laura, ¿verdad?", "voice": "m", "id": "d1ee0e88a3dc", "ms": 3169}
+{"text": "¡Menos mal! Tengo muchas cajas llenas de libros.", "voice": "f", "id": "eee24ba6ffa6", "ms": 3254}
+{"text": "Sí, todo es nuevo. También hay lavadora, pero no hay lavavajillas.", "voice": "m", "id": "df40e7d9ec4c", "ms": 4100}
+{"text": "¡Qué bonito! Y ese balcón, ¿también es del piso?", "voice": "f", "id": "1e6918ce94ae", "ms": 3191}
+{"text": "Dos. El grande tiene un armario empotrado, y el pequeño puede ser un despacho.", "voice": "m", "id": "48b7c319cccf", "ms": 5241}
+{"text": "Está muy limpio. ¿Es un barrio tranquilo?", "voice": "f", "id": "6d2f8a75d12d", "ms": 2891}
+{"text": "Sí, a diez minutos andando hay un parque muy grande con un lago.", "voice": "m", "id": "516591b98863", "ms": 4337}
+{"text": "¿Y la luz y el agua?", "voice": "f", "id": "4874df3a82c1", "ms": 1749}
+{"text": "Sí, dos meses de fianza. Es lo normal.", "voice": "m", "id": "67d77e532057", "ms": 2840}
+{"text": "¿Y los vecinos? ¿Cómo son?", "voice": "f", "id": "10982d5dfb36", "ms": 1955}
+{"text": "A veces juegan un poco por la tarde, pero nada grave.", "voice": "m", "id": "9cd016b1f695", "ms": 3718}
+{"text": "Entonces no quiero esperar mucho. ¿Puedo darle una respuesta mañana por la mañana?", "voice": "f", "id": "6d8f92b1d547", "ms": 5617}
+{"text": "De nada. Hasta mañana, Laura.", "voice": "m", "id": "87ba16eee870", "ms": 2293}
+{"text": "Allí no hacía tanto calor como en la ciudad, y todo era verde.", "voice": "m", "id": "1d0fad6d924e", "ms": 4194}
+{"text": "Pero el animal más importante de la casa era Lobo, su perro.", "voice": "m", "id": "b67200a9eddd", "ms": 4153}
+{"text": "Todas las mañanas me despertaba con su nariz fría.", "voice": "m", "id": "96604fbc69cf", "ms": 3887}
+{"text": "A veces bajábamos al río y yo me bañaba en el agua helada.", "voice": "m", "id": "6082086ed23e", "ms": 4055}
+{"text": "Su especialidad era la fabada, un plato típico de Asturias con judías y chorizo.", "voice": "m", "id": "64b1fe3a150e", "ms": 5579}
+{"text": "Por la noche, nos sentábamos fuera y mi abuela me contaba historias.", "voice": "m", "id": "9d67363a820d", "ms": 4625}
+{"text": "Ella conoció a mi abuelo en una de esas fiestas.", "voice": "m", "id": "2ddf22c31b65", "ms": 3423}
+{"text": "Lobo, mientras tanto, dormía tranquilo junto a la puerta.", "voice": "m", "id": "78239d3a4e71", "ms": 3942}
+{"text": "Yo lloré toda la noche.", "voice": "m", "id": "7caeda71f04a", "ms": 2168}
+{"text": "Mi abuela le preparó un plato enorme de comida y yo lo abracé muy fuerte.", "voice": "m", "id": "ed75137d7ad6", "ms": 4793}
+{"text": "Ahora soy adulto y vivo en la ciudad.", "voice": "m", "id": "1e46557dc962", "ms": 2568}
+{"text": "¡Buenos días, doña Elena! ¿Qué le pongo hoy?", "voice": "m", "id": "e3fe0614face", "ms": 3162}
+{"text": "Seis: mis dos hijos, sus mujeres y los dos nietos. Bueno, siete conmigo.", "voice": "f", "id": "d4921ea3b4ae", "ms": 4887}
+{"text": "A dos euros y medio el kilo.", "voice": "m", "id": "4a7c01c6ea16", "ms": 2340}
+{"text": "Sí, una lechuga y una cebolla roja.", "voice": "f", "id": "19e6f674e0ef", "ms": 2590}
+{"text": "A los niños nunca les gusta la cebolla. Mi hija es igual.", "voice": "m", "id": "c55ddf2f1a2d", "ms": 4154}
+{"text": "¿Cuánto cuestan las fresas?", "voice": "f", "id": "fc3a6b27452b", "ms": 1867}
+{"text": "¿Y para la ensalada no quiere aguacate? Hoy tengo unos aguacates muy buenos.", "voice": "m", "id": "698aaf7505d2", "ms": 5174}
+{"text": "Es verdad, están perfectos. Póngame dos.", "voice": "f", "id": "0bb5e5918f15", "ms": 3000}
+{"text": "Medio kilo son solo tres naranjas. ¿Le pongo un kilo?", "voice": "m", "id": "c112f6d874b3", "ms": 3812}
+{"text": "En total, diecisiete euros con veinte.", "voice": "m", "id": "5a6738b488cd", "ms": 3010}
+{"text": "Gracias a usted, Paco. Por cierto, ¿cómo está su mujer?", "voice": "f", "id": "fb62d4608f49", "ms": 3765}
+{"text": "Sí, ya camina sin muletas. El médico dice que está casi recuperada.", "voice": "m", "id": "101b777cffeb", "ms": 4962}
+{"text": "Gracias. ¡Hasta el sábado, Paco!", "voice": "f", "id": "f28673a80071", "ms": 2369}
+{"text": "dieciocho", "voice": "f", "id": "ee920eb4e0cb", "ms": 952}
+{"text": "veintidós", "voice": "f", "id": "13c26e7a7928", "ms": 945}
+{"text": "veinticinco", "voice": "f", "id": "29fde087be64", "ms": 1042}
+{"text": "veintiocho", "voice": "f", "id": "e26a734ff226", "ms": 952}
+{"text": "treinta y dos", "voice": "f", "id": "912e04895c4b", "ms": 1153}
+{"text": "treinta y cinco", "voice": "f", "id": "8e61750e6709", "ms": 1177}
+{"text": "treinta y ocho", "voice": "f", "id": "4c27be00a312", "ms": 1196}
+{"text": "cuarenta y dos", "voice": "f", "id": "5348d303c845", "ms": 1248}
+{"text": "cuarenta y cinco", "voice": "f", "id": "d1ca89c04d23", "ms": 1274}
+{"text": "cuarenta y ocho", "voice": "f", "id": "d1519131c9eb", "ms": 1295}
+{"text": "cincuenta y dos", "voice": "f", "id": "3115bfd101a0", "ms": 1372}
+{"text": "cincuenta y cinco", "voice": "f", "id": "d27f1858b9d4", "ms": 1320}
+{"text": "cincuenta y ocho", "voice": "f", "id": "9bec520eba2f", "ms": 1344}
+{"text": "sesenta y uno", "voice": "f", "id": "7397fb67309c", "ms": 1220}
+{"text": "sesenta y cuatro", "voice": "f", "id": "5a7ca93ea56b", "ms": 1298}
+{"text": "sesenta y siete", "voice": "f", "id": "514a9b4c16c2", "ms": 1272}
+{"text": "setenta", "voice": "f", "id": "8fd4779b5c32", "ms": 892}
+{"text": "setenta y tres", "voice": "f", "id": "34fbdf3580f0", "ms": 1236}
+{"text": "setenta y seis", "voice": "f", "id": "76eacec4060d", "ms": 1207}
+{"text": "setenta y nueve", "voice": "f", "id": "616c3fd72f03", "ms": 1272}
+{"text": "ochenta y dos", "voice": "f", "id": "e2cebc5c8164", "ms": 1222}
+{"text": "ochenta y cinco", "voice": "f", "id": "dce064fd2774", "ms": 1246}
+{"text": "ochenta y ocho", "voice": "f", "id": "cec1df3ca73d", "ms": 1269}
+{"text": "noventa y uno", "voice": "f", "id": "efac7e28a394", "ms": 1219}
+{"text": "noventa y cuatro", "voice": "f", "id": "6c5d7aabe95d", "ms": 1320}
+{"text": "noventa y siete", "voice": "f", "id": "30906c798d7c", "ms": 1319}
+{"text": "la guitarra", "voice": "f", "id": "1637e8ed6e15", "ms": 871}
+{"text": "el perro, la guitarra, la radio, arriba", "voice": "f", "id": "b832c409e347", "ms": 2650}
+{"text": "el ajo", "voice": "f", "id": "e3473542f1fc", "ms": 759}
+{"text": "el niño, mañana, España, el año", "voice": "f", "id": "02c5d8ab47a5", "ms": 2519}
+{"text": "la calle, llamar, yo, la playa", "voice": "f", "id": "caa08092a391", "ms": 2078}
+{"text": "el zapato, la cerveza, cinco, la plaza", "voice": "f", "id": "f5cd2669b4b8", "ms": 2924}
+{"text": "hola, hoy, el hombre, hablar", "voice": "f", "id": "d20588e6e2b5", "ms": 1856}
+{"text": "Ahora hablo con mi madre.", "voice": "f", "id": "f022a0756e85", "ms": 1730}
+{"text": "Mañana viajo a Madrid.", "voice": "f", "id": "adfb70dbae08", "ms": 1594}
+{"text": "Ya he terminado.", "voice": "f", "id": "7001aef3149d", "ms": 1156}
+{"text": "Viví dos años en Sevilla.", "voice": "f", "id": "0d70d2c7cfab", "ms": 2074}
+{"text": "Leía cuando sonó el teléfono.", "voice": "f", "id": "3150ec8c53bf", "ms": 2078}
+{"text": "El año que viene viajaré a Chile.", "voice": "f", "id": "a96297a4cae3", "ms": 2225}
+{"text": "Yo en tu lugar estudiaría más.", "voice": "f", "id": "2ff1d0aae179", "ms": 2203}
+{"text": "Quiero que vengas.", "voice": "f", "id": "296ab844ed21", "ms": 1230}
+{"text": "Cuando llegues, llámame.", "voice": "f", "id": "dc109ff89168", "ms": 1493}
+{"text": "Habla como si fuera el jefe.", "voice": "f", "id": "dd04c0fb39ee", "ms": 1908}
+{"text": "¡Comamos juntos!", "voice": "f", "id": "9fc3f302f4a2", "ms": 1211}
+{"text": "bailar", "voice": "f", "id": "2645b7e1200a", "ms": 667}
+{"text": "recibir", "voice": "f", "id": "4b35e61bf1cd", "ms": 817}
+{"text": "poner", "voice": "f", "id": "098af5f8bc2d", "ms": 658}
+{"text": "contar", "voice": "f", "id": "7ba84d38f687", "ms": 750}
+{"text": "repetir", "voice": "f", "id": "4459903ea1a9", "ms": 822}
+{"text": "hablas", "voice": "f", "id": "c6407c8677d1", "ms": 648}
+{"text": "habláis", "voice": "f", "id": "42979cd94b0c", "ms": 744}
+{"text": "has hablado", "voice": "f", "id": "8f0f104408bb", "ms": 901}
+{"text": "habéis hablado", "voice": "f", "id": "436154f5e84e", "ms": 1095}
+{"text": "hablaste", "voice": "f", "id": "9e8946952857", "ms": 865}
+{"text": "hablábamos", "voice": "f", "id": "fe6e65dab318", "ms": 911}
+{"text": "había hablado", "voice": "f", "id": "0c62965e1aab", "ms": 1020}
+{"text": "hablarás", "voice": "f", "id": "3d4d8de00d02", "ms": 760}
+{"text": "hablaréis", "voice": "f", "id": "6d04508d5bbc", "ms": 854}
+{"text": "hablarías", "voice": "f", "id": "b36fa39309bc", "ms": 830}
+{"text": "hablarían", "voice": "f", "id": "816b90b7933c", "ms": 827}
+{"text": "hablemos", "voice": "f", "id": "17bef7f52fa9", "ms": 768}
+{"text": "hablara", "voice": "f", "id": "8d7228832632", "ms": 713}
+{"text": "hablarais", "voice": "f", "id": "e92c89cf5f1f", "ms": 838}
+{"text": "trabajo", "voice": "f", "id": "b951c1e2c3db", "ms": 816}
+{"text": "trabajamos", "voice": "f", "id": "a3f1a51181eb", "ms": 966}
+{"text": "he trabajado", "voice": "f", "id": "c25f54c986de", "ms": 1074}
+{"text": "hemos trabajado", "voice": "f", "id": "cb6037919e98", "ms": 1194}
+{"text": "trabajé", "voice": "f", "id": "cc4ca7c62585", "ms": 815}
+{"text": "trabajasteis", "voice": "f", "id": "0982b672cc3d", "ms": 1154}
+{"text": "trabajabas", "voice": "f", "id": "935ef5aab92d", "ms": 986}
+{"text": "trabajaban", "voice": "f", "id": "4e04154f2e1c", "ms": 957}
+{"text": "habíamos trabajado", "voice": "f", "id": "99a6b68666a2", "ms": 1342}
+{"text": "trabajaré", "voice": "f", "id": "9c88674aaa34", "ms": 907}
+{"text": "trabajaremos", "voice": "f", "id": "dff9b8543aca", "ms": 1083}
+{"text": "trabajaría", "voice": "f", "id": "7f37074c3c63", "ms": 1002}
+{"text": "trabajaríais", "voice": "f", "id": "6ca3fd45baab", "ms": 1123}
+{"text": "trabajes", "voice": "f", "id": "2ef22733bc11", "ms": 866}
+{"text": "trabajen", "voice": "f", "id": "b139678f8838", "ms": 841}
+{"text": "trabajáramos", "voice": "f", "id": "d1cfdbeed00b", "ms": 1082}
+{"text": "trabajad", "voice": "f", "id": "65b633580315", "ms": 892}
+{"text": "estudia", "voice": "f", "id": "0f877c8de167", "ms": 807}
+{"text": "estudian", "voice": "f", "id": "4a3c5b4e82ca", "ms": 831}
+{"text": "ha estudiado", "voice": "f", "id": "78a3ca12c016", "ms": 1016}
+{"text": "han estudiado", "voice": "f", "id": "ec047127d7ae", "ms": 1016}
+{"text": "estudió", "voice": "f", "id": "7e9a6ea6d121", "ms": 832}
+{"text": "estudiaba", "voice": "f", "id": "e64d1df94fa3", "ms": 968}
+{"text": "estudiabais", "voice": "f", "id": "3fed2aff31ae", "ms": 1025}
+{"text": "habías estudiado", "voice": "f", "id": "0228bdbda5da", "ms": 1269}
+{"text": "habían estudiado", "voice": "f", "id": "3a1448730869", "ms": 1197}
+{"text": "estudiará", "voice": "f", "id": "aa35a167d54c", "ms": 903}
+{"text": "estudiarán", "voice": "f", "id": "f18e84c04fb5", "ms": 904}
+{"text": "estudiaríamos", "voice": "f", "id": "172cdb04008d", "ms": 1125}
+{"text": "estudie", "voice": "f", "id": "7de6a61a3bbb", "ms": 784}
+{"text": "estudiéis", "voice": "f", "id": "20b11c4df161", "ms": 955}
+{"text": "estudiaras", "voice": "f", "id": "a7506655dda3", "ms": 1000}
+{"text": "estudiaran", "voice": "f", "id": "9f4aa6ee60f6", "ms": 928}
+{"text": "cantas", "voice": "f", "id": "91f8fed4e785", "ms": 749}
+{"text": "cantáis", "voice": "f", "id": "96861d7dcfee", "ms": 870}
+{"text": "has cantado", "voice": "f", "id": "4fd071ffc811", "ms": 994}
+{"text": "habéis cantado", "voice": "f", "id": "490b2f24dd9d", "ms": 1183}
+{"text": "cantaste", "voice": "f", "id": "3d6ee848001e", "ms": 965}
+{"text": "cantaron", "voice": "f", "id": "715721e0b274", "ms": 844}
+{"text": "cantábamos", "voice": "f", "id": "e1e0d52c0733", "ms": 1011}
+{"text": "había cantado", "voice": "f", "id": "55eb0314e742", "ms": 1134}
+{"text": "cantarás", "voice": "f", "id": "2c42c751a594", "ms": 870}
+{"text": "cantaréis", "voice": "f", "id": "f75877d234dd", "ms": 941}
+{"text": "cantarías", "voice": "f", "id": "3e005f439c9e", "ms": 942}
+{"text": "cantarían", "voice": "f", "id": "7d3284adefb3", "ms": 932}
+{"text": "cantemos", "voice": "f", "id": "5c3ae65154ad", "ms": 845}
+{"text": "cantara", "voice": "f", "id": "140f7b9306a8", "ms": 840}
+{"text": "cantarais", "voice": "f", "id": "b10abbecbd23", "ms": 941}
+{"text": "bailo", "voice": "f", "id": "d040400b264c", "ms": 669}
+{"text": "bailamos", "voice": "f", "id": "95824c91e7c8", "ms": 811}
+{"text": "he bailado", "voice": "f", "id": "58aba9def2c4", "ms": 846}
+{"text": "hemos bailado", "voice": "f", "id": "9329ea95abd1", "ms": 1069}
+{"text": "bailasteis", "voice": "f", "id": "b3de00782226", "ms": 1004}
+{"text": "bailabas", "voice": "f", "id": "ce78e23c2750", "ms": 816}
+{"text": "bailaban", "voice": "f", "id": "b8249ed3b28f", "ms": 755}
+{"text": "habíamos bailado", "voice": "f", "id": "d6bdf4eb394d", "ms": 1218}
+{"text": "bailaré", "voice": "f", "id": "d40b6250ba8d", "ms": 755}
+{"text": "bailaremos", "voice": "f", "id": "3ca264f80534", "ms": 917}
+{"text": "bailaría", "voice": "f", "id": "a645d3cccdfb", "ms": 847}
+{"text": "bailes", "voice": "f", "id": "1e5076239312", "ms": 695}
+{"text": "bailen", "voice": "f", "id": "808793bcaf91", "ms": 668}
+{"text": "bailáramos", "voice": "f", "id": "450c92139faf", "ms": 978}
+{"text": "bailad", "voice": "f", "id": "92525c0b37ce", "ms": 698}
+{"text": "compra", "voice": "f", "id": "ab2fa864116c", "ms": 701}
+{"text": "compran", "voice": "f", "id": "3400ec73f100", "ms": 727}
+{"text": "ha comprado", "voice": "f", "id": "75186aee2fca", "ms": 923}
+{"text": "han comprado", "voice": "f", "id": "2c7d44ea6ec9", "ms": 991}
+{"text": "compró", "voice": "f", "id": "8da1d775cf3e", "ms": 724}
+{"text": "compraba", "voice": "f", "id": "6451770969cb", "ms": 840}
+{"text": "comprabais", "voice": "f", "id": "13c03537c443", "ms": 987}
+{"text": "habías comprado", "voice": "f", "id": "3720baff7104", "ms": 1195}
+{"text": "habían comprado", "voice": "f", "id": "d03156ec2bc7", "ms": 1170}
+{"text": "comprará", "voice": "f", "id": "eb62106c5571", "ms": 809}
+{"text": "comprarán", "voice": "f", "id": "271baf79e940", "ms": 843}
+{"text": "compraríamos", "voice": "f", "id": "2cbe6c39f59f", "ms": 1042}
+{"text": "compre", "voice": "f", "id": "3fc5ef53385b", "ms": 700}
+{"text": "compréis", "voice": "f", "id": "a1f5e44f7e36", "ms": 820}
+{"text": "compraras", "voice": "f", "id": "eb7ff9d1cb92", "ms": 916}
+{"text": "compraran", "voice": "f", "id": "784fd291b35d", "ms": 866}
+{"text": "escuchas", "voice": "f", "id": "750ee4706bab", "ms": 838}
+{"text": "escucháis", "voice": "f", "id": "57d361c92305", "ms": 931}
+{"text": "has escuchado", "voice": "f", "id": "df9c6190d183", "ms": 1081}
+{"text": "habéis escuchado", "voice": "f", "id": "9a311007c558", "ms": 1270}
+{"text": "escuchaste", "voice": "f", "id": "80967ebe5837", "ms": 1029}
+{"text": "escucharon", "voice": "f", "id": "caa8d109b746", "ms": 953}
+{"text": "escuchábamos", "voice": "f", "id": "9860e3cc0c8c", "ms": 1094}
+{"text": "había escuchado", "voice": "f", "id": "1c46b2af1810", "ms": 1149}
+{"text": "habíais escuchado", "voice": "f", "id": "662913b6782a", "ms": 1245}
+{"text": "escucharás", "voice": "f", "id": "1d7b8d4e98cc", "ms": 956}
+{"text": "escucharéis", "voice": "f", "id": "c2cff3bae5af", "ms": 1050}
+{"text": "escucharías", "voice": "f", "id": "efb7ee173bb1", "ms": 1025}
+{"text": "escucharían", "voice": "f", "id": "03f70b9aa7fd", "ms": 1018}
+{"text": "escuchemos", "voice": "f", "id": "c57574e8ae52", "ms": 981}
+{"text": "escuchara", "voice": "f", "id": "a9fb2456c3fd", "ms": 928}
+{"text": "escucharais", "voice": "f", "id": "81813efccb69", "ms": 993}
+{"text": "como", "voice": "f", "id": "d786b24d8539", "ms": 622}
+{"text": "comemos", "voice": "f", "id": "a5a7ab4c462c", "ms": 746}
+{"text": "he comido", "voice": "f", "id": "57929c2ad29b", "ms": 865}
+{"text": "hemos comido", "voice": "f", "id": "dd8cf983480c", "ms": 978}
+{"text": "comí", "voice": "f", "id": "74fe77b9a9b5", "ms": 605}
+{"text": "comimos", "voice": "f", "id": "53427bc9a0a0", "ms": 822}
+{"text": "comía", "voice": "f", "id": "d9e12918dd55", "ms": 717}
+{"text": "comíais", "voice": "f", "id": "5f3aaa25d7f9", "ms": 794}
+{"text": "habías comido", "voice": "f", "id": "6030b75b03fb", "ms": 1072}
+{"text": "habían comido", "voice": "f", "id": "de2af0f612e4", "ms": 1097}
+{"text": "comerá", "voice": "f", "id": "9be1a7786796", "ms": 717}
+{"text": "comerán", "voice": "f", "id": "fb2b50414472", "ms": 719}
+{"text": "comeríamos", "voice": "f", "id": "2b40a131a571", "ms": 943}
+{"text": "coma", "voice": "f", "id": "cc31d3a3ca8c", "ms": 626}
+{"text": "comáis", "voice": "f", "id": "8a56d9038266", "ms": 772}
+{"text": "comieras", "voice": "f", "id": "11db15a341c7", "ms": 822}
+{"text": "comieran", "voice": "f", "id": "647946d4b725", "ms": 745}
+{"text": "bebes", "voice": "f", "id": "e75d15dcd06b", "ms": 666}
+{"text": "bebéis", "voice": "f", "id": "1b28607c7468", "ms": 735}
+{"text": "has bebido", "voice": "f", "id": "bb0d8b10e08c", "ms": 880}
+{"text": "habéis bebido", "voice": "f", "id": "1680e555c815", "ms": 1072}
+{"text": "bebiste", "voice": "f", "id": "48d9b7a01931", "ms": 879}
+{"text": "bebisteis", "voice": "f", "id": "34475f947cdf", "ms": 906}
+{"text": "bebías", "voice": "f", "id": "3d1c0a252f4f", "ms": 756}
+{"text": "bebían", "voice": "f", "id": "ec0dd5251cc3", "ms": 729}
+{"text": "habíamos bebido", "voice": "f", "id": "396c567051f2", "ms": 1170}
+{"text": "beberé", "voice": "f", "id": "29ad0b82a593", "ms": 663}
+{"text": "beberemos", "voice": "f", "id": "e2f1585eaa95", "ms": 881}
+{"text": "bebería", "voice": "f", "id": "ede84e453ff3", "ms": 798}
+{"text": "beberíais", "voice": "f", "id": "f4d3d68acc0a", "ms": 900}
+{"text": "bebas", "voice": "f", "id": "9c1970b43f49", "ms": 686}
+{"text": "beban", "voice": "f", "id": "4278f80a43a8", "ms": 640}
+{"text": "bebiéramos", "voice": "f", "id": "08c00816a85f", "ms": 905}
+{"text": "bebed", "voice": "f", "id": "05f93176d27b", "ms": 690}
+{"text": "aprende", "voice": "f", "id": "db49396100d9", "ms": 782}
+{"text": "aprenden", "voice": "f", "id": "7b03e9bdc9ec", "ms": 760}
+{"text": "han aprendido", "voice": "f", "id": "a65781c2b1e1", "ms": 1029}
+{"text": "aprendió", "voice": "f", "id": "9bd813207bbd", "ms": 833}
+{"text": "aprendieron", "voice": "f", "id": "982f95b9e71d", "ms": 908}
+{"text": "aprendíamos", "voice": "f", "id": "1b87d97b7253", "ms": 1030}
+{"text": "había aprendido", "voice": "f", "id": "4d7f8c6cba3b", "ms": 1148}
+{"text": "habíais aprendido", "voice": "f", "id": "36525ab9a4e6", "ms": 1220}
+{"text": "aprenderás", "voice": "f", "id": "c021c27cc292", "ms": 907}
+{"text": "aprenderéis", "voice": "f", "id": "8ae32bdbbe2e", "ms": 978}
+{"text": "aprenderías", "voice": "f", "id": "1607dadce3d0", "ms": 981}
+{"text": "aprenderían", "voice": "f", "id": "797cd1bb7e4c", "ms": 971}
+{"text": "aprendamos", "voice": "f", "id": "09ff81a88507", "ms": 908}
+{"text": "aprendiera", "voice": "f", "id": "c5b4285de85e", "ms": 925}
+{"text": "aprendierais", "voice": "f", "id": "671623c1f357", "ms": 981}
+{"text": "vendo", "voice": "f", "id": "cb9c5f7834cc", "ms": 667}
+{"text": "vendemos", "voice": "f", "id": "7c02da4f5ec5", "ms": 832}
+{"text": "he vendido", "voice": "f", "id": "19c9601333dd", "ms": 846}
+{"text": "hemos vendido", "voice": "f", "id": "1dfb3586e708", "ms": 1072}
+{"text": "vendí", "voice": "f", "id": "e2bb72fbc42e", "ms": 658}
+{"text": "vendimos", "voice": "f", "id": "d213483103bf", "ms": 856}
+{"text": "vendía", "voice": "f", "id": "b13c32edaf35", "ms": 775}
+{"text": "vendíais", "voice": "f", "id": "7181e6a7fb7b", "ms": 879}
+{"text": "habías vendido", "voice": "f", "id": "6224c2e3454b", "ms": 1169}
+{"text": "habían vendido", "voice": "f", "id": "95c8da8d8449", "ms": 1108}
+{"text": "venderá", "voice": "f", "id": "61fa8aeb4d91", "ms": 755}
+{"text": "venderán", "voice": "f", "id": "5caf7c0ff9bc", "ms": 756}
+{"text": "venderíamos", "voice": "f", "id": "0a09362d68f3", "ms": 990}
+{"text": "venda", "voice": "f", "id": "16dbbefc42ca", "ms": 669}
+{"text": "vendáis", "voice": "f", "id": "4bfb14f0de3d", "ms": 832}
+{"text": "vendieras", "voice": "f", "id": "bc6e16c9cf98", "ms": 856}
+{"text": "vendieran", "voice": "f", "id": "752247b85de1", "ms": 827}
+{"text": "corres", "voice": "f", "id": "188bd512bfc3", "ms": 701}
+{"text": "corréis", "voice": "f", "id": "ebf3c2a3ab79", "ms": 772}
+{"text": "has corrido", "voice": "f", "id": "a7e55d9e9890", "ms": 878}
+{"text": "habéis corrido", "voice": "f", "id": "20449b7672d1", "ms": 1056}
+{"text": "corriste", "voice": "f", "id": "68f381e27054", "ms": 892}
+{"text": "corristeis", "voice": "f", "id": "c0640222f66a", "ms": 944}
+{"text": "corrías", "voice": "f", "id": "a7389276d0cd", "ms": 797}
+{"text": "corrían", "voice": "f", "id": "7fd1f858a2d2", "ms": 769}
+{"text": "habíamos corrido", "voice": "f", "id": "6ebb0676eb36", "ms": 1146}
+{"text": "correré", "voice": "f", "id": "12c7ab3e96e5", "ms": 720}
+{"text": "correremos", "voice": "f", "id": "db415b1e84eb", "ms": 919}
+{"text": "correría", "voice": "f", "id": "1406ab9fbc55", "ms": 794}
+{"text": "correríais", "voice": "f", "id": "1b42183ce641", "ms": 938}
+{"text": "corras", "voice": "f", "id": "5a84a482f82f", "ms": 701}
+{"text": "corran", "voice": "f", "id": "ce10708b5e0e", "ms": 676}
+{"text": "corriéramos", "voice": "f", "id": "8ec0adcf4dc3", "ms": 968}
+{"text": "corred", "voice": "f", "id": "badc33ce33a8", "ms": 720}
+{"text": "vive", "voice": "f", "id": "02911d2dcc20", "ms": 621}
+{"text": "viven", "voice": "f", "id": "27af6dcbc03b", "ms": 670}
+{"text": "ha vivido", "voice": "f", "id": "367ce833f4ac", "ms": 817}
+{"text": "han vivido", "voice": "f", "id": "d51c0ee53333", "ms": 904}
+{"text": "vivió", "voice": "f", "id": "5f3d648e038e", "ms": 656}
+{"text": "vivía", "voice": "f", "id": "1064b8ea6788", "ms": 738}
+{"text": "habías vivido", "voice": "f", "id": "b6e5cb64ad2b", "ms": 1121}
+{"text": "habían vivido", "voice": "f", "id": "5710a48c711a", "ms": 1072}
+{"text": "vivirá", "voice": "f", "id": "eaabc4c31806", "ms": 715}
+{"text": "vivirán", "voice": "f", "id": "c70859840484", "ms": 731}
+{"text": "viviríamos", "voice": "f", "id": "8b5ff4f0ad8c", "ms": 967}
+{"text": "viva", "voice": "f", "id": "454b09840717", "ms": 645}
+{"text": "viváis", "voice": "f", "id": "3b1c38f2fc8e", "ms": 757}
+{"text": "vivieras", "voice": "f", "id": "7dccf9a21af2", "ms": 806}
+{"text": "vivieran", "voice": "f", "id": "6f3368b10f2c", "ms": 778}
+{"text": "recibes", "voice": "f", "id": "cf514cd30f88", "ms": 819}
+{"text": "recibís", "voice": "f", "id": "59fbdcf900b2", "ms": 857}
+{"text": "has recibido", "voice": "f", "id": "a06557b4eff7", "ms": 1047}
+{"text": "habéis recibido", "voice": "f", "id": "2c86df352907", "ms": 1220}
+{"text": "recibiste", "voice": "f", "id": "7c1af82eefed", "ms": 990}
+{"text": "recibieron", "voice": "f", "id": "38ee7f454070", "ms": 938}
+{"text": "recibíamos", "voice": "f", "id": "8b5b75ef6ae3", "ms": 1008}
+{"text": "había recibido", "voice": "f", "id": "45b8a976fe36", "ms": 1169}
+{"text": "habíais recibido", "voice": "f", "id": "17774386fa68", "ms": 1196}
+{"text": "recibirás", "voice": "f", "id": "deb27ca882d6", "ms": 938}
+{"text": "recibiréis", "voice": "f", "id": "cea57a7bfd5b", "ms": 987}
+{"text": "recibirías", "voice": "f", "id": "472d7d74fc29", "ms": 1008}
+{"text": "recibirían", "voice": "f", "id": "0c5d308f2b3e", "ms": 1004}
+{"text": "recibamos", "voice": "f", "id": "731942e4219a", "ms": 917}
+{"text": "recibiera", "voice": "f", "id": "11ec5c700617", "ms": 909}
+{"text": "recibierais", "voice": "f", "id": "de1c94ac38ac", "ms": 1012}
+{"text": "comparto", "voice": "f", "id": "791e24ede3d4", "ms": 918}
+{"text": "hemos compartido", "voice": "f", "id": "2198b7b380ef", "ms": 1247}
+{"text": "compartí", "voice": "f", "id": "26db84955270", "ms": 845}
+{"text": "compartisteis", "voice": "f", "id": "ada81430e839", "ms": 1138}
+{"text": "compartías", "voice": "f", "id": "df2e896ffd29", "ms": 992}
+{"text": "compartían", "voice": "f", "id": "e841dc13e8da", "ms": 962}
+{"text": "habíamos compartido", "voice": "f", "id": "5ee3d440036a", "ms": 1381}
+{"text": "compartiré", "voice": "f", "id": "3271290ec552", "ms": 962}
+{"text": "compartiremos", "voice": "f", "id": "4a4660dce6e1", "ms": 1162}
+{"text": "compartiría", "voice": "f", "id": "96295de350db", "ms": 1030}
+{"text": "compartiríais", "voice": "f", "id": "6a2cf98266a2", "ms": 1173}
+{"text": "compartas", "voice": "f", "id": "8522d5bbcd93", "ms": 922}
+{"text": "compartan", "voice": "f", "id": "be930ed6b1e5", "ms": 917}
+{"text": "compartiéramos", "voice": "f", "id": "1446386545cc", "ms": 1187}
+{"text": "compartid", "voice": "f", "id": "078289f26115", "ms": 944}
+{"text": "decide", "voice": "f", "id": "115f6482d6c2", "ms": 757}
+{"text": "deciden", "voice": "f", "id": "d807af9c0457", "ms": 758}
+{"text": "ha decidido", "voice": "f", "id": "15d39a69749a", "ms": 921}
+{"text": "han decidido", "voice": "f", "id": "df06520cbd39", "ms": 980}
+{"text": "decidió", "voice": "f", "id": "13aaccbb1549", "ms": 828}
+{"text": "decidía", "voice": "f", "id": "5049abf2a510", "ms": 875}
+{"text": "habías decidido", "voice": "f", "id": "3ef5dcecbbc6", "ms": 1219}
+{"text": "habían decidido", "voice": "f", "id": "30dfd6882f0d", "ms": 1194}
+{"text": "decidirá", "voice": "f", "id": "f2548daa9463", "ms": 875}
+{"text": "decidirán", "voice": "f", "id": "4df4ec9bb239", "ms": 902}
+{"text": "decidiríamos", "voice": "f", "id": "8582ea8ceebf", "ms": 1095}
+{"text": "decida", "voice": "f", "id": "2cff95b7347a", "ms": 756}
+{"text": "decidáis", "voice": "f", "id": "1fc3078130da", "ms": 880}
+{"text": "decidieras", "voice": "f", "id": "282ae0d27d32", "ms": 950}
+{"text": "decidieran", "voice": "f", "id": "d8cebcf6faa8", "ms": 902}
+{"text": "eres", "voice": "f", "id": "7a91493da173", "ms": 600}
+{"text": "sois", "voice": "f", "id": "c5c1295b52c1", "ms": 636}
+{"text": "habéis sido", "voice": "f", "id": "117b34671027", "ms": 962}
+{"text": "fuiste", "voice": "f", "id": "499c035cb1d7", "ms": 788}
+{"text": "fuisteis", "voice": "f", "id": "cadee56dd3ad", "ms": 870}
+{"text": "eras", "voice": "f", "id": "bf90f559d695", "ms": 625}
+{"text": "eran", "voice": "f", "id": "288b130da8ac", "ms": 596}
+{"text": "habíamos sido", "voice": "f", "id": "7d289a846c50", "ms": 1073}
+{"text": "seré", "voice": "f", "id": "0c54d37d217f", "ms": 618}
+{"text": "seremos", "voice": "f", "id": "aa7238ad77fa", "ms": 816}
+{"text": "sería", "voice": "f", "id": "9fa84a64277b", "ms": 717}
+{"text": "seríais", "voice": "f", "id": "5f9caf8e836e", "ms": 793}
+{"text": "seas", "voice": "f", "id": "fbc4dfa9fd2c", "ms": 675}
+{"text": "sean", "voice": "f", "id": "326870269e11", "ms": 626}
+{"text": "fuéramos", "voice": "f", "id": "27c3bb1d8546", "ms": 841}
+{"text": "sé", "voice": "f", "id": "a579ffc18e6e", "ms": 504}
+{"text": "estás", "voice": "f", "id": "5b79f6da1aa3", "ms": 691}
+{"text": "estáis", "voice": "f", "id": "30f6c1d3d40e", "ms": 788}
+{"text": "has estado", "voice": "f", "id": "2ae3ae63b19c", "ms": 956}
+{"text": "habéis estado", "voice": "f", "id": "7961020f853b", "ms": 1072}
+{"text": "estuviste", "voice": "f", "id": "e5e52ba1a90c", "ms": 957}
+{"text": "estuvisteis", "voice": "f", "id": "b22aca452915", "ms": 1070}
+{"text": "estabas", "voice": "f", "id": "951e52f4300d", "ms": 787}
+{"text": "estaban", "voice": "f", "id": "5ee0dac7c2c9", "ms": 732}
+{"text": "habíamos estado", "voice": "f", "id": "50066fc013f4", "ms": 1220}
+{"text": "estaré", "voice": "f", "id": "e4a090fa82a5", "ms": 734}
+{"text": "estaremos", "voice": "f", "id": "dce492d37a8b", "ms": 933}
+{"text": "estaría", "voice": "f", "id": "f39f07c83704", "ms": 806}
+{"text": "estaríais", "voice": "f", "id": "631feab2891a", "ms": 954}
+{"text": "estés", "voice": "f", "id": "4a22a796ba93", "ms": 738}
+{"text": "estén", "voice": "f", "id": "6acbbd83a954", "ms": 665}
+{"text": "estuviéramos", "voice": "f", "id": "bd0a7f6bf1be", "ms": 1055}
+{"text": "estad", "voice": "f", "id": "ab41808937ae", "ms": 669}
+{"text": "van", "voice": "f", "id": "001523f75f0f", "ms": 569}
+{"text": "han ido", "voice": "f", "id": "3008f079fcfc", "ms": 738}
+{"text": "íbamos", "voice": "f", "id": "b0eb7b15fbea", "ms": 742}
+{"text": "había ido", "voice": "f", "id": "8e78b8fabe38", "ms": 895}
+{"text": "habíais ido", "voice": "f", "id": "fb40b5ea4803", "ms": 954}
+{"text": "irás", "voice": "f", "id": "5170800f4810", "ms": 622}
+{"text": "iréis", "voice": "f", "id": "85308ee1fcef", "ms": 695}
+{"text": "irías", "voice": "f", "id": "f0f552bd826a", "ms": 720}
+{"text": "irían", "voice": "f", "id": "f7356c910c06", "ms": 666}
+{"text": "vayamos", "voice": "f", "id": "e9610863c83a", "ms": 804}
+{"text": "ve", "voice": "f", "id": "1a0ba69e31d0", "ms": 454}
+{"text": "tienes", "voice": "f", "id": "ef50d573968d", "ms": 703}
+{"text": "tenéis", "voice": "f", "id": "5982ff1bcd94", "ms": 746}
+{"text": "has tenido", "voice": "f", "id": "273c38749e2a", "ms": 887}
+{"text": "habéis tenido", "voice": "f", "id": "eeb928602a06", "ms": 1080}
+{"text": "tuviste", "voice": "f", "id": "62d78e6d775f", "ms": 867}
+{"text": "tuvisteis", "voice": "f", "id": "969d732109ea", "ms": 944}
+{"text": "tenías", "voice": "f", "id": "6ce76fd68778", "ms": 773}
+{"text": "tenían", "voice": "f", "id": "5cc0a8cdcd54", "ms": 745}
+{"text": "habíamos tenido", "voice": "f", "id": "8e12ae77a282", "ms": 1148}
+{"text": "tendré", "voice": "f", "id": "d54a32658de2", "ms": 720}
+{"text": "tendremos", "voice": "f", "id": "108460a41db4", "ms": 821}
+{"text": "tendría", "voice": "f", "id": "d311be1e6d49", "ms": 814}
+{"text": "tendríais", "voice": "f", "id": "674e7b8aab44", "ms": 941}
+{"text": "tengas", "voice": "f", "id": "491d4c30ce04", "ms": 750}
+{"text": "tengan", "voice": "f", "id": "d67e2c32da35", "ms": 723}
+{"text": "tuviéramos", "voice": "f", "id": "7b10cc369045", "ms": 988}
+{"text": "ten", "voice": "f", "id": "2ba17996455a", "ms": 567}
+{"text": "haces", "voice": "f", "id": "e1062d61b6fd", "ms": 667}
+{"text": "hacéis", "voice": "f", "id": "b7fe40179f7e", "ms": 771}
+{"text": "has hecho", "voice": "f", "id": "4b49978bf1b0", "ms": 883}
+{"text": "habéis hecho", "voice": "f", "id": "b883bbf3804e", "ms": 1049}
+{"text": "hiciste", "voice": "f", "id": "6d3d9efc4b68", "ms": 843}
+{"text": "hicisteis", "voice": "f", "id": "544b7967b840", "ms": 964}
+{"text": "hacías", "voice": "f", "id": "46ea4b6c3ca8", "ms": 816}
+{"text": "hacían", "voice": "f", "id": "d62c5fa0955f", "ms": 769}
+{"text": "habíamos hecho", "voice": "f", "id": "71230cf8109b", "ms": 1146}
+{"text": "haremos", "voice": "f", "id": "77cc9ee4d018", "ms": 750}
+{"text": "haría", "voice": "f", "id": "a9545cd10758", "ms": 675}
+{"text": "haríais", "voice": "f", "id": "1c9ec616da70", "ms": 751}
+{"text": "hagas", "voice": "f", "id": "fdf8798863a1", "ms": 643}
+{"text": "hagan", "voice": "f", "id": "0a1f167110db", "ms": 619}
+{"text": "hiciéramos", "voice": "f", "id": "601bff59a4e7", "ms": 957}
+{"text": "haz", "voice": "f", "id": "0954db1db46a", "ms": 515}
+{"text": "dices", "voice": "f", "id": "b65a1f96911b", "ms": 747}
+{"text": "decís", "voice": "f", "id": "b56b78afe756", "ms": 762}
+{"text": "has dicho", "voice": "f", "id": "43610cb5be32", "ms": 890}
+{"text": "habéis dicho", "voice": "f", "id": "a9f40fd3ee40", "ms": 1079}
+{"text": "dijiste", "voice": "f", "id": "d5b245fc40f4", "ms": 867}
+{"text": "dijisteis", "voice": "f", "id": "148c7cd8de65", "ms": 942}
+{"text": "decías", "voice": "f", "id": "9aad2ac3f212", "ms": 805}
+{"text": "decían", "voice": "f", "id": "551c7d0d89e9", "ms": 782}
+{"text": "habíamos dicho", "voice": "f", "id": "8c4076275d1a", "ms": 1195}
+{"text": "diré", "voice": "f", "id": "0e1153b6663c", "ms": 600}
+{"text": "diremos", "voice": "f", "id": "654cd41e3640", "ms": 770}
+{"text": "diría", "voice": "f", "id": "7a39d01855d7", "ms": 718}
+{"text": "digas", "voice": "f", "id": "762ff483e1f9", "ms": 747}
+{"text": "digan", "voice": "f", "id": "63ac8d3712e6", "ms": 694}
+{"text": "dijéramos", "voice": "f", "id": "5ad25a3c6c47", "ms": 908}
+{"text": "di", "voice": "f", "id": "e3c41acd8cbe", "ms": 492}
+{"text": "puedes", "voice": "f", "id": "042b09725287", "ms": 704}
+{"text": "podéis", "voice": "f", "id": "4c75055ad69b", "ms": 774}
+{"text": "has podido", "voice": "f", "id": "c1a6c94f0956", "ms": 904}
+{"text": "habéis podido", "voice": "f", "id": "7a8af82e4313", "ms": 1080}
+{"text": "pudiste", "voice": "f", "id": "66dc517729a4", "ms": 918}
+{"text": "pudisteis", "voice": "f", "id": "867dcd72fb31", "ms": 945}
+{"text": "podías", "voice": "f", "id": "32fbf8e434bc", "ms": 821}
+{"text": "podían", "voice": "f", "id": "d96581929d07", "ms": 769}
+{"text": "habíamos podido", "voice": "f", "id": "031bd3aeda02", "ms": 1172}
+{"text": "podré", "voice": "f", "id": "51d20b80b6c0", "ms": 696}
+{"text": "podremos", "voice": "f", "id": "97a11e69a243", "ms": 845}
+{"text": "podría", "voice": "f", "id": "2abccc06e943", "ms": 744}
+{"text": "podríais", "voice": "f", "id": "1fa100b2f567", "ms": 867}
+{"text": "puedas", "voice": "f", "id": "304fc549cdb4", "ms": 705}
+{"text": "puedan", "voice": "f", "id": "7feb7bda8194", "ms": 702}
+{"text": "pudiéramos", "voice": "f", "id": "cad70c461f4e", "ms": 991}
+{"text": "poded", "voice": "f", "id": "bc704602033b", "ms": 746}
+{"text": "quiere", "voice": "f", "id": "665bc2512a05", "ms": 651}
+{"text": "quieren", "voice": "f", "id": "079136aa9bce", "ms": 676}
+{"text": "ha querido", "voice": "f", "id": "159e54fe3346", "ms": 803}
+{"text": "han querido", "voice": "f", "id": "99bbe8ef5e7e", "ms": 853}
+{"text": "quiso", "voice": "f", "id": "5944600a8c2f", "ms": 699}
+{"text": "quisieron", "voice": "f", "id": "163291fa5c61", "ms": 818}
+{"text": "queríamos", "voice": "f", "id": "6fc8a6489d93", "ms": 867}
+{"text": "había querido", "voice": "f", "id": "b928b55f9b28", "ms": 1003}
+{"text": "habíais querido", "voice": "f", "id": "0144e9c695af", "ms": 1054}
+{"text": "querrás", "voice": "f", "id": "2bd8202f3c13", "ms": 679}
+{"text": "querréis", "voice": "f", "id": "6a46d5d3f23a", "ms": 773}
+{"text": "querrías", "voice": "f", "id": "a8265be33e4d", "ms": 771}
+{"text": "querrían", "voice": "f", "id": "743bf60728fd", "ms": 743}
+{"text": "queramos", "voice": "f", "id": "3408daf32a4a", "ms": 771}
+{"text": "quisiera", "voice": "f", "id": "3e26c8e4fae4", "ms": 817}
+{"text": "quisierais", "voice": "f", "id": "1140234d5ff5", "ms": 894}
+{"text": "vengo", "voice": "f", "id": "eef078171d9e", "ms": 692}
+{"text": "venimos", "voice": "f", "id": "6c64c858cdc4", "ms": 757}
+{"text": "he venido", "voice": "f", "id": "cbfcf44f51bc", "ms": 755}
+{"text": "hemos venido", "voice": "f", "id": "c17e3fcaada6", "ms": 976}
+{"text": "vine", "voice": "f", "id": "9d1e1d332df3", "ms": 621}
+{"text": "vinimos", "voice": "f", "id": "67c9c1cdb49c", "ms": 806}
+{"text": "venía", "voice": "f", "id": "0ba65c12d7bb", "ms": 718}
+{"text": "veníais", "voice": "f", "id": "f539ef4e5ab3", "ms": 779}
+{"text": "habías venido", "voice": "f", "id": "a393fac08652", "ms": 1073}
+{"text": "habían venido", "voice": "f", "id": "5fcf0b4ab76e", "ms": 1071}
+{"text": "vendrá", "voice": "f", "id": "53f82d1e5d9b", "ms": 730}
+{"text": "vendrán", "voice": "f", "id": "eeda471932b0", "ms": 753}
+{"text": "vendríamos", "voice": "f", "id": "12f8ad57ffb5", "ms": 930}
+{"text": "venga", "voice": "f", "id": "f62650b13f6d", "ms": 693}
+{"text": "vengáis", "voice": "f", "id": "2b122ee1a802", "ms": 830}
+{"text": "vinieras", "voice": "f", "id": "f7b3f5ca6f5b", "ms": 805}
+{"text": "vinieran", "voice": "f", "id": "81a5310765bd", "ms": 753}
+{"text": "pongo", "voice": "f", "id": "005e992202ad", "ms": 697}
+{"text": "ponemos", "voice": "f", "id": "7f416f0db676", "ms": 754}
+{"text": "he puesto", "voice": "f", "id": "5b91018ff28a", "ms": 855}
+{"text": "hemos puesto", "voice": "f", "id": "2bf4e737e1b0", "ms": 1007}
+{"text": "puse", "voice": "f", "id": "8de5b1c90898", "ms": 709}
+{"text": "pusimos", "voice": "f", "id": "76fad9333282", "ms": 848}
+{"text": "ponía", "voice": "f", "id": "e0521431de8a", "ms": 744}
+{"text": "poníais", "voice": "f", "id": "8c69102fd083", "ms": 819}
+{"text": "habías puesto", "voice": "f", "id": "667ccee459fb", "ms": 1113}
+{"text": "habían puesto", "voice": "f", "id": "3ce820cd626f", "ms": 1107}
+{"text": "pondrá", "voice": "f", "id": "1fc420881756", "ms": 690}
+{"text": "pondrán", "voice": "f", "id": "a4028770e322", "ms": 770}
+{"text": "pondríamos", "voice": "f", "id": "749dd5255957", "ms": 1011}
+{"text": "ponga", "voice": "f", "id": "655336e104c3", "ms": 697}
+{"text": "pongáis", "voice": "f", "id": "2383765528ec", "ms": 820}
+{"text": "pusieras", "voice": "f", "id": "d3325ad15363", "ms": 870}
+{"text": "pusieran", "voice": "f", "id": "f2bcb0f31d70", "ms": 797}
+{"text": "sabes", "voice": "f", "id": "c8592e58c45f", "ms": 675}
+{"text": "sabéis", "voice": "f", "id": "4bea33ce8570", "ms": 791}
+{"text": "has sabido", "voice": "f", "id": "f4dc61ea5180", "ms": 906}
+{"text": "habéis sabido", "voice": "f", "id": "75909c636448", "ms": 1053}
+{"text": "supiste", "voice": "f", "id": "9ace1cb3abdc", "ms": 942}
+{"text": "supisteis", "voice": "f", "id": "78ff0f89bd54", "ms": 1017}
+{"text": "sabías", "voice": "f", "id": "1d9319006047", "ms": 789}
+{"text": "sabían", "voice": "f", "id": "4be36ce29e36", "ms": 765}
+{"text": "habíamos sabido", "voice": "f", "id": "737fd4026923", "ms": 1147}
+{"text": "sabré", "voice": "f", "id": "16df5b1f97db", "ms": 668}
+{"text": "sabremos", "voice": "f", "id": "3892d8d95391", "ms": 818}
+{"text": "sabría", "voice": "f", "id": "447715644c19", "ms": 761}
+{"text": "sepas", "voice": "f", "id": "ef43ac40006c", "ms": 705}
+{"text": "sepan", "voice": "f", "id": "40442c30438d", "ms": 679}
+{"text": "supiéramos", "voice": "f", "id": "f7164ee22e4e", "ms": 1011}
+{"text": "sabed", "voice": "f", "id": "0d8f448b2a55", "ms": 719}
+{"text": "da", "voice": "f", "id": "2cedfa4d2ca4", "ms": 479}
+{"text": "dan", "voice": "f", "id": "49674fd6d0d4", "ms": 531}
+{"text": "ha dado", "voice": "f", "id": "1bc067a17e45", "ms": 731}
+{"text": "han dado", "voice": "f", "id": "113bac2b8bf4", "ms": 800}
+{"text": "dimos", "voice": "f", "id": "bf7501b5e04f", "ms": 698}
+{"text": "daba", "voice": "f", "id": "f040d9acfeb1", "ms": 645}
+{"text": "dabais", "voice": "f", "id": "c9b699f54e5d", "ms": 792}
+{"text": "habías dado", "voice": "f", "id": "a37dcf6d17cc", "ms": 1004}
+{"text": "habían dado", "voice": "f", "id": "71d822826e86", "ms": 998}
+{"text": "darán", "voice": "f", "id": "3f885c397cbc", "ms": 648}
+{"text": "daríamos", "voice": "f", "id": "fef88a1c725f", "ms": 883}
+{"text": "dé", "voice": "f", "id": "e432ca15b8ab", "ms": 465}
+{"text": "deis", "voice": "f", "id": "81085b5d7309", "ms": 648}
+{"text": "dieras", "voice": "f", "id": "f5144020df8a", "ms": 725}
+{"text": "dieran", "voice": "f", "id": "07938ef1eab9", "ms": 675}
+{"text": "sales", "voice": "f", "id": "e396afcde4c5", "ms": 683}
+{"text": "salís", "voice": "f", "id": "48c8e666173c", "ms": 743}
+{"text": "has salido", "voice": "f", "id": "c3283296176f", "ms": 907}
+{"text": "habéis salido", "voice": "f", "id": "3d635d4a95ad", "ms": 1053}
+{"text": "saliste", "voice": "f", "id": "63bef2671b57", "ms": 891}
+{"text": "salieron", "voice": "f", "id": "3e83a67143fa", "ms": 790}
+{"text": "salíamos", "voice": "f", "id": "09530c74225b", "ms": 905}
+{"text": "había salido", "voice": "f", "id": "3934ca834837", "ms": 1048}
+{"text": "saldrás", "voice": "f", "id": "fee81bf5daa1", "ms": 838}
+{"text": "saldréis", "voice": "f", "id": "0e52b26d8ae9", "ms": 883}
+{"text": "saldrías", "voice": "f", "id": "c9eef85c9e97", "ms": 883}
+{"text": "saldrían", "voice": "f", "id": "0dee4dc754ee", "ms": 904}
+{"text": "salgamos", "voice": "f", "id": "a6e2a8e0a272", "ms": 882}
+{"text": "saliera", "voice": "f", "id": "c52b0f9d43fd", "ms": 805}
+{"text": "salierais", "voice": "f", "id": "67f7749953eb", "ms": 882}
+{"text": "salid", "voice": "f", "id": "1c5544e42cc3", "ms": 719}
+{"text": "vemos", "voice": "f", "id": "ed383dbb080d", "ms": 641}
+{"text": "has visto", "voice": "f", "id": "47a1f44b007a", "ms": 937}
+{"text": "habéis visto", "voice": "f", "id": "6c90ba2aa5da", "ms": 1105}
+{"text": "viste", "voice": "f", "id": "5393e547bf72", "ms": 757}
+{"text": "visteis", "voice": "f", "id": "c39efba92cfb", "ms": 809}
+{"text": "veías", "voice": "f", "id": "477a2120eb61", "ms": 792}
+{"text": "veían", "voice": "f", "id": "7302b8c24276", "ms": 697}
+{"text": "habíamos visto", "voice": "f", "id": "03a027d6ef0b", "ms": 1173}
+{"text": "veré", "voice": "f", "id": "11fb73bd199b", "ms": 592}
+{"text": "veremos", "voice": "f", "id": "d0617f13ddf6", "ms": 759}
+{"text": "vería", "voice": "f", "id": "aa685a40463d", "ms": 686}
+{"text": "veríais", "voice": "f", "id": "28cc13d278e4", "ms": 792}
+{"text": "veas", "voice": "f", "id": "aea3e1d74ac4", "ms": 661}
+{"text": "vean", "voice": "f", "id": "cc5ddcc141f6", "ms": 620}
+{"text": "viéramos", "voice": "f", "id": "975b7f8aa6c3", "ms": 844}
+{"text": "ved", "voice": "f", "id": "e66da283b04a", "ms": 582}
+{"text": "piensa", "voice": "f", "id": "f679eaf3720c", "ms": 792}
+{"text": "piensan", "voice": "f", "id": "233a0eb36444", "ms": 818}
+{"text": "ha pensado", "voice": "f", "id": "06fc79380021", "ms": 920}
+{"text": "han pensado", "voice": "f", "id": "85359df6f9a5", "ms": 1014}
+{"text": "pensó", "voice": "f", "id": "bb7fa84c8cf8", "ms": 791}
+{"text": "pensaba", "voice": "f", "id": "f6356a69e9ae", "ms": 842}
+{"text": "pensabais", "voice": "f", "id": "82605c0adfce", "ms": 941}
+{"text": "habías pensado", "voice": "f", "id": "fcf6c99250ec", "ms": 1195}
+{"text": "habían pensado", "voice": "f", "id": "1cebb4f3b9c5", "ms": 1218}
+{"text": "pensará", "voice": "f", "id": "590f1a08523a", "ms": 840}
+{"text": "pensarán", "voice": "f", "id": "db7b136593e9", "ms": 819}
+{"text": "pensaríamos", "voice": "f", "id": "212c7f9229c7", "ms": 1037}
+{"text": "piense", "voice": "f", "id": "17f9395b7ae2", "ms": 794}
+{"text": "penséis", "voice": "f", "id": "d7f6ff6c5173", "ms": 869}
+{"text": "pensaras", "voice": "f", "id": "11501d1ef7b8", "ms": 917}
+{"text": "pensaran", "voice": "f", "id": "997cb8310433", "ms": 841}
+{"text": "cierras", "voice": "f", "id": "c96096dd9079", "ms": 804}
+{"text": "cerráis", "voice": "f", "id": "5dd811d2dc31", "ms": 816}
+{"text": "has cerrado", "voice": "f", "id": "fb73c8f48c3d", "ms": 911}
+{"text": "habéis cerrado", "voice": "f", "id": "5816d0258357", "ms": 1079}
+{"text": "cerraste", "voice": "f", "id": "c5a22483e6bd", "ms": 891}
+{"text": "cerraron", "voice": "f", "id": "a6e3dd0ffce3", "ms": 793}
+{"text": "cerrábamos", "voice": "f", "id": "c13f29c85218", "ms": 957}
+{"text": "había cerrado", "voice": "f", "id": "5603ef927d85", "ms": 1072}
+{"text": "habíais cerrado", "voice": "f", "id": "b57cf8c14164", "ms": 1073}
+{"text": "cerrarás", "voice": "f", "id": "c980b6d48564", "ms": 795}
+{"text": "cerraréis", "voice": "f", "id": "720be15556c6", "ms": 889}
+{"text": "cerrarías", "voice": "f", "id": "d83e8e04c01e", "ms": 865}
+{"text": "cerrarían", "voice": "f", "id": "b44a5e0885cc", "ms": 864}
+{"text": "cerremos", "voice": "f", "id": "d19bf7acfc03", "ms": 817}
+{"text": "cerrara", "voice": "f", "id": "85f345b59292", "ms": 790}
+{"text": "cerrarais", "voice": "f", "id": "f68bef8cbc0e", "ms": 886}
+{"text": "empiezo", "voice": "f", "id": "709befdfbdff", "ms": 857}
+{"text": "empezamos", "voice": "f", "id": "fbafc8feaae8", "ms": 907}
+{"text": "he empezado", "voice": "f", "id": "b362c12bc192", "ms": 943}
+{"text": "hemos empezado", "voice": "f", "id": "a2175505234f", "ms": 1195}
+{"text": "empecé", "voice": "f", "id": "a9d3be2d2c95", "ms": 832}
+{"text": "empezasteis", "voice": "f", "id": "2cc174084d1e", "ms": 1125}
+{"text": "empezabas", "voice": "f", "id": "2da45eb3c5e0", "ms": 931}
+{"text": "empezaban", "voice": "f", "id": "2fa6b42a87e0", "ms": 928}
+{"text": "habíamos empezado", "voice": "f", "id": "2c24da1a9605", "ms": 1368}
+{"text": "empezaré", "voice": "f", "id": "11b3bf2d8fb8", "ms": 877}
+{"text": "empezaremos", "voice": "f", "id": "4efc15bdf731", "ms": 1005}
+{"text": "empezaría", "voice": "f", "id": "458cb00eef02", "ms": 945}
+{"text": "empezaríais", "voice": "f", "id": "b479499ede9a", "ms": 1066}
+{"text": "empieces", "voice": "f", "id": "e8840db95a70", "ms": 859}
+{"text": "empiecen", "voice": "f", "id": "ea29fa98916a", "ms": 833}
+{"text": "empezáramos", "voice": "f", "id": "3e751241e54f", "ms": 1075}
+{"text": "empezad", "voice": "f", "id": "a8caab6cd26b", "ms": 857}
+{"text": "entiende", "voice": "f", "id": "3cb34a5b428e", "ms": 855}
+{"text": "entienden", "voice": "f", "id": "3df8becbd913", "ms": 831}
+{"text": "ha entendido", "voice": "f", "id": "8c3869c50906", "ms": 967}
+{"text": "han entendido", "voice": "f", "id": "803802e5381d", "ms": 1073}
+{"text": "entendió", "voice": "f", "id": "9299d3de5feb", "ms": 854}
+{"text": "entendieron", "voice": "f", "id": "634be7952b1e", "ms": 952}
+{"text": "entendíamos", "voice": "f", "id": "b61a86ee9892", "ms": 1055}
+{"text": "había entendido", "voice": "f", "id": "dc03b5cd9296", "ms": 1182}
+{"text": "habíais entendido", "voice": "f", "id": "39fbe23f4921", "ms": 1269}
+{"text": "entenderás", "voice": "f", "id": "504f6f5e8b2e", "ms": 906}
+{"text": "entenderéis", "voice": "f", "id": "809f9cf75975", "ms": 1004}
+{"text": "entenderías", "voice": "f", "id": "1de64d1c2a7a", "ms": 980}
+{"text": "entenderían", "voice": "f", "id": "0fc3f2ac0459", "ms": 992}
+{"text": "entendamos", "voice": "f", "id": "1b183fbcc43d", "ms": 956}
+{"text": "entendiera", "voice": "f", "id": "7172e362239f", "ms": 969}
+{"text": "entendierais", "voice": "f", "id": "ce7477f86674", "ms": 1028}
+{"text": "prefiero", "voice": "f", "id": "607fb99cf7e1", "ms": 867}
+{"text": "preferimos", "voice": "f", "id": "2e08d3ad5fd2", "ms": 969}
+{"text": "he preferido", "voice": "f", "id": "84d0002d72cb", "ms": 971}
+{"text": "hemos preferido", "voice": "f", "id": "29a8dde2aa75", "ms": 1174}
+{"text": "preferí", "voice": "f", "id": "36c9d59d3965", "ms": 745}
+{"text": "preferisteis", "voice": "f", "id": "56a080bb80e0", "ms": 1113}
+{"text": "preferías", "voice": "f", "id": "699012c6a427", "ms": 919}
+{"text": "preferían", "voice": "f", "id": "cf7f759d1e9e", "ms": 915}
+{"text": "habíamos preferido", "voice": "f", "id": "85db5a2c01bf", "ms": 1319}
+{"text": "preferiré", "voice": "f", "id": "347e8f711d2c", "ms": 915}
+{"text": "preferiremos", "voice": "f", "id": "28116271b067", "ms": 1066}
+{"text": "preferiría", "voice": "f", "id": "f1ccc21238d7", "ms": 938}
+{"text": "preferiríais", "voice": "f", "id": "2b52d9eaf028", "ms": 1079}
+{"text": "prefieras", "voice": "f", "id": "95e55e81db28", "ms": 893}
+{"text": "prefieran", "voice": "f", "id": "716da5c418c2", "ms": 869}
+{"text": "preferid", "voice": "f", "id": "26ce51efbd57", "ms": 869}
+{"text": "cuenta", "voice": "f", "id": "392688395986", "ms": 744}
+{"text": "cuentan", "voice": "f", "id": "81e3da6233af", "ms": 792}
+{"text": "ha contado", "voice": "f", "id": "d805c8bdf545", "ms": 931}
+{"text": "han contado", "voice": "f", "id": "f5e61533eb18", "ms": 1026}
+{"text": "contó", "voice": "f", "id": "21c53989e1bb", "ms": 722}
+{"text": "contaba", "voice": "f", "id": "2624037795ff", "ms": 818}
+{"text": "contabais", "voice": "f", "id": "309495fc484b", "ms": 942}
+{"text": "habías contado", "voice": "f", "id": "3b1bebd1c973", "ms": 1194}
+{"text": "habían contado", "voice": "f", "id": "244bd52b454b", "ms": 1194}
+{"text": "contará", "voice": "f", "id": "86240577795e", "ms": 812}
+{"text": "contarán", "voice": "f", "id": "eed63d865191", "ms": 820}
+{"text": "contaríamos", "voice": "f", "id": "3c75a0cfe27d", "ms": 1062}
+{"text": "cuente", "voice": "f", "id": "1a6a17246aa4", "ms": 772}
+{"text": "contéis", "voice": "f", "id": "102ac5770899", "ms": 847}
+{"text": "contaras", "voice": "f", "id": "792a4395f1e8", "ms": 895}
+{"text": "contaran", "voice": "f", "id": "05071e899980", "ms": 841}
+{"text": "encuentras", "voice": "f", "id": "644cb6b4bf71", "ms": 909}
+{"text": "encontráis", "voice": "f", "id": "d85bf057ffb7", "ms": 1003}
+{"text": "has encontrado", "voice": "f", "id": "af8aed9c5c62", "ms": 1169}
+{"text": "habéis encontrado", "voice": "f", "id": "1691da578695", "ms": 1342}
+{"text": "encontraste", "voice": "f", "id": "a17512e5e010", "ms": 1052}
+{"text": "encontraron", "voice": "f", "id": "a5eaab05cb0b", "ms": 971}
+{"text": "encontrábamos", "voice": "f", "id": "fb0b62c6d17e", "ms": 1146}
+{"text": "había encontrado", "voice": "f", "id": "29ae3aab4a41", "ms": 1194}
+{"text": "habíais encontrado", "voice": "f", "id": "cc33388e1878", "ms": 1318}
+{"text": "encontrarás", "voice": "f", "id": "75934d2f49d3", "ms": 999}
+{"text": "encontraréis", "voice": "f", "id": "7c56d64a7d29", "ms": 1093}
+{"text": "encontrarías", "voice": "f", "id": "6ecf38d62603", "ms": 1048}
+{"text": "encontrarían", "voice": "f", "id": "d39d5acecb29", "ms": 1091}
+{"text": "encontremos", "voice": "f", "id": "8088596aaaa4", "ms": 980}
+{"text": "encontrara", "voice": "f", "id": "e5606a136295", "ms": 966}
+{"text": "encontrarais", "voice": "f", "id": "f0c5620819bc", "ms": 1044}
+{"text": "vuelvo", "voice": "f", "id": "294bd3b7a154", "ms": 720}
+{"text": "volvemos", "voice": "f", "id": "bbdc1262ed51", "ms": 853}
+{"text": "he vuelto", "voice": "f", "id": "a0ff8a380d24", "ms": 828}
+{"text": "hemos vuelto", "voice": "f", "id": "9ae5d7cbcfe7", "ms": 1032}
+{"text": "volví", "voice": "f", "id": "1b5cd75dce07", "ms": 693}
+{"text": "volvimos", "voice": "f", "id": "2e8d022d7c50", "ms": 886}
+{"text": "volvía", "voice": "f", "id": "80145f459082", "ms": 803}
+{"text": "volvíais", "voice": "f", "id": "f631baac4022", "ms": 881}
+{"text": "habías vuelto", "voice": "f", "id": "86abd6ae81f2", "ms": 1080}
+{"text": "habían vuelto", "voice": "f", "id": "e823a65c03f3", "ms": 1099}
+{"text": "volverá", "voice": "f", "id": "a8767787d94d", "ms": 803}
+{"text": "volverán", "voice": "f", "id": "cd93bc35d9bf", "ms": 830}
+{"text": "volveríamos", "voice": "f", "id": "dbc8871a7fdd", "ms": 1011}
+{"text": "vuelva", "voice": "f", "id": "59f80abde40f", "ms": 712}
+{"text": "volváis", "voice": "f", "id": "f454853f11cd", "ms": 837}
+{"text": "volvieras", "voice": "f", "id": "defd677949ff", "ms": 892}
+{"text": "volvieran", "voice": "f", "id": "25d3b9eb0150", "ms": 839}
+{"text": "duermes", "voice": "f", "id": "93235bff0bc0", "ms": 768}
+{"text": "dormís", "voice": "f", "id": "9129da5a0b95", "ms": 765}
+{"text": "has dormido", "voice": "f", "id": "439edecc373d", "ms": 951}
+{"text": "habéis dormido", "voice": "f", "id": "4938bd932b16", "ms": 1144}
+{"text": "dormiste", "voice": "f", "id": "ee89f2ac73ca", "ms": 890}
+{"text": "durmieron", "voice": "f", "id": "679a7b8c39d8", "ms": 816}
+{"text": "dormíamos", "voice": "f", "id": "1f587a6bf424", "ms": 908}
+{"text": "había dormido", "voice": "f", "id": "0b6c1c3216ff", "ms": 1050}
+{"text": "habíais dormido", "voice": "f", "id": "ce28ce9ecb6a", "ms": 1146}
+{"text": "dormirás", "voice": "f", "id": "a96b560994f1", "ms": 807}
+{"text": "dormiréis", "voice": "f", "id": "303ea22cb753", "ms": 854}
+{"text": "dormirías", "voice": "f", "id": "532ca1192ed4", "ms": 892}
+{"text": "dormirían", "voice": "f", "id": "bef4c0068269", "ms": 889}
+{"text": "durmamos", "voice": "f", "id": "e6c6a5fcfae0", "ms": 841}
+{"text": "durmiera", "voice": "f", "id": "4ecace06142f", "ms": 813}
+{"text": "durmierais", "voice": "f", "id": "681fdf4353a7", "ms": 891}
+{"text": "juego", "voice": "f", "id": "9c5c89e175c4", "ms": 719}
+{"text": "jugamos", "voice": "f", "id": "5cc00d02b497", "ms": 791}
+{"text": "he jugado", "voice": "f", "id": "53ab141fd726", "ms": 845}
+{"text": "hemos jugado", "voice": "f", "id": "95696c475fb8", "ms": 1004}
+{"text": "jugué", "voice": "f", "id": "dc6660f6d535", "ms": 594}
+{"text": "jugasteis", "voice": "f", "id": "c28c8ff7ae3b", "ms": 963}
+{"text": "jugabas", "voice": "f", "id": "25900cdb6b7d", "ms": 816}
+{"text": "jugaban", "voice": "f", "id": "5b0040607bbc", "ms": 766}
+{"text": "habíamos jugado", "voice": "f", "id": "d71d89602584", "ms": 1169}
+{"text": "jugaremos", "voice": "f", "id": "968cbf276f49", "ms": 891}
+{"text": "jugaría", "voice": "f", "id": "6591c43b3d18", "ms": 763}
+{"text": "jugaríais", "voice": "f", "id": "72a323e0feb9", "ms": 905}
+{"text": "juegues", "voice": "f", "id": "28251d66f267", "ms": 719}
+{"text": "jueguen", "voice": "f", "id": "3ced9c44c03f", "ms": 682}
+{"text": "jugáramos", "voice": "f", "id": "e1168e966682", "ms": 933}
+{"text": "jugad", "voice": "f", "id": "e66505f58a4e", "ms": 694}
+{"text": "pide", "voice": "f", "id": "bcdd41c8e257", "ms": 653}
+{"text": "piden", "voice": "f", "id": "59f0a63c9f4f", "ms": 658}
+{"text": "ha pedido", "voice": "f", "id": "faa3737640df", "ms": 807}
+{"text": "han pedido", "voice": "f", "id": "871f0b97cd86", "ms": 905}
+{"text": "pidió", "voice": "f", "id": "af20d6210ad7", "ms": 697}
+{"text": "pedía", "voice": "f", "id": "67f628a3e7d3", "ms": 792}
+{"text": "pedíais", "voice": "f", "id": "df0a7ebf81e4", "ms": 819}
+{"text": "habías pedido", "voice": "f", "id": "6d3862dd0b44", "ms": 1085}
+{"text": "habían pedido", "voice": "f", "id": "f57a03aff307", "ms": 1109}
+{"text": "pedirá", "voice": "f", "id": "b26e36ef8f9b", "ms": 739}
+{"text": "pedirán", "voice": "f", "id": "50d915488f69", "ms": 769}
+{"text": "pediríamos", "voice": "f", "id": "a0aec671f841", "ms": 993}
+{"text": "pida", "voice": "f", "id": "e201c2218a9d", "ms": 631}
+{"text": "pidáis", "voice": "f", "id": "18c0487d5cf4", "ms": 797}
+{"text": "pidieras", "voice": "f", "id": "5f63c2757703", "ms": 871}
+{"text": "pidieran", "voice": "f", "id": "42ef312793ba", "ms": 795}
+{"text": "repites", "voice": "f", "id": "3d288753e1b9", "ms": 830}
+{"text": "repetís", "voice": "f", "id": "04e2ac1e0900", "ms": 870}
+{"text": "has repetido", "voice": "f", "id": "4c679b682302", "ms": 1005}
+{"text": "habéis repetido", "voice": "f", "id": "1cb04d0e72c4", "ms": 1177}
+{"text": "repetiste", "voice": "f", "id": "fc85b6db86f7", "ms": 968}
+{"text": "repitieron", "voice": "f", "id": "55c3f7d42d68", "ms": 916}
+{"text": "repetíamos", "voice": "f", "id": "07e2e3534370", "ms": 993}
+{"text": "había repetido", "voice": "f", "id": "9545e0f105da", "ms": 1105}
+{"text": "habíais repetido", "voice": "f", "id": "b3609c33dcf8", "ms": 1153}
+{"text": "repetirás", "voice": "f", "id": "2c7ac99a535a", "ms": 944}
+{"text": "repetiréis", "voice": "f", "id": "ce1539121113", "ms": 1017}
+{"text": "repetirías", "voice": "f", "id": "3c361322ceb5", "ms": 1018}
+{"text": "repetirían", "voice": "f", "id": "ad8bffb95f67", "ms": 1008}
+{"text": "repitamos", "voice": "f", "id": "759052187c85", "ms": 872}
+{"text": "repitiera", "voice": "f", "id": "0e01614c1fd7", "ms": 963}
+{"text": "repitierais", "voice": "f", "id": "c13b75cac6a5", "ms": 994}
+{"text": "busco", "voice": "f", "id": "ccc1a078cc02", "ms": 769}
+{"text": "buscamos", "voice": "f", "id": "560f240665a3", "ms": 866}
+{"text": "he buscado", "voice": "f", "id": "21398f102eff", "ms": 896}
+{"text": "hemos buscado", "voice": "f", "id": "776d3a8e09c8", "ms": 1097}
+{"text": "busqué", "voice": "f", "id": "213ea87c85ce", "ms": 710}
+{"text": "buscasteis", "voice": "f", "id": "5bd7299b386e", "ms": 1025}
+{"text": "buscabas", "voice": "f", "id": "74fb50e68a1b", "ms": 832}
+{"text": "buscaban", "voice": "f", "id": "75231d048842", "ms": 806}
+{"text": "habíamos buscado", "voice": "f", "id": "fc01e64eef1b", "ms": 1244}
+{"text": "buscaré", "voice": "f", "id": "d4f3b44f0a70", "ms": 778}
+{"text": "buscaremos", "voice": "f", "id": "3ed42a97e4f6", "ms": 930}
+{"text": "buscaría", "voice": "f", "id": "e2d1a8d2fc82", "ms": 829}
+{"text": "buscaríais", "voice": "f", "id": "d74a10cafeee", "ms": 967}
+{"text": "busques", "voice": "f", "id": "4ef5eb25f005", "ms": 785}
+{"text": "busquen", "voice": "f", "id": "0360cea5a911", "ms": 734}
+{"text": "buscáramos", "voice": "f", "id": "0067e8040fad", "ms": 996}
+{"text": "buscad", "voice": "f", "id": "38687fbfdaa2", "ms": 819}
+{"text": "llega", "voice": "f", "id": "177e0b6d8289", "ms": 704}
+{"text": "llegan", "voice": "f", "id": "38335640fb6b", "ms": 694}
+{"text": "ha llegado", "voice": "f", "id": "774c48991371", "ms": 828}
+{"text": "han llegado", "voice": "f", "id": "8eb0d469c2df", "ms": 904}
+{"text": "llegó", "voice": "f", "id": "ee9dd152ac64", "ms": 619}
+{"text": "llegaba", "voice": "f", "id": "5a75a2707afb", "ms": 763}
+{"text": "llegabais", "voice": "f", "id": "3eeaff8d4028", "ms": 863}
+{"text": "habías llegado", "voice": "f", "id": "a7ee1db4ab6d", "ms": 1073}
+{"text": "habían llegado", "voice": "f", "id": "95c2e8acc8ee", "ms": 1119}
+{"text": "llegará", "voice": "f", "id": "23728b6b2255", "ms": 711}
+{"text": "llegarán", "voice": "f", "id": "bedb1f981de6", "ms": 743}
+{"text": "llegaríamos", "voice": "f", "id": "7deabc93da89", "ms": 958}
+{"text": "llegue", "voice": "f", "id": "3fc9071c0c14", "ms": 679}
+{"text": "lleguéis", "voice": "f", "id": "d63fb3ea0391", "ms": 772}
+{"text": "llegaras", "voice": "f", "id": "73b84d128972", "ms": 816}
+{"text": "llegaran", "voice": "f", "id": "102bc04a0fdc", "ms": 790}
+{"text": "lees", "voice": "f", "id": "f93168b61a5c", "ms": 675}
+{"text": "has leído", "voice": "f", "id": "534fe19dd158", "ms": 877}
+{"text": "habéis leído", "voice": "f", "id": "ff5fd364a1e1", "ms": 1050}
+{"text": "leíste", "voice": "f", "id": "d29948bad444", "ms": 840}
+{"text": "leísteis", "voice": "f", "id": "cc71dd611adc", "ms": 916}
+{"text": "leías", "voice": "f", "id": "8a92d26d2bd3", "ms": 763}
+{"text": "leían", "voice": "f", "id": "266e4bdb2a66", "ms": 740}
+{"text": "habíamos leído", "voice": "f", "id": "934be54c1c7e", "ms": 1169}
+{"text": "leeré", "voice": "f", "id": "38a60d7f36db", "ms": 694}
+{"text": "leeremos", "voice": "f", "id": "06f5f309dab6", "ms": 819}
+{"text": "leería", "voice": "f", "id": "689f979fd514", "ms": 767}
+{"text": "leeríais", "voice": "f", "id": "b094a572e57c", "ms": 828}
+{"text": "leas", "voice": "f", "id": "302c6ad5aacb", "ms": 695}
+{"text": "lean", "voice": "f", "id": "46c6f1168c61", "ms": 620}
+{"text": "leyéramos", "voice": "f", "id": "b78060d8ea54", "ms": 958}
+{"text": "leed", "voice": "f", "id": "a4f18129bcc9", "ms": 694}
+{"text": "conoce", "voice": "f", "id": "a76844d15ce3", "ms": 794}
+{"text": "conocen", "voice": "f", "id": "4c17a9f377ac", "ms": 771}
+{"text": "ha conocido", "voice": "f", "id": "05d344b03927", "ms": 966}
+{"text": "han conocido", "voice": "f", "id": "7490bd78ad0f", "ms": 1016}
+{"text": "conoció", "voice": "f", "id": "5757a8cab903", "ms": 843}
+{"text": "conocieron", "voice": "f", "id": "cec83ddffcea", "ms": 894}
+{"text": "conocíamos", "voice": "f", "id": "b097ae1e204e", "ms": 987}
+{"text": "había conocido", "voice": "f", "id": "e3b7e71df6cb", "ms": 1156}
+{"text": "habíais conocido", "voice": "f", "id": "332adf774550", "ms": 1220}
+{"text": "conocerás", "voice": "f", "id": "bc37ae60d195", "ms": 892}
+{"text": "conoceréis", "voice": "f", "id": "08393987333c", "ms": 963}
+{"text": "conocerías", "voice": "f", "id": "d795b8cdeaf8", "ms": 965}
+{"text": "conocerían", "voice": "f", "id": "a50976e9b9a5", "ms": 959}
+{"text": "conozcamos", "voice": "f", "id": "0344d7eb55d7", "ms": 943}
+{"text": "conociera", "voice": "f", "id": "bbd7ff457d19", "ms": 891}
+{"text": "conocierais", "voice": "f", "id": "648bed44537d", "ms": 964}

@@ -8708,6 +8708,7 @@
     const b = e.target.closest("[data-tab]");
     if (!b || b.dataset.tab === view) return;
     unlockAudio();
+    unlockVoice();
     sfx.tap();
     go(b.dataset.tab);
   });
@@ -8722,7 +8723,11 @@
       state.voiceURI = e.target.value || null;
       saveState();
       pickVoice();
-      speak(VOICE_SAMPLE);
+      if (!state.sound) {
+        state.sound = true;
+        saveState();
+      }
+      deviceSpeak(VOICE_SAMPLE);
       return;
     }
     if (!e.target.classList.contains("verb-select")) return;
