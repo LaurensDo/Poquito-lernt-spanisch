@@ -1,0 +1,3 @@
+tools/audio/texts.json
+__pycache__/
+audio/.failed-*.jsonl
