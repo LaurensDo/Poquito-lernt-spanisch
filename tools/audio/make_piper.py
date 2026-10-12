@@ -21,7 +21,7 @@ import numpy as np
 from math import gcd
 from scipy.signal import resample_poly
 
-from common import PIPER_SPEAKERS, PIPER_DIR, piper_length, piper_file_id  # noqa: E402
+from common import PIPER_SPEAKERS, PIPER_DIR, PIPER_PHONEMES, piper_length, piper_file_id  # noqa: E402
 from audiolib import SR, same, clean, to_mp3  # noqa: E402
 from phoncheck import Recognizer, phonemes_of  # noqa: E402
 
@@ -46,7 +46,12 @@ class PiperMaker:
         noise, noise_w = ATTEMPTS[attempt % len(ATTEMPTS)]
         cfg = SynthesisConfig(speaker_id=PIPER_SPEAKERS[voice], length_scale=piper_length(kind), noise_scale=noise, noise_w_scale=noise_w)
         said = text if text[-1] in ".!?…" else text + "."
-        a = np.concatenate([c.audio_float_array for c in self.voice.synthesize(said, syn_config=cfg)])
+        if text in PIPER_PHONEMES:
+            a = np.asarray(self.voice.phoneme_ids_to_audio(self.voice.phonemes_to_ids(list(PIPER_PHONEMES[text])), cfg), np.float32)
+            if np.abs(a).max() > 2:
+                a = a / 32768.0   # ganzzahlig geliefert
+        else:
+            a = np.concatenate([c.audio_float_array for c in self.voice.synthesize(said, syn_config=cfg)])
         g = gcd(SR, self.sr)
         return clean(resample_poly(a, SR // g, self.sr // g).astype(np.float32))
 
@@ -109,10 +114,17 @@ def main():
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "..", "audio"))
     ap.add_argument("--part", default="0/1", help="n/m: nur jeden m-ten Eintrag ab n (zum Parallelisieren)")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--only", nargs="+", help="nur diese Texte (vorhandene Aufnahmen werden neu erzeugt)")
     ap.add_argument("--threads", type=int, default=2)
     args = ap.parse_args()
     n, m = map(int, args.part.split("/"))
     items = json.load(open(args.texts))[n::m]
+    if args.only:
+        items = [it for it in json.load(open(args.texts)) if it["text"] in args.only]
+        for it in items:
+            p = os.path.join(args.out, PIPER_DIR[it["voice"]], piper_file_id(it["voice"], it["kind"], it["text"]) + ".mp3")
+            if os.path.exists(p):
+                os.remove(p)
     if args.limit:
         items = items[:args.limit]
     mk = PiperMaker(args.model, args.threads)
