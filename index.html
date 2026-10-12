@@ -203,26 +203,67 @@
   .voice-row { display: flex; gap: 10px; }
   .voice-row .voice-select { flex: 1; min-width: 0; margin: 0; }
   .voice-row .btn { width: auto; padding: 12px 18px; }
+  .engine-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .engine-options .level-btn { padding: 14px 8px; }
+  .sub-title { margin: 18px 0 8px; font-size: 1rem; font-weight: 900; }
 
-  .goal {
+  .goal-banner { background: linear-gradient(135deg, var(--good), #6FD99E); }
+  .progress-panel { margin-bottom: 28px; }
+
+  .mission {
+    margin-bottom: 26px;
+    padding: 18px;
+    border: 3px solid var(--sun);
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 6px 0 var(--line);
+  }
+
+  .mission.complete { border-color: var(--good); }
+  .mission-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .mission-head h3 { margin: 0; font-size: 1.2rem; font-weight: 900; }
+  .mission-head span { color: var(--muted); font-size: 0.85rem; font-weight: 800; }
+  .mission-count { padding: 6px 14px; border-radius: 99px; background: #FFF1CC; color: #8A6400; font-weight: 900; }
+  .mission.complete .mission-count { background: #E6F8EF; color: var(--good-dark); }
+  .mission-list { display: grid; gap: 8px; }
+
+  .mission-task {
     display: flex;
-    justify-content: space-between;
-    margin-top: -2px;
-    font-size: 0.9rem;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 16px;
+    background: var(--bg);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mission-task:active { transform: translateY(2px); }
+  .mission-task.done { background: #E6F8EF; }
+  .mission-task.bonus { background: #FFF8E1; }
+
+  .mt-check {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--sun-dark);
     font-weight: 900;
   }
 
-  .bar.goal-bar { height: 8px; margin: 6px 0 14px; }
-  .goal.met + .goal-bar > span { background: #FFF3CF; }
-  .goal-banner { background: linear-gradient(135deg, var(--good), #6FD99E); }
-  .goal-panel, .progress-panel { margin-bottom: 28px; }
-  .goal-panel p { color: var(--muted); font-size: 0.9rem; }
-  .goal-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .goal-options .level-btn { padding: 12px 6px; }
-
-  @media (max-width: 480px) {
-    .goal-options { grid-template-columns: repeat(2, 1fr); }
-  }
+  .mission-task.done .mt-check { border-color: var(--good); background: var(--good); color: #fff; }
+  .mt-text { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+  .mt-text b { font-weight: 900; }
+  .mt-text small { color: var(--muted); font-size: 0.82rem; font-weight: 700; }
+  .mt-go { flex: none; color: var(--primary); font-size: 0.9rem; font-weight: 900; }
+  .mission-task.done .mt-go { color: var(--muted); }
+  .mission-foot { margin: 12px 0 0; color: var(--muted); font-size: 0.85rem; font-weight: 700; line-height: 1.45; }
 
   .progress-panel { margin-bottom: 28px; }
   .progress-panel p { color: var(--muted); font-size: 0.9rem; }
@@ -1699,6 +1740,141 @@
   .w-fixes s { color: var(--bad-dark); }
   .w-fixes small { color: var(--muted); font-weight: 700; }
   .w-corrected { background: linear-gradient(160deg, #F0FBF5, #DDF5E8); }
+
+  /* ---------- Wörterbuch ---------- */
+  .dict-input {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 16px;
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    outline: none;
+    background: var(--surface);
+    font: inherit;
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+
+  .dict-input:focus { border-color: var(--sun); }
+  .dict-intro ul { margin: 0; padding-left: 20px; line-height: 1.6; font-weight: 700; }
+  .dict-intro li { margin-bottom: 6px; }
+  .dict-result { padding-bottom: 12px; }
+
+  .dict-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+
+  .dict-head b { font-weight: 900; }
+  .eq { color: #8A6A2E; font-weight: 900; }
+  .dict-group { margin-bottom: 14px; }
+
+  .dict-pos {
+    margin-bottom: 4px;
+    color: #8A6A2E;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .dict-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-top: 1px solid rgba(138, 106, 46, 0.18);
+  }
+
+  .dict-row:first-of-type { border-top: none; }
+  .dict-term { flex: 1; min-width: 0; font-size: 1.05rem; font-weight: 700; line-height: 1.4; }
+  .dict-row.main .dict-term b { font-size: 1.4rem; }
+  .dict-term b { font-weight: 900; }
+  .dict-term .art { margin-right: 6px; color: var(--primary); font-weight: 900; }
+  .dict-term small { display: block; color: #8A6A2E; font-size: 0.85rem; font-weight: 700; }
+  .dict-row.local .dict-term small { display: inline; margin-left: 6px; }
+  .dict-row .say { width: 38px; height: 38px; font-size: 0.95rem; }
+
+  .dict-save {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+    cursor: pointer;
+  }
+
+  .dict-saved { flex: none; width: 38px; color: var(--good-dark); font-weight: 900; text-align: center; }
+
+  .grammar h3 small { color: var(--muted); font-size: 0.9rem; font-weight: 800; }
+  .gram-via { color: var(--muted); font-size: 0.9rem; }
+  .gram-verbs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .gram-verbs .tr-alt { background: var(--bg); font-weight: 800; }
+  .gram-verbs .tr-alt.on { background: var(--primary); color: #fff; }
+  .gram-info { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+
+  .gram-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 14px;
+    background: var(--bg);
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .gram-chip span { color: var(--muted); font-size: 0.8rem; font-weight: 800; }
+  .gram-chip b { font-weight: 900; }
+  .irr-tag { padding: 2px 8px; border-radius: 99px; background: #FFE8CC; color: #A25800; font-size: 0.72rem; font-weight: 900; }
+  .gram-moods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .gram-moods .level-btn { padding: 12px 6px; font-size: 0.9rem; }
+  .tense-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+
+  .tense-card {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: var(--bg);
+  }
+
+  .tc-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-bottom: 6px; }
+  .tc-head b { font-size: 1.05rem; font-weight: 900; }
+  .tc-head small { flex: 1; color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+  .tc-head .link-btn { margin: 0; font-size: 0.8rem; }
+
+  .tc-row {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 4px;
+    border: none;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .tc-row .pn { flex: none; width: 5.2em; color: var(--muted); font-size: 0.85rem; font-weight: 800; }
+  .tc-row .fm { font-size: 1.05rem; font-weight: 800; }
+  .tc-row.irr .fm { color: #C46A00; font-weight: 900; }
+  .tc-row.off { cursor: default; opacity: 0.5; }
+  .gram-legend { margin: 12px 0 0; color: var(--muted); font-size: 0.82rem; }
+  .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #C46A00; vertical-align: -1px; }
+
+  @media (min-width: 700px) {
+    .tense-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 </head>
 <body>
@@ -1711,6 +1887,7 @@
 <nav class="tabbar" id="tabbar" hidden>
   <button data-tab="home"><span>📚</span>Lernen</button>
   <button data-tab="translate"><span>💬</span>Übersetzen</button>
+  <button data-tab="dictionary"><span>🔎</span>Wörterbuch</button>
   <button data-tab="settings"><span>⚙️</span>Einstellungen</button>
 </nav>
 
@@ -2213,7 +2390,7 @@
       },
     },
     {
-      inf: "ir", de: "gehen / fahren", group: "irregular", impTu: "ve", impNos: "vamos",
+      inf: "ir", de: "gehen / fahren", group: "irregular", impTu: "ve", impNos: "vamos", ger: "yendo",
       forms: {
         presente: ["voy", "vas", "va", "vamos", "vais", "van"],
         indefinido: ["fui", "fuiste", "fue", "fuimos", "fuisteis", "fueron"],
@@ -2234,7 +2411,7 @@
       forms: { indefinido: ["dije", "dijiste", "dijo", "dijimos", "dijisteis", "dijeron"] },
     },
     {
-      inf: "poder", de: "können", group: "irregular", stem: "o>ue", futStem: "podr", noImp: true,
+      inf: "poder", de: "können", group: "irregular", stem: "o>ue", futStem: "podr", noImp: true, ger: "pudiendo",
       forms: { indefinido: ["pude", "pudiste", "pudo", "pudimos", "pudisteis", "pudieron"] },
     },
     {
@@ -2290,7 +2467,7 @@
     { inf: "buscar", de: "suchen", group: "special" },
     { inf: "llegar", de: "ankommen", group: "special" },
     {
-      inf: "leer", de: "lesen", group: "special", part: "leído",
+      inf: "leer", iy: true, de: "lesen", group: "special", part: "leído",
       forms: { indefinido: ["leí", "leíste", "leyó", "leímos", "leísteis", "leyeron"] },
     },
     { inf: "conocer", de: "kennen", group: "special", yo: "conozco", subjFromYo: true },
@@ -2998,6 +3175,84 @@
     { n: 3, icon: "🧠", name: "Übersetzen", desc: "Deutsch → Spanisch", hint: "Sag es auf Spanisch." },
   ];
 
+  // ---------- Verb-Datenbank für das Wörterbuch ----------
+  // Regeln statt Tabellen: Stammwechsel, Schreibregeln und wenige echte Ausnahmen. Alle Formen sind
+  // gegen eine unabhängige Konjugations-Bibliothek geprüft (siehe tools/verify_verbs.py).
+  const wordList = (str) => str.split(/\s+/).filter(Boolean);
+  const derive = (prefix, base, over) => {
+    const d = Object.assign({}, base, { inf: prefix + base.inf });
+    ["yo", "futStem", "part", "impTu", "impNos", "ger"].forEach((k) => { if (base[k]) d[k] = prefix + base[k]; });
+    if (base.forms) d.forms = Object.fromEntries(Object.entries(base.forms).map(([t, arr]) => [t, arr.map((f) => prefix + f)]));
+    return Object.assign(d, over);
+  };
+  const BASE = new Map(VERBS.map((v) => [v.inf, v]));
+
+  const DB_PLAIN = wordList(`abandonar abrazar aburrir aceptar acabar acompañar adivinar admirar afeitar agradar ahorrar alcanzar alegrar alquilar amar anunciar apagar aparcar apuntar arreglar asistir aumentar averiguar avisar ayudar bailar bajar barrer besar borrar calmar cambiar caminar cansar cantar casar cazar celebrar cenar cepillar charlar chocar cobrar cocinar colocar comentar comer compartir comparar completar comprar comprender conservar consultar contestar controlar copiar correr cortar crear criticar cruzar cuidar cumplir curar dejar deber decidir decorar dedicar depender desayunar descansar desear dibujar discutir disculpar disfrutar dividir dudar durar echar educar empujar enamorar encantar enfermar engañar enseñar entrar entregar esconder escuchar esperar estacionar estudiar evitar existir explicar expresar faltar felicitar firmar formar fumar funcionar ganar gastar girar gozar grabar gritar guardar gustar hablar importar imaginar indicar informar insistir intentar interrumpir invadir invitar jurar lamentar lanzar lavar levantar limitar limpiar llamar llenar llevar llorar lograr luchar mandar marcar matar mejorar mencionar meter mirar molestar montar nadar necesitar notar observar ocupar ocurrir odiar olvidar opinar ordenar organizar pagar parar participar partir pasar pasear pegar pelear peinar perdonar permitir pesar pintar pisar planchar planear practicar preguntar preocupar preparar presentar prestar presumir bañar duchar enfadar maquillar mudar atrever acercar alejar fijar equivocar acostumbrar prometer pronunciar publicar quedar quejar quemar quitar realizar recibir regalar regresar relajar relacionar repartir representar reservar respetar responder resultar retirar revisar rezar robar saltar saludar sacar significar sorprender subir suceder sufrir tardar temer terminar tirar tocar tomar trabajar tratar usar utilizar vender viajar vigilar visitar vivir votar`);
+  const DB_E_IE = wordList(`pensar cerrar empezar comenzar entender perder despertar sentar negar atravesar confesar defender encender recomendar temblar calentar nevar regar apretar acertar enterrar sembrar tender merendar tropezar gobernar helar fregar cegar manifestar atender ascender descender extender arrepentir preferir sentir mentir divertir convertir advertir herir sugerir hervir referir consentir invertir requerir`);
+  const DB_O_UE = wordList(`contar encontrar mostrar probar recordar costar soñar almorzar mover llover volar doler sonar rogar colgar acostar aprobar demostrar morder promover conmover renovar forzar esforzar comprobar consolar acordar tostar rodar tronar dormir soler`);
+  const DB_VUELTO = { volver: "vuelto", devolver: "devuelto", envolver: "envuelto", resolver: "resuelto", revolver: "revuelto", disolver: "disuelto", absolver: "absuelto" };
+  const DB_E_I = wordList(`pedir repetir servir seguir elegir vestir medir competir corregir despedir conseguir impedir perseguir rendir gemir derretir desvestir concebir proseguir embestir`);
+  const DB_SPELL = wordList(`coger escoger recoger proteger dirigir exigir fingir surgir sumergir afligir vencer convencer ejercer esparcir reconocer desconocer parecer aparecer desaparecer ofrecer agradecer merecer establecer obedecer crecer nacer pertenecer permanecer favorecer padecer enriquecer amanecer anochecer atardecer entristecer envejecer fortalecer lucir`);
+  const DB_DUCIR = wordList(`conducir producir traducir reducir introducir deducir seducir reproducir inducir`);
+  const DB_UIR = wordList(`construir destruir huir incluir concluir excluir contribuir distribuir sustituir constituir instruir atribuir disminuir influir fluir obstruir reconstruir restituir`);
+  const DB_EER = wordList(`creer poseer releer`);
+  const DB_ACC = wordList(`enviar confiar fiar guiar variar enfriar esquiar vaciar criar ampliar resfriar desviar extraviar espiar liar continuar actuar graduar evaluar situar efectuar acentuar puntuar`);
+  const DB_PART = { morir: "muerto", escribir: "escrito", describir: "descrito", abrir: "abierto", cubrir: "cubierto", descubrir: "descubierto", romper: "roto", imprimir: "impreso", prescribir: "prescrito", inscribir: "inscrito" };
+
+  const dbEntries = [];
+  const addDb = (v) => dbEntries.push(v);
+  DB_PLAIN.forEach((inf) => addDb({ inf }));
+  DB_E_IE.forEach((inf) => addDb({ inf, stem: "e>ie" }));
+  DB_O_UE.forEach((inf) => addDb({ inf, stem: "o>ue" }));
+  addDb({ inf: "morir", stem: "o>ue", part: "muerto" });
+  Object.entries(DB_VUELTO).forEach(([inf, part]) => addDb({ inf, stem: "o>ue", part }));
+  DB_E_I.forEach((inf) => addDb({ inf, stem: "e>i" }));
+  DB_SPELL.forEach((inf) => addDb({ inf }));
+  DB_DUCIR.forEach((inf) => {
+    const st = inf.slice(0, -2);
+    const base = st.slice(0, -1) + "j";
+    addDb({ inf, yo: st.slice(0, -1) + "zco", subjFromYo: true, forms: { indefinido: ["e", "iste", "o", "imos", "isteis", "eron"].map((e) => base + e) } });
+  });
+  DB_UIR.forEach((inf) => addDb({ inf, y: true }));
+  DB_EER.forEach((inf) => addDb({ inf, iy: true }));
+  DB_ACC.forEach((inf) => addDb({ inf, acc: true }));
+  Object.entries(DB_PART).filter(([inf]) => inf !== "morir").forEach(([inf, part]) => addDb({ inf, part }));
+  addDb({ inf: "pretender" });
+  // Betonter Stammvokal im Singular und in der 3. Person Plural: prohíbo, reúno, aíslo, rehúso
+  [["prohibir", "í"], ["cohibir", "í"], ["aislar", "í"], ["reunir", "ú"], ["rehusar", "ú"], ["aunar", "ú"]].forEach(([inf, accV]) => addDb({ inf, accV }));
+  [
+    ["adquirir", { stem: "i>ie" }], ["inquirir", { stem: "i>ie" }], ["oler", { stem: "o>hue" }], ["jugar", { stem: "u>ue" }],
+    ["cocer", { stem: "o>ue", spellC: "z" }], ["torcer", { stem: "o>ue", spellC: "z" }], ["mecer", { spellC: "z" }],
+    ["andar", { forms: { indefinido: ["anduve", "anduviste", "anduvo", "anduvimos", "anduvisteis", "anduvieron"] } }],
+    ["caber", { yo: "quepo", subjFromYo: true, futStem: "cabr", noImp: true, forms: { indefinido: ["cupe", "cupiste", "cupo", "cupimos", "cupisteis", "cupieron"] } }],
+    ["valer", { yo: "valgo", subjFromYo: true, futStem: "valdr", impTu: "vale" }],
+    ["caer", { yo: "caigo", subjFromYo: true, iy: true }],
+    ["traer", { yo: "traigo", subjFromYo: true, iy: true, forms: { indefinido: ["traje", "trajiste", "trajo", "trajimos", "trajisteis", "trajeron"] } }],
+    ["oír", { yo: "oigo", subjFromYo: true, iy: true, impTu: "oye", futStem: "oir", forms: { presente: ["oigo", "oyes", "oye", "oímos", "oís", "oyen"], indefinido: ["oí", "oíste", "oyó", "oímos", "oísteis", "oyeron"] } }],
+    ["reír", { stem: "e>i", ger: "riendo", futStem: "reir", forms: { presente: ["río", "ríes", "ríe", "reímos", "reís", "ríen"], indefinido: ["reí", "reíste", "rio", "reímos", "reísteis", "rieron"], subjuntivo: ["ría", "rías", "ría", "riamos", "riáis", "rían"] } }],
+    ["haber", { futStem: "habr", noImp: true, forms: { presente: ["he", "has", "ha", "hemos", "habéis", "han"], indefinido: ["hube", "hubiste", "hubo", "hubimos", "hubisteis", "hubieron"], subjuntivo: ["haya", "hayas", "haya", "hayamos", "hayáis", "hayan"] } }],
+  ].forEach(([inf, over]) => addDb(Object.assign({ inf }, over)));
+  const REIR = dbEntries.find((v) => v.inf === "reír");
+  addDb(derive("son", REIR));
+  addDb(derive("f", REIR, { part: "frito", ger: "friendo" }));
+  // Verbfamilien: Vorsilbe + Grundverb (die Betonung der Befehlsform wird angepasst)
+  const family = (baseInf, prefixes, accentTu) => prefixes.forEach((pre) => addDb(derive(pre, BASE.get(baseInf) || dbEntries.find((v) => v.inf === baseInf), accentTu ? { impTu: pre + accentTu } : {})));
+  family("poner", ["com", "pro", "su", "ex", "im", "o", "dis", "re"], "pón");
+  family("tener", ["man", "con", "ob", "de", "sos", "re", "entre"], "tén");
+  family("venir", ["con", "inter", "pre", "pro"], "vén");
+  family("hacer", ["des", "re"], "haz");
+  family("traer", ["a", "con", "dis", "ex", "sus", "re"], null);
+  family("caer", ["de", "re"], null);
+  const VERB_DB = [...VERBS];
+  const seen = new Set(VERBS.map((v) => v.inf));
+  dbEntries.forEach((v) => {
+    if (!seen.has(v.inf)) {
+      seen.add(v.inf);
+      VERB_DB.push(v);
+    }
+  });
+  const VERB_DB_BY_INF = new Map(VERB_DB.map((v) => [v.inf, v]));
+
   // ---------- Schreiben: Themen je Zeitform ----------
   // ask: Leitfragen · starter: möglicher Satzanfang
   const WRITE_TOPICS = [
@@ -3082,22 +3337,6 @@
   const WRITE_SENTENCES = { min: 4, max: 8 };
   const XP_WRITE = 10;
   const CONNECTORS = ["y", "pero", "porque", "después", "luego", "entonces", "también", "además", "cuando", "mientras", "aunque", "por eso", "sin embargo", "primero", "al final", "finalmente", "por ejemplo", "así que", "ya que", "pues", "antes", "de repente", "si", "por la mañana", "por la tarde", "por la noche", "al principio", "a continuación", "por último", "en cambio"];
-  // Weitere häufige Verben – damit Poquito beim Schreiben möglichst viele Zeitformen erkennt.
-  const EXTRA_VERBS = [
-    ..."ayudar bajar bañar cambiar caminar celebrar cenar charlar cocinar contestar cortar cruzar cuidar dejar desayunar descansar dibujar disfrutar durar enseñar entrar esperar explicar firmar fumar ganar gastar girar gritar guardar invitar lavar levantar limpiar llamar llenar llevar llorar mandar mejorar mezclar mirar molestar montar nadar necesitar olvidar ordenar organizar pagar parar participar pasar pasear pintar practicar preguntar preocupar preparar quedar quitar regalar regresar reservar respetar sacar saltar saludar terminar tocar tomar usar viajar visitar alquilar ahorrar avisar arreglar aceptar acompañar alegrar apagar borrar echar encantar enviar escuchar estudiar gustar importar intentar odiar olvidar pensar quedar relajar tirar tratar trabajar aprobar"
-      .split(" ").map((inf) => ({ inf })),
-    ..."beber comprender deber depender esconder meter prometer responder temer vender toser correr aprender"
-      .split(" ").map((inf) => ({ inf })),
-    ..."añadir compartir decidir discutir existir permitir recibir subir sufrir asistir aplaudir insistir ocurrir vivir"
-      .split(" ").map((inf) => ({ inf })),
-    { inf: "abrir", part: "abierto" }, { inf: "escribir", part: "escrito" }, { inf: "describir", part: "descrito" }, { inf: "romper", part: "roto" },
-    { inf: "despertar", stem: "e>ie" }, { inf: "comenzar", stem: "e>ie" }, { inf: "perder", stem: "e>ie" }, { inf: "sentar", stem: "e>ie" },
-    { inf: "recordar", stem: "o>ue" }, { inf: "probar", stem: "o>ue" }, { inf: "mostrar", stem: "o>ue" }, { inf: "costar", stem: "o>ue" },
-    { inf: "soñar", stem: "o>ue" }, { inf: "almorzar", stem: "o>ue" }, { inf: "acostar", stem: "o>ue" }, { inf: "mover", stem: "o>ue" },
-    { inf: "volar", stem: "o>ue" }, { inf: "morir", stem: "o>ue", part: "muerto" }, { inf: "servir", stem: "e>i" }, { inf: "sentir", stem: "e>ie" },
-    { inf: "divertir", stem: "e>ie" }, { inf: "mentir", stem: "e>ie" }, { inf: "seguir", stem: "e>i", yo: "sigo" },
-    { inf: "elegir", stem: "e>i", yo: "elijo" }, { inf: "construir", yo: "construyo" },
-  ];
 
   const SESSION_SIZE = 10;
   const LEARNED_LEVEL = 3;
@@ -3108,12 +3347,12 @@
   const XP_ROUND_BONUS = 5;
   const XP_PERFECT_BONUS = 5;
   const LEVEL_THRESHOLDS = [0, 60, 120, 200, 300, 450, 750, 1125, 1650, 2250, 3000, 3900, 4900, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 17000, 19000, 22500, 26000, 30000];
-  const DAILY_GOALS = [
-    { xp: 10, name: "Locker" },
-    { xp: 20, name: "Normal" },
-    { xp: 30, name: "Ernsthaft" },
-    { xp: 50, name: "Intensiv" },
-  ];
+  // Tagesaufgabe: die Zeitform des Tages wechselt, abwechselnd stehen Verbgruppen und Zusatzübungen an.
+  const MISSION_TENSES = ["presente", "indefinido", "imperfecto", "perfecto", "futuro", "condicional", "imperativo", "subjuntivo", "pluscuamperfecto", "subjImperfecto"];
+  const MISSION_GROUPS = ["regular", "irregular", "special", "mixed"];
+  const MISSION_MIN_STARS = 2;
+  const MISSION_DONE_XP = 20;
+  const MISSION_BONUS_XP = 15;
   // Version 1 gab 10 XP pro Antwort, Version 2 gibt 2 – alte Stände werden einmalig umgerechnet.
   const XP_SCHEME = 2;
   const MAX_STARS_PER_TENSE = VERB_GROUPS.length * LEVELS.length * 3;
@@ -3123,7 +3362,7 @@
   const XP_EPISODE = 15;
   const STORAGE_KEY = "poquitoVocabTrainerState_v1";
   // Bei jeder neuen Version hochzählen – daran erkennt die App, dass sie sich aktualisieren soll.
-  const APP_VERSION = "2026-10-03.1";
+  const APP_VERSION = "2026-10-12.1";
 
   const VOCAB = CATEGORIES.flatMap((c) => c.words.map((w) => ({ es: w.es, de: w.de, cat: c.id })));
   const WORDS = new Map(VOCAB.map((w) => [w.es, w]));
@@ -3137,6 +3376,9 @@
   const SOUND_BY_ID = new Map(SOUNDS.map((s) => [s.id, s]));
 
   const BADGES = [
+    { id: "mission-1", icon: "🎯", name: "Tagesaufgabe", desc: "Erste Tagesaufgabe gemeistert", test: () => state.missionDays.length >= 1 },
+    { id: "mission-7", icon: "📆", name: "Wochen-Meister", desc: "7 Tage in Folge", test: () => missionStreak() >= 7 },
+    { id: "mission-30", icon: "🏆", name: "Monats-Meister", desc: "30 Tagesaufgaben gemeistert", test: () => state.missionDays.length >= 30 },
     { id: "write-first", icon: "✍️", name: "Schreiberling", desc: "Ersten Text geschrieben", test: () => state.writeSessions >= 1 },
     { id: "write-pro", icon: "🖋️", name: "Feder-Profi", desc: "Text mit 3 Sternen", test: () => Object.values(state.writeStars).some((v) => v === 3) },
     { id: "first-session", icon: "🎉", name: "Erste Runde", desc: "Vokabel-Runde geschafft", test: () => state.sessionsDone >= 1 },
@@ -3203,12 +3445,14 @@
       podcastPos: {},
       lastBackup: null,
       xpScheme: XP_SCHEME,
-      dailyGoal: 20,
-      today: { day: null, xp: 0 },
+      mission: { day: null, done: [] },
+      missionDays: [],
       myWords: [],
       translateDir: "de-es",
       writeStars: {},
       writeSessions: 0,
+      voiceEngine: "auto",
+      dictDir: "de-es",
       resetAt: 0,
       rev: 0,
       savedAt: 0,
@@ -3267,7 +3511,7 @@
   }
 
   // Einstellungen gehören zum Gerät – beim Zusammenführen gewinnt immer eine Seite ganz.
-  const SETTING_KEYS = ["sound", "verbLevel", "listenLevel", "podcastSpeed", "podcastShowDe", "speakLevel", "speakMode", "voiceURI", "dailyGoal", "translateDir"];
+  const SETTING_KEYS = ["sound", "verbLevel", "listenLevel", "podcastSpeed", "podcastShowDe", "speakLevel", "speakMode", "voiceURI", "translateDir", "voiceEngine", "dictDir"];
 
   function readStored() {
     try {
@@ -3334,15 +3578,16 @@
     const streak = mine.lastDay === theirs.lastDay
       ? { count: Math.max(mine.count, theirs.count), lastDay: mine.lastDay }
       : later(mine, theirs, "lastDay");
-    const today = target.today.day === other.today.day
-      ? { day: target.today.day, xp: Math.max(target.today.xp, other.today.xp) }
-      : later(target.today, other.today, "day");
+    const mission = target.mission.day === other.mission.day
+      ? { day: target.mission.day, done: union(target.mission.done, other.mission.done) }
+      : later(target.mission, other.mission, "day");
     Object.assign(target, {
       progress,
       wrongStack,
       xp: Math.max(target.xp, other.xp),
       streak,
-      today,
+      mission,
+      missionDays: union(target.missionDays, other.missionDays).sort().slice(-90),
       badges: union(target.badges, other.badges),
       sessionsDone: Math.max(target.sessionsDone, other.sessionsDone),
       perfectSessions: Math.max(target.perfectSessions, other.perfectSessions),
@@ -3513,22 +3758,9 @@
     return { level, into: xp - start, span: next - start, toNext: next - xp };
   }
 
-  function todayXp() {
-    return state.today.day === todayKey() ? state.today.xp : 0;
-  }
-
-  // Zählt XP gesamt und fürs Tagesziel; meldet, ob das Tagesziel gerade erreicht wurde.
   function addXp(amount, s) {
-    if (state.today.day !== todayKey()) state.today = { day: todayKey(), xp: 0 };
-    const before = state.today.xp;
-    state.today.xp += amount;
     state.xp += amount;
-    const reached = before < state.dailyGoal && state.today.xp >= state.dailyGoal;
-    if (s) {
-      s.xp += amount;
-      if (reached) s.goalReached = true;
-    }
-    return reached;
+    if (s) s.xp += amount;
   }
 
   function dayKey(d) {
@@ -3627,6 +3859,10 @@
   const COND_END = ["ía", "ías", "ía", "íamos", "íais", "ían"];
   const HABER_PRES = ["he", "has", "ha", "hemos", "habéis", "han"];
   const HABER_IMPF = ["había", "habías", "había", "habíamos", "habíais", "habían"];
+  const HABER_FUT = ["habré", "habrás", "habrá", "habremos", "habréis", "habrán"];
+  const HABER_COND = ["habría", "habrías", "habría", "habríamos", "habríais", "habrían"];
+  const HABER_SUBJ = ["haya", "hayas", "haya", "hayamos", "hayáis", "hayan"];
+  const HABER_SUBJ_IMPF = ["hubiera", "hubieras", "hubiera", "hubiéramos", "hubierais", "hubieran"];
   const BOOT = [0, 1, 2, 5];
 
   function changeStem(stem, change) {
@@ -3635,39 +3871,97 @@
     return stem.slice(0, i) + to + stem.slice(i + from.length);
   }
 
-  // -ir-Verben mit Stammwechsel: e → i bzw. o → u in der 3. Person Indefinido und im Subjuntivo (nosotros/vosotros)
+  // -ir-Verben mit Stammwechsel: e → i bzw. o → u in der 3. Person Indefinido, im Gerundio und im Subjuntivo (nosotros/vosotros)
   function weakChange(change) {
-    return change === "o>ue" ? "o>u" : "e>i";
+    if (change === "o>ue") return "o>u";
+    if (change === "e>ie" || change === "e>i") return "e>i";
+    return null; // u>ue, i>ie, o>hue: kein schwacher Wechsel
   }
 
-  // -car/-gar/-zar: vor e ändert sich die Schreibung, damit der Laut gleich bleibt
-  function spell(stem, inf, ending) {
-    if (!/^[eé]/.test(ending)) return stem;
-    if (inf.endsWith("car")) return stem.slice(0, -1) + "qu";
-    if (inf.endsWith("gar")) return stem + "u";
-    if (inf.endsWith("zar")) return stem.slice(0, -1) + "c";
+  // Schreibung, damit der Laut gleich bleibt:
+  // -car/-gar/-zar/-guar vor e · -ger/-gir/-guir/-cer/-cir vor o/a
+  function spell(stem, inf, ending, v) {
+    if (/^[eé]/.test(ending)) {
+      if (inf.endsWith("car")) return stem.slice(0, -1) + "qu";
+      if (inf.endsWith("gar")) return stem + "u";
+      if (inf.endsWith("zar")) return stem.slice(0, -1) + "c";
+      if (inf.endsWith("guar")) return stem.slice(0, -1) + "ü";
+      return stem;
+    }
+    if (/^[oaáó]/.test(ending)) {
+      if (/guir$/.test(inf)) return stem.replace(/gu$/, "g");
+      if (/g[ei]r$/.test(inf)) return stem.replace(/g$/, "j");
+      if (/c[ei]r$/.test(inf) && /c$/.test(stem)) {
+        const before = stem.slice(-2, -1);
+        const soft = v && v.spellC === "z";
+        return /[aeiouáéíóú]/.test(before) && !soft ? stem.replace(/c$/, "zc") : stem.replace(/c$/, "z");
+      }
+    }
     return stem;
   }
 
+  // -iar/-uar mit betontem Stammvokal: envío, continúo
+  function accentStem(stem) {
+    return stem.replace(/([iu])$/, (m) => (m === "i" ? "í" : "ú"));
+  }
+
+  // prohibir → prohíb-, reunir → reún-: der letzte Vokal i/u im Stamm trägt den Akzent
+  function accentInside(stem, vowel) {
+    const plain = vowel === "í" ? "i" : "u";
+    const at = stem.lastIndexOf(plain);
+    return at < 0 ? stem : stem.slice(0, at) + vowel + stem.slice(at + 1);
+  }
+
   function participio(v) {
-    return v.part || v.inf.slice(0, -2) + (v.inf.endsWith("ar") ? "ado" : "ido");
+    if (v.part) return v.part;
+    const stem = v.inf.slice(0, -2);
+    if (v.inf.endsWith("ar")) return stem + "ado";
+    return stem + (/[aeo]$/.test(stem) ? "ído" : "ido");
+  }
+
+  // Verbtyp ar / er / ir (auch bei oír, reír)
+  function verbType(inf) {
+    return inf.slice(-2).replace("í", "i");
+  }
+
+  function gerundio(v) {
+    if (v.ger) return v.ger;
+    const t = verbType(v.inf);
+    const s = v.inf.slice(0, -2);
+    if (t === "ar") return s + "ando";
+    if (v.y || v.iy) return s + "yendo";
+    const weak = v.stem && t === "ir" ? weakChange(v.stem) : null;
+    return (weak ? changeStem(s, weak) : s) + "iendo";
   }
 
   function conj(v, tense) {
     if (v.forms && v.forms[tense]) return v.forms[tense];
-    const t = v.inf.slice(-2);
+    const t = verbType(v.inf);
     const s = v.inf.slice(0, -2);
     switch (tense) {
       case "presente":
         return END.presente[t].map((e, i) => {
           if (i === 0 && v.yo) return v.yo;
-          return (v.stem && BOOT.includes(i) ? changeStem(s, v.stem) : s) + e;
+          let st = v.stem && BOOT.includes(i) ? changeStem(s, v.stem) : s;
+          if (v.acc && BOOT.includes(i)) st = accentStem(st);
+          if (v.accV && BOOT.includes(i)) st = accentInside(st, v.accV);
+          if (v.y && BOOT.includes(i)) st += "y";
+          return (i === 0 ? spell(st, v.inf, e, v) : st) + e;
         });
-      case "indefinido":
+      case "indefinido": {
+        const weak = t === "ir" && v.stem ? weakChange(v.stem) : null;
         return END.indefinido[t].map((e, i) => {
-          const st = t === "ir" && v.stem && (i === 2 || i === 5) ? changeStem(s, weakChange(v.stem)) : s;
-          return spell(st, v.inf, e) + e;
+          if (v.y && (i === 2 || i === 5)) return s + (i === 2 ? "yó" : "yeron");
+          if (v.iy) {
+            if (i === 2) return s + "yó";
+            if (i === 5) return s + "yeron";
+            if (i !== 0 && i !== 1 && i !== 3 && i !== 4) return s + e;
+            return s + ["í", "íste", "", "ímos", "ísteis"][i];
+          }
+          const st = weak && (i === 2 || i === 5) ? changeStem(s, weak) : s;
+          return spell(st, v.inf, e, v) + e;
         });
+      }
       case "imperfecto":
         return END.imperfecto[t].map((e) => s + e);
       case "futuro":
@@ -3678,16 +3972,32 @@
         return HABER_PRES.map((h) => h + " " + participio(v));
       case "pluscuamperfecto":
         return HABER_IMPF.map((h) => h + " " + participio(v));
+      case "futuroPerf":
+        return HABER_FUT.map((h) => h + " " + participio(v));
+      case "condPerf":
+        return HABER_COND.map((h) => h + " " + participio(v));
+      case "subjPerfecto":
+        return HABER_SUBJ.map((h) => h + " " + participio(v));
+      case "subjPluscuam":
+        return HABER_SUBJ_IMPF.map((h) => h + " " + participio(v));
+      case "impNeg": {
+        const subj = conj(v, "subjuntivo");
+        return [subj[1], subj[2], subj[3], subj[4], subj[5]].map((f) => "no " + f);
+      }
       case "subjuntivo": {
         if (v.subjFromYo) {
           const yoStem = conj(v, "presente")[0].slice(0, -1);
           return END.subjuntivo[t].map((e) => yoStem + e);
         }
+        const weak = t === "ir" && v.stem ? weakChange(v.stem) : null;
         return END.subjuntivo[t].map((e, i) => {
           let st = s;
           if (v.stem && BOOT.includes(i)) st = changeStem(s, v.stem);
-          else if (v.stem && t === "ir") st = changeStem(s, weakChange(v.stem));
-          return spell(st, v.inf, e) + e;
+          else if (weak) st = changeStem(s, weak);
+          if (v.acc && BOOT.includes(i)) st = accentStem(st);
+          if (v.accV && BOOT.includes(i)) st = accentInside(st, v.accV);
+          if (v.y) st += "y";
+          return spell(st, v.inf, e, v) + e;
         });
       }
       case "subjImperfecto": {
@@ -3704,8 +4014,104 @@
     return [];
   }
 
+  // ---------- Reflexivverben & Betonung ----------
+  const REFL = ["me", "te", "se", "nos", "os", "se"];
+  const REFL_IMP = ["te", "se", "nos", "os", "se"];
+
+  function joinsVowels(a, b) {
+    const strong = "aeoáéó";
+    if ("íú".includes(a) || "íú".includes(b)) return false;
+    return !(strong.includes(a) && strong.includes(b));
+  }
+
+  // Silbenkerne eines Wortes: [[Anfang, Ende], …]
+  function nuclei(word) {
+    const isV = (k) => {
+      const c = word[k];
+      if (!c || !"aeiouáéíóúü".includes(c)) return false;
+      if (c === "u" && (word[k - 1] === "q" || (word[k - 1] === "g" && /[eiéí]/.test(word[k + 1] || "")))) return false;
+      return true;
+    };
+    const out = [];
+    for (let i = 0; i < word.length; i++) {
+      if (!isV(i)) continue;
+      let j = i;
+      while (isV(j + 1) && joinsVowels(word[j], word[j + 1])) j++;
+      out.push([i, j]);
+      i = j;
+    }
+    return out;
+  }
+
+  function stressIndex(word) {
+    const nu = nuclei(word);
+    const marked = nu.findIndex(([a, b]) => /[áéíóú]/.test(word.slice(a, b + 1)));
+    if (marked >= 0) return marked;
+    if (nu.length <= 1) return 0;
+    return /[aeiouns]$/.test(word) ? nu.length - 2 : nu.length - 1;
+  }
+
+  // Hängt ein Pronomen an (levanta + te → levántate); drop = Buchstaben, die vorher wegfallen (levantemos + nos → levantémonos)
+  function withEnclitic(form, pron, drop) {
+    const stress = stressIndex(form);
+    const word = form.slice(0, form.length - (drop || 0)) + pron;
+    const nu = nuclei(word);
+    const natural = nu.length <= 1 ? 0 : /[aeiouns]$/.test(word) ? nu.length - 2 : nu.length - 1;
+    if (/[áéíóú]/.test(form) || stress === natural || nu.length <= 1) return word;
+    const [a, b] = nu[stress];
+    const chunk = word.slice(a, b + 1);
+    let k = chunk.search(/[aeo]/);
+    if (k < 0) k = chunk.length - 1;
+    const accented = { a: "á", e: "é", i: "í", o: "ó", u: "ú" }[chunk[k]];
+    return accented ? word.slice(0, a + k) + accented + word.slice(a + k + 1) : word;
+  }
+
+  function reflexiveImperative(v) {
+    const imp = conj(v, "imperativo");
+    const vosotros = v.inf === "ir" ? "idos" : verbType(v.inf) === "ir" ? v.inf.slice(0, -2) + "íos" : imp[3].replace(/d$/, "") + "os";
+    return [withEnclitic(imp[0], "te"), withEnclitic(imp[1], "se"), withEnclitic(imp[2], "nos", 1), vosotros, withEnclitic(imp[4], "se")];
+  }
+
+  function conjReflexive(v, tense) {
+    if (tense === "imperativo") return reflexiveImperative(v);
+    if (tense === "impNeg") return conj(v, "impNeg").map((f, i) => "no " + REFL_IMP[i] + " " + f.replace(/^no /, ""));
+    return conj(v, tense).map((f, i) => REFL[i] + " " + f);
+  }
+
+  const DICT_TENSES = [
+    { group: "Indikativ", ids: ["presente", "perfecto", "indefinido", "imperfecto", "pluscuamperfecto", "futuro", "futuroPerf"] },
+    { group: "Konjunktiv", ids: ["subjuntivo", "subjPerfecto", "subjImperfecto", "subjPluscuam"] },
+    { group: "Befehl & Konditional", ids: ["imperativo", "impNeg", "condicional", "condPerf"] },
+  ];
+  const DICT_TENSE_IDS = DICT_TENSES.flatMap((g) => g.ids);
+  const EXTRA_TENSE_NAMES = {
+    futuroPerf: ["Futuro perfecto", "Vorzukunft · habré hablado"],
+    condPerf: ["Condicional perfecto", "Konditional II · habría hablado"],
+    subjPerfecto: ["Subjuntivo perfecto", "Konjunktiv Perfekt · haya hablado"],
+    subjPluscuam: ["Subjuntivo pluscuamperfecto", "Konjunktiv Plusquamperfekt · hubiera hablado"],
+    impNeg: ["Imperativo negativo", "verneinter Befehl · no hables"],
+  };
+
+  // Alle Zeiten eines Verbs (auch reflexiv: levantarse). Unbekannte Verben werden regelmäßig gebildet (known = false).
+  function conjugationFor(inf) {
+    const reflexive = /[aeií]rse$/.test(inf);
+    const base = reflexive ? inf.slice(0, -2) : inf;
+    if (!/[aeií]r$/.test(base) || base.length < 2) return null;
+    const known = VERB_DB_BY_INF.has(base);
+    const v = VERB_DB_BY_INF.get(base) || { inf: base };
+    const tenses = {};
+    DICT_TENSE_IDS.forEach((id) => { tenses[id] = reflexive ? conjReflexive(v, id) : conj(v, id); });
+    const regular = {};
+    DICT_TENSE_IDS.forEach((id) => { regular[id] = conj({ inf: base }, id); });
+    return {
+      inf, base, v, known, reflexive, tenses, regular,
+      participio: participio(v),
+      gerundio: reflexive ? withEnclitic(gerundio(v), "se") : gerundio(v),
+    };
+  }
+
   function personsFor(tense) {
-    return tense === "imperativo" ? IMP_PERSONS : PERSONS;
+    return tense === "imperativo" || tense === "impNeg" ? IMP_PERSONS : PERSONS;
   }
 
   // Typischer Anfängerfehler: das Verb so konjugieren, als wäre es regelmäßig.
@@ -3821,7 +4227,7 @@
       combo: s.combo,
       bestCombo: s.bestCombo,
       startXp: s.startXp,
-      goalReached: !!s.goalReached,
+      missions: s.missions || [],
       active: view === "session" || view === "drill",
       savedAt: Date.now(),
     };
@@ -3889,7 +4295,7 @@
       const id = roundId(r.kind, current);
       if (!done.has(id) && !queue.some((b) => roundId(r.kind, b) === id)) queue.unshift(current);
     }
-    if (synth) synth.cancel();
+    cancelSpeech();
     stopPlayer();
     player = null;
     newSession(r.kind, {
@@ -3908,7 +4314,7 @@
       combo: r.combo || 0,
       bestCombo: r.bestCombo || 0,
       startXp: r.startXp || 0,
-      goalReached: !!r.goalReached,
+      missions: r.missions || [],
       listening: false,
       interim: "",
       notice: "",
@@ -4175,6 +4581,7 @@
       state.sessionsDone++;
     }
     bumpStreak();
+    s.missions = missionProgress(s.kind, s);
     s.newBadges = unlockBadges();
     saveState();
     view = "result";
@@ -4424,9 +4831,116 @@
     };
   }
 
+  // ---------- Natürliche Stimme: vorab erzeugte Aufnahmen ----------
+  // Feste Texte (Vokabeln, Sätze, Zahlen, Verbformen, Podcasts, …) liegen als MP3 mit der App.
+  // Alles andere – und alles, was nicht lädt – liest weiter die Stimme des Geräts vor.
+  const AUDIO_DIR = "audio/";
+  const SILENT_WAV = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=";
+  const voiceEl = new Audio();
+  voiceEl.preload = "auto";
+  let clips = null;
+  let speakToken = 0;
+  let voiceUnlocked = false;
+
+  function loadClips() {
+    if (!/^https?:/.test(location.protocol)) return;
+    fetch(AUDIO_DIR + "manifest.json?v=" + APP_VERSION)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error("http"))))
+      .then((data) => {
+        clips = data.clips || null;
+        if (view === "settings") render();
+      })
+      .catch(() => {
+        clips = null;
+      });
+  }
+
+  function naturalVoiceOn() {
+    return !!clips && state.voiceEngine !== "device";
+  }
+
+  function clipFor(text, voice) {
+    if (!naturalVoiceOn()) return null;
+    const entry = clips[String(text).trim()];
+    const v = voice || "f";
+    const hit = entry && entry[v];
+    return hit ? { url: AUDIO_DIR + v + "/" + hit[0] + ".mp3", ms: hit[1] } : null;
+  }
+
+  function cancelSpeech() {
+    speakToken++;
+    voiceEl.onended = null;
+    voiceEl.onerror = null;
+    voiceEl.pause();
+    if (synth) synth.cancel();
+    document.body.classList.remove("speaking");
+  }
+
+  // onend(ok): ok = false, wenn die Aufnahme nicht gespielt werden konnte (dann springt die Gerätestimme ein).
+  function playClip(clip, rate, onend) {
+    const token = ++speakToken;
+    voiceEl.onended = null;
+    voiceEl.onerror = null;
+    voiceEl.pause();
+    voiceEl.muted = false;
+    voiceEl.src = clip.url;
+    voiceEl.defaultPlaybackRate = rate;
+    voiceEl.playbackRate = rate;
+    voiceEl.preservesPitch = true;
+    voiceEl.webkitPreservesPitch = true;
+    document.body.classList.add("speaking");
+    const finish = (ok) => {
+      if (token !== speakToken) return;
+      document.body.classList.remove("speaking");
+      if (onend) onend(ok);
+    };
+    voiceEl.onended = () => finish(true);
+    voiceEl.onerror = () => finish(false);
+    const started = voiceEl.play();
+    if (started && started.catch) started.catch((e) => finish(!!e && e.name === "AbortError"));
+  }
+
+  // iOS erlaubt Wiedergabe per Programm erst, nachdem das Element einmal per Fingertipp gespielt hat.
+  function unlockVoice() {
+    if (voiceUnlocked) return;
+    voiceUnlocked = true;
+    const token = speakToken;
+    voiceEl.muted = true;
+    voiceEl.src = SILENT_WAV;
+    const p = voiceEl.play();
+    const done = () => {
+      if (token === speakToken) voiceEl.pause();
+      voiceEl.muted = false;
+    };
+    if (p && p.then) p.then(done, done);
+    else done();
+  }
+
+  function prefetchClip(clip) {
+    if (!clip) return;
+    const el = new Audio();
+    el.preload = "auto";
+    el.src = clip.url;
+    prefetched = el;
+  }
+  let prefetched = null;
+
   function speak(text, rate) {
+    if (!state.sound) return;
+    const clip = clipFor(text, "f");
+    if (clip) {
+      cancelSpeech();
+      playClip(clip, Math.min(1.5, Math.max(0.5, (rate || 0.85) / 0.85)), (ok) => {
+        if (!ok) deviceSpeak(text, rate);
+      });
+      return;
+    }
+    deviceSpeak(text, rate);
+  }
+
+  function deviceSpeak(text, rate) {
     if (!synth || !state.sound) return;
-    synth.cancel();
+    cancelSpeech();
     const u = new SpeechSynthesisUtterance(text);
     // Sprache und Stimme müssen zusammenpassen, sonst nimmt Safari die einfache Standardstimme.
     u.lang = voiceLang(spanishVoice);
@@ -4475,7 +4989,15 @@
     return ep.lines.slice(0, upto).reduce((sum, l) => sum + l.es.split(/\s+/).length / 3.2 + 0.45, 0);
   }
 
+  const PODCAST_PAUSE_MS = 380;
+
+  // Mit Aufnahmen ist die Dauer genau bekannt, sonst wird sie geschätzt.
   function episodeSeconds(ep, upto) {
+    const lines = ep.lines.slice(0, upto);
+    const found = lines.map((l) => lineClip(ep, l));
+    if (found.length && found.every(Boolean)) {
+      return found.reduce((sum, c) => sum + c.ms + PODCAST_PAUSE_MS, 0) / 1000 / state.podcastSpeed;
+    }
     return baseSeconds(ep, upto) / PODCAST_RATES[state.podcastSpeed];
   }
 
@@ -4503,8 +5025,13 @@
     if (player.started) rememberPosition();
     player.playing = false;
     player.token++;
-    if (synth) synth.cancel();
+    cancelSpeech();
     releaseWakeLock();
+  }
+
+  function lineClip(ep, line) {
+    const gender = ep.speakers ? ep.speakers[line.s].gender : ep.narrator;
+    return clipFor(line.es, gender === "m" ? "m" : "f");
   }
 
   function playLine() {
@@ -4512,14 +5039,7 @@
     const ep = PODCAST_BY_ID.get(p.id);
     const line = ep.lines[p.index];
     const token = ++p.token;
-    if (synth.speaking || synth.pending) synth.cancel();
-    const u = new SpeechSynthesisUtterance(line.es);
-    const { voice, pitch } = voiceSettings(ep, line);
-    u.lang = voiceLang(voice);
-    if (voice) u.voice = voice;
-    u.pitch = pitch;
-    u.rate = PODCAST_RATES[state.podcastSpeed];
-    u.onend = () => {
+    const advance = () => {
       if (player !== p || token !== p.token || !p.playing) return;
       if (p.index >= ep.lines.length - 1) {
         finishEpisode();
@@ -4529,6 +5049,35 @@
       rememberPosition();
       playLine();
       updatePlayer(true);
+    };
+    const clip = lineClip(ep, line);
+    if (clip) {
+      cancelSpeech();
+      const speed = state.podcastSpeed;
+      playClip(clip, speed, (ok) => {
+        if (player !== p || token !== p.token || !p.playing) return;
+        if (ok) setTimeout(advance, Math.round(PODCAST_PAUSE_MS / speed));
+        else playLineWithDevice(p, ep, line, token, advance);
+      });
+      const nextLine = ep.lines[p.index + 1];
+      if (nextLine) prefetchClip(lineClip(ep, nextLine));
+      return;
+    }
+    playLineWithDevice(p, ep, line, token, advance);
+  }
+
+  function playLineWithDevice(p, ep, line, token, advance) {
+    if (!synth) return;
+    cancelSpeech();
+    const u = new SpeechSynthesisUtterance(line.es);
+    const { voice, pitch } = voiceSettings(ep, line);
+    u.lang = voiceLang(voice);
+    if (voice) u.voice = voice;
+    u.pitch = pitch;
+    u.rate = PODCAST_RATES[state.podcastSpeed];
+    u.onend = () => {
+      if (player !== p || token !== p.token || !p.playing) return;
+      advance();
     };
     synth.speak(u);
   }
@@ -4547,7 +5096,7 @@
   }
 
   function togglePlay() {
-    if (!synth) return;
+    if (!synth && !clips) return;
     if (player.playing) {
       stopPlayer();
     } else {
@@ -4558,7 +5107,7 @@
   }
 
   function jumpTo(i) {
-    if (!synth) return;
+    if (!synth && !clips) return;
     player.index = i;
     startPlaying();
     updatePlayer(false);
@@ -4576,7 +5125,15 @@
   function setSpeed(speed) {
     state.podcastSpeed = speed;
     saveState();
-    if (player.playing) playLine();
+    if (player.playing) {
+      const natural = voiceEl.currentSrc && !voiceEl.currentSrc.startsWith("data:") && !voiceEl.paused && !voiceEl.ended;
+      if (natural) {
+        voiceEl.defaultPlaybackRate = speed;
+        voiceEl.playbackRate = speed;
+      } else {
+        playLine();
+      }
+    }
     updatePlayer(false);
   }
 
@@ -4589,7 +5146,7 @@
     delete state.podcastPos[p.id];
     if (!state.podcastsHeard.includes(p.id)) {
       state.podcastsHeard.push(p.id);
-      p.goalReached = addXp(XP_EPISODE);
+      addXp(XP_EPISODE);
       p.xp = XP_EPISODE;
     }
     bumpStreak();
@@ -4775,7 +5332,7 @@
       if (recorder && recorder.state === "recording") recorder.stop();
       return;
     }
-    if (synth) synth.cancel();
+    cancelSpeech();
     s.notice = "";
     s.interim = "";
     s.task.result = null;
@@ -4990,23 +5547,28 @@
 
   let formIndex = null;
 
-  // Alle Formen der Poquito-Verben, um z. B. „tengo“ als tener · Presente · yo zu erkennen.
+  // Alle Formen aller Verben der Datenbank (ohne zusammengesetzte Zeiten): „tengo“ → tener · Presente · yo
   function verbForms() {
     if (!formIndex) {
       formIndex = new Map();
-      VERBS.forEach((v) => TENSES.forEach((t) => conj(v, t.id).forEach((form, person) => {
+      const simple = DICT_TENSE_IDS.filter((id) => !["perfecto", "pluscuamperfecto", "futuroPerf", "condPerf", "subjPerfecto", "subjPluscuam", "impNeg"].includes(id));
+      VERB_DB.forEach((v) => simple.forEach((id) => conj(v, id).forEach((form, person) => {
         const key = form.toLowerCase();
         if (!formIndex.has(key)) formIndex.set(key, []);
-        formIndex.get(key).push({ v, tense: t.id, person });
+        formIndex.get(key).push({ v, tense: id, person });
       })));
     }
     return formIndex;
   }
 
+  function tenseLabel(id) {
+    return TENSE_BY_ID.has(id) ? TENSE_BY_ID.get(id).name : EXTRA_TENSE_NAMES[id][0];
+  }
+
   function grammarHints(text) {
     const key = simple(text);
     if (!key || key.split(" ").length > 3) return [];
-    const inf = VERB_BY_INF.get(key);
+    const inf = VERB_DB_BY_INF.get(key);
     if (inf) return [{ v: inf, tense: null, persons: [] }];
     const groups = new Map();
     (verbForms().get(key) || []).forEach((h) => {
@@ -5283,7 +5845,7 @@
     const parts = new Set();
     const infinitives = new Set();
     const simple = TENSES.map((t) => t.id).filter((id) => id !== "perfecto" && id !== "pluscuamperfecto");
-    [...VERBS, ...EXTRA_VERBS].forEach((v) => {
+    VERB_DB.forEach((v) => {
       if (infinitives.has(v.inf)) return;
       infinitives.add(v.inf);
       parts.add(participio(v));
@@ -5646,8 +6208,9 @@
     // XP gibt es beim ersten Prüfen – nach dem Überarbeiten nur noch für zusätzliche Sterne.
     r.xp = writing.awarded ? 5 * Math.max(0, r.stars - writing.awarded) : XP_WRITE + 5 * r.stars;
     if (!writing.awarded) state.writeSessions++;
-    if (r.xp) r.goalReached = addXp(r.xp);
+    if (r.xp) addXp(r.xp);
     writing.awarded = Math.max(writing.awarded, r.stars);
+    r.missions = missionProgress("write", r);
     state.writeStars[writing.focus] = Math.max(state.writeStars[writing.focus] || 0, r.stars);
     bumpStreak();
     r.newBadges = unlockBadges();
@@ -5887,6 +6450,409 @@
     return `<button class="notice update-banner" data-action="do-update">✨ Eine neue Version von Poquito ist da – <b>tippen zum Aktualisieren</b></button>`;
   }
 
+  // ---------- Tagesaufgabe ----------
+  function dayNumber(key) {
+    const [y, m, d] = key.split("-").map(Number);
+    return Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+  }
+
+  // Hängt nur vom Datum ab – alle Geräte bekommen dieselbe Aufgabe.
+  function missionFor(key) {
+    const dn = dayNumber(key);
+    const listen = dn % 2 === 0;
+    const pick = Math.floor(dn / 2) % 3;
+    return {
+      day: key,
+      tense: MISSION_TENSES[dn % MISSION_TENSES.length],
+      group: MISSION_GROUPS[(dn + Math.floor(dn / 10)) % MISSION_GROUPS.length],
+      extra: listen ? "listen" : "speak",
+      extraSource: (listen ? ["sentences", "words", "numbers"] : ["sentences", "sounds", "words"])[pick],
+      writeTense: MISSION_TENSES[(dn + 5) % MISSION_TENSES.length],
+    };
+  }
+
+  function missionDone() {
+    return state.mission && state.mission.day === todayKey() ? state.mission.done : [];
+  }
+
+  function missionStreak() {
+    const days = new Set(state.missionDays);
+    const d = new Date();
+    if (!days.has(dayKey(d))) d.setDate(d.getDate() - 1);
+    let n = 0;
+    while (days.has(dayKey(d))) {
+      n++;
+      d.setDate(d.getDate() - 1);
+    }
+    return n;
+  }
+
+  function missionTasks() {
+    const m = missionFor(todayKey());
+    const done = missionDone();
+    const tense = TENSE_BY_ID.get(m.tense);
+    const group = VERB_GROUPS.find((g) => g.id === m.group);
+    const fromMistakes = state.wrongStack.length >= 3;
+    const src = (list, id) => list.find((x) => x.id === id).name;
+    const extraName = m.extra === "listen" ? "🎧 Hören: " + src(LISTEN_SOURCES, m.extraSource) : "🗣️ Sprechen: " + src(SPEAK_SOURCES, m.extraSource);
+    return [
+      { id: "verb", title: `🔤 Verben: ${tense.name}`, desc: `${group.name} · ${tense.de}`, done: done.includes("verb") },
+      { id: "vocab", title: "📚 Vokabeln", desc: fromMistakes ? `Fehlerstapel wiederholen (${state.wrongStack.length})` : "Gemischte Runde", done: done.includes("vocab") },
+      { id: "extra", title: extraName, desc: "1 Runde", done: done.includes("extra") },
+      { id: "write", title: `✍️ Schreiben: ${TENSE_BY_ID.get(m.writeTense).name}`, desc: `Bonus · 1 Text · +${MISSION_BONUS_XP} XP`, done: done.includes("write"), bonus: true },
+    ];
+  }
+
+  function missionCard() {
+    const tasks = missionTasks();
+    const core = tasks.filter((t) => !t.bonus);
+    const doneCount = core.filter((t) => t.done).length;
+    const all = doneCount === core.length;
+    const streak = missionStreak();
+    const today = new Date().toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" });
+    return `
+      <section class="mission ${all ? "complete" : ""}">
+        <div class="mission-head">
+          <div>
+            <h3>🎯 Tagesaufgabe</h3>
+            <span>${esc(today)}</span>
+          </div>
+          <div class="mission-count">${all ? "✓ Geschafft!" : `${doneCount} / ${core.length}`}</div>
+        </div>
+        <div class="mission-list">
+          ${tasks.map((t) => `
+            <button class="mission-task ${t.done ? "done" : ""} ${t.bonus ? "bonus" : ""}" data-action="m-start" data-task="${t.id}">
+              <span class="mt-check">${t.done ? "✓" : t.bonus ? "★" : ""}</span>
+              <span class="mt-text"><b>${esc(t.title)}</b><small>${esc(t.desc)}</small></span>
+              <span class="mt-go">${t.done ? "nochmal" : "Los"} ›</span>
+            </button>`).join("")}
+        </div>
+        <p class="mission-foot">${all ? `Heute gemeistert – ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge. Weiter üben macht trotzdem Spaß!` : `Meistere alle drei mit mindestens ${MISSION_MIN_STARS} Sternen. Täglich wechseln Zeitform, Verbgruppe und Übung. ${streak ? `🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"} in Folge.` : ""}`}</p>
+      </section>`;
+  }
+
+  function startMissionTask(id) {
+    const m = missionFor(todayKey());
+    if (id === "verb") {
+      currentTense = m.tense;
+      startDrill(m.tense, m.group);
+    } else if (id === "vocab") {
+      startVocab(state.wrongStack.length >= 3 ? { type: "mistakes" } : { type: "all" });
+    } else if (id === "extra") {
+      if (m.extra === "listen") startListen(m.extraSource);
+      else startSpeak(m.extraSource);
+    } else if (id === "write") {
+      startWriting(m.writeTense);
+    }
+  }
+
+  // Wird nach jeder Runde aufgerufen; liefert die neu geschafften Teile für die Anzeige.
+  function missionProgress(kind, s) {
+    const m = missionFor(todayKey());
+    let id = null;
+    if (kind === "verbs" && s.tense === m.tense) id = "verb";
+    else if (kind === "vocab") id = "vocab";
+    else if (kind === m.extra) id = "extra";
+    else if (kind === "write" && writing.focus === m.writeTense) id = "write";
+    const stars = s.stars;
+    if (!id || stars < MISSION_MIN_STARS) return [];
+    const key = todayKey();
+    if (!state.mission || state.mission.day !== key) state.mission = { day: key, done: [] };
+    if (state.mission.done.includes(id)) return [];
+    state.mission.done.push(id);
+    const out = [{ id, xp: 0, all: false, streak: 0 }];
+    if (id === "write") {
+      addXp(MISSION_BONUS_XP, s);
+      out[0].xp = MISSION_BONUS_XP;
+    }
+    const core = ["verb", "vocab", "extra"];
+    if (core.every((c) => state.mission.done.includes(c)) && !state.missionDays.includes(key)) {
+      state.missionDays.push(key);
+      state.missionDays = state.missionDays.sort().slice(-90);
+      addXp(MISSION_DONE_XP, s);
+      out[0].xp += MISSION_DONE_XP;
+      out[0].all = true;
+      out[0].streak = missionStreak();
+    }
+    return out;
+  }
+
+  function missionBanners(list) {
+    return (list || []).map((x) => {
+      const names = { verb: "Verben", vocab: "Vokabeln", extra: "Hören/Sprechen", write: "Schreiben (Bonus)" };
+      if (x.all) return `<div class="levelup goal-banner">🏆 Tagesaufgabe gemeistert! +${x.xp} XP · ${x.streak} ${x.streak === 1 ? "Tag" : "Tage"} in Folge</div>`;
+      return `<div class="levelup goal-banner">🎯 Tagesaufgabe: ${names[x.id]} geschafft!${x.xp ? ` +${x.xp} XP` : ""}</div>`;
+    }).join("");
+  }
+
+  // ---------- Wörterbuch ----------
+  // Mehrere Übersetzungen nach Wortart (Google-Wörterbuch, ohne Konto), dazu das Poquito-Wörterbuch.
+  // Bei Verben gibt es darunter die Grammatik: alle Zeiten, auch von konjugierten Formen aus („fuimos“ → ser, ir).
+  const GT_URL = "https://translate.googleapis.com/translate_a/single";
+  const POS_NAMES = { noun: "Nomen", verb: "Verb", adjective: "Adjektiv", adverb: "Adverb", preposition: "Präposition", conjunction: "Konjunktion", pronoun: "Pronomen", interjection: "Interjektion", article: "Artikel", abbreviation: "Abkürzung", particle: "Partikel", determiner: "Begleiter", numeral: "Zahlwort", phrase: "Wendung" };
+  const dictLookup = { text: "", result: null, loading: false, error: "", note: "", token: 0, verb: null, mood: 0 };
+
+  async function fetchGoogleDict(q, from, to) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 10000);
+    try {
+      const res = await fetch(GT_URL + "?client=gtx&sl=" + from + "&tl=" + to + "&dt=t&dt=bd&q=" + encodeURIComponent(q), { signal: ctrl.signal });
+      if (!res.ok) throw new Error("http");
+      const data = await res.json();
+      const main = (data[0] || []).map((seg) => seg[0]).join("").trim();
+      const groups = (data[1] || []).map((g) => ({
+        pos: g[0],
+        items: (g[2] || []).slice(0, 8).map((e) => ({
+          term: e[0],
+          hints: (e[1] || []).filter((h) => simple(h) !== simple(q)).slice(0, 4),
+          article: typeof e[4] === "string" && /^(el|la|los|las)$/.test(e[4]) ? e[4] : "",
+        })),
+      })).filter((g) => g.items.length);
+      return { main, groups };
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  function isInfinitive(word) {
+    return /^[a-záéíóúñü]*[aeií]r(se)?$/.test(word) && (word.length >= 3 || word === "ir");
+  }
+
+  // Sprache einer Wörterbuch-Eingabe: erst die allgemeine Erkennung, dann Hinweise aus der Wortform
+  function guessWordLang(raw) {
+    const g = guessLang(raw);
+    if (g) return g;
+    const w = simple(raw);
+    if (!w || w.includes(" ")) return null;
+    if ((verbForms().get(w) || []).length) return "es";
+    if (/[áéíóúñ]/.test(raw)) return "es";
+    if (/[äöüß]/.test(raw)) return "de";
+    if (isInfinitive(w) && /[aeií]r(se)?$/.test(w)) return "es";
+    if (w.length >= 4 && /(en|ung|heit|keit|schaft|chen|lich|isch)$/.test(w) && !WORDS.has(w)) return "de";
+    return null;
+  }
+
+  async function lookupWord() {
+    const raw = dictLookup.text.trim();
+    if (!raw || dictLookup.loading) return;
+    dictLookup.note = "";
+    dictLookup.error = "";
+    if (raw.split(/\s+/).length > 4) {
+      dictLookup.result = null;
+      dictLookup.error = "Das sieht nach einem ganzen Satz aus. Für Sätze ist der Übersetzer besser.";
+      dictLookup.sentence = true;
+      render();
+      return;
+    }
+    dictLookup.sentence = false;
+    let [from, to] = trLangs(state.dictDir);
+    const guessed = guessWordLang(raw);
+    if (guessed && guessed !== from) {
+      state.dictDir = guessed === "es" ? "es-de" : "de-es";
+      saveState();
+      [from, to] = trLangs(state.dictDir);
+      dictLookup.note = "Sprache automatisch erkannt: " + LANG_NAMES[from] + " → " + LANG_NAMES[to];
+    }
+    const token = ++dictLookup.token;
+    dictLookup.loading = true;
+    dictLookup.result = null;
+    render();
+
+    const local = lookupDictionary(raw, from);
+    let google = null;
+    let failure = null;
+    try {
+      if (navigator.onLine === false) throw new Error("offline");
+      google = await fetchGoogleDict(raw, from, to);
+    } catch (e) {
+      failure = e;
+    }
+    let fallback = [];
+    if ((!google || !google.groups.length) && !failure) {
+      try {
+        fallback = mtCandidates(await fetchMt(raw, from, to), raw);
+      } catch (e) {
+        failure = e;
+      }
+    }
+    if (token !== dictLookup.token) return;
+    dictLookup.loading = false;
+
+    const groups = google ? google.groups : [];
+    if (!groups.length && fallback.length) groups.push({ pos: "", items: fallback.slice(0, 4).map((term) => ({ term, hints: [], article: "" })) });
+
+    // Welche Verben gehören zur Eingabe?
+    const verbs = [];
+    const addVerb = (inf, via) => {
+      if (isInfinitive(inf) && !verbs.some((x) => x.inf === inf)) verbs.push({ inf, via });
+    };
+    if (from === "es") {
+      const key = simple(raw);
+      if (isInfinitive(key)) {
+        const verbGroup = groups.some((g) => g.pos === "verb");
+        if (VERB_DB_BY_INF.has(key.replace(/se$/, "")) || verbGroup || !groups.length) addVerb(key, "");
+      }
+      (verbForms().get(key) || []).forEach((h) => addVerb(h.v.inf, `${raw} = ${personsFor(h.tense)[h.person]} · ${tenseLabel(h.tense)}`));
+    } else {
+      groups.filter((g) => g.pos === "verb").forEach((g) => g.items.forEach((it) => addVerb(it.term.toLowerCase(), "")));
+    }
+    verbs.splice(8);
+
+    if (!groups.length && !local.length && !verbs.length) {
+      dictLookup.error = failure
+        ? (failure.message === "offline" || failure.name === "TypeError" ? "Keine Internetverbindung – offline findet Poquito nur Wörter aus dem eigenen Wörterbuch." : "Das Wörterbuch ist gerade nicht erreichbar. Versuch es gleich nochmal.")
+        : "Dazu habe ich nichts gefunden. Prüf die Schreibweise.";
+    } else if (failure) {
+      dictLookup.note = "Ohne Internet – es werden nur Poquito-Wörter und Verbformen angezeigt.";
+    }
+    dictLookup.result = { query: raw, from, to, main: google ? google.main : "", groups, local, verbs };
+    dictLookup.verb = verbs[0] ? verbs[0].inf : null;
+    dictLookup.mood = 0;
+    if (view === "dictionary") render();
+  }
+
+  // Einen Eintrag als Karteikarte speichern (es = Spanisch vorne)
+  function addMyWord(es, de) {
+    if (!es || !de || es.length > MAX_CARD || de.length > MAX_CARD || WORDS.has(es)) return false;
+    state.myWords.push({ es, de, added: Date.now() });
+    registerMyWords(state.myWords);
+    saveState();
+    return true;
+  }
+
+  function dictRowSave(es, de) {
+    if (!es || !de || es.length > MAX_CARD || de.length > MAX_CARD) return "";
+    if (WORDS.has(es)) return `<span class="dict-saved" title="Schon in deinen Vokabeln">✓</span>`;
+    return `<button class="dict-save" data-action="dict-save" data-es="${esc(es)}" data-de="${esc(de)}" aria-label="Zum Lernen speichern">⭐</button>`;
+  }
+
+  function dictionaryView() {
+    const [from, to] = trLangs(state.dictDir);
+    const r = dictLookup.result;
+    return `
+      <header class="hero">
+        <div class="logo">🔎</div>
+        <div>
+          <h1>Wörterbuch</h1>
+          <p>Wörter nachschlagen – mit allen Bedeutungen</p>
+        </div>
+        <div class="spacer"></div>
+        ${soundButton()}
+      </header>
+      <section class="tr-box">
+        <div class="tr-dir">
+          <span class="tr-chip">${LANG_NAMES[from]}</span>
+          <button class="icon-btn tr-swap" data-action="dict-swap" aria-label="Richtung tauschen">⇄</button>
+          <span class="tr-chip">${LANG_NAMES[to]}</span>
+        </div>
+        <input class="dict-input" type="text" value="${esc(dictLookup.text)}" lang="${from}" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false"
+          placeholder="${from === "de" ? "Deutsches Wort, z. B. Bank, gehen, schön …" : "Spanisches Wort, z. B. tener, fuimos, casa …"}">
+        ${from === "es" ? `<div class="accents">${ACCENT_CHARS.map((a) => `<button class="accent" data-action="accent" data-char="${a}">${a}</button>`).join("")}</div>` : ""}
+        <div class="tr-buttons">
+          <button class="btn" data-action="dict-go" ${dictLookup.loading ? "disabled" : ""}>${dictLookup.loading ? "Suche …" : "🔎 Nachschlagen"}</button>
+          <button class="btn light" data-action="dict-clear">Leeren</button>
+        </div>
+      </section>
+      ${dictLookup.note ? `<div class="notice tr-note">${esc(dictLookup.note)}</div>` : ""}
+      ${dictLookup.error ? `<div class="notice warn">${esc(dictLookup.error)}${dictLookup.sentence ? ` <button class="link-btn inline" data-action="dict-to-translator">Im Übersetzer öffnen</button>` : ""}</div>` : ""}
+      ${r ? dictionaryResult(r) : dictionaryIntro()}`;
+  }
+
+  function dictionaryIntro() {
+    return `
+      <section class="panel dict-intro">
+        <h3>So funktioniert's</h3>
+        <ul>
+          <li>Gib ein <b>deutsches oder spanisches Wort</b> ein – die Sprache wird erkannt.</li>
+          <li>Du siehst <b>mehrere Übersetzungen</b> nach Wortart, bei Nomen mit <b>Artikel</b> (el/la).</li>
+          <li>Ist es ein <b>Verb</b>, zeigt Poquito darunter <b>alle Zeiten</b> – auch wenn du eine konjugierte Form eingibst, z. B. <i>fuimos</i> oder <i>tengo</i>.</li>
+          <li>Mit ⭐ speicherst du Wörter zum Lernen in „Meine Wörter“.</li>
+        </ul>
+      </section>`;
+  }
+
+  function dictionaryResult(r) {
+    const toEs = r.to === "es";
+    const rows = r.groups.map((g) => `
+      <div class="dict-group">
+        <div class="dict-pos">${esc(POS_NAMES[g.pos] || g.pos || "Übersetzung")}</div>
+        ${g.items.map((it, i) => {
+          const es = toEs ? (it.article ? it.article + " " : "") + it.term : r.query;
+          const de = toEs ? r.query : it.term;
+          return `
+            <div class="dict-row ${i === 0 ? "main" : ""}">
+              <div class="dict-term">
+                ${it.article ? `<span class="art">${esc(it.article)}</span>` : ""}<b lang="${r.to}">${esc(it.term)}</b>
+                ${it.hints.length ? `<small>${esc(it.hints.join(" · "))}</small>` : ""}
+              </div>
+              ${toEs ? sayButton(es) : ""}
+              ${toEs ? dictRowSave(es, de) : ""}
+            </div>`;
+        }).join("")}
+      </div>`).join("");
+    const local = r.local.map((e) => {
+      const where = e.cat ? CATS.get(e.cat).name + " · " + wordStatus(e.es) : "Verb";
+      return `
+        <div class="dict-row local">
+          <div class="dict-term"><b lang="es">${esc(e.es)}</b> <span class="eq">=</span> ${esc(e.de)} <small>📚 ${esc(where)}</small></div>
+          ${sayButton(e.es)}
+        </div>`;
+    }).join("");
+    const head = !toEs
+      ? ""
+      : `<div class="dict-head"><b lang="es">${esc(r.query)}</b>${sayButton(r.query)}${r.main ? `<span class="eq">→</span><span>${esc(r.main)}</span>` : ""}${r.groups.length ? "" : dictRowSave(r.query, r.main)}</div>`;
+    return `
+      <section class="tr-result dict-result">
+        ${head}
+        ${rows}
+        ${local ? `<div class="dict-group"><div class="dict-pos">Aus deinen Vokabeln</div>${local}</div>` : ""}
+      </section>
+      ${r.verbs.length ? grammarSection(r) : ""}`;
+  }
+
+  function grammarSection(r) {
+    const c = conjugationFor(dictLookup.verb || r.verbs[0].inf);
+    if (!c) return "";
+    const via = (r.verbs.find((x) => x.inf === c.inf) || {}).via;
+    const mood = DICT_TENSES[dictLookup.mood] || DICT_TENSES[0];
+    const person = (id) => personsFor(id);
+    const label = (p) => p.replace("él / ella / usted", "él/ella/Ud.").replace("ellos / ellas / ustedes", "ellos/Uds.");
+    const cards = mood.ids.map((id) => {
+      const noImp = c.v.noImp && (id === "imperativo" || id === "impNeg");
+      const names = TENSE_BY_ID.has(id) ? [TENSE_BY_ID.get(id).name, TENSE_BY_ID.get(id).de] : EXTRA_TENSE_NAMES[id];
+      const rules = TENSE_BY_ID.has(id) ? `<button class="link-btn inline" data-action="gram-rules" data-tense="${id}">📘 Regeln</button>` : "";
+      return `
+        <div class="tense-card">
+          <div class="tc-head"><b>${esc(names[0])}</b><small>${esc(names[1])}</small>${rules}</div>
+          ${person(id).map((pn, i) => {
+            const form = c.tenses[id][i];
+            const irregular = !noImp && !c.reflexive && c.regular[id][i] !== form;
+            return noImp
+              ? `<div class="tc-row off"><span class="pn">${esc(label(pn))}</span><span class="fm">–</span></div>`
+              : `<button class="tc-row ${irregular ? "irr" : ""}" data-action="say" data-text="${esc(form)}"><span class="pn">${esc(label(pn))}</span><span class="fm" lang="es">${esc(form)}</span></button>`;
+          }).join("")}
+        </div>`;
+    }).join("");
+    const regularPart = c.reflexive ? "" : participio(c.v) !== participio({ inf: c.base }) ? ` <span class="irr-tag">unregelmäßig</span>` : "";
+    return `
+      <section class="panel grammar">
+        <h3>🧩 Grammatik: <span lang="es">${esc(c.inf)}</span>${c.v.de ? ` <small>(${esc(c.v.de)})</small>` : ""}</h3>
+        ${via ? `<p class="gram-via">${esc(via)}</p>` : ""}
+        ${r.verbs.length > 1 ? `<div class="gram-verbs">${r.verbs.map((x) => `<button class="tr-alt ${x.inf === c.inf ? "on" : ""}" data-action="dict-verb" data-verb="${esc(x.inf)}" lang="es">${esc(x.inf)}</button>`).join("")}</div>` : ""}
+        ${c.known ? "" : `<div class="notice warn">⚠️ Dieses Verb kenne ich noch nicht sicher. Hier steht die <b>regelmäßige</b> Konjugation – bei unregelmäßigen Verben können einzelne Formen abweichen.</div>`}
+        <div class="gram-info">
+          <button class="gram-chip" data-action="say" data-text="${esc(c.inf)}">🔊 <span>Infinitiv</span> <b lang="es">${esc(c.inf)}</b></button>
+          <button class="gram-chip" data-action="say" data-text="${esc(c.gerundio)}">🔊 <span>Gerundio</span> <b lang="es">${esc(c.gerundio)}</b></button>
+          <button class="gram-chip" data-action="say" data-text="${esc(c.participio)}">🔊 <span>Participio</span> <b lang="es">${esc(c.participio)}</b>${regularPart}</button>
+        </div>
+        <div class="gram-moods">
+          ${DICT_TENSES.map((g, i) => `<button class="level-btn ${i === dictLookup.mood ? "on" : ""}" data-action="dict-mood" data-mood="${i}"><span>${esc(g.group)}</span></button>`).join("")}
+        </div>
+        <div class="tense-grid">${cards}</div>
+        ${c.reflexive ? "" : `<p class="gram-legend"><span class="swatch"></span> Orange = unregelmäßige Form (Stammwechsel oder Ausnahme). Antippen zum Anhören.</p>`}
+      </section>`;
+  }
+
   function esc(str) {
     return String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
   }
@@ -5906,8 +6872,6 @@
   function playerCard() {
     const { level, into, span, toNext } = levelInfo(state.xp);
     const streak = currentStreak();
-    const done = todayXp();
-    const goalMet = done >= state.dailyGoal;
     return `
       <section class="player">
         <div class="player-top">
@@ -5915,11 +6879,6 @@
           <span class="xp">noch ${toNext} XP bis Level ${level + 1}</span>
         </div>
         <div class="bar"><span style="width:${(into / span) * 100}%"></span></div>
-        <div class="goal ${goalMet ? "met" : ""}">
-          <span>🎯 Tagesziel ${goalMet ? "erreicht!" : ""}</span>
-          <span>${done} / ${state.dailyGoal} XP</span>
-        </div>
-        <div class="bar goal-bar"><span style="width:${Math.min(1, done / state.dailyGoal) * 100}%"></span></div>
         <div class="chips">
           <span class="chip">🔥 ${streak} ${streak === 1 ? "Tag" : "Tage"}</span>
           <span class="chip">📚 ${learnedCount()} / ${VOCAB.length} Wörter</span>
@@ -5963,6 +6922,7 @@
       ${updateBanner()}
       ${storageNotice()}
       ${playerCard()}
+      ${missionCard()}
       ${resumeBanner()}
       <h2 class="section-title">Was möchtest du lernen?</h2>
       <div class="grid two modules">
@@ -6028,7 +6988,6 @@
       ${updateBanner()}
       <p class="version-line">Version ${APP_VERSION}</p>
       ${cloudPanel()}
-      ${goalPanel()}
       ${voicePanel()}
       ${progressPanel()}
       <section class="panel danger-panel">
@@ -6077,21 +7036,6 @@
       </section>`;
   }
 
-  function goalPanel() {
-    return `
-      <section class="panel goal-panel">
-        <h3>🎯 Tagesziel</h3>
-        <p>Eine Runde bringt etwa 15–30 XP. Kleine, regelmäßige Einheiten bringen am meisten.</p>
-        <div class="goal-options">
-          ${DAILY_GOALS.map((g) => `
-            <button class="level-btn ${g.xp === state.dailyGoal ? "on" : ""}" data-action="set-goal" data-goal="${g.xp}">
-              <span>${esc(g.name)}</span>
-              <small>${g.xp} XP am Tag</small>
-            </button>`).join("")}
-        </div>
-      </section>`;
-  }
-
   function timeText(ms) {
     const d = new Date(ms);
     const time = d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }) + " Uhr";
@@ -6133,32 +7077,39 @@
   }
 
   function voicePanel() {
-    if (!synth) {
-      return `
-        <section class="panel voice-panel">
-          <h3>🗣️ Stimme</h3>
-          <p>Dieser Browser kann nicht vorlesen. Öffne Poquito in Safari oder über das Home-Bildschirm-Symbol.</p>
-        </section>`;
-    }
-    const voices = spanishVoices();
+    const natural = naturalVoiceOn();
+    const voices = synth ? spanishVoices() : [];
     const current = spanishVoice;
     const quality = current ? voiceQuality(current) : null;
     const qualityText = { premium: "Premium – klingt sehr natürlich", enhanced: "Erweitert – klingt natürlich", standard: "Standard – klingt etwas künstlich" }[quality];
+    const engineBtn = (id, label) => `<button class="level-btn ${(state.voiceEngine === "device" ? "device" : "auto") === id ? "on" : ""}" data-action="set-engine" data-engine="${id}"><span>${label}</span></button>`;
     return `
       <section class="panel voice-panel">
         <h3>🗣️ Stimme & Ton</h3>
-        ${current
-          ? `<p>Poquito spricht mit <b>${esc(current.name)}</b> (${esc(voiceLang(current))}) · ${qualityText}.</p>`
-          : `<p>Es wurde noch keine spanische Stimme gefunden.</p>`}
-        ${quality !== "premium" ? `
-          <div class="notice">✨ <b>Tipp für eine natürlichere Aussprache:</b> Lade kostenlos eine Premium-Stimme. iPad-Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Spanisch → Spanien → z. B. <b>Mónica</b> oder <b>Marisol</b> → Qualität „Premium“ bzw. „Erweitert“ laden. Danach Poquito neu öffnen – die beste Stimme wird automatisch gewählt.</div>` : ""}
-        <div class="voice-row">
-          <select class="voice-select" aria-label="Stimme wählen">
-            <option value="">Automatisch (beste Stimme)</option>
-            ${voices.map((v) => `<option value="${esc(v.voiceURI)}" ${v.voiceURI === state.voiceURI ? "selected" : ""}>${esc(voiceLabel(v))}</option>`).join("")}
-          </select>
-          <button class="btn light" data-action="voice-test">▶ Probe</button>
+        <div class="engine-options">
+          ${engineBtn("auto", "✨ Natürlich")}
+          ${engineBtn("device", "📱 Gerätestimme")}
         </div>
+        ${state.voiceEngine === "device"
+          ? `<p>Poquito spricht mit der Stimme deines Geräts.</p>`
+          : natural
+            ? `<p>Poquito spricht mit einer natürlichen KI-Stimme (weiblich: Dora, männlich: Alex). Das gilt für alle festen Inhalte wie Vokabeln, Sätze, Zahlen, Verbformen und Podcasts. Eigene Texte (Übersetzer, Schreiben) liest weiterhin die Gerätestimme vor.</p>`
+            : `<p>Die natürliche Stimme wird gerade geladen oder ist offline nicht verfügbar – so lange spricht die Gerätestimme.</p>`}
+        <div class="voice-row">
+          <button class="btn light" data-action="voice-test">▶ Stimme anhören</button>
+        </div>
+        ${natural && state.voiceEngine !== "device" ? `<p class="tr-credit">Natürliche Stimme: Kokoro-82M (Apache-2.0) – Spanisch, eher lateinamerikanische Aussprache (z/c wie s).</p>` : ""}
+        ${synth ? `
+          <h4 class="sub-title">Gerätestimme${natural ? " (für eigene Texte)" : ""}</h4>
+          ${current ? `<p>Aktuell: <b>${esc(current.name)}</b> (${esc(voiceLang(current))}) · ${qualityText}.</p>` : `<p>Es wurde noch keine spanische Stimme gefunden.</p>`}
+          ${quality !== "premium" ? `
+            <div class="notice">✨ <b>Tipp:</b> Lade kostenlos eine Premium-Stimme. iPad-Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Spanisch → Spanien → z. B. <b>Mónica</b> oder <b>Marisol</b> → Qualität „Premium“ bzw. „Erweitert“ laden. Danach Poquito neu öffnen.</div>` : ""}
+          <div class="voice-row">
+            <select class="voice-select" aria-label="Gerätestimme wählen">
+              <option value="">Automatisch (beste Stimme)</option>
+              ${voices.map((v) => `<option value="${esc(v.voiceURI)}" ${v.voiceURI === state.voiceURI ? "selected" : ""}>${esc(voiceLabel(v))}</option>`).join("")}
+            </select>
+          </div>` : ""}
         <div class="setting-row">
           <span>Töne und Vorlesen</span>
           <button class="switch ${state.sound ? "on" : ""}" data-action="toggle-sound-setting" role="switch" aria-checked="${state.sound}" aria-label="Töne und Vorlesen">
@@ -6228,13 +7179,12 @@
         </div>`;
     }).join("");
     const hintRows = r.hints.map((h) => {
-      const link = `<button class="link-btn inline" data-action="open-conj" data-verb="${h.v.inf}" data-tense="${h.tense || "presente"}">Konjugation ansehen</button>`;
+      const link = `<button class="link-btn inline" data-action="open-conj" data-verb="${h.v.inf}">Alle Zeiten ansehen</button>`;
       if (!h.tense) {
-        const group = VERB_GROUPS.find((g) => g.id === h.v.group).name;
-        return `<div class="tr-info"><span>🧩 <b lang="es">${esc(h.v.inf)}</b> ist ein Verb (${esc(h.v.de)}) · ${esc(group)}. ${link}</span></div>`;
+        const group = h.v.group ? VERB_GROUPS.find((g) => g.id === h.v.group).name : "";
+        return `<div class="tr-info"><span>🧩 <b lang="es">${esc(h.v.inf)}</b> ist ein Verb${h.v.de ? ` (${esc(h.v.de)})` : ""}${group ? " · " + esc(group) : ""}. ${link}</span></div>`;
       }
-      const t = TENSE_BY_ID.get(h.tense);
-      return `<div class="tr-info"><span>🧩 Form von <b lang="es">${esc(h.v.inf)}</b> (${esc(h.v.de)}): ${esc(t.name)} – ${esc(h.persons.join(", "))}. ${link}</span></div>`;
+      return `<div class="tr-info"><span>🧩 Form von <b lang="es">${esc(h.v.inf)}</b>${h.v.de ? ` (${esc(h.v.de)})` : ""}: ${esc(tenseLabel(h.tense))} – ${esc(h.persons.join(", "))}. ${link}</span></div>`;
     }).join("");
     return `
       <section class="tr-result">
@@ -7092,7 +8042,6 @@
         ${p.finished ? `
           <div class="pc-done">
             <b>🎉 Folge fertig gehört!${p.xp ? ` +${p.xp} XP` : ""}</b>
-            ${p.goalReached ? `<div class="levelup goal-banner">🎯 Tagesziel erreicht!</div>` : ""}
             ${p.newBadges.length ? `<div class="badges">${p.newBadges.map(badgeTile).join("")}</div>` : ""}
             <div class="btn-stack pair">
               <button class="btn sun" data-action="start-quiz" data-id="${ep.id}">❓ Verständnisfragen</button>
@@ -7222,7 +8171,7 @@
             <div class="stat"><b>+${s.xp}</b><span>XP</span></div>
             <div class="stat"><b>${s.bestCombo}</b><span>beste Serie</span></div>
           </div>
-          ${s.goalReached ? `<div class="levelup goal-banner">🎯 Tagesziel erreicht! ${todayXp()} XP heute – ¡Muy bien!</div>` : ""}
+          ${missionBanners(s.missions)}
           ${levelNow > levelBefore ? `<div class="levelup">🎊 Level ${levelNow} erreicht!</div>` : ""}
           ${s.newBadges.length ? `
             <div class="new-badges">
@@ -7252,6 +8201,7 @@
     drill: drillView,
     result: resultView,
     translate: translateView,
+    dictionary: dictionaryView,
     settings: settingsView,
     write: writeView,
     compose: composeView,
@@ -7259,7 +8209,7 @@
   };
 
   // Die drei Hauptbereiche bekommen unten eine Tab-Leiste.
-  const TAB_VIEWS = new Set(["home", "translate", "settings"]);
+  const TAB_VIEWS = new Set(["home", "translate", "dictionary", "settings"]);
   const tabbar = document.getElementById("tabbar");
 
   function render() {
@@ -7278,7 +8228,7 @@
   }
 
   function go(next) {
-    if (synth) synth.cancel();
+    cancelSpeech();
     document.body.classList.remove("speaking");
     abortListening();
     stopPlayer();
@@ -7294,10 +8244,11 @@
   // ---------- Bedienung ----------
   const BACK_ACTIONS = new Set(["home", "exit"]);
   // Keine Klick-Töne, wo gleich eigene Töne, Sprache oder das Mikrofon starten.
-  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self", "voice-test", "tr-speak", "tr-save", "w-insert", "w-speak", "w-check"]);
+  const OWN_SOUND = new Set(["answer", "flip", "pick", "unpick", "option", "check", "speak", "speak-slow", "say", "locked", "toggle-sound", "accent", "replay", "replay-slow", "mic", "play-mine", "speak-self", "voice-test", "tr-speak", "tr-save", "w-insert", "w-speak", "w-check", "dict-save"]);
 
   app.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".accent")) e.preventDefault();
+    unlockVoice();
   });
 
   app.addEventListener("click", (e) => {
@@ -7445,10 +8396,8 @@
       case "say":
         speak(el.dataset.text);
         break;
-      case "set-goal":
-        state.dailyGoal = Number(el.dataset.goal);
-        saveState();
-        render();
+      case "m-start":
+        startMissionTask(el.dataset.task);
         break;
       case "export":
         exportProgress();
@@ -7527,18 +8476,62 @@
         break;
       case "toggle-sound-setting":
         state.sound = !state.sound;
-        if (!state.sound && synth) synth.cancel();
+        if (!state.sound) cancelSpeech();
         saveState();
         render();
         break;
       case "open-conj":
-        currentTense = el.dataset.tense;
-        lookupVerb = el.dataset.verb;
-        go("rules");
-        {
-          const lookup = app.querySelector(".verb-select");
-          if (lookup) lookup.closest(".panel").scrollIntoView({ block: "start" });
+        dictLookup.text = el.dataset.verb;
+        dictLookup.result = null;
+        dictLookup.error = "";
+        dictLookup.note = "";
+        state.dictDir = "es-de";
+        go("dictionary");
+        lookupWord();
+        break;
+      case "dict-go":
+        lookupWord();
+        break;
+      case "dict-swap":
+        state.dictDir = state.dictDir === "de-es" ? "es-de" : "de-es";
+        dictLookup.result = null;
+        dictLookup.note = "";
+        dictLookup.error = "";
+        saveState();
+        render();
+        break;
+      case "dict-clear":
+        Object.assign(dictLookup, { text: "", result: null, error: "", note: "", sentence: false, loading: false, verb: null });
+        dictLookup.token++;
+        render();
+        app.querySelector(".dict-input").focus();
+        break;
+      case "dict-verb":
+        dictLookup.verb = el.dataset.verb;
+        render();
+        break;
+      case "dict-mood":
+        dictLookup.mood = Number(el.dataset.mood);
+        render();
+        break;
+      case "dict-save":
+        if (addMyWord(el.dataset.es, el.dataset.de)) {
+          playCorrect();
+          render();
         }
+        break;
+      case "dict-to-translator":
+        translator.text = dictLookup.text;
+        translator.result = null;
+        translator.error = "";
+        translator.note = "";
+        state.translateDir = trLangs(state.dictDir).join("-");
+        go("translate");
+        translate();
+        break;
+      case "gram-rules":
+        currentTense = el.dataset.tense;
+        go("rules");
         break;
       case "tr-go":
         translate();
@@ -7610,6 +8603,16 @@
         }
         speak(VOICE_SAMPLE);
         break;
+      case "set-engine":
+        state.voiceEngine = el.dataset.engine;
+        saveState();
+        render();
+        if (!state.sound) {
+          state.sound = true;
+          saveState();
+        }
+        speak(VOICE_SAMPLE);
+        break;
       case "answer":
         answerCard(el.dataset.knew === "1");
         break;
@@ -7632,7 +8635,7 @@
         submitDrill(el.dataset.value);
         break;
       case "accent": {
-        const input = app.querySelector(".type-input, .tr-input, .write-input");
+        const input = app.querySelector(".type-input, .tr-input, .write-input, .dict-input");
         const start = input.selectionStart == null ? input.value.length : input.selectionStart;
         const end = input.selectionEnd == null ? input.value.length : input.selectionEnd;
         input.setRangeText(el.dataset.char, start, end, "end");
@@ -7652,14 +8655,14 @@
         break;
       case "toggle-sound":
         state.sound = !state.sound;
-        if (!state.sound && synth) synth.cancel();
+        if (!state.sound) cancelSpeech();
         saveState();
         el.textContent = state.sound ? "🔊" : "🔇";
         sfx.tap();
         break;
       case "reset":
         if (confirm("Wirklich den gesamten Lernfortschritt (Wörter, Verben, Hören, Podcast, Sprechen, XP, Abzeichen) löschen? Deine Einstellungen und „Meine Wörter“ bleiben erhalten.")) {
-          const keep = ["sound", "voiceURI", "dailyGoal", "translateDir", "myWords"];
+          const keep = ["sound", "voiceURI", "translateDir", "voiceEngine", "myWords"];
           state = Object.assign(defaultState(), Object.fromEntries(keep.map((k) => [k, state[k]])), { resetAt: Date.now() });
           registerMyWords(state.myWords);
           clearRound();
@@ -7671,6 +8674,12 @@
   });
 
   app.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target.classList.contains("dict-input")) {
+      e.preventDefault();
+      e.target.blur();
+      lookupWord();
+      return;
+    }
     if (e.key === "Enter" && !e.shiftKey && e.target.classList.contains("tr-input")) {
       e.preventDefault();
       e.target.blur();
@@ -7686,6 +8695,7 @@
 
   app.addEventListener("input", (e) => {
     if (e.target.classList.contains("tr-input")) translator.text = e.target.value;
+    if (e.target.classList.contains("dict-input")) dictLookup.text = e.target.value;
     if (e.target.classList.contains("write-input")) {
       writing.text = e.target.value;
       saveWriting();
@@ -7731,6 +8741,7 @@
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) {
       syncFromStorage();
+      if (view === "home") render(); // neuer Tag → neue Tagesaufgabe
       checkForUpdate();
       if (Date.now() - cloudLastRun > 20000) syncNow();
     } else if (cloudDirty) {
@@ -7743,6 +8754,7 @@
   const pending = loadRound();
   if (pending && pending.active && Date.now() - pending.savedAt < AUTO_RESUME_MS) resumeRound();
   else render();
+  loadClips();
   setTimeout(() => syncNow(), 600);
   setTimeout(() => checkForUpdate(), 1500);
 })();
